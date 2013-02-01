@@ -1,0 +1,7 @@
+add_to_db inserts the range of frequency and time selected
+ on the spectrogram into a MySQL database.
+
+Create or select a database for the application and copy the file
+ default.settings.php to settings.php, filling the appropriate fields.
+ An example of the table that the tool can use is in the file create_pumilio_table.sql
+

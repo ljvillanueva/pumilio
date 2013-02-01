@@ -1,0 +1,31 @@
+##Rename configfile.py.dist to:
+##	configfile.py
+
+#MySQL settings
+db_hostname=''
+db_database=''
+db_username=''
+db_password=''
+
+#Where the folder with the pumilio application is (i.e. /var/www/pumilio). No trailing slash.
+server_dir='/var/www/pumilio'
+
+#R variables
+##ADI variables
+### dbFS threshold
+db_value='-50'
+
+### The spectrogram should be drawn from 0 to this frequency, in Hertz. Default is 10000Hz.
+max_freq='10000'
+
+###How wide is each frequency band. Default is 1000Hz.
+freq_step='1000'
+
+##For H (seewave)
+###Segment length (seconds) for the H statistic
+###  Files >60 seconds can take very long and even hang a computer.
+###  I recommend to leave this at 60 seconds or less.
+###  The script cuts the sound file to segments and then obtain a mean 
+###  value of H from each segment.
+segment_length='60'
+

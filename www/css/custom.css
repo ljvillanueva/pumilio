@@ -1,0 +1,22 @@
+/* CUSTOM MODIFICATIONS */
+p {margin:0 0 .5em;}
+.highlight2 {color:#FFFFFF;background:#75bad7;padding:0.2em;text-align:center;margin-top:1.5em;}
+.highlight3 {color:#FFFFFF;background:#75bad7;padding:0.4em;text-align:center;}
+.highlight4 {color:#FFFFFF;background:#75bad7;padding:0.4em;}
+.tools {float:left;padding:0.5em;}
+input.small {font-size:.8em;}
+select.small {font-size:.8em;}
+form.inlinesmall {line-height:2;font-size:.8em;}
+form.inlinesmall p {margin-bottom:0;font-size:.8em;}
+td {padding:1px 0px 1px 4px;}
+table {width:auto;}
+body {font-size:85%;font-family:"Ubuntu","Helvetica Neue", Arial, Helvetica, sans-serif;}
+
+.error, .alert, .notice, .success, .info { -moz-border-radius: 5px; -webkit-border-radius: 5px; }
+
+.summary-left{height:376px;overflow:auto;margin-top:10px;}
+.summary-right{height:376px;margin-top:10px;}
+
+.formedge {margin-left: 20px !important;}
+
+#ui-datepicker-div { display: none; }

@@ -1,0 +1,22 @@
+To upgrade Pumilio from version 1.0, or newer, replace the files with the last release,
+ without replacing the following folders:
+    * sounds
+    * tmp
+    * sitephotos
+    * data_sources (if you added something)
+    * plugins (if you added something)
+    * tools (if you added something)
+
+Check config.php.dist to see if new variables are not present in your config.php file.
+ Some options have been moved to the administration page in the application. Then go
+ to the application address /upgrade (if the address is http://somehost.com/pumilio,
+ then go to http://somehost.com/pumilio/upgrade). This will upgrade the database
+ structure and make all necessary checks. IF YOU MISS THIS STEP, THE SYSTEM MAY NOT
+ WORK AS INTENDED. 
+
+UPGRADE TO v2.0.0
+ Any upgrade from v 1.x to version 2.x will delete all images (spectrograms and waveforms). 
+ This is necessary to mantain consistency. After upgrading, go to the Maintenance tab in
+ the Admin menu and click on "Generate mp3 and image files."
+
+For questions and updates, visit the project's help page: http://pumilio.sourceforge.net/help.html

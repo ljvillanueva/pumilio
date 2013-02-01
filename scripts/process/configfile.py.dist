@@ -1,0 +1,31 @@
+##Rename configfile.py.dist to:
+##	configfile.py
+
+##Uncomment this lines with a single pound sign in either section 1 or section 2:
+##	Section 1 is for a single database
+##	Section 2 is for multiple databases in a centralized config file
+
+#########################################################################
+# SECTION 1
+#########################################################################
+
+#use_section=1
+#db_hostname=''
+#db_database=''
+#db_username=''
+#db_password=''
+
+##URL of the pumilio installation, don't use http://
+## and end with trailing slash
+#web_location=''
+
+#########################################################################
+# SECTION 2
+#########################################################################
+
+##URL of the configuration file
+## Must start with http://
+## and end with web_config.txt
+#use_section=2
+#web_config=''
+

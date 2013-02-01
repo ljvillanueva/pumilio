@@ -1,0 +1,13 @@
+#Rename web_config.txt.dist to:
+#  web_config.txt
+
+[myvars]
+db_hostname: 
+db_database: 
+db_username: 
+db_password: 
+
+#URL of the pumilio installation, don't use http://
+# and end with trailing slash
+web_location: 
+

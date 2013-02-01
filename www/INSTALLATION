@@ -1,0 +1,62 @@
+To install, just copy the files to a webserver folder. This application
+ is written in PHP5.
+
+The folder /tmp must have write permissions for the webserver to create the
+ necessary temporary files.
+
+The folder /sounds must have write permissions for the webserver.
+
+The svt.py script requires Python 2.4+, numpy 1.1+ (http://numpy.scipy.org/),
+ and audiolab 0.08
+ (http://www.ar.media.kyoto-u.ac.jp/members/david/softwares/audiolab/index.html).
+
+ If you have problems installing audiolab, try version 0.8:
+  http://pypi.python.org/pypi/scikits.audiolab/0.8
+
+SoX version 14.3.0 or higher is required. To install in Ubuntu:
+ If a version less than 14.3.0 is installed, get the latest version from http://sox.sourceforge.net/
+
+Other required programs include Imagemagick, Python Imaging, and FLAC.
+
+
+
+To install the required packages for in a current version of Ubuntu:
+ sudo apt-get install python-dev python-numpy python-setuptools libsndfile1-dev libasound2-dev sox libsox-fmt-* imagemagick python-imaging flac python-mysqldb lame
+ 
+ Then, install the audiolab module.
+ 
+
+Upload file size limit is determined in the php.ini file. In Ubuntu the file is located
+ in /etc/php5/apache2/php.ini
+ Set the desired value in the variables upload_max_filesize and post_max_size, then restart Apache:
+  sudo /etc/init.d/apache2 restart
+ Please consult the PHP manual for more info:
+  - http://www.php.net/manual/en/ini.core.php#ini.upload-max-filesize
+  - http://www.php.net/manual/en/ini.core.php#ini.post-max-size
+
+
+
+
+
+#CONFIGURATION
+Once the files have been copied to a web server, rename the file config.php.dist to config.php
+ and edit the appropriate fields.
+ 
+Then, go to pumilio/install with your browser to see if all requirements have been met
+ and to create an administrator user. After setting up that account you can delete the install/ folder.
+
+For questions and problems, visit: http://pumilio.sourceforge.net
+
+
+#GOOGLE MAPS v3
+The new version of Pumilio uses the Google Maps version 3 API (version 2 has been deprecated 
+ and will stop working on May 19, 2013). You will need a key to use the maps. To obtain a key:
+	- Go to https://code.google.com/apis/console
+	- Log in to your Google account, if you are not logged in already
+	- Click on Services
+	- Browse down to "Google Maps API v3" and turn ON
+	- Click on API Services
+	- Click on "Create new Browser key..."
+	- Add the URL of the webserver, in the following format: servername.com/*
+	- Copy the API Key that is generated to the corresponding field in the Pumilio Admin page
+	

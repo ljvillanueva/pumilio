@@ -1,0 +1,19 @@
+add_range inserts the range of frequency on the spectrogram into a MySQL database.
+
+This tool assumes there is a table in the application database called FreqRanges 
+ that will store the data.
+
+You can create it from MySQL using:
+
+CREATE TABLE IF NOT EXISTS `FreqRanges` (
+  `MarkID` int(11) NOT NULL AUTO_INCREMENT,
+  `SoundID` int(11) NOT NULL,
+  `ColID` int(11) NOT NULL,
+  `freq_min` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `freq_max` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `Species` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
+  `fft_size` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `UserID` int(11) NOT NULL,
+  PRIMARY KEY (`MarkID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=101 ;
+

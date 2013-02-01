@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS `Tokens` (  `TokenID` varchar(150) COLLATE utf8_unicode_ci NOT NULL,  `UserID` int(11) NOT NULL,  `soundfile_format` varchar(10) COLLATE utf8_unicode_ci NOT NULL,  `soundfile_name` varchar(250) COLLATE utf8_unicode_ci NOT NULL,  `soundfile_duration` float NOT NULL,  `soundfile_samplingrate` int(11) NOT NULL,  `soundfile_samplingrateoriginal` int(11) DEFAULT NULL,  `soundfile_id` int(11) NOT NULL,  `no_channels` int(11) NOT NULL,  `frequency_max` int(11) DEFAULT NULL,  `frequency_min` int(11) DEFAULT NULL,  `soundfile_wav` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,  `from_db` enum('FALSE','TRUE') COLLATE utf8_unicode_ci DEFAULT NULL,  `random_cookie` varchar(50) COLLATE utf8_unicode_ci NOT NULL,  UNIQUE KEY `TokenID` (`TokenID`)) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+UPDATE `PumilioSettings` SET `Value` = '16' WHERE `PumilioSettings`.`Settings` = 'db_version' LIMIT 1;
+

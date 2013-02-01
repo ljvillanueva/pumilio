@@ -1,0 +1,14 @@
+#Fill the values for MySQL
+db_hostname=''
+db_database=''
+db_username=''
+db_password=''
+
+#Location of the pumilio installation, assuming it is a local dir,
+# either on the same machine, or mounted with sshfs, nfs, cifs, smb, etc.
+# With trailing slash.
+# For example: '/var/www/pumilio/' or '/mnt/server/pumilio/'
+server_dir = ''
+
+#Archive format. The default is tar, other option is zip (without compression)
+export_format = 'tar'
