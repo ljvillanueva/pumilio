@@ -37,8 +37,7 @@ The name "pumilio" refers to the tropical frog known as the Strawberry Poison-da
  Frog (Oophaga pumilio), a bold little critter that sings during the day without
  fear of being predated upon.
 
-If you want to contribute coding, ideas, suggestions, bugs, etc., just visit the project's forum:
- https://sourceforge.net/p/pumilio/discussion/1009573/
+Feel free to contribute code, ideas, suggestions, bugs, etc.
 
 Read the INSTALLATION file to install and the UPGRADE file to upgrade.
 
@@ -47,6 +46,6 @@ To prevent access to the original sound files from the web (for example, someone
   /pumilio_directory/sounds/sounds/
  The apache server must be configured to allow this option. Please consult with your administrator.
  
-You can also visit the SourceForge page for more options: 
- https://sourceforge.net/projects/pumilio/
+You can also visit the project page for more information: 
+ http://pumilio.sourceforge.net
 
