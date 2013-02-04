@@ -362,6 +362,28 @@ $(function() {
 });
 </script>
 
+<script type="text/javascript">
+$(function() {
+    // setTimeout() function will be fired after page is loaded
+    // it will wait for 5 sec. and then will fire
+    // $("#successMessage").hide() function
+    setTimeout(function() {
+        $("#pumversion").hide('blind', {}, 500)
+    }, 5000);
+});
+</script>
+
+<script type="text/javascript">
+$(function() {
+    // setTimeout() function will be fired after page is loaded
+    // it will wait for 5 sec. and then will fire
+    // $("#successMessage").hide() function
+    setTimeout(function() {
+        $("#pumversiondev").hide('blind', {}, 500)
+    }, 8000);
+});
+</script>
+
 <?php
 if ($use_googleanalytics) {
 	echo $googleanalytics_code;
@@ -396,22 +418,22 @@ if ($use_googleanalytics) {
 			
 			$w_dev = trim($website_version_e[3]);
 			if ($w_dev == "dev"){
-				echo "<div class=\"error\"><strong><img src=\"images/exclamation.png\"> You are using a development version of Pumilio. This version may be more up to date
+				echo "<div class=\"error\" id=\"pumversiondev\"><strong><img src=\"images/exclamation.png\"> You are using a development version of Pumilio. This version may be more up to date
 					than the current version, but may be unstable.<br>
 					This version is recommended ONLY for development and for testing since there can be data corruption or loss.</strong></div>";
 				}
 
 			if ($last_ver_e[2]>$website_version_e[2] && $last_ver_e[1] == $website_version_e[1]) {
-				$update_message = "<div class=\"notice\"><strong>A new version of Pumilio is available ($last_ver) which includes bug fixes.<br>You are running version $website_version<br>Visit the <a href=\"http://pumilio.sourceforge.net\">project website</a> for more details.</strong></div>";
+				$update_message = "<div class=\"notice\" id=\"pumversion\"><strong>A new version of Pumilio is available ($last_ver) which includes bug fixes.<br>You are running version $website_version<br>Visit the <a href=\"http://pumilio.sourceforge.net\">project website</a> for more details.</strong></div>";
 				}
 			elseif ($last_ver_e[1]>$website_version_e[1] && $last_ver_e[0] == $website_version_e[0]) {
-				$update_message = "<div class=\"notice\"><strong>A new version of Pumilio is available ($last_ver) which includes new or improved features.<br>You are running version $website_version<br>Visit the <a href=\"http://pumilio.sourceforge.net\">project website</a> for more details.</strong></div>";
+				$update_message = "<div class=\"notice\" id=\"pumversion\"><strong>A new version of Pumilio is available ($last_ver) which includes new or improved features.<br>You are running version $website_version<br>Visit the <a href=\"http://pumilio.sourceforge.net\">project website</a> for more details.</strong></div>";
 				}
 			elseif ($last_ver_e[0]>$website_version_e[0]) {
-				$update_message = "<div class=\"notice\"><strong>A new major version of Pumilio is available ($last_ver) which includes major improvements.<br>You are running version $website_version<br>Visit the <a href=\"http://pumilio.sourceforge.net\">project website</a> for more details.</strong></div>";
+				$update_message = "<div class=\"notice\" id=\"pumversion\"><strong>A new major version of Pumilio is available ($last_ver) which includes major improvements.<br>You are running version $website_version<br>Visit the <a href=\"http://pumilio.sourceforge.net\">project website</a> for more details.</strong></div>";
 				}
 			else {
-				$update_message = "<div class=\"success\"><strong>Pumilio is up to date, you are running version $website_version</strong></div>";
+				$update_message = "<div class=\"success\" id=\"pumversion\"><strong>Pumilio is up to date, you are running version $website_version</strong></div>";
 				}
 
 			echo $update_message;

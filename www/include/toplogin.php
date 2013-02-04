@@ -19,7 +19,13 @@ else {
 		#Check if user can enter admin area
 		$username = $_COOKIE["username"];
 		if (is_user_admin($username, $connection)) {
-			echo " [<a href=\"admin.php\">Admin</a>]";
+			$this_page = basename($_SERVER['PHP_SELF']);
+			if ($this_page != "admin.php"){
+				echo " [<a href=\"admin.php\">Admin</a>]";
+				}
+			else {
+				echo " [Admin]";
+				}
 			}
 
 		echo " [<a href=\"include/logout.php?where_to=$self&q=$q_logout\">Logout</a>]";

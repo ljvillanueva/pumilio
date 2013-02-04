@@ -71,10 +71,12 @@ elseif ($type==2) {
 	or die (mysqli_error($connection));
 	$SampleID=mysqli_insert_id($connection);
 
-	if ($time_limits)
-		{$query = ("INSERT INTO SampleMembers (SampleID, SoundID) SELECT '$SampleID', SoundID FROM Sounds WHERE ColID='$ColID' AND (Time>='$time_min' OR Time<='$time_max') ORDER BY RAND() LIMIT $samplesize");}
-	else
-		{$query = ("INSERT INTO SampleMembers (SampleID, SoundID) SELECT '$SampleID', SoundID FROM Sounds WHERE ColID='$ColID' ORDER BY RAND() LIMIT $samplesize");}
+	if ($time_limits){
+		$query = ("INSERT INTO SampleMembers (SampleID, SoundID) SELECT '$SampleID', SoundID FROM Sounds WHERE ColID='$ColID' AND (Time>='$time_min' AND Time<='$time_max') ORDER BY RAND() LIMIT $samplesize");
+		}
+	else {
+		$query = ("INSERT INTO SampleMembers (SampleID, SoundID) SELECT '$SampleID', SoundID FROM Sounds WHERE ColID='$ColID' ORDER BY RAND() LIMIT $samplesize");
+		}
 	
 	$result = mysqli_query($connection, $query)
 	or die (mysqli_error($connection));
