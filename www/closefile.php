@@ -38,8 +38,8 @@ delTree('tmp/' . $random_cookie . '/');
 // Relocate back to the first page of the application
 
 if ($from_db=="TRUE") {
-	echo $from_db;
-	#header("Location: ./db_filedetails.php?SoundID=$SoundID");
+	#echo $from_db;
+	header("Location: ./db_filedetails.php?SoundID=$SoundID");
 	die();
 	}
 else {
