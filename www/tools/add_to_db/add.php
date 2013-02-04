@@ -33,6 +33,7 @@ $t_max=filter_var($_POST["t_max"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALL
 $f_min=filter_var($_POST["f_min"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 $f_max=filter_var($_POST["f_max"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 $SoundID=filter_var($_POST["SoundID"], FILTER_SANITIZE_NUMBER_INT);
+$from_db=filter_var($_POST["from_db"], FILTER_SANITIZE_STRING_INT);
 
 if ($mark_tag_name=="")
 	{die("<p class=\"error\">Please give the variable mark_tag_name in the config.php file a name.
@@ -45,7 +46,7 @@ if ($t_min=="")
 	die("<p class=\"error\">Please select an area of the spectrogram first.");
 
 	if (sessionAuthenticate($connection)) {
-		echo "
+		echo "$SoundID
 		<form method=\"POST\" action=\"add2.php\">
 
 			<input type=\"hidden\" name=\"t_min\" value=\"$t_min\"  />
@@ -53,6 +54,7 @@ if ($t_min=="")
 			<input type=\"hidden\" name=\"f_min\" value=\"$f_min\"  />
 			<input type=\"hidden\" name=\"f_max\" value=\"$f_max\" />
 			<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\" />
+			<input type=\"hidden\" name=\"from_db\" value=\"$from_db\" />
 
 			<h3>Selection:</h3>
 			<p>Frequency range: $f_min - $f_max Hz

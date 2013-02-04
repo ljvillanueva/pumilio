@@ -18,33 +18,34 @@ echo "<input type=\"hidden\" id=\"x_2\" name=\"t_min\" value=\"\" />
 	</form> &nbsp;";
 
 
-
-
 $current_address1=explode("pumilio.php?", $current_address);
 $current_address2=explode("&", $current_address1[1]);
 $link="pumilio.php?tool=add_to_db.php";
 
-for ($b=0;$b<count($current_address2);$b++)
-	{
-		if (($current_address2[$b]!="showmarks=1") && ($current_address2[$b]!="tool=add_to_db.php"))
-			$link=$link . "&" . $current_address2[$b];
+for ($b=0;$b<count($current_address2);$b++){
+		if (($current_address2[$b]!="showmarks=1") && ($current_address2[$b]!="tool=add_to_db.php")){
+		$link=$link . "&" . $current_address2[$b];
+		}
 	}
 
 $str = 'This is still a test.';
-if ($link[strlen($link)-1]=="&")
+if ($link[strlen($link)-1]=="&"){
 	$link_marks=$link . "showmarks=1";
-else
+	}
+else {
 	$link_marks=$link . "&showmarks=1";
+	}
 
 
-if ($_GET["showmarks"])
-	{echo "<a href=\"$link\" onmouseover=\"Tip(' Hide marked regions ', FONTCOLOR, '#fff',BGCOLOR, '#4aa0e0', FADEIN, '400', FADEOUT, '400', ABOVE, 'true', CENTERMOUSE, 'true')\" onmouseout=\"UnTip()\"><img src=\"images/database.png\"></a> &nbsp;";}
-else
-	{echo "<a href=\"$link_marks\" onmouseover=\"Tip(' Show marked regions ', FONTCOLOR, '#fff',BGCOLOR, '#4aa0e0', FADEIN, '400', FADEOUT, '400', ABOVE, 'true', CENTERMOUSE, 'true')\" onmouseout=\"UnTip()\"><img src=\"images/database_refresh.png\"></a> &nbsp;";}
+if ($_GET["showmarks"]) {
+	echo "<a href=\"$link\" onmouseover=\"Tip(' Hide marked regions ', FONTCOLOR, '#fff',BGCOLOR, '#4aa0e0', FADEIN, '400', FADEOUT, '400', ABOVE, 'true', CENTERMOUSE, 'true')\" onmouseout=\"UnTip()\"><img src=\"images/database.png\"></a> &nbsp;";
+	}
+else {
+	echo "<a href=\"$link_marks\" onmouseover=\"Tip(' Show marked regions ', FONTCOLOR, '#fff',BGCOLOR, '#4aa0e0', FADEIN, '400', FADEOUT, '400', ABOVE, 'true', CENTERMOUSE, 'true')\" onmouseout=\"UnTip()\"><img src=\"images/database_refresh.png\"></a> &nbsp;";
+	}
 
 #Window to manage marks
-if ($_GET["showmarks"])
-	{
+if ($_GET["showmarks"]){
 	echo "[<a href=\"managemarks.php?Token=$Token\" target=\"managemarks$add_id\" onclick=\"window.open('managemarks.php?SoundID=$SoundID', 'managemarks$add_id', 'width=600,height=500,status=yes,resizable=yes,scrollbars=auto')\">Manage marks</a>]";
 	}
 						

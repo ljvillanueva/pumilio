@@ -35,6 +35,7 @@ $t_max=filter_var($_POST["t_max"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALL
 $f_min=filter_var($_POST["f_min"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 $f_max=filter_var($_POST["f_max"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 $SoundID=filter_var($_POST["SoundID"], FILTER_SANITIZE_NUMBER_INT);
+$from_db=filter_var($_POST["from_db"], FILTER_SANITIZE_STRING_INT);
 
 #Escape to prevent SQL injection
 $mark_tag=mysqli_real_escape_string($connection, $_POST["mark_tag"]);
@@ -54,20 +55,18 @@ $query = "INSERT INTO SoundsMarks (SoundID, time_min, time_max, freq_min, freq_m
 $result = mysqli_query($connection, $query)
 		or die (mysqli_error($connection));
 
-
 #Make the new mark into a tag
 	#remove spaces
 	$mark_tag=str_replace(" ","", $mark_tag);
 	
 	#Check that it does not exist already for this sound
-	$result=query_several("SELECT Tag FROM Tags WHERE SoundID='$soundfile_id' AND Tag='$mark_tag'", $connection);
+	$result=query_several("SELECT Tag FROM Tags WHERE SoundID='$SoundID' AND Tag='$mark_tag'", $connection);
 	$nrows = mysqli_num_rows($result);
 	if ($nrows==0) {			
-		$query_tags = "INSERT INTO Tags (SoundID, Tag) VALUES ('$soundfile_id', '$mark_tag')";
+		$query_tags = "INSERT INTO Tags (SoundID, Tag) VALUES ('$SoundID', '$mark_tag')";
 		$result_tags = mysqli_query($connection, $query_tags)
 			or die (mysqli_error($connection));
 		}
-
 
 echo "<p class=\"success\">Record inserted in database.";
 ?>
