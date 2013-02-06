@@ -157,8 +157,13 @@ $fileName_exp=explode(".", $soundfile_wav);
 $spectrogram_palette=query_one("SELECT Value FROM PumilioSettings WHERE Settings='spectrogram_palette' LIMIT 1", $connection);
 if ($spectrogram_palette=="")
 	$spectrogram_palette=2;
-if ($palette!="")
-	$spectrogram_palette=$palette;
+	
+if ($palette!=""){
+	$spectrogram_palette = $palette;
+	}
+else{
+	$palette = $spectrogram_palette;
+	}
 
 //If wav file does not exists
 $fileName_exp=explode(".", $soundfile_wav);

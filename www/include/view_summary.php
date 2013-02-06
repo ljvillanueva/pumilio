@@ -271,7 +271,7 @@ if ($mobile==TRUE) {
 				})
 				},
 				volume: \"0.9\",
-				solution: \"flash, html\",
+				solution: \"html\",
 				swfPath: \"$app_url/js\",
 				supplied: \"$AudioPreviewFormat\",
 				cssSelectorAncestor: \"#jp_interface_$iplayer\"
@@ -717,7 +717,7 @@ else {
 				volume: \"0.9\",
 				swfPath: \"$app_url/js\",
 				supplied: \"$AudioPreviewFormat\",
-				solution: \"html, flash\",
+				solution: \"flash, html\",
 				preload: \"none\",
 				cssSelectorAncestor: \"#jp_interface_$iplayer\"
 			})
