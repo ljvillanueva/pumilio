@@ -96,7 +96,7 @@ if ($nrows_all_tags>0) {
 	$(\"#newtag\").autocomplete(mytags);
 	  });
 	</script>
-	<link rel=\"stylesheet\" href=\"$app_url/js/jquery/jquery.autocomplete.css\" type=\"text/css\" />
+	<link rel=\"stylesheet\" href=\"$app_url/js/jquery/jquery.autocomplete.css\" type=\"text/css\">
 	";
  }
 ?>
@@ -170,7 +170,7 @@ if ($use_googleanalytics) {
 		</div>
 		<div class="span-24 last" id="loadingdiv">
 			<?php
-			echo "<h5 class=\"highlight2 ui-corner-all\">Please wait... loading... <img src=\"$app_url/images/ajax-loader.gif\" border=\"0\" /></h5>";
+			echo "<h5 class=\"highlight2 ui-corner-all\">Please wait... loading... <img src=\"$app_url/images/ajax-loader.gif\" border=\"0\"></h5>";
 			?>
 		</div>		
 		<?php

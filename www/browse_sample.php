@@ -136,7 +136,7 @@ if ($nrows_all_tags>0){
 	$(\"#newtag\").autocomplete(mytags);
 	  });
 	</script>
-	<link rel=\"stylesheet\" href=\"js/jquery/jquery.autocomplete.css\" type=\"text/css\" />
+	<link rel=\"stylesheet\" href=\"js/jquery/jquery.autocomplete.css\" type=\"text/css\">
 	";
  }
 ?>
@@ -189,7 +189,7 @@ if ($use_googleanalytics)
 			<hr noshade>
 		</div>
 		<div class="span-24 last" id="loadingdiv">
-			<h5 class="highlight2 ui-corner-all">Please wait... loading... <img src="images/ajax-loader.gif" border="0" /></h5>
+			<h5 class="highlight2 ui-corner-all">Please wait... loading... <img src="images/ajax-loader.gif" border="0"></h5>
 		</div>		
 		<?php
 		flush();
@@ -239,7 +239,7 @@ if ($use_googleanalytics)
 					</div>";
 				echo "<form id=\"testconfirmJQ\" name=\"testconfirmJQ\" method=\"post\" action=\"del_sample.php\">
 				<input type=\"hidden\" name=\"SampleID\" value=\"$SampleIDq\">
-				<input type=\"submit\" value=\" Delete this sample set \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\" />
+				<input type=\"submit\" value=\" Delete this sample set \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
 				</form>";
 				}
 

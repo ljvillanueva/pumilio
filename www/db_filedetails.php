@@ -148,7 +148,7 @@ if ($nrows_all_tags>0) {
 	$(\"#newtag\").autocomplete(mytags);
 	  });
 	</script>
-	<link rel=\"stylesheet\" href=\"$app_url/js/jquery/jquery.autocomplete.css\" type=\"text/css\" />
+	<link rel=\"stylesheet\" href=\"$app_url/js/jquery/jquery.autocomplete.css\" type=\"text/css\">
 	";
 	}
 	
@@ -183,7 +183,7 @@ if ($use_googlemaps=="1" || $use_googlemaps=="3") {
 
 #HTML5 player
 # http://www.jplayer.org
-echo "\n<link href=\"$app_url/html5player/jplayer.css\" rel=\"stylesheet\" type=\"text/css\" />";
+echo "\n<link href=\"$app_url/html5player/jplayer.css\" rel=\"stylesheet\" type=\"text/css\">";
 echo "\n<script type=\"text/javascript\" src=\"$app_url/js/jquery.jplayer.min.js\"></script>\n";
 
 if ($DirID == 0 || $DirID == ""){
@@ -313,7 +313,7 @@ else {
 			<hr noshade>
 		</div>
 		<div class="span-24 last" id="loadingdiv">
-			<h5 class="highlight2 ui-corner-all">Please wait... loading... <img src="images/ajax-loader.gif" border="0" /></h5>
+			<h5 class="highlight2 ui-corner-all">Please wait... loading... <img src="images/ajax-loader.gif" border="0"></h5>
 		</div>		
 		
 		<div class="span-24 last" id="loadingdiv2">
@@ -697,7 +697,7 @@ else {
 				echo "<p><strong>Administrative options</strong>:
 				<form method=\"get\" action=\"file_edit.php\">
 				<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-				<input type=\"submit\" value=\" Edit file information \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\" />
+				<input type=\"submit\" value=\" Edit file information \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
 				</form>";
 		
 				#Delete file div
@@ -708,7 +708,7 @@ else {
 				echo "<p>
 				<form id=\"testconfirmJQ\" name=\"testconfirmJQ\" method=\"post\" action=\"del_file.php\">
 				<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-				<input type=\"submit\" value=\" Delete file from archive \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\" />
+				<input type=\"submit\" value=\" Delete file from archive \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
 				</form>";
 				}
 			else {
@@ -721,7 +721,7 @@ else {
 				echo "<form method=\"get\" action=\"file_obtain.php\">
 				<input type=\"hidden\" name=\"fileid\" value=\"$SoundID\">
 				<input type=\"hidden\" name=\"method\" value=\"3\">
-				<input type=\"submit\" value=\" Open file \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\" DISABLED />
+				<input type=\"submit\" value=\" Open file \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\" DISABLED>
 				</form>";
 				}
 			elseif($special_noprocess == TRUE){
@@ -730,7 +730,7 @@ else {
 				echo "<form method=\"get\" action=\"file_obtain.php\">
 				<input type=\"hidden\" name=\"fileid\" value=\"$SoundID\">
 				<input type=\"hidden\" name=\"method\" value=\"3\">
-				<input type=\"submit\" value=\" Open file \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\" />
+				<input type=\"submit\" value=\" Open file \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
 				</form>";
 				}
 				
