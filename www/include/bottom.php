@@ -17,7 +17,7 @@ if ($special_wrapper == FALSE && $special_iframe == FALSE){
 		else {
 			$files_license_img = str_replace(" ", "", $files_license);
 			$files_license_link = strtolower(str_replace("CC ", "", $files_license));
-			echo "<a href=\"http://creativecommons.org/licenses/$files_license_link/3.0/\" target=_blank><img src=\"images/cc/$files_license_img.png\"></a> $files_license license: ";
+			echo "<a href=\"http://creativecommons.org/licenses/$files_license_link/3.0/\" target=_blank><img src=\"images/cc/$files_license_img.png\" alt=\"License\"></a> $files_license license: ";
 			}
 		echo "\n$files_license_detail\n";
 		}

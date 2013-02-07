@@ -69,7 +69,7 @@ $kml_count = query_one("SELECT COUNT(*) FROM Kml", $connection);
 
 if ($kml_count>0){
 	for ($k=0;$k<$kml_count;$k++) {
-		echo "<script>
+		echo "<script type=\"text/javascript\">
 			$(document).ready(function() {
 				    $( \"#kmldialog$k\" ).dialog({ autoOpen: false });
 				});

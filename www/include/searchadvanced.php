@@ -41,8 +41,8 @@ echo "<form action=\"$advancedsearch_link\" method=\"GET\">
 
 	</td><td>
 	
-		<input type=\"text\" id=\"startTime\" name=\"startTime\" value=\"00:00\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\" readonly /> to 
-		<input type=\"text\" id=\"endTime\" name=\"endTime\" value=\"23:59\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\" readonly /> 
+		<input type=\"text\" id=\"startTime\" name=\"startTime\" value=\"00:00\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\" readonly> to 
+		<input type=\"text\" id=\"endTime\" name=\"endTime\" value=\"23:59\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\" readonly> 
 		<div id=\"datemsg\"></div>
 	
 		</td>
@@ -55,8 +55,8 @@ echo "<form action=\"$advancedsearch_link\" method=\"GET\">
 
 	</td><td>
 			
-		<input type=\"text\" id=\"startDate\" name=\"startDate\" value=\"$DateLow1\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\" readonly /> to 
-		<input type=\"text\" id=\"endDate\" name=\"endDate\" value=\"$DateHigh1\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\" readonly />
+		<input type=\"text\" id=\"startDate\" name=\"startDate\" value=\"$DateLow1\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\" readonly> to 
+		<input type=\"text\" id=\"endDate\" name=\"endDate\" value=\"$DateHigh1\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\" readonly>
 		
 		</td>
 	</tr>
@@ -131,8 +131,8 @@ echo "<form action=\"$advancedsearch_link\" method=\"GET\">
 	</td><td>
 		<div style=\"margin: 10 10 10 10;\"><div id=\"durationslider\"></div></div>
 		
-		<input type=\"text\" id=\"startDuration\" name=\"startDuration\" value=\"$DurationLow\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\" readonly /> to 
-		<input type=\"text\" id=\"endDuration\" name=\"endDuration\" value=\"$DurationHigh\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\" readonly /> seconds
+		<input type=\"text\" id=\"startDuration\" name=\"startDuration\" value=\"$DurationLow\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\" readonly> to 
+		<input type=\"text\" id=\"endDuration\" name=\"endDuration\" value=\"$DurationHigh\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\" readonly> seconds
 
 	</td>
 	</tr>

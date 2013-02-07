@@ -59,7 +59,7 @@ require("include/nocache.php");
 
 #Multiple delete script to select all
 echo "
-<SCRIPT language=\"javascript\">
+<SCRIPT type=\"text/javascript\">
 $(function(){
  
     // add multiple select / deselect functionality

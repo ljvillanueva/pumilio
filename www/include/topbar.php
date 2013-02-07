@@ -9,7 +9,7 @@ if (!isset($special_iframe)){
 
 if ($special_wrapper == FALSE && $special_iframe == FALSE){
 	echo "<div class=\"span-12\">
-			<a href=\"$app_dir\"><img src=\"$app_logo\"></a>
+			<a href=\"$app_dir\"><img src=\"$app_logo\" alt=\"Logo\"></a>
 		</div>
 		<div class=\"span-12 last\">";
 			require("include/toplogin.php");

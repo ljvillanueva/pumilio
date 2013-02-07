@@ -31,13 +31,13 @@ if ($nrows_dates>0) {
 	</select> minutes";
 	*/
 		
-	echo "<p>Select up to three sites:<br>";
+	echo "<p>Select up to three sites:</p><br>";
 	
 	$sites=query_several("SELECT Sites.SiteID,Sites.SiteName FROM Sites,Sounds WHERE Sites.SiteID=Sounds.SiteID 
 		AND SoundStatus!='9' $qf_check GROUP BY SiteName", $connection);
 	$nrows_sites = mysqli_num_rows($sites);
 			
-	echo "<p style=\"margin-left:10px;\">Site 1:
+	echo "<p style=\"margin-left:10px;\">Site 1:</p>
 		<select name=\"site1\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">
 		<option></option>";
 	for ($sc=0;$sc<$nrows_sites;$sc++) {
@@ -56,7 +56,7 @@ if ($nrows_dates>0) {
 		AND Sounds.SoundStatus!='9' $qf_check GROUP BY SiteName", $connection);
 	$nrows_sites = mysqli_num_rows($sites);
 			
-	echo "<p style=\"margin-left:10px;\">Site 2:
+	echo "<p style=\"margin-left:10px;\">Site 2:</p>
 		<select name=\"site2\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">
 		<option></option>";
 	for ($sc=0;$sc<$nrows_sites;$sc++) {
@@ -75,7 +75,7 @@ if ($nrows_dates>0) {
 		AND Sounds.SoundStatus!='9' $qf_check GROUP BY SiteName", $connection);
 	$nrows_sites = mysqli_num_rows($sites);
 			
-	echo "<p style=\"margin-left:10px;\">Site 3:
+	echo "<p style=\"margin-left:10px;\">Site 3:</p>
 		<select name=\"site3\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">
 		<option></option>";
 	for ($sc=0;$sc<$nrows_sites;$sc++) {
@@ -90,10 +90,10 @@ if ($nrows_dates>0) {
 		}			
 	echo "</select>";
 		
-	echo "<p><input type=submit value=\" Show comparison \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">
+	echo "<input type=submit value=\" Show comparison \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">
 		</form>";
 	}
 else {
-	echo "<p>There are no sounds with dates in the database.";
+	echo "<p>There are no sounds with dates in the database.</p>";
 	}
 ?>

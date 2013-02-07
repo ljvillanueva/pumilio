@@ -157,7 +157,7 @@ if ($use_googleanalytics) {
 			echo "<br></p>";
 			
 			if ($tab >= 0){
-				echo "<script>
+				echo "<script type=\"text/javascript\">
 				$(function() {
 					$( \"#accordion\" ).accordion({
 						collapsible: true,
@@ -170,7 +170,7 @@ if ($use_googleanalytics) {
 				";
 				}
 			else {
-				echo "<script>
+				echo "<script type=\"text/javascript\">
 				$(function() {
 					$( \"#accordion\" ).accordion({
 						collapsible: true,

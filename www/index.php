@@ -52,7 +52,7 @@ else{
 	</script>
 
 	<!-- Form validation from http://bassistance.de/jquery-plugins/jquery-plugin-validation/ -->
-	<script src=\"$app_url/js/jquery.validate.js\"></script>
+	<script src=\"$app_url/js/jquery.validate.js\" type=\"text/javascript\"></script>
 
 	<script type=\"text/javascript\">
 	$().ready(function() {
@@ -202,7 +202,7 @@ else{
 	echo "
 		<style type=\"text/css\" media=\"all\">@import \"js/timePicker.css\";</style>
 		<script type=\"text/javascript\" src=\"js/jquery.timePicker.js\"></script>
-		<script>
+		<script type=\"text/javascript\">
 		jQuery(function() {
 		// An example how the two helper functions can be used to achieve 
 		// advanced functionality.
@@ -255,7 +255,7 @@ else{
 	$DurationLow=floor(query_one("SELECT DISTINCT Duration FROM Sounds WHERE Duration IS NOT NULL AND SoundStatus!='9' $qf_check ORDER BY Duration LIMIT 1", $connection));
 	$DurationHigh=ceil(query_one("SELECT DISTINCT Duration FROM Sounds WHERE Duration IS NOT NULL AND SoundStatus!='9' $qf_check ORDER BY Duration DESC LIMIT 1", $connection));
 
-	echo "<script>
+	echo "<script type=\"text/javascript\">
 		$(function() {
 			$( \"#durationslider\" ).slider({
 			range: true,
@@ -373,12 +373,12 @@ else{
 						else {
 							echo "<hr noshade>
 							<p><strong>Browse the archive using the Google Maps system:</strong></p>
-								<p><form action=\"$browse_map_link\" method=\"GET\">";
+								<form action=\"$browse_map_link\" method=\"GET\">";
 							if ($special_wrapper==TRUE){
 								echo "<input type=\"hidden\" name=\"page\" value=\"browse_map\">\n";
 								}
 							echo "<input type=submit value=\" Open GoogleMaps \" class=\"fg-button ui-state-default ui-corner-all\">
-								</form></p>";
+								</form>";
 							}
 						}
 												
@@ -395,7 +395,7 @@ else{
 				if ($sidetoside_comparison=="1" || $sidetoside_comparison=="") {
 					echo "<h3><a href=\"#\">Side-to-side comparison</a></h3>
 						<div>
-						<p>Select up to three sites to compare their sounds side-to-side on a particular date.";
+						<p>Select up to three sites to compare their sounds side-to-side on a particular date.</p>";
 					require("include/comparesites.php");
 					echo "</div>";
 					}

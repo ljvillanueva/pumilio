@@ -733,7 +733,7 @@ else {
 		echo "<div id=\"jquery_jplayer_$iplayer\" class=\"jp-jplayer\"></div>\n";
 
 		echo "	<div style=\"height: 300px; width: 600px; position: relative;\">
-			<img src=\"$app_url/sounds/images/$ColID/$DirID/$sound_spectrogram\">";
+			<img src=\"$app_url/sounds/images/$ColID/$DirID/$sound_spectrogram\" alt=\"Spectrogram\">";
 
 		echo "	\n</div>
 			<div class=\"jp-audio\">

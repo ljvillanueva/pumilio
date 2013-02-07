@@ -84,7 +84,7 @@ if ($nrows_all_tags>0) {
 	echo "
 	<!-- JQuery Autocomplete http://docs.jquery.com/Plugins/Autocomplete -->
 	<script type=\"text/javascript\" src=\"$app_url/js/jquery/jquery.autocomplete.pack.js\"></script>
-	<script>
+	<script type=\"text/javascript\">
 	  $(document).ready(function(){
 	var mytags = \" ";
 	for ($a=0;$a<$nrows_all_tags;$a++) {
@@ -130,7 +130,7 @@ for ($ajax=0;$ajax<10;$ajax++) {
 
 #Multiple delete script to select all
 echo "
-<SCRIPT language=\"javascript\">
+<script type=\"text/javascript\">
 $(function(){
  
     // add multiple select / deselect functionality
