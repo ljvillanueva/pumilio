@@ -310,7 +310,17 @@ function sessionAuthenticate($connection) {
 	}
 
 
-function is_user_admin($username, $connection) {
+function WordpressSessionAuthenticate($wordpress_require) {
+	if (is_user_logged_in()==TRUE){
+		return true;
+		}
+	else{
+		return false;
+		}
+	}
+
+
+function is_user_admin2($username, $connection) {
 	#Check if user can edit files (i.e. has admin privileges)
 	if (sessionAuthenticate($connection)) {
 		if ($username!="") {
@@ -329,6 +339,7 @@ function is_user_admin($username, $connection) {
 			}
 		}
 	}
+
 
 
 function check_cookies() {

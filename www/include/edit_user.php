@@ -11,7 +11,7 @@ $ac=filter_var($_POST["ac"], FILTER_SANITIZE_STRING);
 $UserID=filter_var($_POST["UserID"], FILTER_SANITIZE_NUMBER_INT);
 
 if ($ac=="delete") {
-	if (!is_user_admin($username, $connection)){
+	if (!is_user_admin2($username, $connection)){
 		die();
 		}
 
@@ -24,7 +24,7 @@ if ($ac=="delete") {
 		die();
 	}
 elseif ($ac=="remadmin") {
-	if (!is_user_admin($username, $connection)){
+	if (!is_user_admin2($username, $connection)){
 		die();
 		}
 		
@@ -37,7 +37,7 @@ elseif ($ac=="remadmin") {
 		die();
 	}
 elseif ($ac=="makeadmin") {
-	if (!is_user_admin($username, $connection)){
+	if (!is_user_admin2($username, $connection)){
 		die();
 		}
 
@@ -50,7 +50,7 @@ elseif ($ac=="makeadmin") {
 		die();
 	}
 elseif ($ac=="inactive") {
-	if (!is_user_admin($username, $connection)){
+	if (!is_user_admin2($username, $connection)){
 		die();
 		}
 

@@ -19,7 +19,7 @@ require("include/apply_config.php");
 		{die();}
 	$username = $_COOKIE["username"];
 
-	if (!is_user_admin($username, $connection))
+	if (!is_user_admin2($username, $connection))
 		{die();}
 
 $dir=filter_var($_POST["dir"], FILTER_SANITIZE_URL);

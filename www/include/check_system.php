@@ -2,7 +2,7 @@
 #Check if user can edit files (i.e. has admin privileges)
 $username = $_COOKIE["username"];
 
-if (is_user_admin($username, $connection)) {
+if (is_user_admin2($username, $connection)) {
 		
 	$sys_errors = 0;
 

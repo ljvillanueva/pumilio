@@ -10,7 +10,7 @@ require("apply_config.php");
 #Check if user can edit files (i.e. has admin privileges)
 	$username = $_COOKIE["username"];
 
-	if (!is_user_admin($username, $connection)) {
+	if (!is_user_admin2($username, $connection)) {
 		echo "<div class=\"error\"><strong>Only admins can do this</strong></div>";
 		die();
 		}

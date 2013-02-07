@@ -231,7 +231,7 @@ if ($use_googleanalytics)
 			if ($SampleNotes!="")
 				echo "<p>Notes: $SampleNotes";
 
-			if (sessionAuthenticate($connection) && is_user_admin($username, $connection)) {
+			if (sessionAuthenticate($connection) && is_user_admin2($username, $connection)) {
 				#Delete sample div
 				echo "<div id=\"dialog\" title=\"Delete the sample set?\">
 				<p><span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>This sample set will be deleted

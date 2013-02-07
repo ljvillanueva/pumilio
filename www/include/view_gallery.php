@@ -1,7 +1,7 @@
 <?php
 
 $username = $_COOKIE["username"];
-if (is_user_admin($username, $connection)) {
+if (is_user_admin2($username, $connection)) {
 	$admin=TRUE;
 	}
 

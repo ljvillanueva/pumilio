@@ -132,6 +132,9 @@ if ($useR == TRUE){
 		}
 	}
 
+if (!isset($login_wordpress)){
+	$login_wordpress = FALSE;
+	}
 
 if (!isset($special_noprocess)){
 	$special_noprocess = FALSE;
@@ -141,6 +144,11 @@ if (!isset($special_noprocess)){
 #Execute custom code, if set
 if (is_file("$absolute_dir/customcode.php")) {
 		include("customcode.php");
+	}
+
+if ($login_wordpress == TRUE){
+	require_once($wordpress_require);
+	header('HTTP/1.1 200 OK');
 	}
 
 echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n";

@@ -20,7 +20,7 @@ require("include/apply_config.php");
 	if (!sessionAuthenticate($connection))
 		{die();}
 		
-	if (!is_user_admin($username, $connection))
+	if (!is_user_admin2($username, $connection))
 		{die();}
 
 $SoundIDs=$_POST['SoundIDs'];

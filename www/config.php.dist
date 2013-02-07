@@ -62,6 +62,15 @@ $useR = FALSE; #TRUE or FALSE
 
 
 
+#Use Wordpress for users?
+# When true, the system will use the Wordpress user management
+# to determine who is logged in and what they can do.
+# You must also provide the relative or full path to the file 
+# wordpress_folder/wp-blog-header.php
+$login_wordpress = FALSE; #TRUE or FALSE
+$wordpress_require = '/wp-blog-header.php';
+
+
 #Set as a no login website?
 # When true, there is no option to log in. Useful for public websites that will rarely
 # need someone logged in. May set to true whenever someone needs to log in.

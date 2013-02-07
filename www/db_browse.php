@@ -211,7 +211,7 @@ if ($use_googleanalytics) {
 			#Check if user can edit files (i.e. has admin privileges)
 			$username = $_COOKIE["username"];
 
-			if (sessionAuthenticate($connection) && is_user_admin($username, $connection)) {
+			if (sessionAuthenticate($connection) && is_user_admin2($username, $connection)) {
 				echo "<p class=\"highlight3 ui-corner-all\" style=\"text-align: left;\"><strong>Collection: $CollectionName</strong> 
 				<a href=\"edit_collection.php?ColID=$ColID\" title=\"Edit this collection\" style=\"color: white;\">[edit]</a><br>
 				$no_sounds sounds";

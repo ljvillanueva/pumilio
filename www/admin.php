@@ -22,7 +22,7 @@ require("include/apply_config.php");
 		
 	$username = $_COOKIE["username"];
 
-	if (!is_user_admin($username, $connection)) {
+	if (!is_user_admin2($username, $connection)) {
 		header("Location: error.php?e=admin");
 		die();
 		}

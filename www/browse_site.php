@@ -195,7 +195,7 @@ if ($use_googleanalytics)
 					echo " <a href=\"viewsite_map.php?SiteID=$SiteID\" title=\"View site in a map\" style=\"color: white;\"><strong>Map</strong></a>";
 					}
 
-				if (sessionAuthenticate($connection) && is_user_admin($username, $connection)) {
+				if (sessionAuthenticate($connection) && is_user_admin2($username, $connection)) {
 					echo "<br><a href=\"edit_site.php?SiteID=$SiteID\" title=\"Edit this site\" style=\"color: white;\">[edit site]</a>";
 						}
 				echo "<br>$no_sounds sounds</p>";

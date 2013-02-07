@@ -343,7 +343,7 @@ else{
 		if ($map_only=="1"){
 			echo "<hr noshade></div>";
 			require("include/index_map_body.php");
-			if (is_user_admin($username, $connection)) {
+			if (is_user_admin2($username, $connection)) {
 				echo "<hr noshade>
 				<p><strong><a href=\"add.php\">Add files to the archive</a></strong><br>";
 				}
@@ -358,7 +358,7 @@ else{
 					#Check if user can edit files (i.e. has admin privileges)
 					$username = $_COOKIE["username"];
 
-					if (is_user_admin($username, $connection)) {
+					if (is_user_admin2($username, $connection)) {
 						echo "<p><strong><a href=\"add.php\">Add files to the archive</a></strong><br>
 						<hr noshade>";
 						}
