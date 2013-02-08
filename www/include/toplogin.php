@@ -88,6 +88,14 @@ else {
 			echo "</small>";
 			}
 		}
+	if ($force_login==TRUE){
+		echo "<br><small>You must be logged in to see this site.</small>
+			</div>
+			</div>
+			</body>
+			</html>";
+		die();
+		}
 	}
 
 ?>

@@ -77,6 +77,11 @@ $wordpress_require = '/wp-blog-header.php';
 $no_login=FALSE; #TRUE or FALSE
 
 
+#Force login?
+# When true, no guests are allowed.
+$force_login=FALSE; #TRUE or FALSE
+
+
 #Google Analytics code
 $use_googleanalytics=FALSE; #TRUE or FALSE
 /*

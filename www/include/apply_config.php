@@ -140,6 +140,9 @@ if (!isset($special_noprocess)){
 	$special_noprocess = FALSE;
 	}
 
+if (!isset($force_login)){
+	$force_login = FALSE;
+	}
 
 #Execute custom code, if set
 if (is_file("$absolute_dir/customcode.php")) {
