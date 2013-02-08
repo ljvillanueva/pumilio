@@ -514,7 +514,7 @@ else {
 			$use_tags=query_one("SELECT Value from PumilioSettings WHERE Settings='use_tags'", $connection);
 			if ($use_tags=="1" || $use_tags=="") {
 				if (sessionAuthenticate($connection)) {
-					require("include/managetags2.php");
+					require("include/managetags_db.php");
 					echo "<p><strong>Add tags</strong>:<form method=\"get\" action=\"include/addtag.php\">
 						<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
 						<input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
