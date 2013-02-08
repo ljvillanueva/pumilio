@@ -147,12 +147,12 @@ if (is_file("$absolute_dir/customcode.php")) {
 	}
 
 if ($login_wordpress == TRUE){
-	if (is_file($wordpress_require){
+	if (is_file($wordpress_require)){
 		require_once($wordpress_require);
 		header('HTTP/1.1 200 OK');
 		}
 	else{
-		if (is_file('../' . $wordpress_require){
+		if (is_file('../' . $wordpress_require)){
 			require_once('../' . $wordpress_require);
 			header('HTTP/1.1 200 OK');
 			}
