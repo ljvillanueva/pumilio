@@ -14,21 +14,21 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-#Check if user can edit files (i.e. has admin privileges)
-	if (!sessionAuthenticate($connection)) {
-		header("Location: error.php?e=admin");
-		die();
-		}
-		
-	$username = $_COOKIE["username"];
-
-	if (is_user_logged_in()==TRUE){
+if (is_user_logged_in()==TRUE){
 		if (!is_super_admin()) {
 			header("Location: error.php?e=admin");
 			die();
 			}
 		}
-	else{
+	else {
+		#Check if user can edit files (i.e. has admin privileges)
+		if (!sessionAuthenticate($connection)) {
+			header("Location: error.php?e=admin");
+			die();
+			}
+		
+		$username = $_COOKIE["username"];
+
 		if (!is_user_admin2($username, $connection)) {
 			die("You are not an admin.");
 			}
