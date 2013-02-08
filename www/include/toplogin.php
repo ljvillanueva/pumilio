@@ -89,7 +89,7 @@ else {
 			}
 		}
 	if ($force_login==TRUE){
-		echo "<br><small>You must be logged in to see this site.</small>
+		echo "<br><br><p><strong>You must be logged in to see this site.</strong></p>
 			</div>
 			</div>
 			</body>
