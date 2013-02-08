@@ -22,9 +22,16 @@ require("include/apply_config.php");
 		
 	$username = $_COOKIE["username"];
 
-	if (!is_user_admin2($username, $connection)) {
-		header("Location: error.php?e=admin");
-		die();
+	if (is_user_logged_in()==TRUE){
+		if (!is_super_admin()) {
+			header("Location: error.php?e=admin");
+			die();
+			}
+		}
+	else{
+		if (!is_user_admin2($username, $connection)) {
+			die("You are not an admin.");
+			}
 		}
 
 $u=filter_var($_GET["u"], FILTER_SANITIZE_NUMBER_INT);

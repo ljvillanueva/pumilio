@@ -12,8 +12,16 @@ $settings = filter_var($_POST["settings"], FILTER_SANITIZE_STRING);
 #Check if user can edit files (i.e. has admin privileges)
 	$username = $_COOKIE["username"];
 
-	if (!is_user_admin2($username, $connection)) {
-		die("You are not an admin.");
+	if (is_user_logged_in()==TRUE){
+		if (!is_super_admin()) {
+			header("Location: error.php?e=admin");
+			die();
+			}
+		}
+	else{
+		if (!is_user_admin2($username, $connection)) {
+			die("You are not an admin.");
+			}
 		}
 
 	if ($settings == "top"){
