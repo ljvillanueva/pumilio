@@ -147,8 +147,19 @@ if (is_file("$absolute_dir/customcode.php")) {
 	}
 
 if ($login_wordpress == TRUE){
-	require_once($wordpress_require);
-	header('HTTP/1.1 200 OK');
+	if (is_file($wordpress_require){
+		require_once($wordpress_require);
+		header('HTTP/1.1 200 OK');
+		}
+	else{
+		if (is_file('../' . $wordpress_require){
+			require_once('../' . $wordpress_require);
+			header('HTTP/1.1 200 OK');
+			}
+		else{
+			die("Could not find the Wordpress installation.");
+			}
+		}
 	}
 
 echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n";
