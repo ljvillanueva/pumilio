@@ -44,6 +44,7 @@ else {
 			$login_url = wp_login_url( "$self?$q" );
 			echo "<small>[<a href=\"$login_url\" title=\"Login\">Login</a>]
 				[<a href=\"search.php\">Search</a>]</small>";
+			$notlogged = TRUE;
 			}
 		}
 	else{
@@ -86,9 +87,10 @@ else {
 				echo "</div>";
 				}
 			echo "</small>";
+			$notlogged = TRUE;
 			}
 		}
-	if ($force_login==TRUE){
+	if ($force_login==TRUE && $notlogged==TRUE){
 		echo "<br><br><p><strong>You must be logged in to see this site.</strong></p>
 			</div>
 			</div>
