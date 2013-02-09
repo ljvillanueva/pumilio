@@ -14,7 +14,7 @@ if ($nrows_tags>0){
 			echo "$Tag<a href=\"include/deletetag.php?TagID=$TagID&SoundID=$SoundID&goto=db\" title=\"Delete tag\"><img src=\"images/tag_blue_delete.png\"></a> ";
 			}
 		else {
-			echo "$Tag<a href=\"include/deletetag.php?TagID=$TagID&SoundID=$SoundID\" title=\"Delete tag\"><img src=\"images/tag_blue_delete.png\"></a> ";
+			echo "$Tag<a href=\"include/deletetag.php?TagID=$TagID&SoundID=$SoundID&goto=db\" title=\"Delete tag\"><img src=\"images/tag_blue_delete.png\"></a> ";
 			}
 
 		}
