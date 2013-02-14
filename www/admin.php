@@ -14,24 +14,26 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-if (is_user_logged_in()==TRUE){
+if ($login_wordpress == TRUE){
+	if (is_user_logged_in()==TRUE){
 		if (!is_super_admin()) {
 			header("Location: error.php?e=admin");
 			die();
 			}
 		}
-	else {
-		#Check if user can edit files (i.e. has admin privileges)
-		if (!sessionAuthenticate($connection)) {
-			header("Location: error.php?e=admin");
-			die();
-			}
-		
-		$username = $_COOKIE["username"];
+	}
+else {
+	#Check if user can edit files (i.e. has admin privileges)
+	if (!sessionAuthenticate($connection)) {
+		header("Location: error.php?e=admin");
+		die();
+		}
+	
+	$username = $_COOKIE["username"];
 
-		if (!is_user_admin2($username, $connection)) {
-			die("You are not an admin.");
-			}
+	if (!is_user_admin2($username, $connection)) {
+		die("You are not an admin.");
+		}
 		}
 
 $u=filter_var($_GET["u"], FILTER_SANITIZE_NUMBER_INT);
