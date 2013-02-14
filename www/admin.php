@@ -34,7 +34,7 @@ else {
 	if (!is_user_admin2($username, $connection)) {
 		die("You are not an admin.");
 		}
-		}
+	}
 
 $u=filter_var($_GET["u"], FILTER_SANITIZE_NUMBER_INT);
 
