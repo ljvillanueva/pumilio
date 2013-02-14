@@ -14,10 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-
-if (!sessionAuthenticate($connection)) {
-	die();
-	}
+require("include/check_login.php");
 
 $type=filter_var($_GET["type"], FILTER_SANITIZE_STRING);
 $SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);

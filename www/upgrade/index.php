@@ -4,8 +4,6 @@ require("../include/functions.php");
 require("../config.php");
 
 
-
-
 if ($app_url == ""){
 	header("Location: error.php?e=appurl");
 	die();

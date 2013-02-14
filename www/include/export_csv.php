@@ -6,9 +6,7 @@ require("apply_config.php");
 
 $ColID=filter_var($_POST["ColID"], FILTER_SANITIZE_NUMBER_INT);
 
-if (!sessionAuthenticate($connection)) {
-	die();
-	}
+require("check_login.php");
 
 ?>
 

@@ -7,13 +7,7 @@ require("functions.php");
 require("../config.php");
 require("apply_config.php");
 
-#Check if user can edit files (i.e. has admin privileges)
-	$username = $_COOKIE["username"];
-
-	if (!is_user_admin2($username, $connection)) {
-		echo "<div class=\"error\"><strong>Only admins can do this</strong></div>";
-		die();
-		}
+require("check_admin.php");
 
 $ColID=filter_var($_POST["ColID"], FILTER_SANITIZE_NUMBER_INT);
 $SiteID=filter_var($_POST["SiteID"], FILTER_SANITIZE_NUMBER_INT);

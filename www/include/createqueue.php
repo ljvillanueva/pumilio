@@ -5,11 +5,7 @@ require("functions.php");
 require("../config.php");
 require("apply_config.php");
 
-if (!sessionAuthenticate($connection)) {
-	die();
-	}
-		
-	$username = $_COOKIE["username"];
+require("check_login.php");
 	
 ?>
 <html>

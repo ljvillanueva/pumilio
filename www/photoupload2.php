@@ -23,7 +23,6 @@ if ($photodir=="")
 if ($photonotes=="")
 	$photonotes="NULL";
 		
-
 $random_cookie=mt_rand();
 
 
@@ -32,15 +31,11 @@ echo "	<html>
 <title>$app_custom_name - Upload photograph</title>";
 
 require("include/get_css.php");
-?>
+require("include/get_jqueryui.php");
 
-<?php
-	require("include/get_jqueryui.php");
-?>
-
-<?php
-if ($use_googleanalytics)
-	{echo $googleanalytics_code;}
+if ($use_googleanalytics) {
+	echo $googleanalytics_code;
+	}
 ?>
 
 </head>

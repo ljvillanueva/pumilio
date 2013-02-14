@@ -14,15 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-#Check if user can edit files (i.e. has admin privileges)
-	if (!sessionAuthenticate($connection))
-		{die();}
-		
-	$username = $_COOKIE["username"];
-
-	if (!is_user_admin($username, $connection)) {
-		die();
-		}
+require("include/check_login.php");
 
 $dir=filter_var($_POST["dir"], FILTER_SANITIZE_URL);
 $files_to_process_counter=filter_var($_POST["files_to_process_counter"], FILTER_SANITIZE_NUMBER_INT);

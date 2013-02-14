@@ -19,11 +19,7 @@ $SoundID=filter_var($_GET["SoundID"], FILTER_SANITIZE_STRING);
 $username = $_COOKIE["username"];
 $UserID = query_one("SELECT UserID FROM Users WHERE UserName='$username'", $connection);
 
-#Check if user can edit files (i.e. has admin privileges)
-	if (!sessionAuthenticate($connection)) {
-		echo "You must be logged in to use this tool.";
-		die();
-		}
+require("include/check_login.php");
 
 $d = filter_var($_GET["d"], FILTER_SANITIZE_NUMBER_INT);
 $mark_todel = filter_var($_GET["markID"], FILTER_SANITIZE_NUMBER_INT);

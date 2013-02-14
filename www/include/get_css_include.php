@@ -1,6 +1,5 @@
 <?php
 
-
 if(isset($_COOKIE["jquerycss"])) {
 	$jquerycss = $_COOKIE["jquerycss"];
 	echo "<!-- JQuery -->

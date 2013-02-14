@@ -14,10 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-if (!sessionAuthenticate($connection)) {
-	header("Location: error.php?e=login");
-	die();
-	}
+require("include/check_login.php");
 	
 echo "	<html>
 	<head>

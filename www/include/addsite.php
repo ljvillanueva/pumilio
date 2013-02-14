@@ -67,17 +67,28 @@ require("apply_config.php");
 
 <?php
 
-#Check if user can edit files (i.e. has admin privileges)
-	if (!sessionAuthenticate($connection)) {
-		die("<div class=\"error\">You are not logged in.</div></body></html>");
+	if ($login_wordpress == TRUE){
+		if (is_user_logged_in()==TRUE){
+			if (!is_super_admin()) {
+				die("<div class=\"error\">You are not logged in.</div></body></html>");
+				}
+			else {
+				die("<div class=\"error\">You are not an admin.</div></body></html>");
+				}
+			}
 		}
-		
-	$username = $_COOKIE["username"];
+	else {
+		#Check if user can edit files (i.e. has admin privileges)
+		if (!sessionAuthenticate($connection)) {
+			die("<div class=\"error\">You are not logged in.</div></body></html>");
+			}
+	
+		$username = $_COOKIE["username"];
 
-	if (!is_user_admin2($username, $connection)) {
-		die("<div class=\"error\">You are not and admin.</div></body></html>");
+		if (!is_user_admin2($username, $connection)) {
+			die("<div class=\"error\">You are not an admin.</div></body></html>");
+			}
 		}
-
 
 	if ($_POST["submitted"]==1) {
 		$SiteName=filter_var($_POST["SiteName"], FILTER_SANITIZE_STRING);

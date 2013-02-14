@@ -14,11 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-#If user is not logged in, add check for QF
-if (!sessionAuthenticate($connection)) {
-	header("Location: error.php?e=login");
-	die();
-	}
+require("include/check_login.php");
 		
 ?>
 

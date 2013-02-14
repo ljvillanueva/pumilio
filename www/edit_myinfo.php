@@ -14,8 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-#Get username
-$username = $_COOKIE["username"];
+require("include/check_login.php");
 
 $d=filter_var($_GET["d"], FILTER_SANITIZE_NUMBER_INT);
 $t=filter_var($_GET["t"], FILTER_SANITIZE_NUMBER_INT);

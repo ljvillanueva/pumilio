@@ -14,8 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-	if (!sessionAuthenticate($connection))
-		{die();}
+require("include/check_admin.php");
 		
 echo "
 <html>

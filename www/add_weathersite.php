@@ -14,6 +14,8 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
+require("include/check_admin.php");
+	
 ?>
 
 <html>

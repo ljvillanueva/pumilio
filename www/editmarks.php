@@ -14,10 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-#Check if user can edit files (i.e. has admin privileges)
-	if (!sessionAuthenticate($connection))
-		{echo "You must be logged in to use this tool.";
-		die();}
+require("include/check_login.php");
 
 $Token=filter_var($_GET["Token"], FILTER_SANITIZE_STRING);
 $markID=filter_var($_GET["markID"], FILTER_SANITIZE_NUMBER_INT);

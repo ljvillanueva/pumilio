@@ -15,6 +15,8 @@ else {
 
 require("include/apply_config.php");
 
+require("include/check_admin.php");
+
 if (isset($_GET["op"])) {
 	$op=filter_var($_GET["op"], FILTER_SANITIZE_NUMBER_INT);
 	}
@@ -186,6 +188,15 @@ if (is_user_admin2($username, $connection)) {
 			}
 		}
 		
+
+
+	$use_googlemaps=query_one("SELECT Value from PumilioSettings WHERE Settings='use_googlemaps'", $connection);
+		if ($use_googlemaps=="1"){
+			echo "<p class=\"error\"><strong>The system is set up to use Google Maps v2. This version has been deprecated. Please update your settings in the administration menu or contact your administrator.</strong></p>";
+			}
+
+
+
 
 	//Check for tmp folder
 	unset($out, $retval);

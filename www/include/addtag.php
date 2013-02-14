@@ -16,8 +16,7 @@ foreach($newtag as $newitem){
 	#Check that it does not exist already for this sound
 	$result=query_several("SELECT Tag FROM Tags WHERE SoundID='$SoundID' AND Tag='$newitem1'", $connection);
 	$nrows = mysqli_num_rows($result);
-	if ($nrows==0)
-		{			
+	if ($nrows==0){			
 		$query_tags = "INSERT INTO Tags (SoundID, Tag) VALUES ('$SoundID', '$newitem1')";
 		$result_tags = mysqli_query($connection, $query_tags)
 			or die (mysqli_error($connection));
@@ -26,18 +25,15 @@ foreach($newtag as $newitem){
 
 
 // Relocate back to the first page of the application
-	if ($_GET["goto"]=="p")
-		{
+	if ($_GET["goto"]=="p")	{
 		header("Location: ../pumilio.php");
 		die();
 		}
-	elseif ($_GET["goto"]=="o")
-		{
+	elseif ($_GET["goto"]=="o"){
 		header("Location: $where_to");
 		die();
 		}
-	else
-		{
+	else{
 		header("Location: ../db_filedetails.php?SoundID=$SoundID");
 		die;
 		}

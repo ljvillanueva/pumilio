@@ -14,16 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-#Check if user can edit files (i.e. has admin privileges)
-	if (!sessionAuthenticate($connection)) {
-		die();
-		}
-		
-	$username = $_COOKIE["username"];
-
-	if (!is_user_admin2($username, $connection)) {
-		die();
-		}
+require("include/check_login.php");
 
 $ColID=filter_var($_POST["ColID"], FILTER_SANITIZE_NUMBER_INT);
 $SiteID=filter_var($_POST["SiteID"], FILTER_SANITIZE_NUMBER_INT);

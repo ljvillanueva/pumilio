@@ -14,12 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-#Check if user can edit files (i.e. has admin privileges)
-	$username = $_COOKIE["username"];
-
-	if (!is_user_admin2($username, $connection)) {
-		die("Error. You have no admin rights.");
-		}
+require("include/check_admin.php");
 
 #Sanitize inputs
 $SoundID=filter_var($_GET["SoundID"], FILTER_SANITIZE_NUMBER_INT);

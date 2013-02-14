@@ -23,15 +23,11 @@ echo "	<html>
 <title>$app_custom_name - Upload file</title>";
 
 require("include/get_css.php");
-?>
+require("include/get_jqueryui.php");
 
-<?php
-	require("include/get_jqueryui.php");
-?>
-
-<?php
-if ($use_googleanalytics)
-	{echo $googleanalytics_code;}
+if ($use_googleanalytics) {
+	echo $googleanalytics_code;
+	}
 ?>
 
 </head>

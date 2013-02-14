@@ -1,8 +1,22 @@
 <?php
-#Check if user can edit files (i.e. has admin privileges)
-$username = $_COOKIE["username"];
 
-if (is_user_admin2($username, $connection)) {
+if ($login_wordpress == TRUE){
+	if (is_user_logged_in()==TRUE){
+		if (is_super_admin()) {
+			$is_admin=TRUE;
+			}
+		}
+	}
+else {
+	$username = $_COOKIE["username"];
+
+	if (!is_user_admin2($username, $connection)) {
+		$is_admin=TRUE;
+		}
+	}
+
+
+if ($is_admin==TRUE) {
 		
 	$sys_errors = 0;
 
@@ -147,6 +161,10 @@ if (is_user_admin2($username, $connection)) {
 			}
 		}
 
+	$use_googlemaps=query_one("SELECT Value from PumilioSettings WHERE Settings='use_googlemaps'", $connection);
+		if ($use_googlemaps=="1"){
+			$sys_errors++;
+			}
 
 	if ($sys_errors == 1) {
 		echo "<div class=\"notice\" style=\"padding: 0.2px; width: 160px; margin-right: 0px; margin-left: 200px; text-align: center;\"><small>There is <a href=\"#\" onclick=\"window.open('alerts.php', 'alerts', 'width=550,height=400,status=yes,resizable=yes,scrollbars=auto')\">$sys_errors alert</a>.</small></div>";

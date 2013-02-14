@@ -8,13 +8,7 @@ require("../config.php");
 require("apply_config.php");
 require("version.php");
 
-#Check if user can edit files (i.e. has admin privileges)
-	$username = $_COOKIE["username"];
-
-	if (!is_user_admin2($username, $connection)) {
-		header("Location: error.php?e=admin");
-		die();
-		}
+require("check_admin.php");
 
 $ColID=filter_var($_GET["ColID"], FILTER_SANITIZE_NUMBER_INT);
 $SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);

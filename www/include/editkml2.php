@@ -8,30 +8,7 @@ require("apply_config.php");
 $op=filter_var($_GET["op"], FILTER_SANITIZE_NUMBER_INT);
 $KmlID=filter_var($_GET["KmlID"], FILTER_SANITIZE_NUMBER_INT);
 
-#Check if user can edit files (i.e. has admin privileges)
-$username = $_COOKIE["username"];
-
-if ($login_wordpress == TRUE){
-	if (is_user_logged_in()==TRUE){
-		if (!is_super_admin()) {
-			header("Location: error.php?e=admin");
-			die();
-			}
-		}
-	}
-else {
-	#Check if user can edit files (i.e. has admin privileges)
-	if (!sessionAuthenticate($connection)) {
-		header("Location: error.php?e=admin");
-		die();
-		}
-	
-	$username = $_COOKIE["username"];
-
-	if (!is_user_admin2($username, $connection)) {
-		die("You are not an admin.");
-		}
-	}
+require("check_admin.php");
 
 #check if it exists
 if ($op == "1") {

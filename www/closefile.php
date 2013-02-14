@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-
 require("include/functions.php");
 
 $config_file = 'config.php';

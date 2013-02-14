@@ -14,16 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-#Check if user can edit files (i.e. has admin privileges)
-	if (!sessionAuthenticate($connection)) {
-		die();
-		}
-		
-	$username = $_COOKIE["username"];
-
-	if (!is_user_admin2($username, $connection)) {
-		die();
-		}
+require("include/check_login.php");
 
 $sm=filter_var($_GET["sm"], FILTER_SANITIZE_NUMBER_INT);
 $local=filter_var($_GET["local"], FILTER_SANITIZE_NUMBER_INT);

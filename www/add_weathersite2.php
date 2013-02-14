@@ -14,12 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-#Check if user can edit files (i.e. has admin privileges)
-	$username = $_COOKIE["username"];
-
-	if (!is_user_admin2($username, $connection)) {
-		die("user not admin");
-		}
+require("include/check_admin.php");
 
 #Sanitize
 $SiteName=filter_var($_POST["SiteName"], FILTER_SANITIZE_STRING);

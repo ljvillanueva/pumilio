@@ -24,10 +24,7 @@ echo "	<html>
 <title>$app_custom_name - Upload file</title>";
 
 require("include/get_css.php");
-?>
-
-<?php
-	require("include/get_jqueryui.php");
+require("include/get_jqueryui.php");
 ?>
 	<script src="js/jquery.validate.js"></script>
 

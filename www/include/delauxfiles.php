@@ -5,12 +5,7 @@ require("functions.php");
 require("../config.php");
 require("apply_config.php");
 
-#Check if user can edit files (i.e. has admin privileges)
-	$username = $_COOKIE["username"];
-
-	if (!is_user_admin2($username, $connection)) {
-		die();
-		}
+require("check_admin.php");
 
 $op=filter_var($_GET["op"], FILTER_SANITIZE_NUMBER_INT);
 $ColID=filter_var($_GET["ColID"], FILTER_SANITIZE_NUMBER_INT);

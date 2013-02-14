@@ -14,9 +14,17 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-if (!$allow_upload || !sessionAuthenticate($connection)) {
-	header("Location: error.php?e=login");
-	die();
+if ($login_wordpress == TRUE){
+	if (!$allow_upload || is_user_logged_in()==FALSE){
+			header("Location: error.php?e=login");
+			die();
+		}
+	}
+else {
+	if (!$allow_upload || !sessionAuthenticate($connection)) {
+		header("Location: error.php?e=login");
+		die();
+		}
 	}
 
 echo "	<html>

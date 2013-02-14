@@ -14,12 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-#Check if user can edit files (i.e. has admin privileges)
-	$username = $_COOKIE["username"];
-
-	if (!is_user_admin2($username, $connection) || !sessionAuthenticate($connection)) {
-		die("You are not an admin and cannot be here.");
-		}
+require("include/check_admin.php");
 
 $SiteID=filter_var($_POST["SiteID"], FILTER_SANITIZE_NUMBER_INT);
 $SensorID=filter_var($_POST["SensorID"], FILTER_SANITIZE_NUMBER_INT);

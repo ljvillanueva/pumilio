@@ -14,14 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-#Check if user can edit files (i.e. has admin privileges)
-	$username = $_COOKIE["username"];
-
-	if (!sessionAuthenticate($connection))
-		{die();}
-		
-	if (!is_user_admin2($username, $connection))
-		{die();}
+require("include/check_admin.php");
 
 $SoundIDs=$_POST['SoundIDs'];
 $where_to=filter_var($_POST["where_to"], FILTER_SANITIZE_URL);

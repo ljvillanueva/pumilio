@@ -14,10 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-#Check if user can edit files (i.e. has admin privileges)
-if (!sessionAuthenticate($connection)) {
-	die();
-	}
+require("include/check_login.php");
 
 #Sanitize
 $SoundID=filter_var($_GET["SoundID"], FILTER_SANITIZE_NUMBER_INT);

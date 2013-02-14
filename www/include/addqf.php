@@ -5,12 +5,7 @@ require("functions.php");
 require("../config.php");
 require("apply_config.php");
 
-#Check if user can edit files (i.e. has admin privileges)
-	$username = $_COOKIE["username"];
-
-	if (!is_user_admin2($username, $connection)) {
-		die("user not admin");
-		}
+require("check_admin.php");
 
 #Sanitize
 $QualityFlagID=filter_var($_POST["QualityFlagID"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);

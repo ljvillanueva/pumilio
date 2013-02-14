@@ -5,17 +5,10 @@ require("functions.php");
 require("../config.php");
 require("apply_config.php");
 
-#Check if user can edit files (i.e. has admin privileges)
-$username = $_COOKIE["username"];
-
-if (!is_user_admin2($username, $connection)) {
-	header("Location: error.php?e=admin");
-	die();
-	}
+require("check_admin.php");
 
 session_write_close();
 flush(); @ob_flush();
-
 
 $archive_name=date("YMd_His");
 

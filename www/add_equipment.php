@@ -14,12 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-#Check if user can edit files (i.e. has admin privileges)
-	$username = $_COOKIE["username"];
-
-	if (!is_user_admin2($username, $connection)) {
-		die();
-		}
+require("include/check_login.php");
 
 $SoundID=filter_var($_GET["SoundID"], FILTER_SANITIZE_NUMBER_INT);
 $ColID=filter_var($_GET["ColID"], FILTER_SANITIZE_NUMBER_INT);

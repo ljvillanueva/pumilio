@@ -15,11 +15,7 @@ else {
 
 require("include/apply_config.php");
 
-#Check if user can edit files (i.e. has admin privileges)
-if (!sessionAuthenticate($connection)) {
-	echo "You must be logged in to use this tool.";
-	die();
-	}
+require("include/check_login.php");
 
 $QueueID=filter_var($_GET["QueueID"], FILTER_SANITIZE_NUMBER_INT);
 $c=filter_var($_GET["c"], FILTER_SANITIZE_NUMBER_INT);

@@ -1,6 +1,5 @@
 <?php
 
-
 $date_to_browse=filter_var($_GET["date_to_browse"], FILTER_SANITIZE_STRING);
 $time_to_browse=filter_var($_GET["time_to_browse"], FILTER_SANITIZE_STRING);
 $usekml=filter_var($_GET["usekml"], FILTER_SANITIZE_NUMBER_INT);
@@ -278,5 +277,14 @@ if ($googlemaps_ver == "3"){
 				    }
 				</script>\n";
 
+	}
+else {
+	$use_googlemaps=query_one("SELECT Value from PumilioSettings WHERE Settings='use_googlemaps'", $connection);
+	if ($use_googlemaps=="1"){
+		die("<div class=\"error\">The system is set up to use Google Maps v2. This version has been deprecated. Please update your settings in the administration menu or contact your administrator.</div>");
+		}
+	else{
+		die("<div class=\"error\">The system is not set up for the use of Google Maps.</div>");
+		}
 	}
 ?>

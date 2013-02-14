@@ -17,8 +17,7 @@ foreach($newtag as $newitem){
 	#Check that it does not exist already for this sound
 	$result=query_several("SELECT Tag FROM Tags WHERE SoundID='$SoundID' AND Tag='$newitem1'", $connection);
 	$nrows = mysqli_num_rows($result);
-	if ($nrows==0)
-		{			
+	if ($nrows==0){			
 		$query_tags = "INSERT INTO Tags (SoundID, Tag) VALUES ('$SoundID', '$newitem1')";
 		$result_tags = mysqli_query($connection, $query_tags)
 			or die (mysqli_error($connection));

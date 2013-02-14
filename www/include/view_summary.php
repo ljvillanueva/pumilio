@@ -1,10 +1,20 @@
 <?php
 
-$username = $_COOKIE["username"];
-if (is_user_admin2($username, $connection)) {
-	$admin=TRUE;
+
+if ($login_wordpress == TRUE){
+	if (is_user_logged_in()==TRUE){
+		if (is_super_admin()) {
+			$admin=TRUE;
+			}
+		}
 	}
-	
+else {
+	$username = $_COOKIE["username"];
+	if (is_user_admin2($username, $connection)) {
+		$admin=TRUE;
+		}
+	}
+
 #Special wrapper
 if ($special_wrapper==TRUE){
 	$db_filedetails_link = "$wrapper?page=db_filedetails";

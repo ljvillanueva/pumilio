@@ -45,7 +45,19 @@ if ($mark_tag_name=="")
 if ($t_min=="")
 	die("<p class=\"error\">Please select an area of the spectrogram first.");
 
-	if (sessionAuthenticate($connection)) {
+	if ($login_wordpress == TRUE){
+		if (is_user_logged_in()==TRUE){
+				$logged_in=TRUE;
+			}
+		}
+	else {
+		if (sessionAuthenticate($connection)) {
+			$logged_in=TRUE;
+			}
+		}
+
+
+	if ($logged_in==TRUE) {
 		echo "$SoundID
 		<form method=\"POST\" action=\"add2.php\">
 
