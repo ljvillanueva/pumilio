@@ -49,7 +49,7 @@ if ($no_kml>0) {
 				}
 				
 			echo "
-			<form action=\"include/editkml2.php\" method=\"POST\"> 
+			<form action=\"include/editkml2.php\" method=\"GET\"> 
 			<input type=\"hidden\" name=\"KmlID\" value=\"$KmlID\">
 			<select name=\"KmlDefault\" class=\"ui-state-default ui-corner-all formedge\">
 				<option value=\"0\" $selkml0>optional</option>
