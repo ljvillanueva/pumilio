@@ -48,14 +48,15 @@ if ($no_kml>0) {
 				$selkml2 = "SELECTED";
 				}
 				
-			echo "<form action=\"include/editkml2.php\" method=\"POST\" style=\"margin-left: 20px;\"> 
+			echo "<div style=\"margin-left: 20px;\">
+			<form action=\"include/editkml2.php\" method=\"POST\"> 
 			<input type=\"hidden\" name=\"KmlID\" value=\"$KmlID\">
 			<select name=\"KmlDefault\" class=\"ui-state-default ui-corner-all\">
 				<option value=\"0\" $selkml0>optional</option>
 				<option value=\"1\" $selkml1>default</option>
 				<option value=\"2\" $selkml2>always on</option>
 			</select>
-			<input type=submit value=\" Change status \" class=\"fg-button ui-state-default ui-corner-all\"></form>\n";
+			<input type=submit value=\" Change status \" class=\"fg-button ui-state-default ui-corner-all\"></form></div>\n";
 
 		}
 		echo "</ul>";
