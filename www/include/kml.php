@@ -34,11 +34,17 @@ if ($no_kml>0) {
 			$default_kml=query_one("SELECT KmlDefault FROM Kml WHERE KmlID='$KmlID'", $connection);
 			if ($default_kml == 0) {
 				$selkml0 = "SELECTED";
+				$selkml1 = "";
+				$selkml2 = "";
 				}
 			elseif ($default_kml == 1) {
+				$selkml0 = "";
 				$selkml1 = "SELECTED";
+				$selkml2 = "";
 				}
 			elseif ($default_kml == 2) {
+				$selkml0 = "";
+				$selkml1 = "";
 				$selkml2 = "SELECTED";
 				}
 				
@@ -46,8 +52,8 @@ if ($no_kml>0) {
 			<input type=\"hidden\" name=\"KmlID\" value=\"$KmlID\">
 			<select name=\"KmlDefault\" class=\"ui-state-default ui-corner-all\">
 				<option value=\"0\" $selkml0>optional</option>
-				<option value=\"1\" $selkml0>default</option>
-				<option value=\"2\" $selkml0>always on</option>
+				<option value=\"1\" $selkml1>default</option>
+				<option value=\"2\" $selkml2>always on</option>
 			</select>
 			<input type=submit value=\" Change status \" class=\"fg-button ui-state-default ui-corner-all\"></form>\n";
 
