@@ -249,7 +249,7 @@ if ($googlemaps_ver == "3"){
 				$row_kml = mysqli_fetch_array($result_kml);
 				extract($row_kml);
 
-				echo "\nvar ctaLayer$k = new google.maps.KmlLayer('$this_kmlurl',{preserveViewport:true});
+				echo "\nvar ctaLayer$k = new google.maps.KmlLayer('$KmlURL',{preserveViewport:true});
 				        ctaLayer$k.setMap(map);\n";
 				}
 
