@@ -240,6 +240,19 @@ if ($googlemaps_ver == "3"){
 					}
 				}
 
+			#KML layers forced on
+			$querykml = "SELECT * FROM Kml WHERE KmlDefault='2'";
+			$result_kml = query_several($querykml, $connection);
+			$nrows_kml = mysqli_num_rows($result_kml);
+
+			for ($kk=0; $kk<$nrows_kml; $kk++) {
+				$row_kml = mysqli_fetch_array($result_kml);
+				extract($row_kml);
+
+				echo "\nvar ctaLayer$k = new google.maps.KmlLayer('$this_kmlurl',{preserveViewport:true});
+				        ctaLayer$k.setMap(map);\n";
+				}
+
 			echo "var myBounds = new google.maps.LatLngBounds(); 
 			   
 				setMarkers(map, sites);

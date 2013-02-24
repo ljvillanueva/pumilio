@@ -241,6 +241,9 @@ if ($use_googleanalytics) {
 					if ($kml_default == 1 && $KmlDefault == 1) {
 						echo "<input type=\"checkbox\" name=\"kml$k\" value=\"$KmlID\" checked>$KmlName (<a id=\"kmlnotelink$k\" href=\"javascript:void(0);\">notes</a>)<br>\n";
 						}
+					if ($KmlDefault == 2) {
+						echo "$KmlName (<a id=\"kmlnotelink$k\" href=\"javascript:void(0);\">notes</a>)<br>\n";
+						}
 					else {
 						echo "<input type=\"checkbox\" name=\"kml$k\" value=\"$KmlID\">$KmlName (<a id=\"kmlnotelink$k\" href=\"javascript:void(0);\">notes</a>)<br>\n";
 						}
