@@ -1,20 +1,5 @@
 <?php
 
-
-if ($login_wordpress == TRUE){
-	if (is_user_logged_in()==TRUE){
-		if (is_super_admin()) {
-			$admin=TRUE;
-			}
-		}
-	}
-else {
-	$username = $_COOKIE["username"];
-	if (is_user_admin2($username, $connection)) {
-		$admin=TRUE;
-		}
-	}
-
 #Special wrapper
 if ($special_wrapper==TRUE){
 	$db_filedetails_link = "$wrapper?page=db_filedetails";
@@ -387,14 +372,14 @@ if ($mobile==TRUE) {
 			}
 
 		#tags
-		if (!sessionAuthenticate($connection) || $notags=="1") {
+		if ($pumilio_loggedin == FALSE || $notags=="1") {
 			require("include/gettags.php");
 			}
 		else {
 			echo "<br>";
 
 			#Tags
-			if (sessionAuthenticate($connection)) {			
+			if ($pumilio_loggedin == TRUE) {
 				echo "<div id=\"tagspace$i\">\n";
 
 				echo "	<form method=\"get\" action=\"include/addtag_ajax.php\" id=\"addtags$i\">";
@@ -519,7 +504,7 @@ else {
 		 		}
 
 		#Quality flags
-		if (sessionAuthenticate($connection)) {
+		if ($pumilio_loggedin == TRUE) {
 			$QualityFlag=query_one("SELECT QualityFlag from QualityFlags WHERE QualityFlagID='$QualityFlagID'", $connection);
 
 			echo "<p>File Quality flag: <em title=\"$QualityFlag\">$QualityFlagID</em>";
@@ -565,7 +550,7 @@ else {
 
 
 		#tags
-		if (!sessionAuthenticate($connection)) {
+		if ($pumilio_loggedin == FALSE) {
 			require("include/gettags.php");
 			}
 		else {
@@ -574,7 +559,7 @@ else {
 			#Tags
 			$use_tags=query_one("SELECT Value from PumilioSettings WHERE Settings='use_tags'", $connection);
 			if ($use_tags=="1" || $use_tags=="") {
-				if (sessionAuthenticate($connection)) {							
+				if ($pumilio_loggedin == TRUE) {							
 
 				$where_to=$_SERVER['PHP_SELF'];
 				$where_toq=$_SERVER['QUERY_STRING'];

@@ -17,6 +17,8 @@ require("include/apply_config.php");
 
 $Token=filter_var($_POST["Token"], FILTER_SANITIZE_STRING);
 
+require("include/check_login.php");
+
 $username = $_COOKIE["username"];
 $UserID = query_one("SELECT UserID FROM Users WHERE UserName='$username'", $connection);
 
@@ -48,11 +50,10 @@ echo "
 
 require("include/get_css.php");
 require("include/get_jqueryui.php");
-?>
 
-<?php
-if ($use_googleanalytics)
-	{echo $googleanalytics_code;}
+if ($use_googleanalytics){
+	echo $googleanalytics_code;
+	}
 ?>
 
 </head>

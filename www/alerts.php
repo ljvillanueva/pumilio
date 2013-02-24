@@ -15,6 +15,7 @@ else {
 
 require("include/apply_config.php");
 
+$force_admin = TRUE;
 require("include/check_admin.php");
 
 if (isset($_GET["op"])) {

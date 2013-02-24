@@ -1,94 +1,5 @@
 <?php
 
-if ($googlemaps_ver == "2"){
-	echo "<script src=\"http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=$googlemaps_key\" type=\"text/javascript\"></script>
-	<script type=\"text/javascript\">
-
-	function initialize() {
-	if (GBrowserIsCompatible()) {
-	var map = new GMap2(document.getElementById(\"map_canvas\"));\n";
-
-	#Limit zoom for guests
-	if (!sessionAuthenticate($connection) && $hide_latlon_guests) {
-	      echo "
-	      // ====== Restricting the range of Zoom Levels =====
-	      // Get the list of map types      
-	      var mt = map.getMapTypes();
-	      // Overwrite the getMinimumResolution() and getMaximumResolution() methods
-	      for (var i=0; i<mt.length; i++) {
-		mt[i].getMaximumResolution = function() {return 12;}
-	      }";
-	      $approx_size="<br><em>The site is approximate.</em>";
-		}
-
-	echo " \n\n
-		map.setCenter(new GLatLng($SiteLat, $SiteLon), 11);
-		map.addMapType(G_PHYSICAL_MAP);
-		map.addControl(new GMapTypeControl());
-		map.addControl(new GLargeMapControl3D());
-		map.addControl(new GScaleControl());
-		map.enableDoubleClickZoom();
-		map.enableContinuousZoom();
-		map.enableScrollWheelZoom(); 
-
-		var baseIcon = new GIcon();
-		  baseIcon.iconSize=new GSize(32,32);
-		  baseIcon.shadowSize=new GSize(56,32);
-		  baseIcon.iconAnchor=new GPoint(16,32);
-		  baseIcon.infoWindowAnchor=new GPoint(16,0);
-
-		var dicon = new GIcon(G_DEFAULT_ICON);
-		var weathericon = new GIcon(baseIcon, \"http://maps.google.com/mapfiles/kml/pal4/icon22.png\", null, \"http://maps.google.com/mapfiles/kml/pal4/icon22s.png\");
-
-		function createMarker(point,html,icon) {
-			var marker = new GMarker(point,icon);
-			GEvent.addListener(marker, \"click\", function() {
-				marker.openInfoWindowHtml(html);
-			});
-			return marker;
-		}\n";
-
-
-	#Add error to the lat long for guests
-	if (!sessionAuthenticate($connection) && $hide_latlon_guests) {
-		$rand_dir=rand(0,1);
-		$rand_error=(rand(0,100))/10000;
-
-		if ($rand_dir==0) {
-			$SiteLat=$SiteLat+$rand_error;
-			}
-		else {
-			$SiteLat=$SiteLat-$rand_error;
-			}
-		
-		$rand_dir=rand(0,1);
-		$rand_error=(rand(0,100))/10000;
-
-		if ($rand_dir==0) {
-			$SiteLon=$SiteLon+$rand_error;
-			}
-		else {
-			$SiteLon=$SiteLon-$rand_error;
-			}
-		}
-
-	#Set each point
-	#Each point will help determine the map's extent, from http://econym.org.uk/gmap/basic14.htm
-	echo "var point = new GLatLng($SiteLat, $SiteLon);\n";
-
-	if ($special_wrapper==TRUE){
-		echo "var marker = createMarker(point,'<div>$SiteName<br><a href=\"$wrapper?page=browse_site&SiteID=$SiteID\">See other sounds from this site</a>$approx_size</div>')\n";
-		}
-	else {
-		echo "var marker = createMarker(point,'<div>$SiteName<br><a href=\"browse_site.php?SiteID=$SiteID\">See other sounds from this site</a>$approx_size</div>')\n";
-		}
-
-	echo "map.addOverlay(marker);\n\n";
-
-	echo "}
-	}
-	</script>";
-	}
 elseif ($googlemaps_ver == "3"){
 ########################
 # GOOGLE MAPS v3
@@ -102,7 +13,7 @@ elseif ($googlemaps_ver == "3"){
 var sites = [\n";
 
 		#Add error to the lat long for guests
-		if (!sessionAuthenticate($connection) && $hide_latlon_guests) {
+		if ($pumilio_loggedin == FALSE && $hide_latlon_guests) {
 			$rand_dir=rand(0,1);
 			$rand_error=(rand(0,100))/10000;
 			if ($rand_dir==0) {

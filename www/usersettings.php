@@ -15,6 +15,9 @@ else {
 
 require("include/apply_config.php");
 
+$force_loggedin = TRUE;
+require("include/check_login.php");
+
 $jquerycss = $_COOKIE["jquerycss"];
 
 ?>

@@ -1,20 +1,5 @@
 <?php
 
-if ($login_wordpress == TRUE){
-	if (is_user_logged_in()==TRUE){
-		if (is_super_admin()) {
-			$admin=TRUE;
-			}
-		}
-	}
-else {
-	$username = $_COOKIE["username"];
-	if (is_user_admin2($username, $connection)) {
-		$admin=TRUE;
-		}
-	}
-	
-
 #Check if tablet or iOS
 require_once("include/Mobile_Detect.php");
 $detect = new Mobile_Detect();
@@ -261,7 +246,7 @@ for ($i=0;$i<$nrows;$i++) {
 			
 if ($show_tags=="1") {
 	#Tags
-	if (sessionAuthenticate($connection)) {							
+	if ($pumilio_loggedin == TRUE) {
 	echo "<div id=\"tagspace$i\">
 		<form method=\"get\" action=\"include/addtag_ajax.php\" id=\"addtags$i\">";
 	$where_to = $_SERVER['PHP_SELF'];

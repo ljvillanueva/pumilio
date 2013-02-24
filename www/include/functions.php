@@ -202,6 +202,47 @@ function dbfile_mp3($filename,$file_format,$ColID,$DirID,$SamplingRate) {
 	}
 
 
+function pumilio_user($check_role, $connection) {
+	if ($check_role == "user"){
+		if ($login_wordpress == TRUE){
+			if (is_user_logged_in()==TRUE){
+				return TRUE;
+				}
+			else{
+				return FALSE;
+				}
+			}
+		else {
+			if (sessionAuthenticate($connection)) {
+				return TRUE;
+				}
+			else{
+				return FALSE;
+				}
+			}
+		}
+	elseif ($check_role == "admin"){
+		if ($login_wordpress == TRUE){
+			if (is_user_logged_in()==TRUE){
+				return TRUE;
+				}
+			else{
+				return FALSE;
+				}
+			}
+		else {
+			$username = $_COOKIE["username"];
+			if (is_user_admin2($username, $connection)) {
+				return TRUE;
+				}
+			else {
+				return FALSE;
+				}
+			}
+		}
+	}
+
+
 function dbfile_ogg($filename, $file_format, $ColID, $DirID, $SamplingRate) {
 	#Function to make an ogg file from a file in the database
 	$ogg_name="";

@@ -16,7 +16,7 @@ if ($googlemaps_ver == "3"){
 			extract($row);
 
 			#Add error to the lat long for guests
-			if (!sessionAuthenticate($connection) && $hide_latlon_guests) {
+			if ($pumilio_loggedin == FALSE && $hide_latlon_guests) {
 				$rand_dir=rand(0,1);
 				$rand_error=(rand(0,100))/10000;
 				if ($rand_dir==0) {

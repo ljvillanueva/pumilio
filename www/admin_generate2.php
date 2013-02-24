@@ -20,6 +20,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
+$force_admin = TRUE;
 require("include/check_admin.php");
 
 $code=filter_var($_POST["code"], FILTER_SANITIZE_STRING);

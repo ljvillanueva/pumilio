@@ -8,6 +8,7 @@ require("../config.php");
 require("apply_config.php");
 require("version.php");
 
+$force_admin = TRUE;
 require("check_admin.php");
 
 $ColID=filter_var($_GET["ColID"], FILTER_SANITIZE_NUMBER_INT);
@@ -150,8 +151,9 @@ elseif ($archivefrom=="SiteID") {
 		$row_f = mysqli_fetch_array($result_f);
 		extract($row_f);
 		
-		if (!copy("../../../sounds/sounds/$ColID/$DirID/$OriginalFilename", $OriginalFilename))
-			{die("<div class=\"error\"><img src=\"../images/exclamation.png\"> Failed to copy $OriginalFilename.</div>\n");}
+		if (!copy("../../../sounds/sounds/$ColID/$DirID/$OriginalFilename", $OriginalFilename)) {
+			die("<div class=\"error\"><img src=\"../images/exclamation.png\"> Failed to copy $OriginalFilename.</div>\n");
+			}
 			
 		$result_i = mysqli_query($connection, "SELECT Sounds.SoundID,Sounds.OriginalFilename, Sounds.Date,
 				Sounds.Time, Sounds.SamplingRate, Sounds.BitRate, Sounds.Channels, 

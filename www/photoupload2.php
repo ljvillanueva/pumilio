@@ -14,6 +14,9 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
+$force_loggedin = TRUE;
+require("include/check_login.php");
+
 $SiteID=filter_var($_POST["SiteID"], FILTER_SANITIZE_NUMBER_INT);
 $photodir=filter_var($_POST["photodir"], FILTER_SANITIZE_STRING);
 $photonotes=filter_var($_POST["photonotes"], FILTER_SANITIZE_STRING);

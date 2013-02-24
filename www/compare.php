@@ -30,12 +30,8 @@ echo "
 <title>$app_custom_name - Compare Sounds Between Sites</title>";
 
 require("include/get_css.php");
+require("include/get_jqueryui.php");
 ?>
-
-<?php
-	require("include/get_jqueryui.php");
-?>
-
  
 <!--jquery form-->
 <!-- http://jquery.malsup.com/form/ -->
@@ -99,37 +95,7 @@ if ($no_sounds==0) {
 	die();
 	}
 
-/*
-#Calculate how frequent is the sampling, that way, guess the error in the time stamp of the file
-# For example, if sampling every hour, 1:02 and 12:59 should be considered as the same time.
-# May not work in all instances, but its a start.
-# Using 10% as a buffer in time.
-$sampling_times = mysqli_query($connection, "SELECT Time AS this_Time FROM Sounds WHERE SiteID='$site1' AND Date='$date' ORDER BY Time")
-	or die (mysqli_error($connection));	
-#$sampling_times=query_several(, $connection);
-$nrows_sampling_times = mysqli_num_rows($sampling_times);
 
-$sampling_times2=array();
-
-for ($ts1=0;$ts1<$nrows_sampling_times;$ts1++)
-	{
-		$row_this_time = mysqli_fetch_array($sampling_times);
-		extract($row_this_time);
-		array_push($sampling_times2, strtotime("$date $this_Time"));
-	}
-
-$timeadd=0;
-for ($ts2=1;$ts2<$nrows_sampling_times;$ts2++)
-	{
-		$timeadd=$timeadd+$sampling_times2[$ts2]-$sampling_times2[$ts2-1];
-	}
-
-$ave_time=$timeadd/($nrows_sampling_times-1);
-	
-$ave_time2=$ave_time*0.1;		
-*/
-		
-			
 #Get times
 $query_times = "SELECT DATE_FORMAT(Time, '%H:%i') AS Time FROM Sounds WHERE Date='$date' AND (SiteID=$site1 $site2q $site3q) GROUP BY Time";
 $result_times=query_several($query_times, $connection);

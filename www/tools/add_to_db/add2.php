@@ -3,6 +3,7 @@ require("../../include/functions.php");
 require("../../config.php");
 require("../../include/apply_config.php");
 
+require("../../include/check_login.php");
 ?>
 <html>
 <head>
@@ -47,28 +48,34 @@ if (isset($_COOKIE["fft"])) {
 		$fft_size=2048;
 		}
 
-#Build query
-$query = "INSERT INTO SoundsMarks (SoundID, time_min, time_max, freq_min, freq_max, mark_tag, fft_size, UserID)
-			VALUES ('$SoundID', '$t_min', '$t_max', '$f_min', '$f_max', '$mark_tag', '$fft_size', '$UserID')";
+if ($pumilio_loggedin == TRUE) {
+	#Build query
+	$query = "INSERT INTO SoundsMarks (SoundID, time_min, time_max, freq_min, freq_max, mark_tag, fft_size, UserID)
+				VALUES ('$SoundID', '$t_min', '$t_max', '$f_min', '$f_max', '$mark_tag', '$fft_size', '$UserID')";
 
-#Execute query or die and display error message
-$result = mysqli_query($connection, $query)
-		or die (mysqli_error($connection));
-
-#Make the new mark into a tag
-	#remove spaces
-	$mark_tag=str_replace(" ","", $mark_tag);
-	
-	#Check that it does not exist already for this sound
-	$result=query_several("SELECT Tag FROM Tags WHERE SoundID='$SoundID' AND Tag='$mark_tag'", $connection);
-	$nrows = mysqli_num_rows($result);
-	if ($nrows==0) {			
-		$query_tags = "INSERT INTO Tags (SoundID, Tag) VALUES ('$SoundID', '$mark_tag')";
-		$result_tags = mysqli_query($connection, $query_tags)
+	#Execute query or die and display error message
+	$result = mysqli_query($connection, $query)
 			or die (mysqli_error($connection));
-		}
 
-echo "<p class=\"success\">Record inserted in database.";
+	#Make the new mark into a tag
+		#remove spaces
+		$mark_tag=str_replace(" ","", $mark_tag);
+	
+		#Check that it does not exist already for this sound
+		$result=query_several("SELECT Tag FROM Tags WHERE SoundID='$SoundID' AND Tag='$mark_tag'", $connection);
+		$nrows = mysqli_num_rows($result);
+		if ($nrows==0) {			
+			$query_tags = "INSERT INTO Tags (SoundID, Tag) VALUES ('$SoundID', '$mark_tag')";
+			$result_tags = mysqli_query($connection, $query_tags)
+				or die (mysqli_error($connection));
+			}
+
+	echo "<p class=\"success\">Record inserted in database.";
+	}
+else {
+	echo "<p>You have to be logged in to use this tool.";
+	}
+
 ?>
 
 <p><a href="#" onClick="opener.location.reload();window.close();">Close window</a>

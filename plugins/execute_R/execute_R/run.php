@@ -7,11 +7,10 @@ require("../../include/functions.php");
 require("../../config.php");
 require("../../include/apply_config.php");
 
-#Check if user is logged
-	if (!sessionAuthenticate($connection))
-		{die();}
+$force_loggedin = TRUE;
+require("../../include/check_login.php");
 		
-	$username = $_COOKIE["username"];
+$username = $_COOKIE["username"];
 
 #Get variables
 $SampleID=filter_var($_POST["SampleID"], FILTER_SANITIZE_NUMBER_INT);

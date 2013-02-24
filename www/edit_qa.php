@@ -14,6 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
+$force_admin = TRUE;
 require("include/check_admin.php");
 
 $ColID = filter_var($_POST["ColID"], FILTER_SANITIZE_NUMBER_INT);

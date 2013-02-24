@@ -14,13 +14,14 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-require("check_admin.php");
+$force_admin = TRUE;
+require("include/check_admin.php");
 
 $ColID=filter_var($_POST["ColID"], FILTER_SANITIZE_NUMBER_INT);
 
 	$query = ("SELECT SoundID FROM Sounds WHERE ColID='$ColID'");
 	$result = mysqli_query($connection, $query)
-	or die (mysqli_error($connection));
+		or die (mysqli_error($connection));
 	$nrows = mysqli_num_rows($result);
 
 	for ($i=0;$i<$nrows;$i++) {
@@ -32,7 +33,6 @@ $ColID=filter_var($_POST["ColID"], FILTER_SANITIZE_NUMBER_INT);
 		}
 
 	// Relocate back to where you came from
-
-		header("Location: ../admin.php?t=4");
-		die;
+	header("Location: ../admin.php?t=4");
+	die();
 ?>

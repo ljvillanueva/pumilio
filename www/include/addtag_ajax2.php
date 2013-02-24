@@ -5,6 +5,9 @@ require("functions.php");
 require("../config.php");
 require("apply_config.php");
 
+$force_loggedin = TRUE;
+require("include/check_login.php");
+
 $SoundID=filter_var($_GET["SoundID"], FILTER_SANITIZE_NUMBER_INT);
 $i=filter_var($_GET["this_i"], FILTER_SANITIZE_NUMBER_INT);
 
@@ -63,12 +66,12 @@ echo "<html>
 // Relocate back to the first page of the application
 	echo "<form method=\"get\" action=\"include/addtag_ajax2.php\" id=\"addtags$i\">";
 	require("../include/managetagsp.php");
-				echo "<p>Add tags:<br>
-					<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-					<input type=\"hidden\" name=\"this_i\" value=\"$i\">
-					<input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
-					<INPUT TYPE=\"image\" src=\"images/tag_blue_add.png\" BORDER=\"0\" alt=\"Add new tag\" onmouseover=\"Tip('Add new tag', FONTCOLOR, '#fff',BGCOLOR, '#4aa0e0', FADEIN, '400', FADEOUT, '400', ABOVE, 'true', CENTERMOUSE, 'true')\" onmouseout=\"UnTip()\" >
-					<em>Separate tags with a space</em></form><br>";
+		echo "<p>Add tags:<br>
+			<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
+			<input type=\"hidden\" name=\"this_i\" value=\"$i\">
+			<input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
+			<INPUT TYPE=\"image\" src=\"images/tag_blue_add.png\" BORDER=\"0\" alt=\"Add new tag\" onmouseover=\"Tip('Add new tag', FONTCOLOR, '#fff',BGCOLOR, '#4aa0e0', FADEIN, '400', FADEOUT, '400', ABOVE, 'true', CENTERMOUSE, 'true')\" onmouseout=\"UnTip()\" >
+			<em>Separate tags with a space</em></form><br>";
 
 ?>
 </body>

@@ -14,7 +14,10 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
+
+$force_admin = TRUE;
 require("include/check_admin.php");
+
 
 $SoundID=filter_var($_POST["SoundID"], FILTER_SANITIZE_NUMBER_INT);
 

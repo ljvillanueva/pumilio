@@ -14,6 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
+$force_loggedin = TRUE;
 require("include/check_login.php");
 
 echo "
@@ -27,8 +28,9 @@ require("include/get_jqueryui.php");
 ?>
 
 <?php
-if ($use_googleanalytics)
-	{echo $googleanalytics_code;}
+if ($use_googleanalytics) {
+	echo $googleanalytics_code;
+	}
 ?>
 
 </head>

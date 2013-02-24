@@ -14,6 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
+$force_admin = TRUE;
 require("include/check_admin.php");
 
 $SampleID=filter_var($_POST["SampleID"], FILTER_SANITIZE_NUMBER_INT);
@@ -23,10 +24,7 @@ echo "	<html>
 <title>$app_custom_name - Delete sample</title>";
 
 require("include/get_css.php");
-?>
-
-<?php
-	require("include/get_jqueryui.php");
+require("include/get_jqueryui.php");
 ?>
 
 </head>

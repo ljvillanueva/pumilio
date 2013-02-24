@@ -8,7 +8,8 @@ require("apply_config.php");
 #Check if user can edit files (i.e. has admin privileges)
 $username = $_COOKIE["username"];
 
-require("check_admin.php");
+$force_admin = TRUE;
+require("include/check_admin.php");
 
 #Sanitize
 $UserName=filter_var($_POST["UserName"], FILTER_SANITIZE_STRING);

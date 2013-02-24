@@ -15,6 +15,8 @@ else {
 
 require("include/apply_config.php");
 
+require("include/check_login.php");
+
 //From http://elouai.com/force-download.php
 //Updated to automatically get the mime type from http://www.tuxradar.com/practicalphp/15/5/1
 
@@ -23,7 +25,6 @@ $SoundID = $_GET['SoundID'];
 $from_detail = $_GET['from_detail'];
 
 if ($from_detail == "1" && $SoundID != ""){
-
 	$query = "SELECT * FROM Sounds WHERE SoundID='$SoundID'";
 	$result = mysqli_query($connection, $query)
 			or die (mysqli_error($connection));
@@ -145,7 +146,7 @@ switch( $file_extension )
 */
 
 if ($file_extension!="png") {
-	if ($guests_can_dl || sessionAuthenticate($connection)) {
+	if ($guests_can_dl || $pumilio_loggedin) {
 		}
 	else {
 		echo "<html><title>Error</title><link rel=\"stylesheet\" href=\"css/screen.css\" type=\"text/css\" media=\"screen, projection\">

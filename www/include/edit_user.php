@@ -4,36 +4,13 @@ require("functions.php");
 require("../config.php");
 require("apply_config.php");
 
-if ($login_wordpress == TRUE){
-	if (is_user_logged_in()==TRUE){
-		if (is_super_admin()) {
-			$admin=TRUE;
-			}
-		}
-	else{
-		header("Location: error.php?e=login");
-		die();
-		}
-	}
-else {
-	$username = $_COOKIE["username"];
-
-	if (!sessionAuthenticate($connection)) {
-		header("Location: error.php?e=login");
-		die();
-		}
-
-	if (is_user_admin2($username, $connection)) {
-		$admin=TRUE;
-		}
-	}
-
+require("check_admin.php");
 
 $ac=filter_var($_POST["ac"], FILTER_SANITIZE_STRING);
 $UserID=filter_var($_POST["UserID"], FILTER_SANITIZE_NUMBER_INT);
 
 if ($ac=="delete") {
-	if ($admin!=TRUE){
+	if ($pumilio_admin==FALSE){
 		die();
 		}
 
@@ -46,7 +23,7 @@ if ($ac=="delete") {
 		die();
 	}
 elseif ($ac=="remadmin") {
-	if ($admin!=TRUE){
+	if ($pumilio_admin==FALSE){
 		die();
 		}
 		
@@ -59,7 +36,7 @@ elseif ($ac=="remadmin") {
 		die();
 	}
 elseif ($ac=="makeadmin") {
-	if ($admin!=TRUE){
+	if ($pumilio_admin==FALSE){
 		die();
 		}
 
@@ -72,7 +49,7 @@ elseif ($ac=="makeadmin") {
 		die();
 	}
 elseif ($ac=="inactive") {
-	if ($admin!=TRUE){
+	if ($pumilio_admin==FALSE){
 		die();
 		}
 

@@ -5,6 +5,7 @@ require("functions.php");
 require("../config.php");
 require("apply_config.php");
 
+$force_admin = TRUE;
 require("check_admin.php");
 
 $op=filter_var($_GET["op"], FILTER_SANITIZE_NUMBER_INT);

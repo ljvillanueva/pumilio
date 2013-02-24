@@ -2,15 +2,26 @@
 
 if ($login_wordpress == TRUE){
 	if (is_user_logged_in()==FALSE){
-			header("Location: error.php?e=login");
-			die();
+		$pumilio_loggedin = FALSE;
+		}
+	else{
+		$pumilio_loggedin = TRUE;
 		}
 	}
 else {
 	if (!sessionAuthenticate($connection)) {
-		header("Location: error.php?e=login");
-		die();
+		#header("Location: error.php?e=login");
+		#die();
+		$pumilio_loggedin = FALSE;
 		}
+	else{
+		$pumilio_loggedin = TRUE;
+		}
+	}
+
+if ($force_loggedin == TRUE && $pumilio_loggedin == FALSE){
+	header("Location: error.php?e=login");
+	die();
 	}
 
 ?>

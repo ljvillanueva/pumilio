@@ -14,7 +14,8 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-require("include/check_admin.php");
+$force_loggedin = TRUE;
+require("include/check_login.php");
 
 if (isset($_GET["ToAddMemberID"])){
 	$ToAddMemberID=filter_var($_GET["ToAddMemberID"], FILTER_SANITIZE_NUMBER_INT);

@@ -16,21 +16,7 @@ if ($nrows_dates>0) {
 		}
 	
 	echo "</select>";
-		
-	#Time buffer
-	/*
-	echo "<p style=\"margin-left:10px;\">Time buffer:
-	<select name=\"timebuffer\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">
-		<option>1</option>
-		<option>2</option>
-		<option>3</option>
-		<option>5</option>
-		<option>10</option>
-		<option>15</option>
-		<option>30</option>
-	</select> minutes";
-	*/
-		
+				
 	echo "<p>Select up to three sites:</p><br>";
 	
 	$sites=query_several("SELECT Sites.SiteID,Sites.SiteName FROM Sites,Sounds WHERE Sites.SiteID=Sounds.SiteID 

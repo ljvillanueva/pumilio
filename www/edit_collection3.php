@@ -14,6 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
+$force_admin = TRUE;
 require("include/check_admin.php");
 
 $ColID = filter_var($_POST["ColID"], FILTER_SANITIZE_NUMBER_INT);
@@ -29,10 +30,9 @@ else{
 			$Notes_q
 			WHERE ColID='$ColID'");
 	$result = mysqli_query($connection, $query)
-	or die (mysqli_error($connection));
+		or die (mysqli_error($connection));
 
 	// Relocate back to where you came from
-
 	header("Location: edit_collection.php?ColID=$ColID&d=2#anchor2");
 	die();
 	

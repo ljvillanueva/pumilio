@@ -5,6 +5,7 @@ require("functions.php");
 require("../config.php");
 require("apply_config.php");
 
+$force_admin = TRUE;
 require("check_admin.php");
 
 session_write_close();

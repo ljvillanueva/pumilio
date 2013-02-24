@@ -5,7 +5,8 @@ require("functions.php");
 require("../config.php");
 require("apply_config.php");
 
-require("check_admin.php");
+$force_admin = TRUE;
+require("include/check_admin.php");
 
 echo "
 <html>

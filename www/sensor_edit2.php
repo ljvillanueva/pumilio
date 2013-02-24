@@ -14,6 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
+$force_loggedin = TRUE;
 require("include/check_login.php");
 
 #Sanitize
@@ -24,7 +25,7 @@ $Notes=filter_var($_POST["Notes"], FILTER_SANITIZE_STRING);
 
 	$query = ("UPDATE Sensors SET Recorder='$Recorder', Microphone='$Microphone', Notes='$Notes' WHERE SensorID='$SensorID'");
 	$result = mysqli_query($connection, $query)
-	or die (mysqli_error($connection));
+		or die (mysqli_error($connection));
 
 header("Location: admin.php?t=4");
 	die();

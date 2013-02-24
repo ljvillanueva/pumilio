@@ -14,6 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
+$force_admin = TRUE;
 require("include/check_admin.php");
 
 $SiteID=filter_var($_POST["SiteID"], FILTER_SANITIZE_NUMBER_INT);
@@ -30,8 +31,7 @@ $SiteLon=filter_var($_POST["SiteLon"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG
 	or die (mysqli_error($connection));
 
 	// Relocate back to where you came from
-
-		header("Location: edit_site.php?SiteID=$SiteID&d=1");
-		die;
+	header("Location: edit_site.php?SiteID=$SiteID&d=1");
+	die();
 	
 ?>

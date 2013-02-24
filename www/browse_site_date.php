@@ -15,6 +15,8 @@ else {
 
 require("include/apply_config.php");
 
+require("include/check_login.php");
+
 #Sanitize inputs
 $SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
 $QDate=filter_var($_GET["Date"], FILTER_SANITIZE_NUMBER_INT);
@@ -40,7 +42,7 @@ else
 	$order_byq = $order_by;
 	
 #If user is not logged in, add check for QF
-	if (!sessionAuthenticate($connection)) {
+	if ($pumilio_loggedin==FALSE) {
 		$qf_check = "AND Sounds.QualityFlagID>='$default_qf'";
 		}
 	else {

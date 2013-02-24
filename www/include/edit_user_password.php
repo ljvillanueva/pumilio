@@ -5,7 +5,8 @@ require("functions.php");
 require("../config.php");
 require("apply_config.php");
 
-require("check_admin.php");
+$force_loggedin = TRUE;
+require("check_login.php");
 
 echo "
 <html>

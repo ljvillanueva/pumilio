@@ -14,6 +14,9 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
+$force_loggedin = TRUE;
+require("include/check_admin.php");
+
 #Sanitize inputs
 $SoundID=filter_var($_GET["SoundID"], FILTER_SANITIZE_NUMBER_INT);
 if (isset($_GET["hidemarks"])){
@@ -71,7 +74,7 @@ if ($SoundID_status == 9) {
 	die();
 	}
 
-if ($SoundID_qf_check < $default_qf && !sessionAuthenticate($connection)) {
+if ($SoundID_qf_check < $default_qf && $pumilio_loggedin==FALSE) {
 	echo "<body>
 		<div class=\"error\" style=\"margins: 10px;\"><img src=\"images/exclamation.png\"> You must be logged in to see
 			this file. Please contact the administrator for more information.</div>
@@ -88,10 +91,8 @@ $nrows = mysqli_num_rows($result);
 $row = mysqli_fetch_array($result);
 extract($row);
 
-?>
+require("include/get_jqueryui.php");
 
-<?php
-	require("include/get_jqueryui.php");
 ?>
 <!-- JQuery Confirmation -->
 <script type="text/javascript">
@@ -330,7 +331,7 @@ else {
 			#file info
 			echo "<div class=\"span-8\">
 				<p class=\"highlight3 ui-corner-all\">";
-				if ($guests_can_open || sessionAuthenticate($connection)) {
+				if ($guests_can_open || $pumilio_loggedin) {
 					echo "<a href=\"file_obtain.php?fileid=$SoundID&method=3\" title=\"Open file for analysis\" style=\"color: white;\"><strong>$SoundName</strong></a>";
 					}
 				else {
@@ -379,7 +380,7 @@ else {
 						echo "Site: <a href=\"browse_site.php?SiteID=$SiteID\" title=\"Browse the recordings made at this site\" style=\"color: white;\"><strong>$SiteName</strong></a>";
 						}
 
-					if (!sessionAuthenticate($connection) && $hide_latlon_guests){
+					if ($pumilio_loggedin==FALSE && $hide_latlon_guests){
 						}
 					else {
 						echo "<br>Coordinates: $SiteLat, $SiteLon";
@@ -451,7 +452,7 @@ else {
 		echo "</div>";
 				
 		#MD5 hash calculation
-		if (sessionAuthenticate($connection)) {
+		if ($pumilio_loggedin) {
 			if (!file_exists("sounds/sounds/$ColID/$DirID/$OriginalFilename")) {
 				echo "<div class=\"span-24 last\" style=\"text-align: center;\"><div class=\"error\"><img src=\"images/exclamation.png\"> The file could not be found.</div></div>";
 				$file_error = 1;
@@ -497,7 +498,7 @@ else {
 
 			
 			#Check if from a sample set
-			if (sessionAuthenticate($connection)) {
+			if ($pumilio_loggedin) {
 				$sample_check = mysqli_query($connection, "SELECT Samples.SampleName,Samples.SampleID FROM
 					Samples,SampleMembers WHERE Samples.SampleID=SampleMembers.SampleID 
 					AND SampleMembers.SoundID='$SoundID'")
@@ -513,7 +514,7 @@ else {
 			#Tags
 			$use_tags=query_one("SELECT Value from PumilioSettings WHERE Settings='use_tags'", $connection);
 			if ($use_tags=="1" || $use_tags=="") {
-				if (sessionAuthenticate($connection)) {
+				if ($pumilio_loggedin) {
 					require("include/managetags_db.php");
 					echo "<p><strong>Add tags</strong>:<form method=\"get\" action=\"include/addtag.php\">
 						<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
@@ -527,7 +528,7 @@ else {
 				}
 
 			#File quality data
-			if (sessionAuthenticate($connection)) {
+			if ($pumilio_loggedin) {
 				$QualityFlag=query_one("SELECT QualityFlag from QualityFlags WHERE QualityFlagID='$QualityFlagID'", $connection);
 				echo "<p><strong>Record quality data</strong>:
 					<ul>";
@@ -543,7 +544,7 @@ else {
 					}
 				}
 
-			if (sessionAuthenticate($connection)) {
+			if ($pumilio_loggedin) {
 				echo "<form method=\"GET\" action=\"editqf.php\" target=\"editqf\" onsubmit=\"window.open('', 'editqf', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
 				Edit the Quality Flag for this file:<br>
 				<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">";
@@ -576,9 +577,9 @@ else {
 			echo "<p><strong>File data</strong>:
 			<ul>
 			<li>Original filename: $OriginalFilename";
-				if ($guests_can_dl || sessionAuthenticate($connection)) {
+				if ($guests_can_dl || $pumilio_loggedin) {
 					echo "<br>&nbsp;&nbsp;&nbsp;Download: <a href=\"dl.php?file=sounds/sounds/$ColID/$DirID/$OriginalFilename\">$SoundFormat</a>";
-					if ($SoundFormat != "wav" && $special_noprocess){
+					if ($SoundFormat != "wav" && $special_noprocess==FALSE){
 						echo " | <a href=\"dl.php?from_detail=1&SoundID=$SoundID\">wav</a>";
 						}
 					echo " | <a href=\"dl.php?file=sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename\">$AudioPreviewFormat</a>
@@ -687,35 +688,27 @@ else {
 
 		echo "<div class=\"span-5\">\n";
 		
-		$username = $_COOKIE["username"];
+		#$username = $_COOKIE["username"];
 		#Check if user can edit files (i.e. has admin privileges)
-		if ($username!="") {
-			$resultname = mysqli_query($connection, "SELECT UserRole FROM Users WHERE UserName='$username'");
-			$rowname = mysqli_fetch_array($resultname);
-			extract($rowname);
-			if (sessionAuthenticate($connection) && $UserRole=="admin") {
-				echo "<p><strong>Administrative options</strong>:
-				<form method=\"get\" action=\"file_edit.php\">
-				<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-				<input type=\"submit\" value=\" Edit file information \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
-				</form>";
-		
-				#Delete file div
-				echo "<div id=\"dialog\" title=\"Delete the file?\">
-					<p><span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>The file will be permanently deleted and cannot be recovered. Are you sure?</p>
-				</div>";
+		if ($pumilio_admin) {
+			echo "<p><strong>Administrative options</strong>:
+			<form method=\"get\" action=\"file_edit.php\">
+			<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
+			<input type=\"submit\" value=\" Edit file information \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
+			</form>";
+	
+			#Delete file div
+			echo "<div id=\"dialog\" title=\"Delete the file?\">
+				<p><span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>The file will be permanently deleted and cannot be recovered. Are you sure?</p>
+			</div>";
 
-				echo "<p>
-				<form id=\"testconfirmJQ\" name=\"testconfirmJQ\" method=\"post\" action=\"del_file.php\">
-				<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-				<input type=\"submit\" value=\" Delete file from archive \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
-				</form>";
-				}
-			else {
-				echo "&nbsp;";
-				}
+			echo "<p>
+			<form id=\"testconfirmJQ\" name=\"testconfirmJQ\" method=\"post\" action=\"del_file.php\">
+			<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
+			<input type=\"submit\" value=\" Delete file from archive \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
+			</form>";
 			}
-		if ($guests_can_open || sessionAuthenticate($connection)) {
+		if ($guests_can_open || $pumilio_loggedin) {
 			echo "<p>";
 			if ($file_error == 1 || $special_noopen == TRUE) {
 				echo "<form method=\"get\" action=\"file_obtain.php\">

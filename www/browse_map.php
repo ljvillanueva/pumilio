@@ -15,6 +15,8 @@ else {
 
 require("include/apply_config.php");
 
+require("include/check_login.php");
+
 $date_to_browse=filter_var($_GET["date_to_browse"], FILTER_SANITIZE_STRING);
 $time_to_browse=filter_var($_GET["time_to_browse"], FILTER_SANITIZE_STRING);
 $usekml=filter_var($_GET["usekml"], FILTER_SANITIZE_NUMBER_INT);
@@ -23,7 +25,7 @@ $nokml=filter_var($_GET["nokml"], FILTER_SANITIZE_NUMBER_INT);
 $this_page_title="Browse Map";
 
 #If user is not logged in, add check for QF
-	if (!sessionAuthenticate($connection)) {
+	if ($pumilio_loggedin==FALSE) {
 		$qf_check = "AND Sounds.QualityFlagID>='$default_qf'";
 		}
 	else {

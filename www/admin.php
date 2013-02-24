@@ -14,7 +14,10 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-require("include/check_login.php");
+
+$force_admin = TRUE;
+require("include/check_admin.php");
+
 
 $u=filter_var($_GET["u"], FILTER_SANITIZE_NUMBER_INT);
 

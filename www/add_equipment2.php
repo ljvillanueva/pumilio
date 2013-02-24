@@ -14,7 +14,8 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-require("include/check_login.php");
+$force_loggedin = TRUE;
+require("include/check_admin.php");
 
 #Sanitize
 if ($_POST["Recorder"]!="")

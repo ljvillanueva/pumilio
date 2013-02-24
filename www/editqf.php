@@ -14,7 +14,8 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-require("include/check_login.php");
+$force_admin = TRUE;
+require("include/check_admin.php");
 
 #Sanitize
 $SoundID=filter_var($_GET["SoundID"], FILTER_SANITIZE_NUMBER_INT);

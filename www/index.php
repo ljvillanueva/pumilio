@@ -14,8 +14,10 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
+require("include/check_admin.php");
+
 #If user is not logged in, add check for QF
-if (!sessionAuthenticate($connection)) {
+if ($pumilio_user == FALSE) {
 	$qf_check = "AND Sounds.QualityFlagID>='$default_qf'";
 	}
 else {
@@ -343,7 +345,7 @@ else{
 		if ($map_only=="1"){
 			echo "<hr noshade></div>";
 			require("include/index_map_body.php");
-			if (is_user_admin2($username, $connection)) {
+			if ($pumilio_loggedin == TRUE) {
 				echo "<hr noshade>
 				<p><strong><a href=\"add.php\">Add files to the archive</a></strong><br>";
 				}
@@ -355,10 +357,7 @@ else{
 				echo "<h3><a href=\"#\">Main Menu</a></h3>
 					<div>";
 				
-					#Check if user can edit files (i.e. has admin privileges)
-					$username = $_COOKIE["username"];
-
-					if (is_user_admin2($username, $connection)) {
+					if ($pumilio_loggedin == TRUE) {
 						echo "<p><strong><a href=\"add.php\">Add files to the archive</a></strong><br>
 						<hr noshade>";
 						}
@@ -411,7 +410,7 @@ else{
 					}
 
 				#Only for logged in users
-				if (sessionAuthenticate($connection)) {
+				if ($pumilio_loggedin == TRUE) {
 					echo "<h3><a href=\"#\">Quality control</a></h3>
 					<div>\n";
 						echo "<p><a href=\"qc.php\">Data extraction for quality control</a>

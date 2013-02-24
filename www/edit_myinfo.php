@@ -14,6 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
+$force_loggedin = TRUE;
 require("include/check_login.php");
 
 $d=filter_var($_GET["d"], FILTER_SANITIZE_NUMBER_INT);
@@ -26,10 +27,7 @@ echo "
 <title>$app_custom_name - Edit my information</title>";
 
 require("include/get_css.php");
-?>
-
-<?php
-	require("include/get_jqueryui.php");
+require("include/get_jqueryui.php");
 ?>
 
 <script src="js/jquery.validate.js"></script>
@@ -116,8 +114,9 @@ else {
 	</script>
 	
 <?php
-if ($use_googleanalytics)
-	{echo $googleanalytics_code;}
+if ($use_googleanalytics) {
+	echo $googleanalytics_code;
+	}
 ?>
 
 </head>

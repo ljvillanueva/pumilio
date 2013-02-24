@@ -14,6 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
+$force_loggedin = TRUE;
 require("include/check_login.php");
 
 $JobID = filter_var($_GET["JobID"], FILTER_SANITIZE_NUMBER_INT);
@@ -42,10 +43,7 @@ echo "
 
 #Get CSS
 require("include/get_css.php");
-?>
-
-<?php
-	require("include/get_jqueryui.php");
+require("include/get_jqueryui.php");
 ?>
 
 <?php
@@ -120,16 +118,19 @@ if ($e==1) {
 		echo "<div style=\"height:100px; overflow:scroll;\"><p>Items: ";
 		$no_pages=ceil($no_items/$items_per_page);
 		for ($p=0;$p<$no_pages;$p++) {
-				$p_to=($p+1)*$items_per_page;
-				$p_from=$p_to-$items_per_page;
-			
-				if ($p_to>$no_items)
-					$p_to=$no_items;
-			
-				if ($pageno==$p)
-					echo "[$p_from-$p_to] &nbsp; ";
-				else
-					echo "[<a href=\"managejobs.php?JobID=$JobID&pageno=$p&e=1\">$p_from-$p_to</a>] &nbsp; ";
+			$p_to=($p+1)*$items_per_page;
+			$p_from=$p_to-$items_per_page;
+		
+			if ($p_to>$no_items){
+				$p_to=$no_items;
+				}
+		
+			if ($pageno==$p){
+				echo "[$p_from-$p_to] &nbsp; ";
+				}
+			else{
+				echo "[<a href=\"managejobs.php?JobID=$JobID&pageno=$p&e=1\">$p_from-$p_to</a>] &nbsp; ";
+				}
 			}
 		echo "</div>\n";
 		}
@@ -179,22 +180,22 @@ if ($e==1) {
 		echo "<div style=\"height:100px; overflow:scroll;\"><p>Items: ";
 		$no_pages=ceil($no_items/$items_per_page);
 		for ($p=0;$p<$no_pages;$p++) {
-				$p_to=($p+1)*$items_per_page;
-				$p_from=$p_to-$items_per_page;
-			
-				if ($p_to>$no_items)
-					$p_to=$no_items;
-			
-				if ($pageno==$p)
-					echo "[$p_from-$p_to] &nbsp; ";
-				else
-					echo "[<a href=\"managejobs.php?JobID=$JobID&pageno=$p&e=1\">$p_from-$p_to</a>] &nbsp; ";
+			$p_to=($p+1)*$items_per_page;
+			$p_from=$p_to-$items_per_page;
+		
+			if ($p_to>$no_items)
+				$p_to=$no_items;
+		
+			if ($pageno==$p)
+				echo "[$p_from-$p_to] &nbsp; ";
+			else
+				echo "[<a href=\"managejobs.php?JobID=$JobID&pageno=$p&e=1\">$p_from-$p_to</a>] &nbsp; ";
 			}
 		echo "</div>";
 		}
 	
 	echo "<hr noshade>";
-}
+	}
 elseif ($e==2) {
 	$no_items=query_one("SELECT COUNT(*) as no_items FROM Queue, QueueJobs WHERE Queue.JobID='$JobID' AND Queue.JobID=QueueJobs.JobID AND Queue.Status='5'", $connection);
 
@@ -427,7 +428,7 @@ elseif ($r==1) {
 		}
 	
 	echo "<hr noshade>";
-}
+	}
 elseif ($r==2) {
 	$no_items=query_one("SELECT COUNT(*) as no_items FROM Queue, QueueJobs WHERE Queue.JobID='$JobID' AND Queue.JobID=QueueJobs.JobID AND Queue.ComputerDone='$machine'", $connection);
 
@@ -530,7 +531,7 @@ elseif ($r==2) {
 		}
 	
 	echo "<hr noshade>";
-}
+	}
 elseif ($r==3) {
 	$result=mysqli_query($connection, "SELECT DISTINCT Queue.ComputerDone AS machine FROM Queue, QueueJobs 
 				WHERE Queue.JobID='$JobID' AND Queue.JobID=QueueJobs.JobID AND Queue.Status='2'")
@@ -560,7 +561,7 @@ elseif ($r==3) {
 	}
 	echo "<hr noshade>";
 
-}
+	}
 else {
 	$no_items=query_one("SELECT COUNT(*) as no_items FROM Queue, QueueJobs WHERE Queue.JobID='$JobID' AND Queue.JobID=QueueJobs.JobID", $connection);
 
@@ -690,7 +691,7 @@ else {
 		<p><input type=submit value=\" Change Status \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"></form>";
 	
 	echo "<hr noshade>";
-}
+	}
 ?>
 
 <br><br><p><a href="#" onClick="window.close();">Close window</a>

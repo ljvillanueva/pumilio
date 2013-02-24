@@ -14,6 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
+$force_loggedin = TRUE;
 require("include/check_login.php");
 
 $ColID=filter_var($_GET["ColID"], FILTER_SANITIZE_NUMBER_INT);

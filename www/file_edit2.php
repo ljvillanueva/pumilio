@@ -14,6 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
+$force_admin = TRUE;
 require("include/check_admin.php");
 
 $SoundID=filter_var($_POST["SoundID"], FILTER_SANITIZE_NUMBER_INT);
@@ -70,63 +71,7 @@ $date_f=$date[2] . "-" . $date[0] . "-" . $date[1];
 	or die (mysqli_error($connection));
 
 
-
-/*
-if ($OldSiteID != $SiteID){
-	$query1 = "SELECT * FROM Sounds WHERE SoundID='$SoundID'";
-
-	$result1=query_several($query1, $connection);
-	$row1 = mysqli_fetch_array($result1);
-	extract($row1);
-
-		#Check if dir exists
-		if (!is_dir("../sounds/sounds/$ColID/$SiteID")) {
-			mkdir("../sounds/sounds/$ColID/$SiteID", 0777);
-			}
-		if (!rename("../sounds/sounds/$ColID/$OldSiteID/$OriginalFilename","../sounds/sounds/$ColID/$SiteID/$OriginalFilename")){
-			die("Could not move file sounds/sounds/$ColID/$OldSiteID/$OriginalFilename.");}
-
-
-			#Move MP3
-			#Check if dir exists
-			if (!is_dir("../sounds/previewsounds/$ColID/$SiteID")) {
-				mkdir("../sounds/previewsounds/$ColID/$SiteID", 0777);
-				}
-
-			if (is_file("../sounds/previewsounds/$ColID/$OldSiteID/$AudioPreviewFilename")) {
-				if (!rename("../sounds/previewsounds/$ColID/$OldSiteID/$AudioPreviewFilename","../sounds/previewsounds/$ColID/$SiteID/$AudioPreviewFilename")){
-					die("Could not move file sounds/previewsounds/$ColID/$OldSiteID/$AudioPreviewFilename.");}
-				}
-		}
-
-		}
-
-	$query_move = "SELECT * from Sounds, SoundsImages WHERE Sounds.SoundID=SoundsImages.SoundID";
-	$result_move = mysqli_query($connection, $query_move)
-		or die (mysqli_error($connection));
-	$nrows_move = mysqli_num_rows($result_move);
-
-	if ($nrows_move > 0) {
-		for ($m=0; $m<$nrows_move; $m++) {
-			$row_move = mysqli_fetch_array($result_move);
-			extract($row_move);
-
-			#Check if dir exists
-			if (!is_dir("../sounds/images/$ColID/$SiteID")) {
-				mkdir("../sounds/images/$ColID/$SiteID", 0777);
-				}
-			if (is_file("../sounds/images/$ColID/$OldSiteID/$ImageFile")) {
-				if (!rename("../sounds/images/$ColID/$OldSiteID/$ImageFile","../sounds/images/$ColID/$SiteID/$ImageFile")){
-					die("Could not move file sounds/images/$ColID/$OldSiteID/$ImageFile.");}
-				}
-		}
-		}
-
-}
-*/
-
 	// Relocate back to where you came from
-
 	header("Location: $where_to&d=1");
 	die();
 	

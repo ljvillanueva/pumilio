@@ -14,6 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
+$force_loggedin = TRUE;
 require("include/check_login.php");
 
 $Token=filter_var($_GET["Token"], FILTER_SANITIZE_STRING);
@@ -34,15 +35,11 @@ echo "
 
 #Get CSS
 require("include/get_css.php");
-?>
+require("include/get_jqueryui.php");
 
-<?php
-	require("include/get_jqueryui.php");
-?>
-
-<?php
-if ($use_googleanalytics)
-	{echo $googleanalytics_code;}
+if ($use_googleanalytics) {
+	echo $googleanalytics_code;
+	}
 ?>
 
 </head>

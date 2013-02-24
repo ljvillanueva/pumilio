@@ -1,22 +1,8 @@
 <?php
 
-if ($login_wordpress == TRUE){
-	if (is_user_logged_in()==TRUE){
-		if (is_super_admin()) {
-			$is_admin=TRUE;
-			}
-		}
-	}
-else {
-	$username = $_COOKIE["username"];
+require("include/check_admin.php");
 
-	if (!is_user_admin2($username, $connection)) {
-		$is_admin=TRUE;
-		}
-	}
-
-
-if ($is_admin==TRUE) {
+if ($pumilio_admin==TRUE) {
 		
 	$sys_errors = 0;
 

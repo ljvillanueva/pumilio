@@ -11,7 +11,8 @@ $KmlURL=filter_var($_POST["KmlURL"], FILTER_SANITIZE_URL);
 $op=filter_var($_POST["op"], FILTER_SANITIZE_NUMBER_INT);
 $KmlID=filter_var($_POST["KmlID"], FILTER_SANITIZE_NUMBER_INT);
 
-require("check_admin.php");
+$force_admin = TRUE;
+require("include/check_admin.php");
 
 #check if it exists
 if ($op == "1") {

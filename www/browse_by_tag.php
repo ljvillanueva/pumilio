@@ -14,6 +14,8 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
+require("include/check_login.php");
+
 #Sanitize inputs
 $Tagq=filter_var($_GET["Tag"], FILTER_SANITIZE_STRING);
 $SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
@@ -38,7 +40,7 @@ else
 
 
 #If user is not logged in, add check for QF
-	if (!sessionAuthenticate($connection)) {
+	if ($pumilio_loggedin==FALSE) {
 		$qf_check = "AND Sounds.QualityFlagID>='$default_qf'";
 		}
 	else {
@@ -176,8 +178,9 @@ if ($use_googleanalytics) {
 			$endid = $how_many_to_show;
 			$endid_show=$startid_q+$endid;
 
-			if ($startid_q+$how_many_to_show >= $no_sounds)
-				$endid_show = $no_sounds; 
+			if ($startid_q+$how_many_to_show >= $no_sounds){
+				$endid_show = $no_sounds;
+				}
 
 			$sql_limit = "$startid_q, $endid";
 

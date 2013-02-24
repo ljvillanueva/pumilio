@@ -3,6 +3,9 @@
 require("../../include/functions.php");
 require("../../config.php");
 require("../../include/apply_config.php");
+
+$force_loggedin = TRUE;
+require("include/check_login.php");
 ?>
 
 <html>
@@ -34,7 +37,6 @@ if ($f_min==""){
 	die("<p class=\"error\">Please select an area of the spectrogram first.");
 	}
 
-if (sessionAuthenticate($connection)) {
 	echo "
 	<form method=\"POST\" action=\"add2.php\">
 		<input type=\"hidden\" name=\"f_min\" value=\"$f_min\"  />
@@ -45,10 +47,6 @@ if (sessionAuthenticate($connection)) {
 		<p>Species: <input type=\"text\" name=\"Species\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\" />
 		<p><input type=\"button\" id=\"add_submit\" value=\" Insert to database \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\" onClick=\"submit(); document.getElementById('add_submit').disabled = true; document.getElementById('add_submit').value = ' Please wait... ';\" />
 	</form>";
-	}
-else {
-	echo "<p>You have to be logged in to use this tool.";
-	}
 
 ?>
 

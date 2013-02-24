@@ -14,8 +14,11 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-	$random_cookie=mt_rand();
-	setcookie("random_cookie", $random_cookie, 0);
+$force_loggedin = TRUE;
+require("include/check_login.php");
+
+$random_cookie=mt_rand();
+setcookie("random_cookie", $random_cookie, 0);
 
 
 echo "	<html>

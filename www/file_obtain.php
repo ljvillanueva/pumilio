@@ -24,6 +24,16 @@ else {
 
 require("include/apply_config.php");
 
+
+$force_loggedin = TRUE;
+require("include/check_login.php");
+
+if (!$allow_upload){
+	header("Location: error.php?e=upload");
+	die();
+	}
+
+
 #Generate a random number and store in cookies
 	$random_cookie=mt_rand();
 	setcookie("random_cookie", $random_cookie, 0);
@@ -43,7 +53,6 @@ require("include/apply_config.php");
 
 #Check if internal transfer
 if ($obtain_method==3) {
-	
 	$result=query_several("SELECT * FROM Sounds WHERE SoundID='$obtain_fileid'", $connection);
 	$row = mysqli_fetch_array($result);
 	extract($row);

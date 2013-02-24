@@ -14,6 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
+$force_loggedin = TRUE;
 require("include/check_login.php");
 
 $dir=filter_var($_POST["dir"], FILTER_SANITIZE_URL);
@@ -23,8 +24,9 @@ $SiteID=filter_var($_POST["SiteID"], FILTER_SANITIZE_NUMBER_INT);
 $SensorID=filter_var($_POST["SensorID"], FILTER_SANITIZE_NUMBER_INT);
 $sm=filter_var($_POST["sm"], FILTER_SANITIZE_NUMBER_INT);
 
-if ($dir=="")
-	{die();}
+if ($dir=="") {
+	die();
+	}
 
 echo "
 <html>

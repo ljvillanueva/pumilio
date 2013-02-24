@@ -31,6 +31,9 @@ if ($valid_token==1) {
 	$no_channels = query_one("SELECT no_channels FROM Tokens WHERE TokenID='$Token' LIMIT 1", $connection);
 	$soundfile_samplingrate = query_one("SELECT soundfile_samplingrate FROM Tokens WHERE TokenID='$Token' LIMIT 1", $connection);
 	}
+else{	
+	die("File not found.");
+	}
 
 
 echo "
@@ -40,10 +43,7 @@ echo "
 <title>$app_custom_name - Convert File</title>";
 
 require("include/get_css.php");
-?>
-
-<?php
-	require("include/get_jqueryui.php");
+require("include/get_jqueryui.php");
 ?>
 
 <!-- JQuery Tabs -->

@@ -12,7 +12,7 @@ if ($nrows_tagcloud1>0) {
 			query_one("DELETE From Tags WHERE TagID='$TagID'", $connection);
 			}
 		}
-#	}
+
 
 	$result_tagcloud=query_several("SELECT DISTINCT Tag FROM Tags ORDER BY RAND()", $connection);
 	$nrows_tagcloud = mysqli_num_rows($result_tagcloud);

@@ -5,7 +5,8 @@ require("functions.php");
 require("../config.php");
 require("apply_config.php");
 
-require("check_admin.php");
+$force_admin = TRUE;
+require("include/check_admin.php");
 
 #Sanitize
 $defaultqf=filter_var($_POST["defaultqf"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);

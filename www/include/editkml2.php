@@ -8,7 +8,8 @@ require("apply_config.php");
 $op=filter_var($_GET["op"], FILTER_SANITIZE_NUMBER_INT);
 $KmlID=filter_var($_GET["KmlID"], FILTER_SANITIZE_NUMBER_INT);
 
-require("check_admin.php");
+$force_admin = TRUE;
+require("include/check_admin.php");
 
 #check if it exists
 if ($op == "1") {

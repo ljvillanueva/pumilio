@@ -5,6 +5,9 @@ require("functions.php");
 require("../config.php");
 require("apply_config.php");
 
+$force_loggedin = TRUE;
+require("include/check_login.php");
+
 $SoundID=filter_var($_GET["SoundID"], FILTER_SANITIZE_NUMBER_INT);
 $this_i=filter_var($_GET["this_i"], FILTER_SANITIZE_NUMBER_INT);
 $newtag=explode(" ",$_GET["newtag"]);
@@ -89,13 +92,13 @@ $(document).ready(function() {
 	echo "<div id=\"tagspace$this_i\">\n";
 	echo "<form method=\"get\" action=\"include/addtag_ajax.php\" id=\"addtags$this_i\">";
 	require("../include/managetags.php");
-				echo "Add tags:
-					<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-					<input type=\"hidden\" name=\"goto\" value=\"p\">
-					<br><input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
-					<INPUT TYPE=\"image\" src=\"images/tag_blue_add.png\" BORDER=\"0\" alt=\"Add new tag\" title=\"Add new tag\" >
-					<em>Separate tags with a space</em></form><br>
-			</div>";
+		echo "Add tags:
+			<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
+			<input type=\"hidden\" name=\"goto\" value=\"p\">
+			<br><input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
+			<INPUT TYPE=\"image\" src=\"images/tag_blue_add.png\" BORDER=\"0\" alt=\"Add new tag\" title=\"Add new tag\" >
+			<em>Separate tags with a space</em></form><br>
+		</div>";
 
 ?>
 </body>

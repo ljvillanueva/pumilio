@@ -53,6 +53,11 @@ require("include/get_jqueryui.php");
 			echo "<p><div class=\"notice\"> <img src=\"images/error.png\"> This installation is not set up to open files.
 				Please contact the administrator: <a href=\"mailto:$app_admin_email\">$app_admin_email</a>.</div>";
 			}
+		elseif ($e=="upload") {
+			echo "<p><div class=\"notice\"> <img src=\"images/error.png\"> This installation is not set up to upload files.
+				Please contact the administrator: <a href=\"mailto:$app_admin_email\">$app_admin_email</a>.</div>";
+			}
+			
 		?>
 
 	</div>

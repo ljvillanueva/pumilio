@@ -17,7 +17,8 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-require("include/check_admin.php");
+$force_loggedin = TRUE;
+require("include/check_login.php");
 
 $dir=filter_var($_POST["dir"], FILTER_SANITIZE_URL);
 $ColID=filter_var($_POST["ColID"], FILTER_SANITIZE_NUMBER_INT);

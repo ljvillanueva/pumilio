@@ -3,8 +3,9 @@ require("../../include/functions.php");
 require("../../config.php");
 require("../../include/apply_config.php");
 
-if (!sessionAuthenticate($connection))
-	{die();}
+$force_loggedin = TRUE;
+require("../../include/check_login.php");
+
 ?>
 <html>
 <head>
@@ -42,11 +43,11 @@ $ColID=query_one("SELECT ColID FROM Sounds WHERE SoundID='$soundfile_id' LIMIT 1
 
 #Build query
 $query = "INSERT INTO FreqRanges (SoundID, ColID, freq_min, freq_max, Species, fft_size, UserID)
-			VALUES ('$soundfile_id', '$ColID', '$f_min', '$f_max', '$Species', '$fft_size', '$UserID')";
+	VALUES ('$soundfile_id', '$ColID', '$f_min', '$f_max', '$Species', '$fft_size', '$UserID')";
 
 #Execute query or die and display error message
 $result = mysqli_query($connection, $query)
-		or die (mysqli_error($connection));
+	or die (mysqli_error($connection));
 
 
 #Make the new mark into a tag

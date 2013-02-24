@@ -15,6 +15,8 @@ else {
 
 require("include/apply_config.php");
 
+require("include/check_login.php");
+
 $Token=filter_var($_GET["Token"], FILTER_SANITIZE_STRING);
 
 $username = $_COOKIE["username"];
@@ -274,16 +276,6 @@ require("include/get_jqueryui.php");
   $(document).ready(function() { 
     var options = { 
         target:        '#toolcontainer',   // target element(s) to be updated with server response 
- 
-        // other available options: 
-        //url:       url         // override for form's 'action' attribute 
-        //type:      type        // 'get' or 'post', override for form's 'method' attribute 
-        //dataType:  null        // 'xml', 'script', or 'json' (expected server response type) 
-        //clearForm: true        // clear all form fields after successful submit 
-        //resetForm: true        // reset the form after successful submit 
- 
-        // $.ajax options can be used here too, for example: 
-        //timeout:   3000 
     }; 
  
     // bind to the form's submit event 
@@ -303,19 +295,8 @@ require("include/get_jqueryui.php");
 $(document).ready(function() { 
     var options = { 
         target:        '#tagspace',   // target element(s) to be updated with server response 
-        // beforeSubmit:  showRequest,  // pre-submit callback 
-        // success:       showResponse,  // post-submit callback 
  	clearForm: true,
  	resetForm: true
-        // other available options: 
-        //url:       url         // override for form's 'action' attribute 
-        //type:      type        // 'get' or 'post', override for form's 'method' attribute 
-        //dataType:  null        // 'xml', 'script', or 'json' (expected server response type) 
-        //clearForm: true        // clear all form fields after successful submit 
-        //resetForm: true        // reset the form after successful submit 
- 
-        // $.ajax options can be used here too, for example: 
-        //timeout:   3000 
     }; 
  
     // bind form using 'ajaxForm' 
@@ -455,18 +436,80 @@ if ($use_googleanalytics) {
 		</div>
 		<div class="span-2 last">
 			<?php
-			require('include/processor_scale.php');
+				#SCALE
+				$min_freq=$frequency_min;
+				$max_freq=$frequency_max;
+				$mid_freq=((($frequency_max-$frequency_min)/2) + $frequency_min);
+
+				$range=$max_freq-$min_freq;
+				$steps=round($range/8);
+				$freq_1=$min_freq+$steps;
+				$freq_2=$min_freq+($steps*2);
+				$freq_3=$min_freq+($steps*3);
+				$freq_4=$min_freq+($steps*4);
+				$freq_5=$min_freq+($steps*5);
+				$freq_6=$min_freq+($steps*6);
+				$freq_7=$min_freq+($steps*7);
+
+				echo "
+				<table height=\"$spectrogram_height\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">
+					<tr height=\"24\"><td style=\"background:#FFFFFF;\">$max_freq Hz
+					</td></tr>
+					<tr height=\"50\" style=\"background:#FFFFFF;\"><td style=\"background:#FFFFFF;\">&nbsp;
+					</td></tr>
+					<tr height=\"50\"><td style=\"background:#FFFFFF;\">&nbsp;
+					</td></tr>
+					<tr height=\"50\"><td style=\"background:#FFFFFF;\">&nbsp;
+					</td></tr>
+					<tr height=\"50\"><td style=\"background:#FFFFFF;\">$freq_4 Hz
+					</td></tr>
+					<tr height=\"50\"><td style=\"background:#FFFFFF;\">&nbsp;
+					</td></tr>
+					<tr height=\"50\"><td style=\"background:#FFFFFF;\">&nbsp;
+					</td></tr>
+					<tr height=\"50\"><td style=\"background:#FFFFFF;\">&nbsp;
+					</td></tr>
+					<tr><td style=\"background:#FFFFFF;\">$min_freq Hz
+					</td></tr>
+				</table>";
 			?>
 		</div>
 
 		<div class="span-4">
 			<?php
-			require("include/processor_controls.php");
+				echo "
+				<a href=\"#\" onclick=\"pause(); return false\" class=\"fg-button1 ui-state-default fg-button1-icon-solo ui-corner-all\" title=\"Pause\"><span class=\"ui-icon ui-icon-pause\"></span> Pause</a>
+				<a href=\"#\" onclick=\"play(xmin); return false\" class=\"fg-button1 ui-state-default fg-button1-icon-solo ui-corner-all\" title=\"Play\"><span class=\"ui-icon ui-icon-play\"></span> Play</a>
+				<a href=\"#\" onclick=\"stop(); return false\" class=\"fg-button1 ui-state-default fg-button1-icon-solo ui-corner-all\" title=\"Stop\"><span class=\"ui-icon ui-icon-stop\"></span> Stop</a>";
+
 			?>
 		</div>
 		<div class="span-8">
 			<?php
-			require("include/processor_timer.php");
+			
+			#Timer
+				#Use minimum time of current display to show default time
+				#minutes
+				if ($time_min>0) {
+					$min_to_show=floor($time_min/60);
+					}
+				else {
+					$min_to_show=0;
+					}
+
+				#seconds
+				if ($time_min>0) {
+					$sec_to_show=(($time_min/60)-$min_to_show)*60;
+					if ($sec_to_show<10) {
+						$sec_to_show="0" . $sec_to_show;
+						}
+					}
+				else {
+					$sec_to_show="00";
+					}
+
+				echo "<h1 style=\"font-size:4em;\"><div id=\"time_min_div\" style=\"float: left;\">$min_to_show</div><div style=\"float: left;\">:</div><div id=\"time_sec_div\" style=\"float: left;\">$sec_to_show</div></h1>";
+			
 			?>
 		</div>
 		<div class="span-8">
@@ -485,7 +528,7 @@ if ($use_googleanalytics) {
 			#Tags
 			$use_tags=query_one("SELECT Value from PumilioSettings WHERE Settings='use_tags'", $connection);
 			if ($use_tags=="1" || $use_tags==""){
-				if (sessionAuthenticate($connection)) {
+				if ($pumilio_loggedin) {
 					echo "<div id=\"tagspace\"><form method=\"get\" action=\"include/addtag_ajax2.php\" id=\"addtags\">";
 					require("include/managetagsp.php");
 					echo "&nbsp;&nbsp;&nbsp;Add tags:

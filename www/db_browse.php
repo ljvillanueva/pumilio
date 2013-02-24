@@ -14,6 +14,8 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
+require("include/check_admin.php");
+
 #Sanitize inputs
 $ColID=filter_var($_GET["ColID"], FILTER_SANITIZE_NUMBER_INT);
 $startid=filter_var($_GET["startid"], FILTER_SANITIZE_NUMBER_INT);
@@ -57,7 +59,7 @@ else {
 	}
 
 #If user is not logged in, add check for QF
-	if (!sessionAuthenticate($connection)) {
+	if ($pumilio_loggedin == FALSE) {
 		$qf_check = "AND Sounds.QualityFlagID>='$default_qf'";
 		}
 	else {
@@ -173,9 +175,9 @@ if ($use_googleanalytics) {
 			echo "<h5 class=\"highlight2 ui-corner-all\">Please wait... loading... <img src=\"$app_url/images/ajax-loader.gif\" border=\"0\"></h5>";
 			?>
 		</div>		
-		<?php
-		flush();
-		?>
+			<?php
+				flush();
+			?>
 		<div class="span-11">
 			<?php
 
@@ -190,14 +192,17 @@ if ($use_googleanalytics) {
 				AND Sounds.SoundStatus!='9' $qf_check", $connection);
 
 			if ($startid<1) {
-				$startid=1;}
+				$startid=1;
+				}
 				
 			$startid_q=$startid-1;
 			
 			if ($display_type=="summary"){
-				$how_many_to_show=10;}
+				$how_many_to_show=10;
+				}
 			elseif ($display_type=="gallery"){
-				$how_many_to_show=18;}
+				$how_many_to_show=18;
+				}
 				
 			$endid = $how_many_to_show;
 			$endid_show=$startid_q+$endid;
@@ -211,7 +216,7 @@ if ($use_googleanalytics) {
 			#Check if user can edit files (i.e. has admin privileges)
 			$username = $_COOKIE["username"];
 
-			if (sessionAuthenticate($connection) && is_user_admin2($username, $connection)) {
+			if ($pumilio_admin) {
 				echo "<p class=\"highlight3 ui-corner-all\" style=\"text-align: left;\"><strong>Collection: $CollectionName</strong> 
 				<a href=\"edit_collection.php?ColID=$ColID\" title=\"Edit this collection\" style=\"color: white;\">[edit]</a><br>
 				$no_sounds sounds";

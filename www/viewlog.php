@@ -15,6 +15,7 @@ else {
 
 require("include/apply_config.php");
 
+$force_loggedin = TRUE;
 require("include/check_login.php");
 
 $QueueID=filter_var($_GET["QueueID"], FILTER_SANITIZE_NUMBER_INT);
@@ -86,7 +87,7 @@ $result=mysqli_query($connection, "SELECT FileLog, Computer FROM ProcessLog WHER
 $nrows = mysqli_num_rows($result);
 if ($nrows>0) {
 	$row = mysqli_fetch_array($result);
-		extract($row);
+	extract($row);
 
 	echo "<p>Computer: $Computer</p>
 	<pre>$FileLog</pre>";
