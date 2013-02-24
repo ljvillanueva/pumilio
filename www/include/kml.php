@@ -29,22 +29,33 @@ if ($no_kml>0) {
 			(<a href=\"http://maps.google.com/maps?q=$KmlURL\" title=\"Open layer in GoogleMaps\" target=\"_blank\">$KmlURL</a>)
 			<input type=\"hidden\" name=\"op\" value=\"2\">
 			<input type=\"hidden\" name=\"KmlID\" value=\"$KmlID\">
-			<input type=submit value=\" Delete \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"></form>";
+			<input type=submit value=\" Delete \" class=\"fg-button ui-state-default ui-corner-all\"></form>\n";
 			
 			$default_kml=query_one("SELECT KmlDefault FROM Kml WHERE KmlID='$KmlID'", $connection);
-			if ($default_kml == 1) {
-				echo " &nbsp;&nbsp;&nbsp;[<a href=\"include/editkml2.php?KmlID=$KmlID&op=2\">Remove as default layer</a>]";
+			if ($default_kml == 0) {
+				$selkml0 = "SELECTED";
 				}
-			elseif ($default_kml == 0) {
-				echo " &nbsp;&nbsp;&nbsp;[<a href=\"include/editkml2.php?KmlID=$KmlID&op=1\">Set as default layer</a>]";
+			elseif ($default_kml == 1) {
+				$selkml1 = "SELECTED";
 				}
+			elseif ($default_kml == 2) {
+				$selkml2 = "SELECTED";
+				}
+				
+			echo "<form action=\"include/editkml2.php\" method=\"POST\"> 
+			<input type=\"hidden\" name=\"KmlID\" value=\"$KmlID\">
+			<select name=\"KmlDefault\" class=\"ui-state-default ui-corner-all\">
+				<option value=\"0\" $selkml0>optional</option>
+				<option value=\"1\" $selkml0>default</option>
+				<option value=\"2\" $selkml0>always on</option>
+			</select>
+			<input type=submit value=\" Change status \" class=\"fg-button ui-state-default ui-corner-all\"></form>\n";
+
 		}
 		echo "</ul>";
-		
 	}
 else {
 	echo "<p>There are no KML/KMZ data layers.";
 	}
-
 
 ?>
