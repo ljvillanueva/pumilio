@@ -9,7 +9,7 @@ $KmlDefault=filter_var($_GET["KmlDefault"], FILTER_SANITIZE_NUMBER_INT);
 $KmlID=filter_var($_GET["KmlID"], FILTER_SANITIZE_NUMBER_INT);
 
 $force_admin = TRUE;
-require("include/check_admin.php");
+require("check_admin.php");
 
 $query = "UPDATE Kml SET KmlDefault='$KmlDefault' WHERE KmlID='$KmlID' LIMIT 1";
 $result = mysqli_query($connection, $query)
