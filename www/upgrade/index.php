@@ -103,7 +103,7 @@ require("../config.php");
 
 //Check database
 #Current version
-$current_db_version=22;
+$current_db_version=23;
 
 $db_version=query_one("SELECT Value FROM PumilioSettings WHERE Settings LIKE 'db_version' LIMIT 1", $connection);
 
@@ -281,6 +281,12 @@ if ($db_version==3) {
 
 	$connection2 = mysqli_connect($host, $user, $password, $database);
 	$all_query = file_get_contents("./upgrade_pumilio21.sql");
+	mysqli_multi_query($connection2, $all_query);
+	mysqli_close($connection2);
+	sleep(5);
+	
+	$connection2 = mysqli_connect($host, $user, $password, $database);
+	$all_query = file_get_contents("./upgrade_pumilio22.sql");
 	mysqli_multi_query($connection2, $all_query);
 	mysqli_close($connection2);
 	sleep(5);
@@ -553,6 +559,12 @@ elseif ($db_version==4) {
 	mysqli_close($connection2);
 	sleep(5);
 	
+	$connection2 = mysqli_connect($host, $user, $password, $database);
+	$all_query = file_get_contents("./upgrade_pumilio22.sql");
+	mysqli_multi_query($connection2, $all_query);
+	mysqli_close($connection2);
+	sleep(5);
+	
 	
 	#MOVE FILES
 	$query_move = "SELECT * from Sounds";
@@ -814,6 +826,12 @@ elseif ($db_version==5) {
 	mysqli_close($connection2);
 	sleep(5);
 	
+	$connection2 = mysqli_connect($host, $user, $password, $database);
+	$all_query = file_get_contents("./upgrade_pumilio22.sql");
+	mysqli_multi_query($connection2, $all_query);
+	mysqli_close($connection2);
+	sleep(5);
+	
 	
 	
 	#MOVE FILES
@@ -1070,6 +1088,12 @@ elseif ($db_version==6) {
 	mysqli_close($connection2);
 	sleep(5);
 	
+	$connection2 = mysqli_connect($host, $user, $password, $database);
+	$all_query = file_get_contents("./upgrade_pumilio22.sql");
+	mysqli_multi_query($connection2, $all_query);
+	mysqli_close($connection2);
+	sleep(5);
+	
 	
 	#MOVE FILES
 	$query_move = "SELECT * from Sounds";
@@ -1319,6 +1343,12 @@ elseif ($db_version==7) {
 	mysqli_close($connection2);
 	sleep(5);
 	
+	$connection2 = mysqli_connect($host, $user, $password, $database);
+	$all_query = file_get_contents("./upgrade_pumilio22.sql");
+	mysqli_multi_query($connection2, $all_query);
+	mysqli_close($connection2);
+	sleep(5);
+	
 	
 	#MOVE FILES
 	$query_move = "SELECT * from Sounds";
@@ -1562,6 +1592,12 @@ elseif ($db_version==8) {
 	mysqli_close($connection2);
 	sleep(5);
 	
+	$connection2 = mysqli_connect($host, $user, $password, $database);
+	$all_query = file_get_contents("./upgrade_pumilio22.sql");
+	mysqli_multi_query($connection2, $all_query);
+	mysqli_close($connection2);
+	sleep(5);
+	
 	
 	#MOVE FILES
 	$query_move = "SELECT * from Sounds";
@@ -1799,6 +1835,12 @@ elseif ($db_version==9) {
 	mysqli_close($connection2);
 	sleep(5);
 	
+	$connection2 = mysqli_connect($host, $user, $password, $database);
+	$all_query = file_get_contents("./upgrade_pumilio22.sql");
+	mysqli_multi_query($connection2, $all_query);
+	mysqli_close($connection2);
+	sleep(5);
+	
 	
 	#MOVE FILES
 	$query_move = "SELECT * from Sounds";
@@ -2008,6 +2050,12 @@ elseif ($db_version==10) {
 	mysqli_close($connection2);
 	sleep(5);
 	
+	$connection2 = mysqli_connect($host, $user, $password, $database);
+	$all_query = file_get_contents("./upgrade_pumilio22.sql");
+	mysqli_multi_query($connection2, $all_query);
+	mysqli_close($connection2);
+	sleep(5);
+	
 	
 	#MOVE FILES
 	$query_move = "SELECT * from Sounds";
@@ -2193,6 +2241,12 @@ elseif ($db_version==11) {
 	mysqli_close($connection2);
 	sleep(5);
 	
+	$connection2 = mysqli_connect($host, $user, $password, $database);
+	$all_query = file_get_contents("./upgrade_pumilio22.sql");
+	mysqli_multi_query($connection2, $all_query);
+	mysqli_close($connection2);
+	sleep(5);
+	
 	
 	#MOVE FILES
 	$query_move = "SELECT * from Sounds";
@@ -2372,6 +2426,12 @@ elseif ($db_version==12) {
 	mysqli_close($connection2);
 	sleep(5);
 	
+	$connection2 = mysqli_connect($host, $user, $password, $database);
+	$all_query = file_get_contents("./upgrade_pumilio22.sql");
+	mysqli_multi_query($connection2, $all_query);
+	mysqli_close($connection2);
+	sleep(5);
+	
 	
 	#MOVE FILES
 	$query_move = "SELECT * from Sounds";
@@ -2546,6 +2606,12 @@ elseif ($db_version==13) {
 	mysqli_close($connection2);
 	sleep(5);
 	
+	$connection2 = mysqli_connect($host, $user, $password, $database);
+	$all_query = file_get_contents("./upgrade_pumilio22.sql");
+	mysqli_multi_query($connection2, $all_query);
+	mysqli_close($connection2);
+	sleep(5);
+	
 	
 	#MOVE FILES
 	$query_move = "SELECT * from Sounds";
@@ -2699,6 +2765,12 @@ elseif ($db_version==14) {
 	mysqli_close($connection2);
 	sleep(5);
 	
+	$connection2 = mysqli_connect($host, $user, $password, $database);
+	$all_query = file_get_contents("./upgrade_pumilio22.sql");
+	mysqli_multi_query($connection2, $all_query);
+	mysqli_close($connection2);
+	sleep(5);
+	
 	
 	#MOVE FILES
 	$query_move = "SELECT * from Sounds";
@@ -2846,6 +2918,12 @@ elseif ($db_version==15) {
 	mysqli_close($connection2);
 	sleep(5);
 	
+	$connection2 = mysqli_connect($host, $user, $password, $database);
+	$all_query = file_get_contents("./upgrade_pumilio22.sql");
+	mysqli_multi_query($connection2, $all_query);
+	mysqli_close($connection2);
+	sleep(5);
+	
 	
 	#MOVE FILES
 	$query_move = "SELECT * from Sounds";
@@ -2987,6 +3065,12 @@ elseif ($db_version==16) {
 	mysqli_close($connection2);
 	sleep(5);
 	
+	$connection2 = mysqli_connect($host, $user, $password, $database);
+	$all_query = file_get_contents("./upgrade_pumilio22.sql");
+	mysqli_multi_query($connection2, $all_query);
+	mysqli_close($connection2);
+	sleep(5);
+	
 	
 	#MOVE FILES
 	$query_move = "SELECT * from Sounds";
@@ -3124,6 +3208,11 @@ elseif ($db_version==17) {
 	mysqli_close($connection2);
 	sleep(5);
 	
+	$connection2 = mysqli_connect($host, $user, $password, $database);
+	$all_query = file_get_contents("./upgrade_pumilio22.sql");
+	mysqli_multi_query($connection2, $all_query);
+	mysqli_close($connection2);
+	sleep(5);
 	
 	#Verify that the upgrade was successful
 	$db_version=query_one("SELECT Value FROM PumilioSettings WHERE Settings LIKE 'db_version' LIMIT 1", $connection);
@@ -3191,6 +3280,12 @@ elseif ($db_version==18) {
 	mysqli_close($connection2);
 	sleep(5);
 	
+	$connection2 = mysqli_connect($host, $user, $password, $database);
+	$all_query = file_get_contents("./upgrade_pumilio22.sql");
+	mysqli_multi_query($connection2, $all_query);
+	mysqli_close($connection2);
+	sleep(5);
+	
 	
 	#Verify that the upgrade was successful
 	$db_version=query_one("SELECT Value FROM PumilioSettings WHERE Settings LIKE 'db_version' LIMIT 1", $connection);
@@ -3252,6 +3347,12 @@ elseif ($db_version==19) {
 	mysqli_close($connection2);
 	sleep(5);
 	
+	$connection2 = mysqli_connect($host, $user, $password, $database);
+	$all_query = file_get_contents("./upgrade_pumilio22.sql");
+	mysqli_multi_query($connection2, $all_query);
+	mysqli_close($connection2);
+	sleep(5);
+	
 	#Verify that the upgrade was successful
 	$db_version=query_one("SELECT Value FROM PumilioSettings WHERE Settings LIKE 'db_version' LIMIT 1", $connection);
 	if ($db_version==$current_db_version){
@@ -3305,6 +3406,12 @@ elseif ($db_version==20) {
 	mysqli_close($connection2);
 	sleep(5);
 	
+	$connection2 = mysqli_connect($host, $user, $password, $database);
+	$all_query = file_get_contents("./upgrade_pumilio22.sql");
+	mysqli_multi_query($connection2, $all_query);
+	mysqli_close($connection2);
+	sleep(5);
+	
 	#Verify that the upgrade was successful
 	$db_version=query_one("SELECT Value FROM PumilioSettings WHERE Settings LIKE 'db_version' LIMIT 1", $connection);
 	if ($db_version==$current_db_version){
@@ -3348,6 +3455,60 @@ elseif ($db_version==20) {
 elseif ($db_version==21) {
 	$connection2 = mysqli_connect($host, $user, $password, $database);
 	$all_query = file_get_contents("./upgrade_pumilio21.sql");
+	mysqli_multi_query($connection2, $all_query);
+	mysqli_close($connection2);
+	sleep(5);
+	
+	$connection2 = mysqli_connect($host, $user, $password, $database);
+	$all_query = file_get_contents("./upgrade_pumilio22.sql");
+	mysqli_multi_query($connection2, $all_query);
+	mysqli_close($connection2);
+	sleep(5);
+	
+	#Verify that the upgrade was successful
+	$db_version=query_one("SELECT Value FROM PumilioSettings WHERE Settings LIKE 'db_version' LIMIT 1", $connection);
+	if ($db_version==$current_db_version){
+		echo "
+		<html>
+		<head>
+
+		<title>Pumilio - Upgrade</title>
+
+		<!-- Blueprint css -->
+		<link rel=\"stylesheet\" href=\"../css/screen.css\" type=\"text/css\" media=\"screen, projection\">
+		<link rel=\"stylesheet\" href=\"../css/print.css\" type=\"text/css\" media=\"print\">	
+		<!--[if IE]><link rel=\"stylesheet\" href=\"../css/ie.css\" type=\"text/css\" media=\"screen, projection\"><![endif]-->
+		</head>
+		<body>
+		<div class=\"success\">This system has been upgraded. You can delete the folders 'upgrade' and 'install'.</div>
+		</body>
+		</html>"; 
+		die();
+		}
+	else {
+		echo "
+		<html>
+		<head>
+
+		<title>Pumilio - Upgrade</title>
+
+		<!-- Blueprint css -->
+		<link rel=\"stylesheet\" href=\"../css/screen.css\" type=\"text/css\" media=\"screen, projection\">
+		<link rel=\"stylesheet\" href=\"../css/print.css\" type=\"text/css\" media=\"print\">	
+		<!--[if IE]><link rel=\"stylesheet\" href=\"../css/ie.css\" type=\"text/css\" media=\"screen, projection\"><![endif]-->
+		</head>
+		<body>
+		<div class=\"error\">There was an error in the upgrade process. Please check the mysql and apache logs or contact the developer for help.</div>
+		</body>
+		</html>"; 
+		die();
+		}
+
+	}
+elseif ($db_version==22) {
+	
+	$connection2 = mysqli_connect($host, $user, $password, $database);
+	$all_query = file_get_contents("./upgrade_pumilio22.sql");
 	mysqli_multi_query($connection2, $all_query);
 	mysqli_close($connection2);
 	sleep(5);
