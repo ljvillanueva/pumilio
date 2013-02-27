@@ -26,11 +26,6 @@ require("include/apply_config.php");
 
 require("include/check_login.php");
 
-if (!$allow_upload){
-	header("Location: error.php?e=upload");
-	die();
-	}
-
 
 #Generate a random number and store in cookies
 	$random_cookie=mt_rand();
@@ -66,6 +61,12 @@ if ($obtain_method==3) {
 		}
 
 	header("Location: ./openfile.php?filename=$OriginalFilename&format=$SoundFormat&duration=$Duration&samprate=$SamplingRate&fileID=$SoundID&no_channels=$Channels&from_db=TRUE");
+	die();
+	}
+
+
+if (!$allow_upload){
+	header("Location: error.php?e=upload");
 	die();
 	}
 
