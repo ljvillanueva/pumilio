@@ -24,8 +24,6 @@ else {
 
 require("include/apply_config.php");
 
-
-$force_loggedin = TRUE;
 require("include/check_login.php");
 
 if (!$allow_upload){
@@ -53,6 +51,11 @@ if (!$allow_upload){
 
 #Check if internal transfer
 if ($obtain_method==3) {
+	if ($guests_can_open == FALSE && $pumilio_loggedin == FALSE) {
+		header("Location: error.php?e=login");
+		die();
+		}
+
 	$result=query_several("SELECT * FROM Sounds WHERE SoundID='$obtain_fileid'", $connection);
 	$row = mysqli_fetch_array($result);
 	extract($row);
