@@ -1,6 +1,6 @@
 <?php
 
-elseif ($googlemaps_ver == "3"){
+if ($googlemaps_ver == "3"){
 ########################
 # GOOGLE MAPS v3
 ########################

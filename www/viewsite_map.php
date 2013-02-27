@@ -14,6 +14,8 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
+require("include/check_login.php");
+
 $date_to_browse=filter_var($_GET["date_to_browse"], FILTER_SANITIZE_STRING);
 $usekml=filter_var($_GET["usekml"], FILTER_SANITIZE_NUMBER_INT);
 $nokml=filter_var($_GET["nokml"], FILTER_SANITIZE_NUMBER_INT);
