@@ -72,6 +72,13 @@ if ($from_detail == "1" && $SoundID != ""){
 
 	$filename = $wav_file;
 
+	#copy sound to tmp and then let download
+	copy($filename, "tmp/" . basename($filename));
+	$filename = "tmp/" . basename($filename);
+	header("Location: $filename");
+	die();
+	
+	/*
 	//From http://elouai.com/force-download.php
 	//Updated to automatically get the mime type from http://www.tuxradar.com/practicalphp/15/5/1
 
@@ -95,6 +102,7 @@ if ($from_detail == "1" && $SoundID != ""){
 	header("Content-Length: ".filesize($filename));
 	readfile("$filename");
 	die();
+	*/
 	}
 	
 // addition by Jorg Weske
@@ -157,17 +165,25 @@ if ($file_extension!="png") {
 		}
 	}
 
-
-header("Pragma: public"); // required
-header("Expires: 0");
-header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-header("Cache-Control: private",false); // required for certain browsers 
-header("Content-Type: $ctype");
-// change, added quotes to allow spaces in filenames, by Rajkumar Singh
-header("Content-Disposition: attachment; filename=\"".basename($filename)."\";" );
-header("Content-Transfer-Encoding: binary");
-header("Content-Length: ".filesize($filename));
-readfile("$filename");
-exit();
+if ($file_extension == "png") {
+	header("Pragma: public"); // required
+	header("Expires: 0");
+	header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+	header("Cache-Control: private",false); // required for certain browsers 
+	header("Content-Type: $ctype");
+	// change, added quotes to allow spaces in filenames, by Rajkumar Singh
+	header("Content-Disposition: attachment; filename=\"".basename($filename)."\";" );
+	header("Content-Transfer-Encoding: binary");
+	header("Content-Length: ".filesize($filename));
+	readfile("$filename");
+	exit();
+	}
+else{
+	#copy sound to tmp and then let download
+	copy($filename, "tmp/" . basename($filename));
+	$filename = "tmp/" . basename($filename);
+	header("Location: $filename");
+	die();
+	}
 
 ?>
