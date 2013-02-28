@@ -43,11 +43,6 @@ require("include/get_jqueryui.php");
 <div style="padding: 10px;">
 
 <?php
-#Check if user can edit files (i.e. has admin privileges)
-$username = $_COOKIE["username"];
-
-if (is_user_admin2($username, $connection)) {
-
 	echo "<p>";
 	if ($op == 1){
 		delete_old('tmp/',3);
@@ -245,10 +240,6 @@ if (is_user_admin2($username, $connection)) {
 		}
 
 	echo "<br><br><p><a href=\"#\" onClick=\"window.close();\">Close window</a>";
-	}
-else {
-	echo "<div class=\"notice\" >Only administrators can access this area.</div>";
-	}
 ?>
 
 </body>
