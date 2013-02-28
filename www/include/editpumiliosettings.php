@@ -29,10 +29,6 @@ require("include/check_admin.php");
 		query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('use_googlemaps', '$value') 
 				ON DUPLICATE KEY UPDATE Value='$value'", $connection);
 				
-		$value = filter_var($_POST["googlemaps_key"], FILTER_SANITIZE_STRING);
-		query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('googlemaps_key', '$value') 
-				ON DUPLICATE KEY UPDATE Value='$value'", $connection);
-				
 		$value = filter_var($_POST["googlemaps3_key"], FILTER_SANITIZE_STRING);
 		query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('googlemaps3_key', '$value') 
 				ON DUPLICATE KEY UPDATE Value='$value'", $connection);
