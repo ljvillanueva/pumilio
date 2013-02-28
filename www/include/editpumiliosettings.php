@@ -10,7 +10,7 @@ $Value = filter_var($_POST["Value"], FILTER_SANITIZE_STRING);
 $settings = filter_var($_POST["settings"], FILTER_SANITIZE_STRING);
 
 $force_admin = TRUE;
-require("include/check_admin.php");
+require("check_admin.php");
 
 	if ($settings == "top"){
 		$value = filter_var($_POST["app_custom_name"], FILTER_SANITIZE_STRING);
