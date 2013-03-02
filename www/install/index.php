@@ -1,7 +1,18 @@
 <?php
 
+
 require("../include/functions.php");
-require("../config.php");
+
+
+$config_file = '../config.php';
+
+if (file_exists($config_file)) {
+    require("../config.php");
+} else {
+    header("Location: ../error.php?e=config");
+    die();
+}
+
 require("apply_config.php");
 
 $e=filter_var($_GET["e"], FILTER_SANITIZE_NUMBER_INT);
