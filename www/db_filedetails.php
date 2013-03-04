@@ -702,14 +702,7 @@ else {
 			}
 		if ($guests_can_open || $pumilio_loggedin) {
 			echo "<p>";
-			if ($file_error == 1 || $special_noopen == TRUE) {
-				echo "<form method=\"get\" action=\"file_obtain.php\">
-				<input type=\"hidden\" name=\"fileid\" value=\"$SoundID\">
-				<input type=\"hidden\" name=\"method\" value=\"3\">
-				<input type=\"submit\" value=\" Open file \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\" DISABLED>
-				</form>";
-				}
-			elseif($special_noprocess == TRUE){
+			if ($file_error == 1 || $special_noopen == TRUE || $special_noprocess == TRUE){
 				}
 			else {
 				echo "<form method=\"get\" action=\"file_obtain.php\">
