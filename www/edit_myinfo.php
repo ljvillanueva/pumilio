@@ -135,33 +135,39 @@ if ($use_googleanalytics) {
 			<p>Use this page to edit your email address or password.
 
 			<?php
-			if ($d==1) {
-				echo "<p><div class=\"success\">Changes were applied successfully</div>";
+			if ($login_wordpress == TRUE){
+				$path_parts = pathinfo($wordpress_require);
+				$path_dir = $path_parts['dirname'];
+				echo "<div class=\"notice\">Your account is managed by Wordpress, change your information <a href=\"$path_dir/wp-admin/profile.php\">there</a>.</div>");
 				}
-			if ($d==3) {
-				echo "<p><div class=\"success\">Changes were applied successfully. Please log in to apply the changes.</div>";
-				echo "<br>
-				</div>
-				<div class=\"span-24 last\">";
+			else{
+				if ($d==1) {
+					echo "<p><div class=\"success\">Changes were applied successfully</div>";
+					}
+				if ($d==3) {
+					echo "<p><div class=\"success\">Changes were applied successfully. Please log in to apply the changes.</div>";
+					echo "<br>
+					</div>
+					<div class=\"span-24 last\">";
 	
-				require("include/bottom.php");
+					require("include/bottom.php");
 	
-				echo "</div>
-				</div>
-				</body></html>";
-				die();
-				}
+					echo "</div>
+					</div>
+					</body></html>";
+					die();
+					}
 
-			$result = mysqli_query($connection, "SELECT * FROM Users WHERE UserName='$username' LIMIT 1")
-				or die (mysqli_error($connection));
-			$row = mysqli_fetch_array($result);
-			if (mysqli_num_rows($result) == 1) {
-				extract($row);
+				$result = mysqli_query($connection, "SELECT * FROM Users WHERE UserName='$username' LIMIT 1")
+					or die (mysqli_error($connection));
+				$row = mysqli_fetch_array($result);
+				if (mysqli_num_rows($result) == 1) {
+					extract($row);
+					}
+				else {
+					die("<div class=\"error\">Your account could not be found or you are not logged in.</div>");
+					}
 				}
-			else {
-				die("<div class=\"error\">Your account could not be found or you are not logged in.</div>");
-				}
-
 			?>
 				<div id="tabs0">
 					<ul>
