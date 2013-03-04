@@ -138,7 +138,7 @@ if ($use_googleanalytics) {
 			if ($login_wordpress == TRUE){
 				$path_parts = pathinfo($wordpress_require);
 				$path_dir = $path_parts['dirname'];
-				echo "<div class=\"notice\">Your account is managed by Wordpress, change your information <a href=\"$path_dir/wp-admin/profile.php\">there</a>.</div>");
+				echo "<div class=\"notice\">Your account is managed by Wordpress, change your information <a href=\"$path_dir/wp-admin/profile.php\">there</a>.</div>";
 				}
 			else{
 				if ($d==1) {
