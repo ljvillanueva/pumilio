@@ -504,14 +504,14 @@ else {
 		 		}
 
 		#Quality flags
-		if ($pumilio_loggedin == TRUE) {
-			$QualityFlag=query_one("SELECT QualityFlag from QualityFlags WHERE QualityFlagID='$QualityFlagID'", $connection);
+		$QualityFlag=query_one("SELECT QualityFlag from QualityFlags WHERE QualityFlagID='$QualityFlagID'", $connection);
 
 			echo "<p>File Quality flag: <em title=\"$QualityFlag\">$QualityFlagID</em>";
 			if ($DerivedSound == "1"){
 				echo "<br>&nbsp;&nbsp;&nbsp; - Derived from: <a href=\"db_filedetails.php?SoundID=$DerivedFromSoundID\">$DerivedFromSoundID";
 				}
-
+		if ($pumilio_admin == TRUE) {
+			
 			echo "<div style=\"margin-left: 10px;\"><form method=\"GET\" action=\"editqf.php\" target=\"editqf\" onsubmit=\"window.open('', 'editqf', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
 				Edit the Quality Flag for this file:<br>
 				<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">";
@@ -541,12 +541,6 @@ else {
 			<input type=submit value=\" Change \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
 			</form></div>";
 			}
-		else {
-			if ($DerivedSound == "1"){
-				echo "<br>&nbsp;&nbsp;&nbsp; - Derived from: <a href=\"db_filedetails.php?SoundID=$DerivedFromSoundID\">$DerivedFromSoundID";
-				}
-			}
-
 
 
 		#tags

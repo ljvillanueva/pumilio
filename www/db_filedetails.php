@@ -527,23 +527,16 @@ else {
 				}
 
 			#File quality data
-			if ($pumilio_loggedin) {
-				$QualityFlag=query_one("SELECT QualityFlag from QualityFlags WHERE QualityFlagID='$QualityFlagID'", $connection);
-				echo "<p><strong>Record quality data</strong>:
-					<ul>";
-				echo "<li>Quality flag: $QualityFlagID ($QualityFlag)</li>";
-				if ($DerivedSound == "1"){
-					echo "<li>Derived from: <a href=\"db_filedetails.php?SoundID=$DerivedFromSoundID\">$DerivedFromSoundID</li>";
-					}
-				echo "</ul>";
+			$QualityFlag=query_one("SELECT QualityFlag from QualityFlags WHERE QualityFlagID='$QualityFlagID'", $connection);
+			echo "<p><strong>Record quality data</strong>:
+				<ul>";
+			echo "<li>Quality flag: $QualityFlagID ($QualityFlag)</li>";
+			if ($DerivedSound == "1"){
+				echo "<li>Derived from: <a href=\"db_filedetails.php?SoundID=$DerivedFromSoundID\">$DerivedFromSoundID</li>";
 				}
-			else {
-				if ($DerivedSound == "1"){
-					echo "<p>Derived from: <a href=\"db_filedetails.php?SoundID=$DerivedFromSoundID\">$DerivedFromSoundID</p>";
-					}
-				}
+			echo "</ul>";
 
-			if ($pumilio_loggedin) {
+			if ($pumilio_admin == TRUE) {
 				echo "<form method=\"GET\" action=\"editqf.php\" target=\"editqf\" onsubmit=\"window.open('', 'editqf', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
 				Edit the Quality Flag for this file:<br>
 				<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">";
