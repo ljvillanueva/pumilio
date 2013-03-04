@@ -346,8 +346,10 @@ else{
 			echo "<hr noshade></div>";
 			require("include/index_map_body.php");
 			if ($pumilio_loggedin == TRUE) {
-				echo "<hr noshade>
-				<p><strong><a href=\"add.php\">Add files to the archive</a></strong><br>";
+				if ($pumilio_admin == TRUE || $allow_upload){
+					echo "<hr noshade>
+					<p><strong><a href=\"add.php\">Add files to the archive</a></strong><br>";
+					}
 				}
 			}
 		else{
@@ -358,8 +360,10 @@ else{
 					<div>";
 				
 					if ($pumilio_loggedin == TRUE) {
-						echo "<p><strong><a href=\"add.php\">Add files to the archive</a></strong><br>
-						<hr noshade>";
+						if ($pumilio_admin == TRUE || $allow_upload){
+							echo "<p><strong><a href=\"add.php\">Add files to the archive</a></strong><br>
+							<hr noshade>";
+							}
 						}
 
 					require("include/db_select.php");
