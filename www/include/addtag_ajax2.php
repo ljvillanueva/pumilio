@@ -6,7 +6,7 @@ require("../config.php");
 require("apply_config.php");
 
 $force_loggedin = TRUE;
-require("include/check_login.php");
+require("check_login.php");
 
 $SoundID=filter_var($_GET["SoundID"], FILTER_SANITIZE_NUMBER_INT);
 $i=filter_var($_GET["this_i"], FILTER_SANITIZE_NUMBER_INT);

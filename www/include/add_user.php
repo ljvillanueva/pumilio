@@ -9,7 +9,7 @@ require("apply_config.php");
 $username = $_COOKIE["username"];
 
 $force_admin = TRUE;
-require("include/check_admin.php");
+require("check_admin.php");
 
 #Sanitize
 $UserName=filter_var($_POST["UserName"], FILTER_SANITIZE_STRING);

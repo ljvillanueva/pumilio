@@ -6,7 +6,7 @@ require("../config.php");
 require("apply_config.php");
 
 $force_admin = TRUE;
-require("include/check_admin.php");
+require("check_admin.php");
 
 #Sanitize
 $QualityFlagID=filter_var($_GET["QualityFlagID"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);

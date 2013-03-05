@@ -8,7 +8,7 @@ require("apply_config.php");
 set_time_limit(0);
 
 $force_admin = TRUE;
-require("include/check_admin.php");
+require("check_admin.php");
 
 echo "
 <html>
