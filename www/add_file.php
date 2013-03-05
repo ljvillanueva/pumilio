@@ -97,7 +97,7 @@ if ($use_googleanalytics)
 				echo "<input name=\"userfile\" type=\"file\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">&nbsp;&nbsp;";
 				$max=ini_get("upload_max_filesize");
 	
-				echo "<p>Site: <select name=\"SiteID\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">";
+				echo "<p>Site: <select name=\"SiteID\" class=\"ui-state-default ui-corner-all\">";
 
 				for ($i=0;$i<$nrowssites;$i++) {
 					$row = mysqli_fetch_array($resultsites);
