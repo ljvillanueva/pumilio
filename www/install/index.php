@@ -1,8 +1,6 @@
 <?php
 
-
 require("../include/functions.php");
-
 
 $config_file = '../config.php';
 
@@ -17,7 +15,7 @@ require("apply_config.php");
 
 $e=filter_var($_GET["e"], FILTER_SANITIZE_NUMBER_INT);
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 
@@ -107,24 +105,23 @@ echo "
 
 		<p><form method="GET" action="../include/soft_check.php" target="softcheck" onsubmit="window.open('', 'softcheck', 'width=600,height=700,status=yes,resizable=yes,scrollbars=yes')">
 			<input type=submit value=" Software and permissions check " class="fg-button ui-state-default ui-corner-all">
-			</form>
+		</form>
 
 		<p>Use this page to set up an administrative user. You can add more users from the administration
 			menu, once that user is logged in.
 
 		<form action="add_admin_user.php" method="POST" id="AddUserForm">
-		<p>UserName: <input type="text" name="UserName" maxlength="20" size="20" class="fg-button ui-state-default ui-corner-all"><br>
-		Full name of the user: <input type="text" name="UserFullname" maxlength="100" size="60" class="fg-button ui-state-default ui-corner-all"><br>
-		User email address: <input type="text" name="UserEmail" maxlength="100" size="60" class="fg-button ui-state-default ui-corner-all"><br>
-		User password: <input type="password" name="newpassword1" id="newpassword1" maxlength="20" size="20" class="fg-button ui-state-default ui-corner-all"><br>
-		Please retype the password:<input type="password" name="newpassword2" id="newpassword2" maxlength="20" size="20" class="fg-button ui-state-default ui-corner-all"><br>
-		<input type=submit value=" Add user " class="fg-button ui-state-default ui-corner-all">
-		<div class="notice">Make sure that the database listed in the configuration file,  
-		<?php
-			echo "<b>$database</b>, ";
-		?>
-			is not being used, its content will be deleted!</div>
-			
+			<p>UserName: <input type="text" name="UserName" maxlength="20" size="20" class="fg-button ui-state-default ui-corner-all"><br>
+			Full name of the user: <input type="text" name="UserFullname" maxlength="100" size="60" class="fg-button ui-state-default ui-corner-all"><br>
+			User email address: <input type="text" name="UserEmail" maxlength="100" size="60" class="fg-button ui-state-default ui-corner-all"><br>
+			User password: <input type="password" name="newpassword1" id="newpassword1" maxlength="20" size="20" class="fg-button ui-state-default ui-corner-all"><br>
+			Please retype the password:<input type="password" name="newpassword2" id="newpassword2" maxlength="20" size="20" class="fg-button ui-state-default ui-corner-all"><br>
+			<input type=submit value=" Add user " class="fg-button ui-state-default ui-corner-all">
+			<div class="notice">Make sure that the database listed in the configuration file,  
+			<?php
+				echo "<b>$database</b>, ";
+			?>
+				is not being used, its content will be deleted!</div>
 		</form>
 		</div>
 

@@ -21,10 +21,9 @@ require("include/check_admin.php");
 $SoundID=filter_var($_GET["SoundID"], FILTER_SANITIZE_NUMBER_INT);
 $newqf=filter_var($_GET["newqf"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
-
 <title>$app_custom_name</title>";
 
 #Get CSS

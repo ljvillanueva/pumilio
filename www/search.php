@@ -22,10 +22,11 @@ else {
 	$qf_check = "";
 	}
 
-echo "<html>
-<head>\n";
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+<html>
+<head>
+<title>$app_custom_name</title>";
 
-echo "<title>$app_custom_name</title>";
 require("include/get_css.php");
 
 echo "<!-- IE Fix for accordion http://dev.jqueryui.com/ticket/4444 -->
@@ -144,17 +145,17 @@ require("include/get_jqueryui.php");
 		</script>";
 
 if ($special_wrapper==TRUE){
-		$browse_map_link = "$wrapper";
-		$db_browse_link = "$wrapper";
-		$db_filedetails_link = "$wrapper";
-		$advancedsearch_link = "$wrapper";
-		}
-	else {
-		$browse_map_link = "browse_map.php";
-		$db_browse_link = "db_browse.php";
-		$db_filedetails_link = "db_filedetails.php";
-		$advancedsearch_link = "advancedsearch.php";
-		}
+	$browse_map_link = "$wrapper";
+	$db_browse_link = "$wrapper";
+	$db_filedetails_link = "$wrapper";
+	$advancedsearch_link = "$wrapper";
+	}
+else {
+	$browse_map_link = "browse_map.php";
+	$db_browse_link = "db_browse.php";
+	$db_filedetails_link = "db_filedetails.php";
+	$advancedsearch_link = "advancedsearch.php";
+	}
 		
 if ($use_googleanalytics) {
 	echo $googleanalytics_code;
@@ -183,7 +184,7 @@ echo "<body>";
 		</div>
 		<div class="span-24 last">
 			<?php
-			require("include/bottom.php");
+				require("include/bottom.php");
 			?>
 		</div>
 	</div>

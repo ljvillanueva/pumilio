@@ -17,14 +17,11 @@ require("include/apply_config.php");
 $force_loggedin = TRUE;
 require("include/check_login.php");
 
-?>
-
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
+<title>$app_custom_name - Sample the archive</title>";
 
-<?php
-
-echo "<title>$app_custom_name - Sample the archive</title>";
 require("include/get_css.php");
 require("include/get_jqueryui.php");
 
@@ -62,7 +59,7 @@ if ($use_googleanalytics) {
 
 			if ($nrows>0 && $no_sounds>0 && $no_marks>0) {
 				echo "<form action=\"include/export_csv.php\" method=\"POST\" id=\"csvform\" target=\"csv\" onsubmit=\"window.open('', 'csv', 'width=800,height=400,status=yes,resizable=yes,scrollbars=auto')\">
-				<select name=\"ColID\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">";
+				<select name=\"ColID\" class=\"ui-state-default ui-corner-all\">";
 
 				for ($i=0;$i<$nrows;$i++) {
 					$row = mysqli_fetch_array($result);
@@ -78,12 +75,12 @@ if ($use_googleanalytics) {
 					}
 
 				echo "</select> 
-				<input type=submit value=\" Get data \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"></form>";
+				<input type=submit value=\" Get data \" class=\"fg-button ui-state-default ui-corner-all\">
+				</form>";
 				}
 			else {
 				echo "<p>There is no data available yet.";
 				}
-
 			?>
 			
 		<br>

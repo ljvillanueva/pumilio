@@ -42,7 +42,7 @@ $process=filter_var($_POST["process"], FILTER_SANITIZE_STRING);
 $convert_to=filter_var($_POST["convert_to"], FILTER_SANITIZE_STRING);
 $samp=filter_var($_POST["samp"], FILTER_SANITIZE_NUMBER_INT);
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 

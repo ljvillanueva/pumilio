@@ -88,7 +88,7 @@ for ($k=0;$k<$files_to_process_counter;$k++) {
 		}
 
 	$result = mysqli_query($connection, $query_to_insert)
-			or die (mysqli_error($connection));
+		or die (mysqli_error($connection));
 
 	$SoundID=mysqli_insert_id($connection);
 	
@@ -110,7 +110,7 @@ for ($k=0;$k<$files_to_process_counter;$k++) {
 			$query_file = "UPDATE Sounds SET SamplingRate='$sampling_rate', Channels='$no_channels', 
 					Duration='$file_duration',SoundFormat='$file_format' WHERE SoundID='$SoundID' LIMIT 1";
 			$result_file = mysqli_query($connection, $query_file)
-					or die (mysqli_error($connection));
+				or die (mysqli_error($connection));
 			unset($lastline_file);
 			unset($query_file);
 			unset($retval);

@@ -37,6 +37,7 @@ else {
 		}
 
 	echo "</select>
-	<input type=submit value=\" Select \" class=\"fg-button ui-state-default ui-corner-all\"></form>";
+	<input type=submit value=\" Select \" class=\"fg-button ui-state-default ui-corner-all\">
+	</form>";
 	}
 ?>

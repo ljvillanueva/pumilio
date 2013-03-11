@@ -1,23 +1,20 @@
 <?php
 
-require("include/functions.php");
+require("functions.php");
 
-$config_file = 'config.php';
+$config_file = '../config.php';
 
 if (file_exists($config_file)) {
-    require("config.php");
+    require($config_file);
 } else {
-    header("Location: error.php?e=config");
+    header("Location: ../error.php?e=config");
     die();
 }
 
-require("include/apply_config.php");
-
-
+require("apply_config.php");
 $force_admin = TRUE;
-require("include/check_admin.php");
+require("check_admin.php");
 
-		
 $WeatherSiteID=filter_var($_POST["WeatherSiteID"], FILTER_SANITIZE_NUMBER_INT);
 
 	$query_file = "DELETE FROM WeatherData WHERE WeatherSiteID='$WeatherSiteID'";
@@ -25,9 +22,7 @@ $WeatherSiteID=filter_var($_POST["WeatherSiteID"], FILTER_SANITIZE_NUMBER_INT);
 		or die (mysqli_error($connection));
 	// Relocate back to where you came from
 
-	header("Location: admin.php?t=8");
+	header("Location: ../admin.php?t=6");
 	die();
-
-
 
 ?>

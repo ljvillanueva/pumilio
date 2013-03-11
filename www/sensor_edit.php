@@ -19,8 +19,14 @@ require("include/check_login.php");
 
 #Sanitize inputs
 $SensorID=filter_var($_GET["SensorID"], FILTER_SANITIZE_NUMBER_INT);
+if (isset($_GET["u"])){
+	$u=filter_var($_GET["u"], FILTER_SANITIZE_NUMBER_INT);
+	}
+else{
+	$u = 0;
+	}
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 
@@ -29,7 +35,6 @@ echo "
 require("include/get_css.php");
 require("include/get_jqueryui.php");
 ?>
-
 
 <script src="js/jquery.validate.js"></script>
 
@@ -127,7 +132,12 @@ if ($use_googleanalytics) {
 				extract($row);
 					
 				echo "<h3>Edit sensor to the database</h3>";
-				echo "<form action=\"sensor_edit2.php\" method=\"POST\" id=\"AddSensors\">
+				
+				if ($u==1) {
+					echo "<p><div class=\"success\">Sensor data was updated successfully.</div>";
+					}				
+				
+				echo "<form action=\"include/sensor_edit.php\" method=\"POST\" id=\"AddSensors\">
 					<input name=\"SensorID\" type=\"hidden\" value=\"$SensorID\">
 					<p>Sensor ID: $SensorID
 					<p>Recorder: <input type=\"text\" name=\"Recorder\" maxlength=\"100\" size=\"40\" class=\"fg-button ui-state-default ui-corner-all\" value=\"$Recorder\"><br>

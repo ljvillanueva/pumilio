@@ -13,7 +13,6 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 $force_loggedin = TRUE;
 require("include/check_login.php");
 
@@ -34,21 +33,18 @@ else {
 	$pageno=0;
 	}
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
-
-<title>$app_custom_name - Manage Jobs</title>
-";
+<title>$app_custom_name - Manage Jobs</title>\n";
 
 #Get CSS
 require("include/get_css.php");
 require("include/get_jqueryui.php");
-?>
 
-<?php
-if ($use_googleanalytics)
-	{echo $googleanalytics_code;}
+if ($use_googleanalytics){
+	echo $googleanalytics_code;
+	}
 ?>
 
 </head>
@@ -69,7 +65,7 @@ if ($reset == 1) {
 
 if ($c==1) {
 	$result1=mysqli_query($connection, "SELECT Queue.QueueID as QueueID FROM Queue, QueueJobs WHERE Queue.JobID='$JobID' AND Queue.JobID=QueueJobs.JobID")
-	or die (mysqli_error($connection));;
+		or die (mysqli_error($connection));
 	$nrows1 = mysqli_num_rows($result1);
 
 	for ($ii=0;$ii<$nrows1;$ii++) {
@@ -81,7 +77,7 @@ if ($c==1) {
 	}
 elseif ($c==2) {
 	$result1=mysqli_query($connection, "SELECT Queue.QueueID AS QueueID, Queue.Status AS CurrentStatus FROM Queue, QueueJobs WHERE Queue.JobID='$JobID' AND Queue.JobID=QueueJobs.JobID")
-	or die (mysqli_error($connection));;
+		or die (mysqli_error($connection));
 	$nrows1 = mysqli_num_rows($result1);
 
 	for ($ii=0;$ii<$nrows1;$ii++) {
@@ -106,7 +102,7 @@ if ($e==1) {
 	$result=mysqli_query($connection, "SELECT 
 		*, DATE_FORMAT(LastChange,'%d-%b-%y %T') AS LastChange_f, DATE_FORMAT(ClaimedDate,'%d-%b-%y %T') AS ClaimedDate_f, DATE_FORMAT(ProcessDoneDate,'%d-%b-%y %T') AS ProcessDoneDate_f, TIMEDIFF(ProcessDoneDate,ClaimedDate) AS RunningTime
 		FROM Queue, QueueJobs WHERE Queue.JobID='$JobID' AND Queue.JobID=QueueJobs.JobID AND Queue.Status='3' $query_limit")
-		or die (mysqli_error($connection));;
+		or die (mysqli_error($connection));
 	$nrows = mysqli_num_rows($result);
 
 	$JobName=query_one("SELECT JobName FROM QueueJobs WHERE JobID='$JobID' LIMIT 1", $connection);
@@ -209,7 +205,7 @@ elseif ($e==2) {
 	$result=mysqli_query($connection, "SELECT 
 		*, DATE_FORMAT(LastChange,'%d-%b-%y %T') AS LastChange_f, DATE_FORMAT(ClaimedDate,'%d-%b-%y %T') AS ClaimedDate_f, DATE_FORMAT(ProcessDoneDate,'%d-%b-%y %T') AS ProcessDoneDate_f, TIMEDIFF(ProcessDoneDate,ClaimedDate) AS RunningTime
 		FROM Queue, QueueJobs WHERE Queue.JobID='$JobID' AND Queue.JobID=QueueJobs.JobID AND Queue.Status='5' $query_limit")
-		or die (mysqli_error($connection));;
+		or die (mysqli_error($connection));
 	$nrows = mysqli_num_rows($result);
 
 	$JobName=query_one("SELECT JobName FROM QueueJobs WHERE JobID='$JobID' LIMIT 1", $connection);
@@ -313,7 +309,7 @@ elseif ($r==1) {
 			DATE_FORMAT(ProcessDoneDate,'%d-%b-%y %T') AS ProcessDoneDate_f, TIMEDIFF(ProcessDoneDate,ClaimedDate) AS RunningTime, 
 			TIME_TO_SEC(TIMEDIFF(NOW(), ClaimedDate)) AS JobRunning
 		FROM Queue, QueueJobs WHERE Queue.JobID='$JobID' AND Queue.JobID=QueueJobs.JobID AND Queue.Status='1' $query_limit")
-		or die (mysqli_error($connection));;
+		or die (mysqli_error($connection));
 	$nrows = mysqli_num_rows($result);
 
 	$JobName=query_one("SELECT JobName FROM QueueJobs WHERE JobID='$JobID' LIMIT 1", $connection);
@@ -442,7 +438,7 @@ elseif ($r==2) {
 	$result=mysqli_query($connection, "SELECT 
 		*, DATE_FORMAT(LastChange,'%d-%b-%y %T') AS LastChange_f, DATE_FORMAT(ClaimedDate,'%d-%b-%y %T') AS ClaimedDate_f, DATE_FORMAT(ProcessDoneDate,'%d-%b-%y %T') AS ProcessDoneDate_f, TIMEDIFF(ProcessDoneDate,ClaimedDate) AS RunningTime
 		FROM Queue, QueueJobs WHERE Queue.JobID='$JobID' AND Queue.JobID=QueueJobs.JobID AND Queue.ComputerDone='$machine' $query_limit")
-		or die (mysqli_error($connection));;
+		or die (mysqli_error($connection));
 	$nrows = mysqli_num_rows($result);
 
 	$JobName=query_one("SELECT JobName FROM QueueJobs WHERE JobID='$JobID' LIMIT 1", $connection);
@@ -575,7 +571,7 @@ else {
 	$result=mysqli_query($connection, "SELECT 
 		*, DATE_FORMAT(LastChange,'%d-%b-%y %T') AS LastChange_f, DATE_FORMAT(ClaimedDate,'%d-%b-%y %T') AS ClaimedDate_f, DATE_FORMAT(ProcessDoneDate,'%d-%b-%y %T') AS ProcessDoneDate_f, TIMEDIFF(ProcessDoneDate,ClaimedDate) AS RunningTime
 		FROM Queue, QueueJobs WHERE Queue.JobID='$JobID' AND Queue.JobID=QueueJobs.JobID $query_limit")
-		or die (mysqli_error($connection));;
+		or die (mysqli_error($connection));
 	$nrows = mysqli_num_rows($result);
 
 	$JobName=query_one("SELECT JobName FROM QueueJobs WHERE JobID='$JobID' LIMIT 1", $connection);
@@ -663,32 +659,34 @@ else {
 
 	echo "<p><strong>Change the priority for this job</strong>
 		<form method=\"GET\" action=\"managejobs.php\">
-		<input type=\"hidden\" name=\"c\" value=\"1\">
-		<input type=\"hidden\" name=\"JobID\" value=\"$JobID\">
-		New priority: <select name=\"Priority\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">";
-		for ($p=0;$p<4;$p++) {
-			if ($p==$Priority)
-				echo "<option value=\"$p\" SELECTED>$p</option>\n";
-			else
-				echo "<option value=\"$p\">$p</option>\n";
-			}
-		echo "</select> <p>Lower values have higher priority.
-		<p><input type=submit value=\" Change Priority \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"></form>";
+			<input type=\"hidden\" name=\"c\" value=\"1\">
+			<input type=\"hidden\" name=\"JobID\" value=\"$JobID\">
+			New priority: <select name=\"Priority\" class=\"ui-state-default ui-corner-all\">";
+			for ($p=0;$p<4;$p++) {
+				if ($p==$Priority)
+					echo "<option value=\"$p\" SELECTED>$p</option>\n";
+				else
+					echo "<option value=\"$p\">$p</option>\n";
+				}
+			echo "</select> <p>Lower values have higher priority.
+			<p><input type=submit value=\" Change Priority \" class=\"fg-button ui-state-default ui-corner-all\">
+		</form>";
 
 	echo "<hr noshade>";
 
 	echo "<p><strong>Change the status for this job</strong>
 		<form method=\"GET\" action=\"managejobs.php\">
-		<input type=\"hidden\" name=\"c\" value=\"2\">
-		<input type=\"hidden\" name=\"JobID\" value=\"$JobID\">
-		New status: <select name=\"Status\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">
+			<input type=\"hidden\" name=\"c\" value=\"2\">
+			<input type=\"hidden\" name=\"JobID\" value=\"$JobID\">
+			New status: <select name=\"Status\" class=\"ui-state-default ui-corner-all\">
 	
-			<option value=\"0\">Waiting</option>
-			<option value=\"4\">On Hold</option>
+				<option value=\"0\">Waiting</option>
+				<option value=\"4\">On Hold</option>
 		
-		</select> 
-		<p>Completed items will not be changed. To re-queue completed items, click on the SoundID.</p>
-		<p><input type=submit value=\" Change Status \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"></form>";
+			</select> 
+			<p>Completed items will not be changed. To re-queue completed items, click on the SoundID.</p>
+			<p><input type=submit value=\" Change Status \" class=\"fg-button ui-state-default ui-corner-all\">
+		</form>";
 	
 	echo "<hr noshade>";
 	}

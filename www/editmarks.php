@@ -27,10 +27,9 @@ if ($e==1) {
 		or die (mysqli_error($connection));
 	}
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
-
 <title>$app_custom_name - Edit Marks</title>";
 
 #Get CSS
@@ -59,17 +58,17 @@ echo "<h4>Edit mark for the file $SoundName (ID: $SoundID):</h4>";
 echo "
 
 <form action=\"editmarks.php\" method=\"GET\" id=\"EditForm\">
-<input name=\"e\" type=\"hidden\" value=\"1\">
-<input name=\"markID\" type=\"hidden\" value=\"$markID\">
-<input name=\"Token\" type=\"hidden\" value=\"$Token\">
-
-<p>$mark_tag_name:	&nbsp;<input name=\"markq\" type=\"text\" maxlength=\"200\" size=\"26\" value=\"$mark_tag\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"><br>
-ID:$marks_ID<br>
-Time: $time_min - $time_max sec<br>
-Frequency: $freq_min - $freq_max Hz<br><br>
-&nbsp;&nbsp;<input type=\"submit\" value=\" Edit Mark \"  class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">\n
+	<input name=\"e\" type=\"hidden\" value=\"1\">
+	<input name=\"markID\" type=\"hidden\" value=\"$markID\">
+	<input name=\"Token\" type=\"hidden\" value=\"$Token\">
+	<p>$mark_tag_name:
+		&nbsp;<input name=\"markq\" type=\"text\" maxlength=\"200\" size=\"26\" value=\"$mark_tag\" class=\"fg-button ui-state-default ui-corner-all\"><br>
+	ID:$marks_ID<br>
+	Time: $time_min - $time_max sec<br>
+	Frequency: $freq_min - $freq_max Hz<br><br>
+	&nbsp;&nbsp;
+	<input type=\"submit\" value=\" Edit Mark \"  class=\"fg-button ui-state-default ui-corner-all\">\n
 </form>";
-
 
 if ($e==1) {
 	echo "<br><br><p><a href=\"managemarks.php?Token=$Token\">Go back.</a>";

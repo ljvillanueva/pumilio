@@ -115,7 +115,7 @@ if ($startid=="")
 if ($display_type=="")
 	$display_type = "summary";
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 
@@ -505,7 +505,7 @@ if ($use_googleanalytics)
 				or die (mysqli_error($connection));
 			$nrows_q = mysqli_num_rows($result_q);
 
-			echo "<select name=\"SoundID\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\" >";
+			echo "<select name=\"SoundID\" class=\"ui-state-default ui-corner-all\">";
 
 			for ($q=0;$q<$nrows_q;$q++) {
 				$row_q = mysqli_fetch_array($result_q);
@@ -515,7 +515,8 @@ if ($use_googleanalytics)
 				}
 
 			echo "</select> 
-			<input type=submit value=\" Select \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"></form>
+			<input type=submit value=\" Select \" class=\"fg-button ui-state-default ui-corner-all\">
+			</form>
 			</div>";
 		?>
 
@@ -636,7 +637,7 @@ if ($use_googleanalytics)
 					<input type=\"hidden\" value=\"$Col\" name=\"Col\">
 					<input type=\"hidden\" value=\"$Col_comparison\" name=\"Col_comparison\">";
 
-				echo "<select name=\"startid\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\" >";
+				echo "<select name=\"startid\" class=\"ui-state-default ui-corner-all\">";
 
 				for ($p=0;$p<($no_pages+1);$p++) {
 					$this_p=$p+1;
@@ -650,8 +651,8 @@ if ($use_googleanalytics)
 					}
 
 				echo "</select> 
-				<input type=submit value=\" Select \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"></form>
-
+				<input type=submit value=\" Select \" class=\"fg-button ui-state-default ui-corner-all\">
+				</form>
 				</div>";
 
 			?>

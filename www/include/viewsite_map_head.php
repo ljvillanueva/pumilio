@@ -7,10 +7,8 @@ if ($googlemaps_ver == "3"){
 	echo "<script src=\"http://maps.googleapis.com/maps/api/js?key=$googlemaps3_key&sensor=false\" type=\"text/javascript\"></script>\n";
 	
 	echo "<script type=\"text/javascript\">
-
 	$(document).ready(function () { initialize();  });
-
-var sites = [\n";
+	var sites = [\n";
 
 		#Add error to the lat long for guests
 		if ($pumilio_loggedin == FALSE && $hide_latlon_guests) {
@@ -68,7 +66,6 @@ var sites = [\n";
 				}
 			}
 		else {
-
 		$SiteName=filter_var($SiteName, FILTER_SANITIZE_STRING);
 
 		if ($time_to_browse=="") {
@@ -81,9 +78,6 @@ var sites = [\n";
 				else {
 					$no_sounds_f = "$no_sounds sounds";
 					}
-				
-				
-				
 				
 				$query_by_dates = "SELECT DISTINCT DATE_FORMAT(Date,'%d-%b-%Y') AS Date_f, DATE_FORMAT(Time,'%h:%i %p') AS Time_f, SoundID, SoundName 
 					FROM Sounds

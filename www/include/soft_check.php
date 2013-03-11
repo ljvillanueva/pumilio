@@ -26,19 +26,7 @@
 			Please install by using this command: sudo apt-get install sox libsox*</div>";
 		}
 	else {
-		echo "<div class=\"success\"><strong>Sox is installed</strong>.";
-		/*
-		$out_formats=exec('sox -h | grep "FILE FORMATS:"', $out, $retval);
-		$formats_available=explode(" ", $out_formats);
-
-		//Display formats available for SoX
-		for ($f=3;$f<count($formats_available);$f++)
-				{
-				echo $formats_available[$f] . " ";
-				//Add function to insert the formats in MySQL
-				}
-		*/
-		echo "</div>";
+		echo "<div class=\"success\"><strong>Sox is installed</strong>.</div>";
 		}
 
 // Test if the required programs are installed.

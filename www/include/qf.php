@@ -1,14 +1,14 @@
 <?php
 
 //Custom name of the app
-if ($_GET["t"]==9) {
-	if ($_GET["u"]==1) {
+if ($t==9) {
+	if ($u==1) {
 		echo "<div class=\"success\">The database was updated.</div>";
 		}
-	elseif ($_GET["u"]==2) {
+	elseif ($u==2) {
 		echo "<div class=\"error\">The Quality Flag could not be added. Please try again.</div>";
 		}
-	elseif ($_GET["u"]==3) {
+	elseif ($u==3) {
 		echo "<div class=\"notice\">The Quality Flag already exists in the database.</div>";
 		}
 	}
@@ -34,14 +34,14 @@ echo "<p>
 		$row_qf = mysqli_fetch_array($result_qf);
 		extract($row_qf);
 		echo "	<tr>
-			<td>$QualityFlagID</td><td>&nbsp;</td><td>$QualityFlag</td><td>&nbsp;</td><td>";
-			if ($QualityFlagID=="0"){
-				echo " (default) ";
-				}
-			else {
-				echo "<a href=\"include/delqf.php?QualityFlagID=$QualityFlagID\"><img src=\"images/cross.png\"></a>";
-				}
-			echo "</td>
+		<td>$QualityFlagID</td><td>&nbsp;</td><td>$QualityFlag</td><td>&nbsp;</td><td>";
+		if ($QualityFlagID=="0"){
+			echo " (default) ";
+			}
+		else {
+			echo "<a href=\"include/delqf.php?QualityFlagID=$QualityFlagID\"><img src=\"images/cross.png\"></a>";
+			}
+		echo "</td>
 		</tr>";
 		}
 
@@ -49,14 +49,14 @@ echo "</table>
 </div>";
 
 echo "<p><form action=\"include/addqf.php\" method=\"POST\" id=\"AddQF\">Add new Quality Flags:<br>
-	Quality Flag Value:<br>
-		<input name=\"QualityFlagID\" type=\"text\" maxlength=\"4\" size=\"4\" class=\"fg-button ui-state-default ui-corner-all formedge\"> (Integer or decimal value)<br>
-	Quality Flag Meaning:<br>
-		<input name=\"QualityFlag\" type=\"text\" maxlength=\"40\" size=\"40\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>
-	<input type=\"submit\" value=\" Add quality flag \"  class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">
-</form><br><br>";
+		Quality Flag Value:<br>
+			<input name=\"QualityFlagID\" type=\"text\" maxlength=\"4\" size=\"4\" class=\"fg-button ui-state-default ui-corner-all formedge\"> (Integer or decimal value)<br>
+		Quality Flag Meaning:<br>
+			<input name=\"QualityFlag\" type=\"text\" maxlength=\"40\" size=\"40\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>
+		<input type=\"submit\" value=\" Add quality flag \"  class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">
+	</form><br><br>";
 
-if ($_GET["u"]==4) {
+if ($u==4) {
 	echo "<div class=\"success\">The database was updated.</div>";
 	}
 
@@ -72,17 +72,16 @@ echo "<p><form action=\"include/editqfdefault.php\" method=\"POST\" id=\"EditQFD
 
 	echo "<select name=\"defaultqf\" class=\"ui-state-default ui-corner-all formedge\">";
 
-	for ($f=0;$f<$nrows_qf;$f++) {
-		$row_qf = mysqli_fetch_array($result_qf);
-		extract($row_qf);
-		if ($QualityFlagID == $default_qf){
-			echo "<option value=\"$QualityFlagID\" SELECTED>$QualityFlagID: $QualityFlag</option>\n";
+		for ($f=0;$f<$nrows_qf;$f++) {
+			$row_qf = mysqli_fetch_array($result_qf);
+			extract($row_qf);
+			if ($QualityFlagID == $default_qf){
+				echo "<option value=\"$QualityFlagID\" SELECTED>$QualityFlagID: $QualityFlag</option>\n";
+				}
+			else {
+				echo "<option value=\"$QualityFlagID\">$QualityFlagID: $QualityFlag</option>\n";
+				}
 			}
-		else {
-			echo "<option value=\"$QualityFlagID\">$QualityFlagID: $QualityFlag</option>\n";
-			}
-
-		}
 
 	echo "</select><br>
 	<input type=submit value=\" Change \" class=\"fg-button ui-state-default ui-corner-all\">

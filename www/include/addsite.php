@@ -13,22 +13,20 @@ if (file_exists($config_file)) {
 }
 
 require("apply_config.php");
-
 $force_admin = TRUE;
 require("check_admin.php");
 
-?>
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
-<head>
+<head>";
 
-<?php
- require("get_css_include.php");
- require("get_jqueryui_include.php");
+require("get_css_include.php");
+require("get_jqueryui_include.php");
 ?>
 	
 	<script src="../js/jquery.validate.js"></script>
 
-<!-- Form validation from http://bassistance.de/jquery-plugins/jquery-plugin-validation/ -->
+	<!-- Form validation from http://bassistance.de/jquery-plugins/jquery-plugin-validation/ -->
 
 	<script type="text/javascript">
 	$().ready(function() {
@@ -117,13 +115,15 @@ require("check_admin.php");
 
 
 echo "<h3>Add a site to the database</h3>
-	<p><form action=\"addsite.php\" method=\"POST\" id=\"AddForm\">
-	<input name=\"submitted\" type=\"hidden\" value=\"1\">
-	Name of the site: <input name=\"SiteName\" type=\"text\" maxlength=\"60\" size=\"40\" class=\"fg-button ui-state-default ui-corner-all\"><br>
-	Notes about this site: <input name=\"SiteNotes\" type=\"text\" maxlength=\"60\" size=\"40\" class=\"fg-button ui-state-default ui-corner-all\"><br>
-	Latitude: <input name=\"SiteLat\" type=\"text\" maxlength=\"20\" size=\"24\" class=\"fg-button ui-state-default ui-corner-all\"> (decimal degrees)<br>
-	Longitude: <input name=\"SiteLon\" type=\"text\" maxlength=\"20\" size=\"24\" class=\"fg-button ui-state-default ui-corner-all\"> (decimal degrees)<br>
-	<input type=\"submit\" value=\" Add site \" class=\"fg-button ui-state-default ui-corner-all\"></form>
+	<p>
+	<form action=\"addsite.php\" method=\"POST\" id=\"AddForm\">
+		<input name=\"submitted\" type=\"hidden\" value=\"1\">
+		Name of the site: <input name=\"SiteName\" type=\"text\" maxlength=\"60\" size=\"40\" class=\"fg-button ui-state-default ui-corner-all\"><br>
+		Notes about this site: <input name=\"SiteNotes\" type=\"text\" maxlength=\"60\" size=\"40\" class=\"fg-button ui-state-default ui-corner-all\"><br>
+		Latitude: <input name=\"SiteLat\" type=\"text\" maxlength=\"20\" size=\"24\" class=\"fg-button ui-state-default ui-corner-all\"> (decimal degrees)<br>
+		Longitude: <input name=\"SiteLon\" type=\"text\" maxlength=\"20\" size=\"24\" class=\"fg-button ui-state-default ui-corner-all\"> (decimal degrees)<br>
+		<input type=\"submit\" value=\" Add site \" class=\"fg-button ui-state-default ui-corner-all\">
+	</form>
 	
 	<br><br><p><a href=\"#\" onClick=\"window.close();\">Cancel and close window</a>";
 

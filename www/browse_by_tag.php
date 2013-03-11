@@ -13,25 +13,42 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 require("include/check_login.php");
 
 #Sanitize inputs
 $Tagq=filter_var($_GET["Tag"], FILTER_SANITIZE_STRING);
-$SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
-$startid=filter_var($_GET["startid"], FILTER_SANITIZE_NUMBER_INT);
-$order_by=filter_var($_GET["order_by"], FILTER_SANITIZE_STRING);
-$order_dir=filter_var($_GET["order_dir"], FILTER_SANITIZE_STRING);
-$display_type=filter_var($_GET["display_type"], FILTER_SANITIZE_STRING);
+if (isset($_GET["SiteID"])){
+	$SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
+	}
 
-if ($startid=="")
+if (isset($_GET["startid"])){
+	$startid=filter_var($_GET["startid"], FILTER_SANITIZE_NUMBER_INT);
+	}
+else{
 	$startid=1;
-if ($order_by=="")
+	}
+
+if (isset($_GET["order_by"])){
+	$order_by=filter_var($_GET["order_by"], FILTER_SANITIZE_STRING);
+	}
+else{
 	$order_by = "Date";
-if ($order_dir=="")
+	}
+
+if (isset($_GET["order_dir"])){
+	$order_dir=filter_var($_GET["order_dir"], FILTER_SANITIZE_STRING);
+	}
+else{
 	$order_dir = "ASC";
-if ($display_type=="")
+	}
+	
+if (isset($_GET["display_type"])){
+	$display_type=filter_var($_GET["display_type"], FILTER_SANITIZE_STRING);
+	}
+else{
 	$display_type = "summary";
+	}
+	
 
 if ($order_by=="Date")
 	$order_byq = "Date $order_dir, Time";
@@ -47,7 +64,7 @@ else
 		$qf_check = "";
 		}
 		
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 
@@ -272,7 +289,7 @@ if ($use_googleanalytics) {
 					or die (mysqli_error($connection));
 				$nrows_q = mysqli_num_rows($result_q);
 
-				echo "<select name=\"SoundID\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\" >";
+				echo "<select name=\"SoundID\" class=\"ui-state-default ui-corner-all\">";
 
 				for ($q=0;$q<$nrows_q;$q++) {
 					$row_q = mysqli_fetch_array($result_q);
@@ -282,7 +299,7 @@ if ($use_googleanalytics) {
 					}
 
 				echo "</select> 
-				<input type=submit value=\" Select \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"></form>
+				<input type=submit value=\" Select \" class=\"fg-button ui-state-default ui-corner-all\"></form>
 				</div>";
 
 				?>
@@ -318,7 +335,7 @@ if ($use_googleanalytics) {
 						<input type=\"hidden\" name=\"order_dir\" value=\"$order_dir\">
 						<input type=\"hidden\" name=\"display_type\" value=\"$display_type\">";
 
-					echo "<select name=\"startid\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\" >";
+					echo "<select name=\"startid\" class=\"ui-state-default ui-corner-all\">";
 
 					for ($p=0;$p<($no_pages+1);$p++) {
 						$this_p=$p+1;
@@ -332,7 +349,8 @@ if ($use_googleanalytics) {
 						}
 
 					echo "</select> 
-					<input type=submit value=\" Select \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"></form>
+					<input type=submit value=\" Select \" class=\"fg-button ui-state-default ui-corner-all\">
+					</form>
 					</div>";
 
 			?>

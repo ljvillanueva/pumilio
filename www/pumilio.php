@@ -14,7 +14,6 @@ else {
 	}
 
 require("include/apply_config.php");
-
 require("include/check_login.php");
 
 $Token=filter_var($_GET["Token"], FILTER_SANITIZE_STRING);
@@ -70,7 +69,7 @@ if (isset($_GET["showmarks"])) {
 
 #Check if cookies are empty
 if ($soundfile_name=="") {
-	echo "
+	echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 	<html>
 	<head>
 	<title>$app_custom_name - Pumilio Viewer</title>
@@ -181,7 +180,7 @@ $player_file_duration = $time_max-$time_min;
 $player_file=$fileName_exp[0] . '_' . $frequency_min . '-' . $frequency_max . '_' . $time_min . '-' . $time_max . '.mp3';
 
 		
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 <script type=\"text/javascript\" src=\"mediaplayer/swfobject.js\"></script>
@@ -343,7 +342,7 @@ if ($use_googleanalytics) {
 			
 			<?php
 			echo "<form id=\"myForm2\" action=\"include/gettool.php\" method=\"get\">";
-			echo "<select name=\"tool\" class=\"ui-state-default ui-corner-all\" style=\"font-size:10px\">";
+			echo "<select name=\"tool\" class=\"ui-state-default ui-corner-all\">";
 
 			//Space to include custom icons from addons
  			$dir="tools/";
@@ -364,7 +363,7 @@ if ($use_googleanalytics) {
  			//End addons
 
 			echo "</select>
-			<input type=submit value=\" Select tool \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\"></form>
+			<input type=submit value=\" Select tool \" class=\"fg-button ui-state-default ui-corner-all\"></form>
 			";
 
 			?>
@@ -385,7 +384,7 @@ if ($use_googleanalytics) {
 			if ($no_channels==2) {
 				echo "<form id=\"form\" action=\"pumilio.php\" method=\"get\">
 					<input type=\"hidden\" name=\"Token\" value=\"$Token\">
-				Channel: <select name=\"ch\" id=\"selectchannel\" class=\"ui-state-default ui-corner-all\" style=\"font-size:10px\" onChange=\"this.form.submit();\">";
+				Channel: <select name=\"ch\" id=\"selectchannel\" class=\"ui-state-default ui-corner-all\" onChange=\"this.form.submit();\">";
 				if ($ch=="1") {
 					echo "<option value=\"1\" SELECTED>LEFT</option>
 					<option value=\"2\">RIGHT</option>";
@@ -394,10 +393,11 @@ if ($use_googleanalytics) {
 					echo "<option value=\"1\">LEFT</option>
 					<option value=\"2\" SELECTED>RIGHT</option>";
 					}
-				echo "</select></form>";
+				echo "</select>
+				</form>";
 				}
 			else {
-				echo "Channel: <select name=\"ch\" id=\"selectchannel\" class=\"ui-state-default ui-corner-all\" style=\"font-size:10px\" DISABLED><option value=\"1\" SELECTED>MONO</option></select>";
+				echo "Channel: <select name=\"ch\" id=\"selectchannel\" class=\"ui-state-default ui-corner-all\" DISABLED><option value=\"1\" SELECTED>MONO</option></select>";
 				}
 			?>
 		</div>
@@ -407,9 +407,8 @@ if ($use_googleanalytics) {
 				<a href=\"dl.php?file=tmp/$random_cookie/$imgfile\" title=\"Download spectrogram\"><img src=\"images/action_save.gif\" alt=\"Download spectrogram\"></a>
 				<a href=\"convert.php?Token=$Token\" class=\"small\" title=\"Convert file\"><img src=\"images/drive_go.png\" alt=\"Convert file\"></a>
 				<a href=\"file_details.php?Token=$Token\" class=\"small\" title=\"File details\"><img src=\"images/information.png\" alt=\"File details\"></a>
-				<a href=\"settings.php?Token=$Token\" title=\"Visualization settings\"><img src=\"images/wrench.png\" alt=\"Visualization settings\"></a>";
-
-			echo "<a href=\"closefile.php?Token=$Token\" class=\"small\" title=\"Close file\"><img src=\"images/cross.png\" alt=\"Close file\"></a>";
+				<a href=\"settings.php?Token=$Token\" title=\"Visualization settings\"><img src=\"images/wrench.png\" alt=\"Visualization settings\"></a>
+				<a href=\"closefile.php?Token=$Token\" class=\"small\" title=\"Close file\"><img src=\"images/cross.png\" alt=\"Close file\"></a>";
 			?>
 		</div>
 
@@ -533,7 +532,7 @@ if ($use_googleanalytics) {
 					require("include/managetagsp.php");
 					echo "&nbsp;&nbsp;&nbsp;Add tags:
 						<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-						<input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
+						<input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\">
 						<INPUT TYPE=\"image\" src=\"images/tag_blue_add.png\" BORDER=\"0\" alt=\"Add new tag\" alt=\"Add new tag\">
 						<em>Separate tags with a space</em></form><br></div>
 						\n\n";

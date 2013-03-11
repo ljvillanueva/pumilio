@@ -24,10 +24,9 @@ if ($show_spectrogram==""){
 
 $valid_id=query_one("SELECT COUNT(*) FROM Sounds WHERE SoundID='$SoundID'", $connection);
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
-
 <title>$app_custom_name</title>";
 
 require("include/get_css.php");

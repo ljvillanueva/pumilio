@@ -19,7 +19,7 @@ else {
 	$db_filedetails_link = "db_filedetails.php?";
 	}
 
-if ($admin==TRUE && $mobile==FALSE){
+if ($pumilio_admin==TRUE && $mobile==FALSE){
 	$mult_delete=TRUE;
 	}
 else {
@@ -243,24 +243,28 @@ for ($i=0;$i<$nrows;$i++) {
 	if (isset($Date_h) && $Date_h!="") {
 		echo "<br>$Date_h | $Time";
 		}
-			
+	
+if (!isset($show_tags)){
+	$show_tags = 0;
+	}
+
 if ($show_tags=="1") {
 	#Tags
 	if ($pumilio_loggedin == TRUE) {
-	echo "<div id=\"tagspace$i\">
+		echo "<div id=\"tagspace$i\">
 		<form method=\"get\" action=\"include/addtag_ajax.php\" id=\"addtags$i\">";
-	$where_to = $_SERVER['PHP_SELF'];
-	$where_toq = $_SERVER['QUERY_STRING'];
+			$where_to = $_SERVER['PHP_SELF'];
+			$where_toq = $_SERVER['QUERY_STRING'];
 
-	require("include/managetags.php");
+			require("include/managetags.php");
 
-	echo "<p>Add tags:
-		<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-		<input type=\"hidden\" name=\"this_i\" value=\"$i\">
-		<input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
-		<INPUT TYPE=\"image\" src=\"images/tag_blue_add.png\" BORDER=\"0\" alt=\"Add new tag\"></form><br>
-		</div>
-		\n\n";
+			echo "<p>Add tags:
+			<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
+			<input type=\"hidden\" name=\"this_i\" value=\"$i\">
+			<input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\">
+			<INPUT TYPE=\"image\" src=\"images/tag_blue_add.png\" BORDER=\"0\" alt=\"Add new tag\">
+		</form><br>
+		</div>\n\n";
 		}
 	else {
 		require("include/gettags.php");
@@ -280,7 +284,7 @@ if ($mult_delete==TRUE){
 			<input type=\"checkbox\" id=\"selectall\"/>Select all 
 			<input name=\"where_to\" type=\"hidden\" value=\"$self?$q\">
 			<input type=submit value=\" Delete selected files \" class=\"fg-button ui-state-default ui-corner-all\">
-			</form></div>
+		</form></div>
 	<div class=\"span-8 last\">&nbsp;</div>";
 	}
 

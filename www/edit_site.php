@@ -21,10 +21,9 @@ require("include/check_admin.php");
 $SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
 $d=filter_var($_GET["d"], FILTER_SANITIZE_NUMBER_INT);
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
-
 <title>$app_custom_name - Edit Site Info</title>";
 
 require("include/get_css.php");
@@ -66,8 +65,9 @@ require("include/get_jqueryui.php");
 	</style>
 
 <?php
-if ($use_googleanalytics)
-	{echo $googleanalytics_code;}
+if ($use_googleanalytics){
+	echo $googleanalytics_code;
+	}
 ?>
 
 </head>

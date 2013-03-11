@@ -93,6 +93,7 @@ function delete_old($dir,$days) {
 
 
 function player_file_mp3($file_in,$samplingrate,$file_out,$random_cookie) {
+	$retval = 0;
 	if ($samplingrate!=44100) {
 		if ($samplingrate>44100) {
 			$to_SamplingRate=44100;

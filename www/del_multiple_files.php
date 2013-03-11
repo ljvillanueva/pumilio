@@ -13,15 +13,15 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 $force_admin = TRUE;
 require("include/check_admin.php");
 
 $SoundIDs=$_POST['SoundIDs'];
 $where_to=filter_var($_POST["where_to"], FILTER_SANITIZE_URL);
 
-echo "<html>
-	<head>
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+<html>
+<head>
 <title>$app_custom_name - Delete file</title>";
 
 require("include/get_css.php");

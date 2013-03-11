@@ -40,10 +40,9 @@ $DateFrom_q=$DateFrom;
 $DateTo_q=$DateTo;
 $data_q=$data;
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
-
 <title>$app_custom_name - Quality Control figures</title>";
 
 require("include/get_css.php");
@@ -120,7 +119,7 @@ if ($type != ""){
 				Sounds.SoundID=SoundsStatsResults.SoundID AND
 				SoundsStatsResults.Stat='$data'
 				ORDER BY Date, Time";
-#			echo $query;
+			#echo $query;
 			}
 		else{
 			$query = "SELECT SoundID, QualityFlagID, $data AS this_data, 
@@ -251,7 +250,6 @@ if ($use_googleanalytics) {
 			echo "<div class=\"success\" id=\"updated_div\">The database was updated.</div>";
 			}
 			
-		
 		echo "<div style=\"margin-left: 10px;\">";
 				
 		//Select a sound collection

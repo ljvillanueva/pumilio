@@ -1,5 +1,4 @@
 <?php
-
 #Not very elegant, but it works
 # Try to find a better way to do these scales
 

@@ -19,6 +19,11 @@ else {
 		}
 	}
 
+
+if (!isset($force_loggedin)){
+	$force_loggedin = FALSE;
+	}
+
 if ($force_loggedin == TRUE && $pumilio_loggedin == FALSE){
 	header("Location: error.php?e=login");
 	die();

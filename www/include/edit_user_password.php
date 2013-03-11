@@ -8,7 +8,7 @@ require("apply_config.php");
 $force_loggedin = TRUE;
 require("check_login.php");
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 

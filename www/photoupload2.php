@@ -13,7 +13,6 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 $force_loggedin = TRUE;
 require("include/check_login.php");
 
@@ -21,16 +20,19 @@ $SiteID=filter_var($_POST["SiteID"], FILTER_SANITIZE_NUMBER_INT);
 $photodir=filter_var($_POST["photodir"], FILTER_SANITIZE_STRING);
 $photonotes=filter_var($_POST["photonotes"], FILTER_SANITIZE_STRING);
 
-if ($photodir=="")
+if ($photodir==""){
 	$photodir="NULL";
-if ($photonotes=="")
+	}
+if ($photonotes==""){
 	$photonotes="NULL";
+	}
 		
 $random_cookie=mt_rand();
 
 
-echo "	<html>
-	<head>
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+<html>
+<head>
 <title>$app_custom_name - Upload photograph</title>";
 
 require("include/get_css.php");
@@ -44,10 +46,6 @@ if ($use_googleanalytics) {
 </head>
 <body>
 
-	<!-- Scripts for Javascript tooltip from http://www.walterzorn.com/tooltip/tooltip_e.htm -->
-	<script type="text/javascript" src="include/wz_tooltip/wz_tooltip.js"></script>
-
-
 	<!--Blueprint container-->
 	<div class="container">
 		<?php
@@ -58,7 +56,7 @@ if ($use_googleanalytics) {
 		</div>
 		<div class="span-24 last">
 
-			<?php
+		<?php
 
 			if (($_FILES['userfile']['type'] == "image/jpeg") || ($_FILES['userfile']['type'] == "image/pjpeg")) {
 				$target_path = "sitephotos/$SiteID/";

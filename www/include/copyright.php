@@ -2,11 +2,25 @@
 <head>
 <title>Pumilio - Copyright Statement</title>
 
-<?php
-require("../config.php");
-require("get_css_include.php");
-require("get_jqueryui_include.php");
-?>
+
+<!-- JQuery -->
+<link type="text/css" href="../js/jquery/cupertino/jquery-ui-1.7.3.custom.css" rel="stylesheet">
+
+<link type="text/css" href="../js/jquery/jquery.custom.css" rel="stylesheet">
+<link type="text/css" href="../js/jquery/jquery.css.custom.css" rel="stylesheet">
+
+<!-- Blueprint -->
+<link rel="stylesheet" href="../css/screen.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="../css/print.css" type="text/css" media="print">	
+<!--[if IE]><link rel="stylesheet" href="../css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu">
+
+<!-- Scripts for JQuery -->
+	<script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="../js/jquery/jquery-ui-1.7.3.custom.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.fg-button.js"></script>
+
+<link rel="stylesheet" href="../css/custom.css" type="text/css" media="screen, projection">
 
 </head>
 <body>
@@ -14,7 +28,7 @@ require("get_jqueryui_include.php");
 <div style="padding: 10px;">
 
 <h4>Pumilio - A sound archive manager and visualization web application.
-    <br>Copyright (&copy;) 2010-2012 Luis J. Villanueva-Rivera (lvillanu@purdue.edu)</h4>
+    <br>Copyright (&copy;) 2010-2013 Luis J. Villanueva-Rivera (lvillanu@purdue.edu)</h4>
 
 <p><strong>Citation</strong>: Villanueva-Rivera, Luis J., and Bryan C. Pijanowski. 2012. Pumilio: A Web-Based Management System for Ecological Recordings. Bulletin of the Ecological Society of America 93: 71-81. doi: 10.1890/0012-9623-93.1.71</p>
 

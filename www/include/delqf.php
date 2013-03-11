@@ -22,12 +22,12 @@ if ($flag_check==0) {
 	}
 			
 $query = ("DELETE FROM QualityFlags WHERE QualityFlagID='$QualityFlagID'");
-	$result = mysqli_query($connection, $query)
-		or die (mysqli_error($connection));
+$result = mysqli_query($connection, $query)
+	or die (mysqli_error($connection));
 
 $query = ("UPDATE QualityFlags SET QualityFlagID='0' WHERE QualityFlagID='$QualityFlagID'");
-	$result = mysqli_query($connection, $query)
-		or die (mysqli_error($connection));
+$result = mysqli_query($connection, $query)
+	or die (mysqli_error($connection));
 	
 // Relocate back to the first page of the application
 	header("Location: ../admin.php?t=9");

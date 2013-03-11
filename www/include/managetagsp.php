@@ -10,9 +10,6 @@ if ($nrows_tags>0){
 		extract($row_tags);
 
 		echo "$Tag<a href=\"include/deletetagp.php?TagID=$TagID&SoundID=$SoundID\" title=\"Delete tag\"><img src=\"images/tag_blue_delete.png\"></a> ";
-		#if (($t+1)!=$nrows_tags)
-		#	echo ", ";
-
 		}
 	echo "<br>";
 	}

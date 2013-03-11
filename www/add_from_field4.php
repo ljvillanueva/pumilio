@@ -13,7 +13,6 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 $force_loggedin = TRUE;
 require("include/check_login.php");
 
@@ -50,17 +49,17 @@ if ($codedhour == "") {
 if ($codedminutes == "") {
 	$codeerror=1;}
 	
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
-
 <title>$app_custom_name - Add files from the field</title>";
 
 require("include/get_css.php");
 require("include/get_jqueryui.php");
 
-if ($use_googleanalytics)
-	{echo $googleanalytics_code;}
+if ($use_googleanalytics){
+	echo $googleanalytics_code;
+	}
 ?>
 
 </head>
@@ -151,27 +150,28 @@ if ($use_googleanalytics)
 				&nbsp;&nbsp; Seconds: $secondscoded<br>";
 				
 				echo "<form action=\"add_manager.php\" method=\"POST\">";
-				echo "<input type=\"hidden\" name=\"dir\" value=\"$dir\">
-				<input type=\"hidden\" name=\"files_to_process_counter\" value=\"$files_to_process_counter\">
-				<input type=\"hidden\" name=\"codedyear\" value=\"$codedyear\">
-				<input type=\"hidden\" name=\"codedmonth\" value=\"$codedmonth\">
-				<input type=\"hidden\" name=\"codedday\" value=\"$codedday\">
-				<input type=\"hidden\" name=\"codedhour\" value=\"$codedhour\">
-				<input type=\"hidden\" name=\"codedminutes\" value=\"$codedminutes\">
-				<input type=\"hidden\" name=\"codedseconds\" value=\"$codedseconds\">
+					echo "<input type=\"hidden\" name=\"dir\" value=\"$dir\">
+					<input type=\"hidden\" name=\"files_to_process_counter\" value=\"$files_to_process_counter\">
+					<input type=\"hidden\" name=\"codedyear\" value=\"$codedyear\">
+					<input type=\"hidden\" name=\"codedmonth\" value=\"$codedmonth\">
+					<input type=\"hidden\" name=\"codedday\" value=\"$codedday\">
+					<input type=\"hidden\" name=\"codedhour\" value=\"$codedhour\">
+					<input type=\"hidden\" name=\"codedminutes\" value=\"$codedminutes\">
+					<input type=\"hidden\" name=\"codedseconds\" value=\"$codedseconds\">
 				
-				<input type=\"hidden\" name=\"ColID\" value=\"$ColID\">
-				<input type=\"hidden\" name=\"SiteID\" value=\"$SiteID\">
-				<input type=\"hidden\" name=\"SensorID\" value=\"$SensorID\">";
+					<input type=\"hidden\" name=\"ColID\" value=\"$ColID\">
+					<input type=\"hidden\" name=\"SiteID\" value=\"$SiteID\">
+					<input type=\"hidden\" name=\"SensorID\" value=\"$SensorID\">";
 				
-				if ($sm==1) {
-					echo "<p>If the files is coded in another format, use the <a href=\"add_from_field.php\">regular import</a>.";
-					}
+					if ($sm==1) {
+						echo "<p>If the files is coded in another format, use the <a href=\"add_from_field.php\">regular import</a>.";
+						}
 				
-				echo "<br><br>
-				<strong>If there is an error in the fields, go back to fix them.</strong><br><br>
-				<input type=\"hidden\" name=\"sm\" value=\"$sm\">
-				<input type=submit id=\"this_form_submit\" value=\" Insert to database \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\" onclick=\"this.value='Please wait...'; return true;\"></form>\n";
+					echo "<br><br>
+					<strong>If there is an error in the fields, go back to fix them.</strong><br><br>
+					<input type=\"hidden\" name=\"sm\" value=\"$sm\">
+					<input type=submit id=\"this_form_submit\" value=\" Insert to database \" class=\"fg-button ui-state-default ui-corner-all\" onclick=\"this.value='Please wait...'; return true;\">
+				</form>\n";
 
 				echo "<br><br>";
 				}

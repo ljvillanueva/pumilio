@@ -6,25 +6,35 @@ require("include/functions.php");
 $config_file = 'config.php';
 
 if (file_exists($config_file)) {
-	require("config.php");
+	require($config_file);
 } else {
 	header("Location: error.php?e=config");
 	die();
 }
 
 require("include/apply_config.php");
-
-
 $force_admin = TRUE;
 require("include/check_admin.php");
 
-
 $u=filter_var($_GET["u"], FILTER_SANITIZE_NUMBER_INT);
 
-echo "
+if (!isset($_GET["t"])){
+	$t = 0;
+	}
+else{
+	$t = $_GET["t"];
+	}
+	
+if (!isset($_GET["tt"])){
+	$tt = 0;
+	}
+else{
+	$tt = $_GET["tt"];
+	}
+
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
-
 <title>$app_custom_name - Administration Area</title>";
 
 #Get CSS
@@ -276,47 +286,47 @@ require("include/get_jqueryui.php");
 
 <?php
 						
-if ($_GET["t"]==9) {
+if ($t==9) {
 	echo "$(function() {
 		$(\"#tabs0\").tabs({ selected: 8 });
 		});";
 	}
-elseif ($_GET["t"]==8) {
+elseif ($t==8) {
 	echo "$(function() {
 		$(\"#tabs0\").tabs({ selected: 7 });
 		});";
 	}
-elseif ($_GET["t"]==7) {
+elseif ($t==7) {
 	echo "$(function() {
 		$(\"#tabs0\").tabs({ selected: 6 });
 		});";
 	}
-elseif ($_GET["t"]==6) {
+elseif ($t==6) {
 	echo "$(function() {
 		$(\"#tabs0\").tabs({ selected: 5 });
 		});";
 	}
-elseif ($_GET["t"]==5) {
+elseif ($t==5) {
 	echo "$(function() {
 		$(\"#tabs0\").tabs({ selected: 4 });
 		});";
 	}
-elseif ($_GET["t"]==4) {
+elseif ($t==4) {
 	echo "$(function() {
 		$(\"#tabs0\").tabs({ selected: 3 });
 		});";
 	}
-elseif ($_GET["t"]==3) {
+elseif ($t==3) {
 	echo "$(function() {
 		$(\"#tabs0\").tabs({ selected: 2 });
 		});";
 	}
-elseif ($_GET["t"]==2) {
+elseif ($t==2) {
 	echo "$(function() {
 		$(\"#tabs0\").tabs({ selected: 1 });
 		});";
 	}
-elseif ($_GET["t"]==1) {
+elseif ($t==1) {
 	echo "$(function() {
 		$(\"#tabs0\").tabs({ selected: 0 });
 		});";

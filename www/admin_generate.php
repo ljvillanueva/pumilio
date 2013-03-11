@@ -13,26 +13,20 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 $force_admin = TRUE;
 require("include/check_admin.php");
 		
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
-
 <title>$app_custom_name - Generate preview files</title>";
 
 require("include/get_css.php");
-?>
+require("include/get_jqueryui.php");
 
-<?php
-	require("include/get_jqueryui.php");
-?>
-
-<?php
-if ($use_googleanalytics)
-	{echo $googleanalytics_code;}
+if ($use_googleanalytics){
+	echo $googleanalytics_code;
+	}
 ?>
 
 </head>
@@ -57,30 +51,30 @@ if ($use_googleanalytics)
 
 			if ($no_sounds>0) {
 
-			/*How to check how many processors are available on the current machine.
-				by gordon@incero.com http://www.Incero.com. Feel free to use this code,
-				but keep this header. June 30th, 2010.*/
-			/*
-			$numberOfProcessors=`cat /proc/cpuinfo | grep processor | tail -1`;
-			$numberOfProcessors=preg_replace('/\s+/', '',$numberOfProcessors);
-			$numberOfProcessors=str_replace(":","", $numberOfProcessors);
-			$numberOfProcessors=str_replace("processor","", $numberOfProcessors);
-			$numberOfProcessors++;
-			echo "Number of processors on this server is $numberOfProcessors.";
-			*/
+				/*How to check how many processors are available on the current machine.
+					by gordon@incero.com http://www.Incero.com. Feel free to use this code,
+					but keep this header. June 30th, 2010.*/
+				/*
+				$numberOfProcessors=`cat /proc/cpuinfo | grep processor | tail -1`;
+				$numberOfProcessors=preg_replace('/\s+/', '',$numberOfProcessors);
+				$numberOfProcessors=str_replace(":","", $numberOfProcessors);
+				$numberOfProcessors=str_replace("processor","", $numberOfProcessors);
+				$numberOfProcessors++;
+				echo "Number of processors on this server is $numberOfProcessors.";
+				*/
 				echo "<form action=\"admin_generate2.php\" method=\"POST\">
-						<input type=\"hidden\" name=\"code\" value=\"$no_sounds\">";
+					<input type=\"hidden\" name=\"code\" value=\"$no_sounds\">";
 
-			/*
-					echo "Number of processes to run simultaneously: &nbsp;&nbsp;<select name=\"no_processes\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\" >";
+					/*
+					echo "Number of processes to run simultaneously: &nbsp;&nbsp;<select name=\"no_processes\" class=\"fg-button ui-state-default ui-corner-all\" >";
 						for ($c=0;$c<$numberOfProcessors;$c++) {
 							$cc = $c + 1; 
 							echo "<option>$cc</option>\n";}
 
 					echo "	</select><br>";
 
-			*/
-				echo "&nbsp;&nbsp;&nbsp;<input type=submit value=\" Generate preview files \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">
+					*/
+				echo "&nbsp;&nbsp;&nbsp;<input type=submit value=\" Generate preview files \" class=\"fg-button ui-state-default ui-corner-all\">
 						</form>
 						<br><br>";
 					}

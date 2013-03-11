@@ -13,7 +13,6 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 $force_admin = TRUE;
 require("include/check_admin.php");
 
@@ -27,15 +26,14 @@ else{
 	$Notes_q = ", Notes='$Notes'";
 	}
 
-
-	$query = ("UPDATE Sounds SET SensorID='$SensorID' 
-			$Notes_q
-			WHERE SiteID='$SiteID'");
-	$result = mysqli_query($connection, $query)
+$query = ("UPDATE Sounds SET SensorID='$SensorID' 
+		$Notes_q
+		WHERE SiteID='$SiteID'");
+$result = mysqli_query($connection, $query)
 	or die (mysqli_error($connection));
 
-	// Relocate back to where you came from
-	header("Location: edit_site.php?SiteID=$SiteID&d=2#anchor2");
-	die();
+// Relocate back to where you came from
+header("Location: edit_site.php?SiteID=$SiteID&d=2#anchor2");
+die();
 	
 ?>

@@ -1,12 +1,9 @@
 <?php
-session_start();
-
-require("include/functions.php");
 
 $config_file = 'config.php';
 
 if (file_exists($config_file)) {
-    require("config.php");
+    require($config_file);
 } else {
     header("Location: error.php?e=config");
     die();
@@ -14,14 +11,12 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-?>
-
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
-<head>
+<head>";
 
-<?php
-	require("include/get_css.php");
-	require("include/get_jqueryui.php");
+require("include/get_css.php");
+require("include/get_jqueryui.php");
 ?>
 	
 </head>

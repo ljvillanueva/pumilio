@@ -17,15 +17,11 @@ require("include/apply_config.php");
 
 $date_to_browse=cleanme($_GET["date"]);
 
-require("include/update_sites.php");
-?>
-
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
+<title>$app_custom_name - Browse Weather Stations</title>";
 
-<?php
-
-echo "<title>$app_custom_name - Browse Weather Stations</title>";
 require("include/get_css.php");
 require("include/get_jqueryui.php");
 

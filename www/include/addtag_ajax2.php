@@ -27,10 +27,10 @@ foreach($newtag as $newitem){
 		}
 	}
 
-echo "<html>
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+<html>
 <head>";
 ?>
-
 
 <!--jquery form-->
 <!-- http://jquery.malsup.com/form/ -->
@@ -38,7 +38,6 @@ echo "<html>
 
 <?php
 	echo "
-	
 	<script type=\"text/javascript\">
 	$(document).ready(function() { 
 	    var options = { 
@@ -52,9 +51,7 @@ echo "<html>
 	    // bind form using 'ajaxForm' 
 	    $('#addtags$i').ajaxForm(options); 
 	}); 
-	</script>
-	
-	";
+	</script>\n";
 
 ?>
 
@@ -65,13 +62,14 @@ echo "<html>
 <?php
 // Relocate back to the first page of the application
 	echo "<form method=\"get\" action=\"include/addtag_ajax2.php\" id=\"addtags$i\">";
-	require("../include/managetagsp.php");
+		require("../include/managetagsp.php");
 		echo "<p>Add tags:<br>
 			<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
 			<input type=\"hidden\" name=\"this_i\" value=\"$i\">
-			<input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
+			<input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\">
 			<INPUT TYPE=\"image\" src=\"images/tag_blue_add.png\" BORDER=\"0\" alt=\"Add new tag\" onmouseover=\"Tip('Add new tag', FONTCOLOR, '#fff',BGCOLOR, '#4aa0e0', FADEIN, '400', FADEOUT, '400', ABOVE, 'true', CENTERMOUSE, 'true')\" onmouseout=\"UnTip()\" >
-			<em>Separate tags with a space</em></form><br>";
+			<em>Separate tags with a space</em>
+		</form><br>";
 
 ?>
 </body>

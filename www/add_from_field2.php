@@ -13,7 +13,6 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 $force_loggedin = TRUE;
 require("include/check_login.php");
 
@@ -28,7 +27,7 @@ if ($ColID=="") {
 	die();
 	}
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 ";
@@ -156,7 +155,6 @@ if ($local == 1){
 			<input type=\"hidden\" name=\"sm\" value=\"$sm\">
 			<input type=submit value=\" Next step \" class=\"fg-button ui-state-default ui-corner-all\">
 			</form>";
-
 			}
 		?>
 

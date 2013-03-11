@@ -13,7 +13,6 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 require("include/check_admin.php");
 
 #Sanitize inputs
@@ -48,7 +47,7 @@ if ($d=="w"){
 	$hidemarks = 1;
 	}
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 
@@ -517,7 +516,7 @@ else {
 					require("include/managetags_db.php");
 					echo "<p><strong>Add tags</strong>:<form method=\"get\" action=\"include/addtag.php\">
 						<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-						<input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
+						<input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\">
 						<INPUT TYPE=\"image\" src=\"images/tag_blue_add.png\" BORDER=\"0\" alt=\"Add new tag\">
 						<br><em>Separate tags with a space</em></form><br>";
 					}
@@ -561,7 +560,7 @@ else {
 					}
 
 				echo "</select><br>
-				<input type=submit value=\" Change \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
+				<input type=submit value=\" Change \" class=\"fg-button ui-state-default ui-corner-all\">
 				</form><br>";
 				}
 
@@ -686,7 +685,7 @@ else {
 			echo "<p><strong>Administrative options</strong>:
 			<form method=\"get\" action=\"file_edit.php\">
 			<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-			<input type=\"submit\" value=\" Edit file information \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
+			<input type=\"submit\" value=\" Edit file information \" class=\"fg-button ui-state-default ui-corner-all\">
 			</form>";
 	
 			#Delete file div
@@ -697,7 +696,7 @@ else {
 			echo "<p>
 			<form id=\"testconfirmJQ\" name=\"testconfirmJQ\" method=\"post\" action=\"del_file.php\">
 			<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-			<input type=\"submit\" value=\" Delete file from archive \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
+			<input type=\"submit\" value=\" Delete file from archive \" class=\"fg-button ui-state-default ui-corner-all\">
 			</form>";
 			}
 		if ($guests_can_open || $pumilio_loggedin) {
@@ -708,7 +707,7 @@ else {
 				echo "<form method=\"get\" action=\"file_obtain.php\">
 				<input type=\"hidden\" name=\"fileid\" value=\"$SoundID\">
 				<input type=\"hidden\" name=\"method\" value=\"3\">
-				<input type=\"submit\" value=\" Open file \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
+				<input type=\"submit\" value=\" Open file \" class=\"fg-button ui-state-default ui-corner-all\">
 				</form>";
 				}
 				
@@ -721,6 +720,10 @@ else {
 				if ($SiteID!="" && $SiteLat!="" && $SiteLon!=""){
 					echo "\n<p>Map:<br>
 						<div id=\"map_canvas\" style=\"width: 320px; height: 220px\">Your browser does not have JavaScript enabled, which is required to proceed, or can not connect to GoogleMaps. Please contact your administrator.</div>\n";
+					if (!isset($kml_default)){
+						$kml_default = 0;
+						}
+
 					if ($kml_default == 1){
 						if ($hidekml==1){
 							echo "<a href=\"db_filedetails.php?SoundID=$SoundID&hidekml=0&d=$d&hidemarks=$hidemarks\">Show default KML layers</a>";

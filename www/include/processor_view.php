@@ -92,6 +92,10 @@ echo "<div id=\"myCanvas\" style=\"position:relative; left: 0px;\">";
 
 //Marks
 // if marks are wanted, show
+if (!isset($showmarks)){
+	$showmarks = 0;
+	}
+	
 if ($showmarks==1) {
 	require("include/showmarks.php");
 	}

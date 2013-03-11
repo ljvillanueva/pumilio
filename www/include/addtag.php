@@ -26,7 +26,6 @@ foreach($newtag as $newitem){
 		}
 	}
 
-
 // Relocate back to the first page of the application
 	if ($_GET["goto"]=="p")	{
 		header("Location: ../pumilio.php");
@@ -40,5 +39,4 @@ foreach($newtag as $newitem){
 		header("Location: ../db_filedetails.php?SoundID=$SoundID");
 		die;
 		}
-
 ?>

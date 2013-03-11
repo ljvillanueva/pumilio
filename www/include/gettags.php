@@ -8,9 +8,8 @@ if ($nrows_tags>0){
 	for ($t=0;$t<$nrows_tags;$t++){
 		$row_tags = mysqli_fetch_array($result_tags);
 		extract($row_tags);
-
 		echo "$Tag ";
 		}
 	echo "<br>";
-}
+	}
 ?>

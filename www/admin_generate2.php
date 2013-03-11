@@ -19,7 +19,6 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 $force_admin = TRUE;
 require("include/check_admin.php");
 
@@ -33,22 +32,15 @@ $no_sounds = mysqli_num_rows($result);
 if ($no_sounds!=$code)
 	die("There was an error or the databased was changed while you were trying to execute this command. Please go back and try again.");
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 
 <title>$app_custom_name</title>";
 
 require("include/get_css.php");
-?>
+require("include/get_jqueryui.php");
 
-<?php
-	require("include/get_jqueryui.php");
-?>
-
-<?php
-#if ($use_googleanalytics)
-#	{echo $googleanalytics_code;}
 ?>
 
 </head>
@@ -78,7 +70,7 @@ require("include/get_css.php");
 			echo "
 			<div id=\"please_wait\"><p>Please wait, working... <img src=\"images/wait18trans.gif\"></p></div>";
 			
-			echo "<iframe src=\"progressbar.php?per=1\" width=\"100%\" height=\"30\" frameborder=\"0\" id=\"progress_bar\" scrolling=\"no\"></iframe>&nbsp;
+			echo "<iframe src=\"include/progressbar.php?per=1\" width=\"100%\" height=\"30\" frameborder=\"0\" id=\"progress_bar\" scrolling=\"no\"></iframe>&nbsp;
 			<div id=\"progress_counter\"><strong>0 of $no_sounds checked</strong></div>
 			</div>
 			<div class=\"span-24 last\">";

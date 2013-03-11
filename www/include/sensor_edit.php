@@ -1,21 +1,20 @@
 <?php
 session_start();
 
-require("include/functions.php");
+require("functions.php");
 
-$config_file = 'config.php';
+$config_file = '../config.php';
 
 if (file_exists($config_file)) {
-    require("config.php");
+    require($config_file);
 } else {
-    header("Location: error.php?e=config");
+    header("Location: ../error.php?e=config");
     die();
 }
 
-require("include/apply_config.php");
-
+require("apply_config.php");
 $force_loggedin = TRUE;
-require("include/check_login.php");
+require("check_login.php");
 
 #Sanitize
 $SensorID=filter_var($_POST["SensorID"], FILTER_SANITIZE_NUMBER_INT);
@@ -27,6 +26,6 @@ $Notes=filter_var($_POST["Notes"], FILTER_SANITIZE_STRING);
 	$result = mysqli_query($connection, $query)
 		or die (mysqli_error($connection));
 
-header("Location: admin.php?t=4");
-	die();
+header("Location: ../sensor_edit.php?u=1&SensorID=$SensorID");
+die();
 ?>

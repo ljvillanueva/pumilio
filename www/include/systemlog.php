@@ -1,5 +1,11 @@
 <?php
-$LogTypeQ = $_GET["LogTypeQ"];
+
+if (!isset($_GET["LogTypeQ"])){
+	$LogTypeQ = "";
+	}
+else{
+	$LogTypeQ = $_GET["LogTypeQ"];
+	}
 
 $query = "SELECT DISTINCT LogType from PumilioLog ORDER BY LogType";
 $result = mysqli_query($connection, $query)
@@ -11,39 +17,39 @@ if ($nrows == 0){
 	}
 else {
 	echo "<form action=\"admin.php\" method=\"GET\">
-	<input name=\"t\" type=\"hidden\" value=\"8\">
-	<select name=\"LogTypeQ\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">";
+		<input name=\"t\" type=\"hidden\" value=\"8\">
+		<select name=\"LogTypeQ\" class=\"ui-state-default ui-corner-all\">";
 
-	for ($i=0;$i<$nrows;$i++) {
-		$row = mysqli_fetch_array($result);
-		extract($row);
-		if ($LogType==1){
+		for ($i=0;$i<$nrows;$i++) {
+			$row = mysqli_fetch_array($result);
+			extract($row);
+			if ($LogType==1){
+				}
+			elseif ($LogType==70){
+				$LogCat = "FLAC processing error";
+				}
+			elseif ($LogType==80){
+				$LogCat = "SoX processing error";
+				}
+			elseif ($LogType==90){
+				$LogCat = "File was deleted";
+				}
+			elseif ($LogType==91){
+				$LogCat = "File not processable";
+				}
+			elseif ($LogType==98){
+				$LogCat = "Other file errors";
+				}
+			elseif ($LogType==99){
+				$LogCat = "File not found";
+				}
+			//How many sounds associated with that source
+			echo "<option value=\"$LogType\">$LogCat</option>\n";
 			}
-		elseif ($LogType==70){
-			$LogCat = "FLAC processing error";
-			}
-		elseif ($LogType==80){
-			$LogCat = "SoX processing error";
-			}
-		elseif ($LogType==90){
-			$LogCat = "File was deleted";
-			}
-		elseif ($LogType==91){
-			$LogCat = "File not processable";
-			}
-		elseif ($LogType==98){
-			$LogCat = "Other file errors";
-			}
-		elseif ($LogType==99){
-			$LogCat = "File not found";
-			}
-		//How many sounds associated with that source
-		echo "<option value=\"$LogType\">$LogCat</option>\n";
-		}
 
-	echo "</select> 
-		<input type=submit value=\" Filter log \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">
-		</form><br><br>";
+		echo "</select> 
+		<input type=submit value=\" Filter log \" class=\"fg-button ui-state-default ui-corner-all\">
+	</form><br><br>";
 
 	if ($LogTypeQ!=""){
 		$query = "SELECT *, DATE_FORMAT(timestamp,'%d-%b-%Y %T') AS timestamp from PumilioLog WHERE LogType='$LogTypeQ' ORDER BY timestamp DESC";

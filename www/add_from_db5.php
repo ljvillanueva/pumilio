@@ -19,7 +19,6 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 $force_loggedin = TRUE;
 require("include/check_login.php");
 
@@ -43,20 +42,14 @@ if ($files_format=="") {
 
 $files_format_length=strlen($files_format);
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
-
 <title>$app_custom_name - Add from a database or spreadsheet</title>";
 
 require("include/get_css.php");
-?>
+require("include/get_jqueryui.php");
 
-<?php
-	require("include/get_jqueryui.php");
-?>
-
-<?php
 if ($use_googleanalytics) {
 	echo $googleanalytics_code;
 	}
@@ -89,7 +82,8 @@ if ($use_googleanalytics) {
 			$commadata_count=count($commadata);
 
 			if ($commadata_count!=$files_to_process_counter) {
-				echo "<div class=\"error\">The number of lines ($commadata_count) does not match the number of files to import ($files_to_process_counter). Please go back and try again.</div><br><br>";
+				echo "<div class=\"error\">The number of lines ($commadata_count) does not match the number of files to import ($files_to_process_counter). 
+						Please go back and try again.</div><br><br>";
 				die();
 				}
 
@@ -103,7 +97,8 @@ if ($use_googleanalytics) {
 				#Check that the number of fields match
 				$this_row_counter=count($this_row1);
 				if ($this_row_counter!=$fields_to_use_counter) {
-					echo "<div class=\"error\">The number of fields ($this_row_counter) in line $j does not match the number of fields to import ($fields_to_use_counter). Please go back and try again.</div><br><br>";
+					echo "<div class=\"error\">The number of fields ($this_row_counter) in line $j does not match the number of fields 
+						to import ($fields_to_use_counter). Please go back and try again.</div><br><br>";
 					die();
 					}
 
@@ -111,7 +106,8 @@ if ($use_googleanalytics) {
 				$this_file=filter_var($this_row1[0], FILTER_SANITIZE_STRING);
 				exec('include/soundcheck.py ' . $dir . '/' . $this_file, $lastline, $retval);
 				if ($retval!=0) {
-					echo "<div class=\"error\">The file " . $this_file . " could not be read or it is not an audio file. Please go back and try again.</div>";
+					echo "<div class=\"error\">The file " . $this_file . " could not be read or it is not an audio file. 
+						Please go back and try again.</div>";
 					$file_errors+=1;
 					}
 				}
@@ -127,14 +123,13 @@ if ($use_googleanalytics) {
 			echo "</div>
 			<div class=\"span-24 last\">&nbsp;
 			<p>Please wait, importing...</p>
-				<iframe src=\"progressbar.php?per=1\" width=\"100%\" height=\"30\" frameborder=\"0\" id=\"progress_bar\" scrolling=\"no\"></iframe>&nbsp;
+				<iframe src=\"include/progressbar.php?per=1\" width=\"100%\" height=\"30\" frameborder=\"0\" id=\"progress_bar\" scrolling=\"no\"></iframe>&nbsp;
 			<div id=\"progress_counter\"><strong>0 of $commadata_count files imported</strong></div>
 			</div>
 			<div class=\"span-24 last\">";
 			
 			
 			require("include/addtodb.php");
-			#require("include/update_sites.php");
 
 			echo "<br><div class=\"success\">$success_counter files were addedd successfully to the database.</div>
 				<p><a href=\"db_browse.php?ColID=$ColID\">Browse this collection</a>.";

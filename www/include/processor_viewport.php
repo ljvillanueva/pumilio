@@ -24,6 +24,10 @@ if (!file_exists('tmp/' . $random_cookie . '/' . $viewport_blackbox)) {
 		}
 	}
 
+if (!isset($showmarks)){
+	$showmarks = 0;
+	}
+
 echo "<img src=\"tmp/$random_cookie/$viewport_blackbox\" onClick=\"parent.location='pumilio.php?Token=$Token&showmarks=$showmarks'\" alt=\"Click to return to default view\" title=\"Click to return to default view\">";
 
 ?>

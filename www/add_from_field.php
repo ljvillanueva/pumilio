@@ -13,14 +13,13 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 $force_loggedin = TRUE;
 require("include/check_login.php");
 
 $sm=filter_var($_GET["sm"], FILTER_SANITIZE_NUMBER_INT);
 $local=filter_var($_GET["local"], FILTER_SANITIZE_NUMBER_INT);
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 ";
@@ -72,12 +71,12 @@ require("include/get_jqueryui.php");
 	</style>
 
 <?php
-if ($use_googleanalytics)
-	{echo $googleanalytics_code;}
+if ($use_googleanalytics){
+	echo $googleanalytics_code;
+	}
 ?>
 
 <link rel="stylesheet" href="js/plupload/jquery.plupload.queue.css" type="text/css" media="screen" />
-
 <script type="text/javascript" src="js/plupload/plupload.js"></script>
 <script type="text/javascript" src="js/plupload/plupload.html5.js"></script>
 <script type="text/javascript" src="js/plupload/jquery.plupload.queue.js"></script>
@@ -186,7 +185,7 @@ setcookie("random_upload_dir", $random_dir, time()+(3600*24*30), $app_dir);
 			
 			<input type=\"hidden\" name=\"sm\" value=\"$sm\"><br>
 			<input type=submit value=\" Next step \" class=\"fg-button ui-state-default ui-corner-all\">
-				</form>";
+			</form>";
 				}
 			else {
 				echo "<p><strong>There are no collections in the archive. Please create at least <a href=\"add_collection.php\">one collection</a> to continue.</strong>";

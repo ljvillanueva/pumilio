@@ -1,7 +1,8 @@
 <?php
 $e=filter_var($_GET["e"], FILTER_SANITIZE_STRING);
 
-echo "<html>
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+<html>
 <head>\n";
 
 if ($e=="maint") {
@@ -81,7 +82,6 @@ echo "\n<link rel=\"stylesheet\" href=\"css/custom.css\" type=\"text/css\" media
 			echo "<p><div class=\"notice\"> <img src=\"images/error.png\"> This installation is not set up to upload files.
 				Please contact the administrator: <a href=\"mailto:$app_admin_email\">$app_admin_email</a>.</div>";
 			}
-			
 		?>
 
 	</div>

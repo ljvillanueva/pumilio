@@ -17,13 +17,23 @@ require("include/apply_config.php");
 $force_loggedin = TRUE;
 require("include/check_login.php");
 
-$d=filter_var($_GET["d"], FILTER_SANITIZE_NUMBER_INT);
+if ($_GET["d"]){
+	$d=filter_var($_GET["d"], FILTER_SANITIZE_NUMBER_INT);
+	}
+else{
+	$d=0;
+	}
+	
+if ($_GET["t"]){
 $t=filter_var($_GET["t"], FILTER_SANITIZE_NUMBER_INT);
-
-echo "
+	}
+else{
+	$t=0;
+	}
+	
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
-
 <title>$app_custom_name - Edit my information</title>";
 
 require("include/get_css.php");
@@ -189,12 +199,30 @@ if ($use_googleanalytics) {
 				<?php
 				echo "<h3>User settings</h3>";
 			
+				$blacktie_s = "";
+				$blitzer_s = "";
+				$cupertino_s = "";
+				$excitebike_s = "";
+				$hotsneaks_s = "";
+				$humanity_s = "";
+				$lightness_s = "";
+				$overcast_s = "";
+				$peppergrinder_s = "";
+				$smoothness_s = "";
+				$southstreet_s = "";
+				$start_s = "";
+				$sunny_s = "";
+
 				echo "<form action=\"set_cookies.php\" method=\"post\">
 					<input type=\"hidden\" name=\"cookie_to_set\" value=\"jquerycss\">
 					Select a theme for the application:
 					<select name=\"css\" class=\"ui-state-default ui-corner-all\">\n";
 
-				if ($jquerycss=="" || $jquerycss=="cupertino") {
+				if (!isset($jquerycss)){
+					$jquerycss = "cupertino";
+					}
+					
+				if ($jquerycss=="cupertino") {
 					$cupertino_s = "SELECTED";
 					}
 				elseif ($jquerycss=="blitzer") {

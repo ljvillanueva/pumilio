@@ -13,14 +13,13 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-?>
+
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 
+<title>$app_custom_name - Recover Password</title>";
 
-
-<?php
-echo "<title>$app_custom_name - Recover Password</title>";
 require("include/get_css.php");
 ?>
 
@@ -36,20 +35,21 @@ require("include/get_css.php");
 
 		<H4>Recover password</H4>
 		<?php
-		if ($app_allow_email==FALSE)
-			echo "This server is not configured to send emails. To recover your password, please request it from the administrator: $app_admin_email.
-		</div>
-		<div class=\"span-24 last\">
-			&nbsp;
-		</div>
-		</body>
-		</html>";
-		die();
+			if ($app_allow_email==FALSE){
+				echo "This server is not configured to send emails. To recover your password, please request it from the administrator: $app_admin_email.
+				</div>
+				<div class=\"span-24 last\">
+					&nbsp;
+				</div>
+				</body>
+				</html>";
+				die();
+				}
 		?>
 		<form method="post" action="recover_password2.php">
 			<p>Enter your email address:<br><br>
-			<input name="sumitted_email" type="text" size="30" class="fg-button ui-state-default ui-corner-all" style="font-size:10px"><br><br>
-		        <input type="submit" value=" Submit " class="fg-button ui-state-default ui-corner-all" style="font-size:10px">
+			<input name="sumitted_email" type="text" size="30" class="fg-button ui-state-default ui-corner-all"><br><br>
+		        <input type="submit" value=" Submit " class="fg-button ui-state-default ui-corner-all">
 		</form>
 
 		</div>

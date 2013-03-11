@@ -57,15 +57,16 @@
 	$filename='tmp/' . $random_cookie . '/' . $soundfile_wav;
 	$imgfile=$fileName_exp[0] . '_' . $frequency_min . '-' . $frequency_max . '_' . $time_min . '-' . $time_max . '_' . $fft_size . '_' . $spectrogram_palette . '.s.png';
 
-	if (!file_exists($filename))
+	if (!file_exists($filename)){
 		die("<div class=\"error\">The file was not found. Please try again.</div>");
-
+		}
 
 	//Write spectrogram
 	if (!file_exists('tmp/' . $random_cookie . '/' . $imgfile)) {
 		exec('include/svt.py -s tmp/' . $random_cookie . '/' . $imgfile . ' -w ' . $spectrogram_width . ' -h ' . $spectrogram_height . ' -i ' . $frequency_min . ' -m ' . $frequency_max . ' -f ' . $fft_size . ' -p ' . $spectrogram_palette . ' tmp/' . $random_cookie . '/' . $soundfile_wav, $lastline, $retval);
-		if ($retval!=0)
+		if ($retval!=0){
 			die("<div class=\"error\">There was a problem with svt...</div>");
+			}
 		}
 
 //Image Container

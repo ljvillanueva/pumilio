@@ -6,7 +6,7 @@ require("include/functions.php");
 $config_file = 'config.php';
 
 if (file_exists($config_file)) {
-	require("config.php");
+	require($config_file);
 	}
 else {
 	header("Location: error.php?e=config");
@@ -23,7 +23,7 @@ $date=filter_var($_GET["date"], FILTER_SANITIZE_STRING);
 
 $Date_h=query_one("SELECT DATE_FORMAT('$date','%d-%b-%Y') AS Date_h", $connection);
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 
@@ -57,10 +57,12 @@ if ($site1=="" && $site2=="" && $site3=="") {
 	}
 
 
-if ($site2=="")
+if ($site2==""){
 	unset($site2);
-if ($site3=="")
+	}
+if ($site3==""){
 	unset($site3);
+	}
 
 if ($site1=="") {
 	echo "<div class=\"error\"> <img src=\"images/exclamation.png\"> You must make a selection for the first site. Please go back and try again.</div>

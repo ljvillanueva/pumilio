@@ -13,7 +13,6 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 $force_admin = TRUE;
 require("include/check_admin.php");
 
@@ -21,7 +20,7 @@ require("include/check_admin.php");
 $SoundID=filter_var($_GET["SoundID"], FILTER_SANITIZE_NUMBER_INT);
 $d=filter_var($_GET["d"], FILTER_SANITIZE_NUMBER_INT);
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 
@@ -40,7 +39,7 @@ require("include/get_jqueryui.php");
 
 	<script src="js/jquery.validate.js"></script>
 
-<!-- Form validation from http://bassistance.de/jquery-plugins/jquery-plugin-validation/ -->
+	<!-- Form validation from http://bassistance.de/jquery-plugins/jquery-plugin-validation/ -->
 
 	<script type="text/javascript">
 	$().ready(function() {
@@ -128,9 +127,8 @@ if ($use_googleanalytics) {
 				$col_name=query_one("SELECT Collections.CollectionName from Collections,Sounds WHERE Collections.ColID=Sounds.ColID AND Sounds.SoundID='$SoundID'", $connection);
 
 				#Source info
-				echo "<br>From: <a href=\"db_browse.php?ColID=$ColID\">$col_name</a>";
-
-				echo "<p><form action=\"file_edit2.php\" method=\"POST\" id=\"EditForm\">
+				echo "<br>From: <a href=\"db_browse.php?ColID=$ColID\">$col_name</a>
+				<p><form action=\"file_edit2.php\" method=\"POST\" id=\"EditForm\">
 					<input name=\"SoundID\" type=\"hidden\" value=\"$SoundID\">
 
 				New name of the sound: <br><input name=\"SoundName\" type=\"text\" maxlength=\"160\" size=\"60\" value=\"$SoundName\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>

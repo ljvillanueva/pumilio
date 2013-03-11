@@ -1,21 +1,20 @@
 <?php
 session_start();
 
-require("include/functions.php");
+require("functions.php");
 
-$config_file = 'config.php';
+$config_file = '../config.php';
 
 if (file_exists($config_file)) {
-    require("config.php");
+    require($config_file);
 } else {
-    header("Location: error.php?e=config");
+    header("Location: ../error.php?e=config");
     die();
 }
 
-require("include/apply_config.php");
-
+require("apply_config.php");
 $force_admin = TRUE;
-require("include/check_admin.php");
+require("check_admin.php");
 
 #Sanitize
 $SensorID=filter_var($_GET["SensorID"], FILTER_SANITIZE_NUMBER_INT);

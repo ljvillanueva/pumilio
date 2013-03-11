@@ -15,7 +15,7 @@ $SiteID=filter_var($_POST["SiteID"], FILTER_SANITIZE_NUMBER_INT);
 $method=filter_var($_POST["method"], FILTER_SANITIZE_STRING);
 $archivefrom=filter_var($_POST["archivefrom"], FILTER_SANITIZE_STRING);
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 

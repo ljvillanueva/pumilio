@@ -19,7 +19,8 @@ require("include/check_admin.php");
 
 $SampleID=filter_var($_POST["SampleID"], FILTER_SANITIZE_NUMBER_INT);
 
-echo "	<html>
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+	<html>
 	<head>
 <title>$app_custom_name - Delete sample</title>";
 

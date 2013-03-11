@@ -10,8 +10,8 @@ echo "<p>Search sounds in the archive using several options:<br><hr noshade>";
 		echo "\n<p><strong>Search by Sound ID</strong>:";
 
 		echo "<form action=\"$db_filedetails_link\" method=\"GET\">Sound ID: 
-			<input type=\"text\" name=\"SoundID\" class=\"fg-button ui-state-default ui-corner-all\" style=\"margin-left: 10px;\" size=\"10\">
-			<input type=submit value=\" Search \" class=\"fg-button ui-state-default ui-corner-all\" style=\"margin-left: 16px;\">
+				<input type=\"text\" name=\"SoundID\" class=\"fg-button ui-state-default ui-corner-all\" style=\"margin-left: 10px;\" size=\"10\">
+				<input type=submit value=\" Search \" class=\"fg-button ui-state-default ui-corner-all\" style=\"margin-left: 16px;\">
 			</form>
 			<br>\n";
 		
@@ -84,7 +84,7 @@ echo "<p>Search sounds in the archive using several options:<br><hr noshade>";
 			<select name=\"Site_comparison\" class=\"ui-state-default ui-corner-all\">
 				<option value=\"1\" SELECTED> is </option>
 				<option value=\"2\"> is not </option>
-				</select> &nbsp;
+			</select> &nbsp;
 
 			</td><td>
 			<select name=\"SiteID\" class=\"ui-state-default ui-corner-all\">
@@ -107,7 +107,7 @@ echo "<p>Search sounds in the archive using several options:<br><hr noshade>";
 							}
 						}
 					}
-				echo "</select>
+			echo "</select>
 			</td>
 			</tr>
 
@@ -117,7 +117,7 @@ echo "<p>Search sounds in the archive using several options:<br><hr noshade>";
 			</td><td style=\"text-align:right;\">
 			<select name=\"Tag_comparison\" class=\"ui-state-default ui-corner-all\">
 				<option value=\"1\" SELECTED> include </option>
-				</select> &nbsp;
+			</select> &nbsp;
 
 			</td><td>
 			<select name=\"Tags\" class=\"ui-state-default ui-corner-all\">
@@ -136,7 +136,7 @@ echo "<p>Search sounds in the archive using several options:<br><hr noshade>";
 						echo "\n<option value=\"$Tag\">$Tag</option>";
 						}
 					}
-				echo "</select>
+			echo "</select>
 			</td>
 			</tr>
 
@@ -161,13 +161,13 @@ echo "<p>Search sounds in the archive using several options:<br><hr noshade>";
 			<select name=\"Channels_comparison\" class=\"ui-state-default ui-corner-all\">
 				<option value=\"1\" SELECTED> is </option>
 				<option value=\"2\"> is not </option>
-				</select> &nbsp;
+			</select> &nbsp;
 			</td><td>
 			<select name=\"Channels\" class=\"ui-state-default ui-corner-all\">
 				<option value=\"0\" SELECTED></option>
 				<option value=\"1\">1</option>
 				<option value=\"2\">2</option>
-				</select>
+			</select>
 			</td>
 			</tr>
 
@@ -178,7 +178,7 @@ echo "<p>Search sounds in the archive using several options:<br><hr noshade>";
 			<select name=\"SamplingRate_comparison\" class=\"ui-state-default ui-corner-all\">
 				<option value=\"1\" SELECTED> is </option>
 				<option value=\"2\"> is not </option>
-				</select> &nbsp;
+			</select> &nbsp;
 
 			</td><td>
 			<select name=\"SamplingRate\" class=\"ui-state-default ui-corner-all\">
@@ -196,7 +196,7 @@ echo "<p>Search sounds in the archive using several options:<br><hr noshade>";
 						echo "\n<option value=\"$SamplingRate\">$SamplingRate</option>";
 						}
 					}
-				echo "</select> Hz
+			echo "</select> Hz
 			</td>
 			</tr>
 
@@ -208,11 +208,11 @@ echo "<p>Search sounds in the archive using several options:<br><hr noshade>";
 					<option value=\"Time\">Time</option>
 					<option value=\"SiteID\">Site</option>
 					<option value=\"Duration\">Duration</option>
-					</select> &nbsp; in &nbsp; 
+				</select> &nbsp; in &nbsp; 
 		 		<select name=\"Orderby_dir\" class=\"ui-state-default ui-corner-all\">
 					<option value=\"ASC\" SELECTED>ascending order</option>
 					<option value=\"DESC\">descending order</option>
-					</select>
+				</select>
 			</td>
 			</tr>
 			</table>

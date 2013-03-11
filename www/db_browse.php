@@ -13,42 +13,66 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 require("include/check_admin.php");
 
 #Sanitize inputs
 $ColID=filter_var($_GET["ColID"], FILTER_SANITIZE_NUMBER_INT);
-$startid=filter_var($_GET["startid"], FILTER_SANITIZE_NUMBER_INT);
-$order_by=filter_var($_GET["order_by"], FILTER_SANITIZE_STRING);
-$order_dir=filter_var($_GET["order_dir"], FILTER_SANITIZE_STRING);
-$display_type=filter_var($_GET["display_type"], FILTER_SANITIZE_STRING);
-$show_tags=filter_var($_GET["show_tags"], FILTER_SANITIZE_STRING);
+if (isset($_GET["startid"])){
+	$startid=filter_var($_GET["startid"], FILTER_SANITIZE_NUMBER_INT);
+	}
+if (isset($_GET["order_by"])){
+	$order_by=filter_var($_GET["order_by"], FILTER_SANITIZE_STRING);
+	}
+if (isset($_GET["order_dir"])){
+	$order_dir=filter_var($_GET["order_dir"], FILTER_SANITIZE_STRING);
+	}
+if (isset($_GET["display_type"])){
+	$display_type=filter_var($_GET["display_type"], FILTER_SANITIZE_STRING);
+	}
+if (isset($_GET["show_tags"])){
+	$show_tags=filter_var($_GET["show_tags"], FILTER_SANITIZE_STRING);
+	}
 
 $valid_id=query_one("SELECT COUNT(*) FROM Collections WHERE ColID=$ColID", $connection);
 
 if ($valid_id==0) {
-	echo "<body>
+	echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+		<html>
+		<head>";
+		
+		require("include/get_css.php");
+		require("include/get_jqueryui.php");
+
+		echo "</head>
+		<body>
 		<div class=\"error\" style=\"margins: 10px;\">The Collection requested does not exists or the ID is not valid. Please go back and try again.</div>
 		</body>
 		</html>";
 	die();
 	}
 
-if ($startid=="")
+if ($startid==""){
 	$startid=1;
-if ($order_by=="")
+	}
+if ($order_by==""){
 	$order_by = "Date";
-if ($order_dir=="")
+	}
+if ($order_dir==""){
 	$order_dir = "ASC";
-if ($display_type=="")
+	}
+if ($display_type==""){
 	$display_type = "summary";
-if ($show_tags=="")
+	}
+if ($show_tags==""){
 	$show_tags = "0";
+	}
 
-if ($order_by=="Date")
+if ($order_by=="Date"){
 	$order_byq = "Date $order_dir, Time";
-else
+	}
+else{
 	$order_byq = $order_by;
+	}
 
 #Special iframe
 if ($special_wrapper==TRUE){
@@ -66,7 +90,7 @@ else {
 		$qf_check = "";
 		}
 		
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 
@@ -75,9 +99,7 @@ echo "
 require("include/get_css.php");
 require("include/get_jqueryui.php");
 require("include/nocache.php");
-?>
 
-<?php
 $query_all_tags = "SELECT DISTINCT Tag FROM Tags";
 $result_all_tags=query_several($query_all_tags, $connection);
 $nrows_all_tags = mysqli_num_rows($result_all_tags);
@@ -98,9 +120,8 @@ if ($nrows_all_tags>0) {
 	$(\"#newtag\").autocomplete(mytags);
 	  });
 	</script>
-	<link rel=\"stylesheet\" href=\"$app_url/js/jquery/jquery.autocomplete.css\" type=\"text/css\">
-	";
- }
+	<link rel=\"stylesheet\" href=\"$app_url/js/jquery/jquery.autocomplete.css\" type=\"text/css\">\n";
+	}
 ?>
 
   
@@ -110,49 +131,49 @@ if ($nrows_all_tags>0) {
 <?php
 	echo "<script type=\"text/javascript\" src=\"$app_url/js/jquery.form.js\"></script>\n";
 
-for ($ajax=0;$ajax<10;$ajax++) {
-	echo "
+	for ($ajax=0;$ajax<10;$ajax++) {
+		echo "
 	
-	<script type=\"text/javascript\">
-	$(document).ready(function() { 
-	    var options = { 
-	        target:        '#tagspace$ajax',   // target element(s) to be updated with server response 
-	        // beforeSubmit:  showRequest,  // pre-submit callback 
-	        // success:       showResponse,  // post-submit callback 
-	 	clearForm: true,
-	 	resetForm: true
-	    }; 
-	 
-	    // bind form using 'ajaxForm' 
-	    $('#addtags$ajax').ajaxForm(options); 
-	}); 
-	</script>
-	";
-	}
+		<script type=\"text/javascript\">
+		$(document).ready(function() { 
+		    var options = { 
+			target:        '#tagspace$ajax',   // target element(s) to be updated with server response 
+			// beforeSubmit:  showRequest,  // pre-submit callback 
+			// success:       showResponse,  // post-submit callback 
+		 	clearForm: true,
+		 	resetForm: true
+		    }; 
+		 
+		    // bind form using 'ajaxForm' 
+		    $('#addtags$ajax').ajaxForm(options); 
+		}); 
+		</script>
+		";
+		}
 
-#Multiple delete script to select all
-echo "
-<script type=\"text/javascript\">
-$(function(){
- 
-    // add multiple select / deselect functionality
-    $(\"#selectall\").click(function () {
-          $('.case').attr('checked', this.checked);
-    });
- 
-    // if all checkbox are selected, check the selectall checkbox
-    // and viceversa
-    $(\".case\").click(function(){
- 
-        if($(\".case\").length == $(\".case:checked\").length) {
-            $(\"#selectall\").attr(\"checked\", \"checked\");
-        } else {
-            $(\"#selectall\").removeAttr(\"checked\");
-        }
- 
-    });
-});
-</SCRIPT>";
+	#Multiple delete script to select all
+	echo "
+	<script type=\"text/javascript\">
+	$(function(){
+	 
+	    // add multiple select / deselect functionality
+	    $(\"#selectall\").click(function () {
+		  $('.case').attr('checked', this.checked);
+	    });
+	 
+	    // if all checkbox are selected, check the selectall checkbox
+	    // and viceversa
+	    $(\".case\").click(function(){
+	 
+		if($(\".case\").length == $(\".case:checked\").length) {
+		    $(\"#selectall\").attr(\"checked\", \"checked\");
+		} else {
+		    $(\"#selectall\").removeAttr(\"checked\");
+		}
+	 
+	    });
+	});
+	</SCRIPT>";
 
 if ($use_googleanalytics) {
 	echo $googleanalytics_code;
@@ -229,7 +250,7 @@ if ($use_googleanalytics) {
 				echo "<div style=\"float: left; padding-right: 10px;\">
 				<form action=\"add_file.php\" method=\"GET\">
 				<input type=\"hidden\" name=\"ColID\" value=\"$ColID\">
-				<input type=submit value=\" Add files \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"></form></div>";
+				<input type=submit value=\" Add files \" class=\"fg-button ui-state-default ui-corner-all\"></form></div>";
 				}
 			else {
 				echo "<p class=\"highlight3 ui-corner-all\" style=\"text-align: left;\"><strong>Collection: $CollectionName<br>$no_sounds sounds</strong>";
@@ -323,7 +344,7 @@ if ($use_googleanalytics) {
 				or die (mysqli_error($connection));
 			$nrows_q = mysqli_num_rows($result_q);
 
-			echo "<select name=\"SoundID\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\" >";
+			echo "<select name=\"SoundID\" class=\"ui-state-default ui-corner-all\" >";
 
 				for ($q=0;$q<$nrows_q;$q++) {
 					$row_q = mysqli_fetch_array($result_q);
@@ -333,7 +354,7 @@ if ($use_googleanalytics) {
 					}
 
 				echo "</select> 
-				<input type=submit value=\" Select \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"></form>
+				<input type=submit value=\" Select \" class=\"fg-button ui-state-default ui-corner-all\"></form>
 			</div>";
 			?>
 			<div class="span-6">
@@ -379,7 +400,7 @@ if ($use_googleanalytics) {
 					<input type=\"hidden\" name=\"display_type\" value=\"$display_type\">
 					<input type=\"hidden\" name=\"show_tags\" value=\"$show_tags\">";
 
-				echo "<select name=\"startid\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\" >";
+				echo "<select name=\"startid\" class=\"ui-state-default ui-corner-all\" >";
 
 				for ($p=0;$p<($no_pages+1);$p++) {
 					$this_p=$p+1;
@@ -393,7 +414,8 @@ if ($use_googleanalytics) {
 					}
 
 				echo "</select> 
-				<input type=submit value=\" Select \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"></form>
+				<input type=submit value=\" Select \" class=\"fg-button ui-state-default ui-corner-all\">
+				</form>
 
 			</div>";
 			?>

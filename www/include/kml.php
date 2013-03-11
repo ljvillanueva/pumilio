@@ -2,12 +2,11 @@
 
 echo "<strong>Add a KML/KMZ layer:</strong>
 	<form action=\"include/editkml.php\" method=\"POST\" id=\"AddKML\">
-	<input type=\"hidden\" name=\"op\" value=\"1\">
-
-	Name: <br><input type=\"text\" name=\"KmlName\" maxlength=\"50\" size=\"30\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>
-	Complete URL: <br><input type=\"text\" name=\"KmlURL\" maxlength=\"250\" size=\"36\" value=\"http://\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>
-	Notes: <br><input type=\"text\" name=\"KmlNotes\" maxlength=\"250\" size=\"36\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>
-	<input type=submit value=\" Add layer \" class=\"fg-button ui-state-default ui-corner-all formedge\">
+		<input type=\"hidden\" name=\"op\" value=\"1\">
+		Name: <br><input type=\"text\" name=\"KmlName\" maxlength=\"50\" size=\"30\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>
+		Complete URL: <br><input type=\"text\" name=\"KmlURL\" maxlength=\"250\" size=\"36\" value=\"http://\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>
+		Notes: <br><input type=\"text\" name=\"KmlNotes\" maxlength=\"250\" size=\"36\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>
+		<input type=submit value=\" Add layer \" class=\"fg-button ui-state-default ui-corner-all formedge\">
 	</form>
 	<br><br>\n";
 	
@@ -26,10 +25,11 @@ if ($no_kml>0) {
 		extract($row_kml);
 
 		echo "<li><form action=\"include/editkml.php\" method=\"POST\">$KmlName 
-			(<a href=\"http://maps.google.com/maps?q=$KmlURL\" title=\"Open layer in GoogleMaps\" target=\"_blank\">$KmlURL</a>)
-			<input type=\"hidden\" name=\"op\" value=\"2\">
-			<input type=\"hidden\" name=\"KmlID\" value=\"$KmlID\">
-			<input type=submit value=\" Delete \" class=\"fg-button ui-state-default ui-corner-all\"></form>\n";
+				(<a href=\"http://maps.google.com/maps?q=$KmlURL\" title=\"Open layer in GoogleMaps\" target=\"_blank\">$KmlURL</a>)
+				<input type=\"hidden\" name=\"op\" value=\"2\">
+				<input type=\"hidden\" name=\"KmlID\" value=\"$KmlID\">
+				<input type=submit value=\" Delete \" class=\"fg-button ui-state-default ui-corner-all\">
+			</form>\n";
 			
 			$default_kml=query_one("SELECT KmlDefault FROM Kml WHERE KmlID='$KmlID'", $connection);
 			if ($default_kml == 0) {
@@ -50,14 +50,14 @@ if ($no_kml>0) {
 				
 			echo "
 			<form action=\"include/editkml2.php\" method=\"GET\"> 
-			<input type=\"hidden\" name=\"KmlID\" value=\"$KmlID\">
-			<select name=\"KmlDefault\" class=\"ui-state-default ui-corner-all formedge\">
-				<option value=\"0\" $selkml0>optional</option>
-				<option value=\"1\" $selkml1>default</option>
-				<option value=\"2\" $selkml2>always on</option>
-			</select>
-			<input type=submit value=\" Change status \" class=\"fg-button ui-state-default ui-corner-all\"></form>\n";
-
+				<input type=\"hidden\" name=\"KmlID\" value=\"$KmlID\">
+				<select name=\"KmlDefault\" class=\"ui-state-default ui-corner-all formedge\">
+					<option value=\"0\" $selkml0>optional</option>
+					<option value=\"1\" $selkml1>default</option>
+					<option value=\"2\" $selkml2>always on</option>
+				</select>
+				<input type=submit value=\" Change status \" class=\"fg-button ui-state-default ui-corner-all\">
+			</form>\n";
 		}
 		echo "</ul>";
 	}

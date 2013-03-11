@@ -27,14 +27,16 @@ foreach($newtag as $newitem){
 		}
 	}
 
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+<html>
+<head>";
+
 echo "<!--jquery form-->
 <!-- http://jquery.malsup.com/form/ -->
-<script type=\"text/javascript\" src=\"../js/jquery.form.js\"></script> 
-";  
+<script type=\"text/javascript\" src=\"../js/jquery.form.js\"></script>\n";
 
 for ($ajax=0;$ajax<10;$ajax++){
-	echo "
-	
+	echo "	
 	<script type=\"text/javascript\">
 	$(document).ready(function() { 
 	    var options = { 
@@ -48,14 +50,10 @@ for ($ajax=0;$ajax<10;$ajax++){
 	    // bind form using 'ajaxForm' 
 	    $('#addtags$ajax').ajaxForm(options); 
 	}); 
-	</script>
-	";
+	</script>\n";
 	}
 
-echo "<html>
-<head>";
 ?>
-
 
 <!--jquery form-->
 <!-- http://jquery.malsup.com/form/ -->
@@ -91,15 +89,15 @@ $(document).ready(function() {
 // Relocate back to the first page of the application
 	echo "<div id=\"tagspace$this_i\">\n";
 	echo "<form method=\"get\" action=\"include/addtag_ajax.php\" id=\"addtags$this_i\">";
-	require("../include/managetags.php");
+		require("../include/managetags.php");
 		echo "Add tags:
 			<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
 			<input type=\"hidden\" name=\"goto\" value=\"p\">
-			<br><input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
+			<br><input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\">
 			<INPUT TYPE=\"image\" src=\"images/tag_blue_add.png\" BORDER=\"0\" alt=\"Add new tag\" title=\"Add new tag\" >
-			<em>Separate tags with a space</em></form><br>
+			<em>Separate tags with a space</em>
+		</form><br>
 		</div>";
-
 ?>
 </body>
 </html>

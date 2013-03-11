@@ -13,7 +13,6 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 $force_loggedin = TRUE;
 require("include/check_login.php");
 
@@ -21,7 +20,7 @@ require("include/check_login.php");
 $SoundID=filter_var($_GET["SoundID"], FILTER_SANITIZE_NUMBER_INT);
 $SampleID=filter_var($_GET["SampleID"], FILTER_SANITIZE_NUMBER_INT);
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 
@@ -29,15 +28,11 @@ echo "
 
 #Get CSS
 require("include/get_css.php");
-?>
+require("include/get_jqueryui.php");
 
-<?php
-	require("include/get_jqueryui.php");
-?>
-
-<?php
-if ($use_googleanalytics)
-	{echo $googleanalytics_code;}
+if ($use_googleanalytics){
+	echo $googleanalytics_code;
+	}
 ?>
 
 </head>
@@ -60,11 +55,7 @@ if ($nrows_q==0){
 else {
 	echo "<div class=\"notice\">The sound is already in the sample set.</div>";
 	}
-
-
 ?>
-
-
 
 <br><p><a href="#" onClick="window.close();">Close window.</a>
 

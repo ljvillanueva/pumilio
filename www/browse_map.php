@@ -14,7 +14,6 @@ else {
 	}
 
 require("include/apply_config.php");
-
 require("include/check_login.php");
 
 $date_to_browse=filter_var($_GET["date_to_browse"], FILTER_SANITIZE_STRING);
@@ -32,14 +31,11 @@ $this_page_title="Browse Map";
 		$qf_check = "";
 		}
 
-?>
-
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
+<title>$app_custom_name - $this_page_title</title>";
 
-<?php
-
-echo "<title>$app_custom_name - $this_page_title</title>";
 require("include/get_css.php");
 require("include/get_jqueryui.php");
 
@@ -219,39 +215,42 @@ if ($use_googleanalytics) {
 					<input type=\"hidden\" name=\"time_to_browse\" value=\"$time_to_browse\">
 					<input type=\"hidden\" name=\"usekml\" value=\"1\">";
 
-				$query_kml = "SELECT * FROM Kml ORDER BY KmlName";
-				$result_kml=query_several($query_kml, $connection);
-				$nrows_kml = mysqli_num_rows($result_kml);
+					$query_kml = "SELECT * FROM Kml ORDER BY KmlName";
+					$result_kml=query_several($query_kml, $connection);
+					$nrows_kml = mysqli_num_rows($result_kml);
 
-				for ($k=0;$k<$nrows_kml;$k++) {
-					$row_kml = mysqli_fetch_array($result_kml);
-					extract($row_kml);
+					for ($k=0;$k<$nrows_kml;$k++) {
+						$row_kml = mysqli_fetch_array($result_kml);
+						extract($row_kml);
 
-					echo "<div id=\"kmldialog$k\" title=\"Notes of KML layer\">
-						<p>Notes: ";
-						if ($KmlNotes==""){
-							echo "none";
+						echo "<div id=\"kmldialog$k\" title=\"Notes of KML layer\">
+							<p>Notes: ";
+							if ($KmlNotes==""){
+								echo "none";
+								}
+							else {
+								echo "$KmlNotes;";
+								}
+						echo "</p>
+						</div>";
+
+						if (!isset($kml_default)){
+							$kml_default = 0;
+							}
+						
+						if ($kml_default == 1 && $KmlDefault == 1) {
+							echo "<input type=\"checkbox\" name=\"kml$k\" value=\"$KmlID\" checked>$KmlName (<a id=\"kmlnotelink$k\" href=\"javascript:void(0);\">notes</a>)<br>\n";
+							}
+						if ($KmlDefault == 2) {
+							echo "$KmlName (<a id=\"kmlnotelink$k\" href=\"javascript:void(0);\">notes</a>)<br>\n";
 							}
 						else {
-							echo "$KmlNotes;";
+							echo "<input type=\"checkbox\" name=\"kml$k\" value=\"$KmlID\">$KmlName (<a id=\"kmlnotelink$k\" href=\"javascript:void(0);\">notes</a>)<br>\n";
 							}
-					echo "</p>
-					</div>";
+						}
 
-					if ($kml_default == 1 && $KmlDefault == 1) {
-						echo "<input type=\"checkbox\" name=\"kml$k\" value=\"$KmlID\" checked>$KmlName (<a id=\"kmlnotelink$k\" href=\"javascript:void(0);\">notes</a>)<br>\n";
-						}
-					if ($KmlDefault == 2) {
-						echo "$KmlName (<a id=\"kmlnotelink$k\" href=\"javascript:void(0);\">notes</a>)<br>\n";
-						}
-					else {
-						echo "<input type=\"checkbox\" name=\"kml$k\" value=\"$KmlID\">$KmlName (<a id=\"kmlnotelink$k\" href=\"javascript:void(0);\">notes</a>)<br>\n";
-						}
-					}
-
-					
-				echo "<input type=\"hidden\" name=\"nokml\" value=\"$nrows_kml\">
-					<p>&nbsp;&nbsp;&nbsp;&nbsp;<input type=submit value=\" Update layers \" class=\"fg-button ui-state-default ui-corner-all\">
+					echo "<input type=\"hidden\" name=\"nokml\" value=\"$nrows_kml\">
+						<p>&nbsp;&nbsp;&nbsp;&nbsp;<input type=submit value=\" Update layers \" class=\"fg-button ui-state-default ui-corner-all\">
 					</form>";
 					}
 				}

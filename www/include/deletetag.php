@@ -17,16 +17,16 @@ $result_tags = mysqli_query($connection, $query_tags)
 	or die (mysqli_error($connection));
 
 // Relocate back to the first page of the application
-	if ($_GET["goto"]=="db")	{
-		header("Location: ../db_filedetails.php?SoundID=$SoundID");
-		die();
-		}
-	elseif ($_GET["goto"]=="o")	{
-		header("Location: $where_to");
-		die();
-		}
-	else {
-		header("Location: ../db_filedetails.php?SoundID=$SoundID");
-		die();
-		}
+if ($_GET["goto"]=="db")	{
+	header("Location: ../db_filedetails.php?SoundID=$SoundID");
+	die();
+	}
+elseif ($_GET["goto"]=="o")	{
+	header("Location: $where_to");
+	die();
+	}
+else {
+	header("Location: ../db_filedetails.php?SoundID=$SoundID");
+	die();
+	}
 ?>

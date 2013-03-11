@@ -22,7 +22,7 @@ $QueueID=filter_var($_GET["QueueID"], FILTER_SANITIZE_NUMBER_INT);
 $c=filter_var($_GET["c"], FILTER_SANITIZE_NUMBER_INT);
 $NewStatus=filter_var($_GET["Status"], FILTER_SANITIZE_NUMBER_INT);
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 
@@ -30,13 +30,8 @@ echo "
 
 #Get CSS
 require("include/get_css.php");
-?>
+require("include/get_jqueryui.php");
 
-<?php
-	require("include/get_jqueryui.php");
-?>
-
-<?php
 if ($use_googleanalytics) {
 	echo $googleanalytics_code;
 	}
@@ -61,26 +56,29 @@ $nrows = mysqli_num_rows($result);
 $row = mysqli_fetch_array($result);
 extract($row);
 
-echo "<p style=\"float: right;\">[<a href=\"viewlog.php?QueueID=$QueueID\">Refresh information</a>]</p>";
-	
-echo "<p>SoundID - Priority - Status
+echo "<p style=\"float: right;\">[<a href=\"viewlog.php?QueueID=$QueueID\">Refresh information</a>]</p>
+	<p>SoundID - Priority - Status
 	<hr noshade>";
 
 echo "<p><a href=\"#\" onClick=\"window.opener.location.href='db_filedetails.php?SoundID=$SoundID';\" title=\"Open file in main window\">$SoundID</a> - $Priority - ";
-	if ($Status==0)
+	if ($Status==0){
 		echo "<strong style=\"color: black;\">Waiting";
-	elseif ($Status==1)
+		}
+	elseif ($Status==1){
 		echo "<strong style=\"color: gray;\">Running";
-	elseif ($Status==2)
+		}
+	elseif ($Status==2){
 		echo "<strong style=\"color: green;\">Completed";
-	elseif ($Status==3)
+		}
+	elseif ($Status==3){
 		echo "<strong style=\"color: red;\">There was an error";
-	elseif ($Status==4)
+		}
+	elseif ($Status==4){
 		echo "<strong style=\"color: red;\">On hold";
+		}
 						
-	echo "</strong>";
-
-	echo "<p>Log:";
+	echo "</strong>
+	<p>Log:";
 
 $result=mysqli_query($connection, "SELECT FileLog, Computer FROM ProcessLog WHERE QueueID='$QueueID' LIMIT 1")
 	or die (mysqli_error($connection));;
@@ -103,13 +101,10 @@ echo "<p><strong>Change the status for this item</strong>
 	<input type=\"hidden\" name=\"c\" value=\"1\">
 	<input type=\"hidden\" name=\"QueueID\" value=\"$QueueID\">
 	New status: <select name=\"Status\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">
-	
 		<option value=\"0\">Waiting</option>
 		<option value=\"4\">On Hold</option>
-		
 	</select> 
 	<p><input type=submit value=\" Change Status \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"></form>";
-
 
 echo "<br><p><a href=\"managejobs.php?JobID=$JobID\">Go back</a>";
 	

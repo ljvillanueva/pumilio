@@ -13,7 +13,6 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 $force_loggedin = TRUE;
 require("include/check_login.php");
 
@@ -35,7 +34,8 @@ $result1 = mysqli_query($connection, $query1)
 	or die (mysqli_error($connection));
 $nrows1 = mysqli_num_rows($result1);
 if ($nrows1>0) {
-	echo "<html>
+	echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+	<html>
 	<head>";
 
 	require("include/get_css.php");
@@ -55,19 +55,19 @@ if ($type==1) {
 		(SampleName,SampleNotes) 
 		VALUES ('$samplename','$samplenotes')");
 	$result = mysqli_query($connection, $query)
-	or die (mysqli_error($connection));
+		or die (mysqli_error($connection));
 	$SampleID=mysqli_insert_id($connection);
 	
 	$query = ("INSERT INTO SampleMembers (SampleID, SoundID) SELECT '$SampleID', SoundID FROM Sounds ORDER BY RAND() LIMIT $samplesize");
 	$result = mysqli_query($connection, $query)
-	or die (mysqli_error($connection));
+		or die (mysqli_error($connection));
 	}
 elseif ($type==2) {
 	$query = ("INSERT INTO Samples 
 		(SampleName,SampleNotes) 
 		VALUES ('$samplename','$samplenotes')");
 	$result = mysqli_query($connection, $query)
-	or die (mysqli_error($connection));
+		or die (mysqli_error($connection));
 	$SampleID=mysqli_insert_id($connection);
 
 	if ($time_limits){
@@ -95,7 +95,7 @@ elseif ($type==3) {
 		if ($no_sounds_setsample>0) {
 			$query1 = ("INSERT INTO Samples (SampleName,SampleNotes) VALUES ( CONCAT('$CollectionName', ' Sample Set'),'$samplenotes')");
 			$result1 = mysqli_query($connection, $query1)
-			or die (mysqli_error($connection));
+				or die (mysqli_error($connection));
 			$SampleID=mysqli_insert_id($connection);
 
 			$no_samples=ceil(($sample_percent/100)*$no_sounds_setsample);
@@ -105,7 +105,7 @@ elseif ($type==3) {
 			}
 		}
 		
-	echo "
+	echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 		<html>
 		<head>
 
@@ -149,7 +149,7 @@ elseif ($type==4) {
 			}
 		}
 		
-	echo "
+	echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 		<html>
 		<head>
 
@@ -173,9 +173,9 @@ if ($type==5) {
 		(SampleName,SampleNotes) 
 		VALUES ('$samplename','$samplenotes')");
 	$result = mysqli_query($connection, $query)
-	or die (mysqli_error($connection));
+		or die (mysqli_error($connection));
 	
-		echo "
+		echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 		<html>
 		<head>
 

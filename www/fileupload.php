@@ -19,16 +19,18 @@ if (!$allow_upload || !sessionAuthenticate($connection)) {
 	die();
 	}
 	
-echo "	<html>
-	<head>
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+<html>
+<head>
 <title>$app_custom_name - Upload file</title>";
 
 require("include/get_css.php");
 require("include/get_jqueryui.php");
 ?>
+
 	<script src="js/jquery.validate.js"></script>
 
-<!-- Form validation from http://bassistance.de/jquery-plugins/jquery-plugin-validation/ -->
+	<!-- Form validation from http://bassistance.de/jquery-plugins/jquery-plugin-validation/ -->
 
 	<script type="text/javascript">
 	$().ready(function() {
@@ -58,8 +60,9 @@ require("include/get_jqueryui.php");
 	</style>
 
 <?php
-if ($use_googleanalytics)
-	{echo $googleanalytics_code;}
+if ($use_googleanalytics){
+	echo $googleanalytics_code;
+	}
 ?>
 
 </head>
@@ -78,16 +81,16 @@ if ($use_googleanalytics)
 			<h3>Upload a sound file:</h3>
 
 			<form enctype="multipart/form-data" action="fileupload2.php" method="post" id="fileForm">
-				<input name="userfile" type="file" id="file" class="fg-button ui-state-default ui-corner-all" style="font-size:12px">&nbsp;&nbsp;
+				<input name="userfile" type="file" id="file" class="fg-button ui-state-default ui-corner-all">&nbsp;&nbsp;
 
-			<?php
-			$max=ini_get("upload_max_filesize");
-			echo "<span class=\"notice\">Maximum file size is $max</span>";
-			?>
+				<?php
+					$max=ini_get("upload_max_filesize");
+					echo "<span class=\"notice\">Maximum file size is $max</span>";
+				?>
 
-			<br>
-			Unique ID of the file: <input type="text" name="fileID" id="fileid" value="101" size="6" class="fg-button ui-state-default ui-corner-all" style="font-size:12px"><br>
-			<input type="submit" value=" Upload " class="fg-button ui-state-default ui-corner-all" style="font-size:12px"> <br>
+				<br>
+				Unique ID of the file: <input type="text" name="fileID" id="fileid" value="101" size="6" class="fg-button ui-state-default ui-corner-all"><br>
+				<input type="submit" value=" Upload " class="fg-button ui-state-default ui-corner-all"> <br>
 			</form>
 			<br>
 			<p class="notice">The file has to be in one of these formats:

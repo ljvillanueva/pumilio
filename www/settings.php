@@ -26,24 +26,18 @@ if ($valid_token==1) {
 	$soundfile_name = query_one("SELECT soundfile_name FROM Tokens WHERE TokenID='$Token' LIMIT 1", $connection);
 	}
 
-?>
-
-
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 
-<?php
-echo "<title>$app_custom_name - Settings Page</title>";
+<title>$app_custom_name - Settings Page</title>";
+
 require("include/get_css.php");
-?>
+require("include/get_jqueryui.php");
 
-<?php
-	require("include/get_jqueryui.php");
-?>
-
-<?php
-if ($use_googleanalytics)
-	{echo $googleanalytics_code;}
+if ($use_googleanalytics){
+	echo $googleanalytics_code;
+	}
 ?>
 
 </head>
@@ -80,7 +74,7 @@ if ($use_googleanalytics)
 			<form name=\"frequencies\" action=\"set_cookies.php\" method=\"post\" class=\"inline\">
 				<input type=\"hidden\" name=\"cookie_to_set\" value=\"freq_range\">
 				Frequency range when opening files:
-				<select name=\"min_freq\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">
+				<select name=\"min_freq\" class=\"ui-state-default ui-corner-all\">
 					<option selected>10</option>
 					<option>100</option>
 					<option>500</option>
@@ -94,7 +88,7 @@ if ($use_googleanalytics)
 					<option>12000</option>
 				</select> Hz
 				to
-				<select name=\"max_freq\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">
+				<select name=\"max_freq\" class=\"ui-state-default ui-corner-all\">
 					<option>300</option>
 					<option>500</option>
 					<option>1000</option>
@@ -111,7 +105,7 @@ if ($use_googleanalytics)
 					<option>24000</option>
 				</select> Hz 
 				<input type=\"hidden\" name=\"Token\" value=\"$Token\">
-				<input type=submit value=\"Update\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">";
+				<input type=submit value=\"Update\" class=\"fg-button ui-state-default ui-corner-all\">";
 
 			if (isset($_COOKIE["frequency_min"])) {
 				$frequency_min=$_COOKIE["frequency_min"];
@@ -122,12 +116,10 @@ if ($use_googleanalytics)
 			echo "
 			</form>
 
-
-
 			<form name=\"fft\" action=\"set_cookies.php\" method=\"post\" class=\"inline\">
 				<input type=\"hidden\" name=\"cookie_to_set\" value=\"fft\">
 				FFT size:
-				<select name=\"fft\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">
+				<select name=\"fft\" class=\"ui-state-default ui-corner-all\">
 					<option>256</option>
 					<option>512</option>
 					<option>1024</option>
@@ -135,25 +127,24 @@ if ($use_googleanalytics)
 					<option>4096</option>
 				</select> 
 				<input type=\"hidden\" name=\"Token\" value=\"$Token\">
-				<input type=submit value=\"Update\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">";
+				<input type=submit value=\"Update\" class=\"fg-button ui-state-default ui-corner-all\">";
 
 			if (isset($_COOKIE["fft"])) {
 				$fft=$_COOKIE["fft"];
 				echo " | (current: $fft)";
 				}
-
 			echo "
 			</form>
 
 			<form name=\"palette\" action=\"set_cookies.php\" method=\"post\" class=\"inline\">
 				<input type=\"hidden\" name=\"cookie_to_set\" value=\"palette\">
 				Color palette to use in spectrograms:
-				<select name=\"palette\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">
+				<select name=\"palette\" class=\"ui-state-default ui-corner-all\">
 					<option value=\"1\">black</option>
 					<option value=\"2\">white</option>
 				</select> 
 				<input type=\"hidden\" name=\"Token\" value=\"$Token\">
-				<input type=submit value=\"Update\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">";
+				<input type=submit value=\"Update\" class=\"fg-button ui-state-default ui-corner-all\">";
 
 			if (isset($_COOKIE["palette"])) {
 				$palette=$_COOKIE["palette"];
@@ -170,7 +161,7 @@ if ($use_googleanalytics)
 			<form name=\"clear\" action=\"set_cookies.php\" method=\"post\" class=\"inline\">
 				<input type=\"hidden\" name=\"cookie_to_set\" value=\"clear\">
 				<input type=\"hidden\" name=\"Token\" value=\"$Token\">
-				<input type=submit value=\"Return settings to their defaults\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">
+				<input type=submit value=\"Return settings to their defaults\" class=\"fg-button ui-state-default ui-corner-all\">
 				</form>
 
 			<br>

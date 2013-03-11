@@ -22,7 +22,6 @@ if ($QualityFlag==""){
 	die();
 	}
 
-
 $flag_check = query_one("SELECT COUNT(*) FROM QualityFlags WHERE QualityFlagID='$QualityFlagID'", $connection);
 
 if ($flag_check!=0) {
@@ -33,8 +32,8 @@ if ($flag_check!=0) {
 $query = ("INSERT INTO QualityFlags 
 		(QualityFlagID, QualityFlag) 
 		VALUES ('$QualityFlagID','$QualityFlag')");
-	$result = mysqli_query($connection, $query)
-		or die (mysqli_error($connection));
+$result = mysqli_query($connection, $query)
+	or die (mysqli_error($connection));
 
 // Relocate back to the first page of the application
 	header("Location: ../admin.php?t=9&u=1");

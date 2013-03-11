@@ -7,7 +7,7 @@ if ($nrows_dates>0) {
 
 	echo "<form action=\"compare.php\" method=\"GET\">
 		Select a date to browse:
-		<select name=\"date\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">";
+		<select name=\"date\" class=\"ui-state-default ui-corner-all\">";
 					
 	for ($dc=0;$dc<$nrows_dates;$dc++) {
 		$row_date = mysqli_fetch_array($dates);
@@ -24,7 +24,7 @@ if ($nrows_dates>0) {
 	$nrows_sites = mysqli_num_rows($sites);
 			
 	echo "<p style=\"margin-left:10px;\">Site 1:</p>
-		<select name=\"site1\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">
+		<select name=\"site1\" class=\"ui-state-default ui-corner-all\">
 		<option></option>";
 	for ($sc=0;$sc<$nrows_sites;$sc++) {
 		$row_site = mysqli_fetch_array($sites);
@@ -43,7 +43,7 @@ if ($nrows_dates>0) {
 	$nrows_sites = mysqli_num_rows($sites);
 			
 	echo "<p style=\"margin-left:10px;\">Site 2:</p>
-		<select name=\"site2\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">
+		<select name=\"site2\" class=\"ui-state-default ui-corner-all\">
 		<option></option>";
 	for ($sc=0;$sc<$nrows_sites;$sc++) {
 		$row_site = mysqli_fetch_array($sites);
@@ -62,7 +62,7 @@ if ($nrows_dates>0) {
 	$nrows_sites = mysqli_num_rows($sites);
 			
 	echo "<p style=\"margin-left:10px;\">Site 3:</p>
-		<select name=\"site3\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">
+		<select name=\"site3\" class=\"ui-state-default ui-corner-all\">
 		<option></option>";
 	for ($sc=0;$sc<$nrows_sites;$sc++) {
 		$row_site = mysqli_fetch_array($sites);
@@ -76,7 +76,7 @@ if ($nrows_dates>0) {
 		}			
 	echo "</select>";
 		
-	echo "<input type=submit value=\" Show comparison \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">
+	echo "<input type=submit value=\" Show comparison \" class=\"fg-button ui-state-default ui-corner-all\">
 		</form>";
 	}
 else {

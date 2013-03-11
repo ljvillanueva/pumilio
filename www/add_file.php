@@ -19,17 +19,14 @@ require("include/check_login.php");
 
 $ColID=filter_var($_GET["ColID"], FILTER_SANITIZE_NUMBER_INT);
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 
 <title>$app_custom_name - Add File</title>";
 
 require("include/get_css.php");
-?>
-
-<?php
-	require("include/get_jqueryui.php");
+require("include/get_jqueryui.php");
 ?>
 
 <script src="js/jquery.validate.js"></script>
@@ -64,8 +61,9 @@ require("include/get_css.php");
 	</style>
 
 <?php
-if ($use_googleanalytics)
-	{echo $googleanalytics_code;}
+if ($use_googleanalytics){
+	echo $googleanalytics_code;
+	}
 ?>
 
 </head>
@@ -84,7 +82,7 @@ if ($use_googleanalytics)
 		</div>
 		<div class="span-24 last">
 			<h3>Add files to the database</h3>
-			<?php
+		<?php
 			$CollectionName=query_one("SELECT CollectionName FROM Collections WHERE ColID='$ColID' LIMIT 1", $connection);
 			echo "<p>Add a file to <strong>$CollectionName</strong>:";
 			$querysites = "SELECT * from Sites ORDER BY SiteName";
@@ -94,26 +92,27 @@ if ($use_googleanalytics)
 			if ($nrowssites>0) {
 				echo "<p><form enctype=\"multipart/form-data\" action=\"add_file2.php\" method=\"post\" id=\"EditForm\">";
 
-				echo "<input name=\"userfile\" type=\"file\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">&nbsp;&nbsp;";
-				$max=ini_get("upload_max_filesize");
+					echo "<input name=\"userfile\" type=\"file\" class=\"fg-button ui-state-default ui-corner-all\">&nbsp;&nbsp;";
+					$max=ini_get("upload_max_filesize");
 	
-				echo "<p>Site: <select name=\"SiteID\" class=\"ui-state-default ui-corner-all\">";
+					echo "<p>Site: <select name=\"SiteID\" class=\"ui-state-default ui-corner-all\">";
 
-				for ($i=0;$i<$nrowssites;$i++) {
-					$row = mysqli_fetch_array($resultsites);
-					extract($row);
-					echo "<option value=\"$SiteID\">$SiteName";
-					if ($SiteCode!="") {
-						echo " - Code: $SiteCode";
+					for ($i=0;$i<$nrowssites;$i++) {
+						$row = mysqli_fetch_array($resultsites);
+						extract($row);
+						echo "<option value=\"$SiteID\">$SiteName";
+						if ($SiteCode!="") {
+							echo " - Code: $SiteCode";
+							}
+						echo "</option>\n";
 						}
-					echo "</option>\n";
-					}
 
-				echo "</select> <a href=\"#\" onclick=\"window.open('include/addsite.php', 'softcheck', 'width=600,height=400,status=yes,resizable=yes,scrollbars=yes')\">Add sites</a><br>
+					echo "</select> <a href=\"#\" onclick=\"window.open('include/addsite.php', 'softcheck', 'width=600,height=400,status=yes,resizable=yes,scrollbars=yes')\">Add sites</a><br>
 
-				<input name=\"ColID\" type=\"hidden\" value=\"$ColID\">
+					<input name=\"ColID\" type=\"hidden\" value=\"$ColID\">
 				
-				<p><input type=\"submit\" value=\" Upload \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"> </form><br><br>
+					<p><input type=\"submit\" value=\" Upload \" class=\"fg-button ui-state-default ui-corner-all\">
+				</form><br><br>
 				<p><span class=\"notice\">Maximum file size is $max</span><br><br>";
 				}
 			else {
@@ -121,7 +120,7 @@ if ($use_googleanalytics)
 				}
 			
 			echo "<p><form method=\"GET\" action=\"include/addsite.php\" target=\"addsite\" onsubmit=\"window.open('', 'addsite', 'width=650,height=350,status=yes,resizable=yes,scrollbars=auto')\">
-				<input type=submit value=\" Add sites \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">
+					<input type=submit value=\" Add sites \" class=\"fg-button ui-state-default ui-corner-all\">
 				</form>";
 
 			?>

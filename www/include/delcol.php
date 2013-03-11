@@ -11,7 +11,7 @@ require("check_admin.php");
 $op=filter_var($_GET["op"], FILTER_SANITIZE_NUMBER_INT);
 $ColID=filter_var($_GET["ColID"], FILTER_SANITIZE_NUMBER_INT);
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 
@@ -107,7 +107,7 @@ echo "
 	$result = mysqli_query($connection, $query)
 		or die (mysqli_error($connection));
 	$nrows = mysqli_num_rows($result);
-	echo "<select name=\"ColID\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">";
+	echo "<select name=\"ColID\" class=\"ui-state-default ui-corner-all\">";
 
 		for ($i=0;$i<$nrows;$i++) {
 			$row = mysqli_fetch_array($result);
@@ -124,8 +124,9 @@ echo "
 
 		echo "</select> 
 		<input type=\"hidden\" name=\"op\" value=\"1\">
-		<input type=submit value=\" Delete \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"></form>
-		<hr noshade>";
+		<input type=submit value=\" Delete \" class=\"fg-button ui-state-default ui-corner-all\">
+	</form>
+	<hr noshade>";
 
 	?>
 

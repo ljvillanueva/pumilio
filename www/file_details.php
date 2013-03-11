@@ -38,7 +38,7 @@ if ($valid_token==1) {
 #Get the size of the file
 $soundfile_size=formatsize(filesize("tmp/$random_cookie/$soundfile_name"));
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 

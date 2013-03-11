@@ -13,22 +13,16 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 $force_admin = TRUE;
 require("include/check_admin.php");
 	
-?>
-
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
+<title>$app_custom_name</title>";
 
-<?php
-echo "<title>$app_custom_name</title>";
 require("include/get_css.php");
-?>
-
-<?php
-	require("include/get_jqueryui.php");
+require("include/get_jqueryui.php");
 ?>
 
 <!-- Validation Script -->
@@ -70,13 +64,13 @@ require("include/get_css.php");
 	</style>
 
 <?php
-if ($use_googleanalytics)
-	{echo $googleanalytics_code;}
+if ($use_googleanalytics){
+	echo $googleanalytics_code;
+	}
 ?>
 
 </head>
 <body>
-
 
 	<!--Blueprint container-->
 	<div class="container">
@@ -89,14 +83,14 @@ if ($use_googleanalytics)
 		<div class="span-24 last">
 
 			<h3>Add a weather data collection site:</h3>
-			<form action="add_weathersite2.php" method="POST" id="AddSiteForm">
-					<p>Site Name: <br><input type="text" name="SiteName" maxlength="40" size="30" class="fg-button ui-state-default ui-corner-all formedge"><br>
-					Latitude: <br><input type="text" name="Lat" maxlength="20" size="10" class="fg-button ui-state-default ui-corner-all formedge"> (decimal degrees) <br>
-					Longitude: <br><input type="text" name="Lon" maxlength="20" size="10" class="fg-button ui-state-default ui-corner-all formedge"> (decimal degrees) <br>
-					Elevation: <br><input type="text" name="Elevation" maxlength="20" size="10" class="fg-button ui-state-default ui-corner-all formedge"> (meters above sea level) <br>
-					Data source: <br><input type="text" name="DataSource" maxlength="60" size="40" class="fg-button ui-state-default ui-corner-all formedge"><br>
-					<input type=submit value=" Add Site " class="fg-button ui-state-default ui-corner-all">
-
+			<form action="include/add_weathersite.php" method="POST" id="AddSiteForm">
+				<p>Site Name: <br><input type="text" name="SiteName" maxlength="40" size="30" class="fg-button ui-state-default ui-corner-all formedge"><br>
+				Latitude: <br><input type="text" name="Lat" maxlength="20" size="10" class="fg-button ui-state-default ui-corner-all formedge"> (decimal degrees) <br>
+				Longitude: <br><input type="text" name="Lon" maxlength="20" size="10" class="fg-button ui-state-default ui-corner-all formedge"> (decimal degrees) <br>
+				Elevation: <br><input type="text" name="Elevation" maxlength="20" size="10" class="fg-button ui-state-default ui-corner-all formedge"> (meters above sea level) <br>
+				Data source: <br><input type="text" name="DataSource" maxlength="60" size="40" class="fg-button ui-state-default ui-corner-all formedge"><br>
+				<input type=submit value=" Add Site " class="fg-button ui-state-default ui-corner-all">
+			</form>
 		<br>
 		</div>
 		<div class="span-24 last">

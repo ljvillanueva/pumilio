@@ -27,7 +27,6 @@ if ($valid_token==1) {
 	$from_db = query_one("SELECT from_db FROM Tokens WHERE TokenID='$Token' LIMIT 1", $connection);
 	}
 
-
 $del_token=query_one("DELETE FROM Tokens WHERE TokenID='$Token'", $connection);
 
 #rm temp dir

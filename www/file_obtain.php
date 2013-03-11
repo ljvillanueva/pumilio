@@ -23,9 +23,7 @@ else {
 	}
 
 require("include/apply_config.php");
-
 require("include/check_login.php");
-
 
 #Generate a random number and store in cookies
 	$random_cookie=mt_rand();
@@ -70,16 +68,14 @@ if (!$allow_upload){
 	die();
 	}
 
-echo "	<html>
-	<head>
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+<html>
+<head>
 <title>$app_custom_name - Obtain a file from the web</title>";
-?>
-<link rel="stylesheet" href="css/screen.css" type="text/css" media="screen, projection">
-<link rel="stylesheet" href="css/print.css" type="text/css" media="print">	
-<!--[if IE]><link rel="stylesheet" href="css/ie.css" type="text/css" media="screen, projection"><![endif]-->
 
-<?php
-	require("include/get_jqueryui.php");
+require("include/get_css.php");
+require("include/get_jqueryui.php");
+
 ?>
 
 </head>
@@ -95,95 +91,94 @@ echo "	<html>
 		</div>
 		<div class="span-24 last">
 
-<?php
+		<?php
 
-#Check that variables are not empty
-if ($obtain_soundfile=="" || $obtain_fileid=="" || $obtain_method=="") {
-	echo "<div class=\"error\">Script was called incorrectly. Please check the documentation and try again.</div>
-		</div>
-		<div class=\"span-24 last\">";
+		#Check that variables are not empty
+		if ($obtain_soundfile=="" || $obtain_fileid=="" || $obtain_method=="") {
+			echo "<div class=\"error\">Script was called incorrectly. Please check the documentation and try again.</div>
+				</div>
+				<div class=\"span-24 last\">";
 
-			require("include/bottom.php");
+					require("include/bottom.php");
 
-	echo "</div></div>
-	</body>
-	</html>";
-	die();
-	}
+			echo "</div></div>
+			</body>
+			</html>";
+			die();
+			}
 
-#Check that any error check was triggered
-if ($error_msg!="") {
-	echo "<div class=\"error\">$error_msg</div>
-		</div>
-		<div class=\"span-24 last\">";
+		#Check that any error check was triggered
+		if ($error_msg!="") {
+			echo "<div class=\"error\">$error_msg</div>
+				</div>
+				<div class=\"span-24 last\">";
 
-			require("include/bottom.php");
+					require("include/bottom.php");
 
-	echo "</div></div>
-	</body>
-	</html>";
-	die();
-	}
+			echo "</div></div>
+			</body>
+			</html>";
+			die();
+			}
 
-#General variables
+		#General variables
+		$obtain_soundfile_exp=explode("/", $obtain_soundfile);
+		$filename_pos=(count($obtain_soundfile_exp))-1;
+		$filename=$obtain_soundfile_exp[$filename_pos];
 
-	$obtain_soundfile_exp=explode("/", $obtain_soundfile);
-	$filename_pos=(count($obtain_soundfile_exp))-1;
-	$filename=$obtain_soundfile_exp[$filename_pos];
-
-#The file is in the same server
-if ($obtain_method==1) {
-	if (!copy($obtain_soundfile, $target_path . $filename)) {
-		die ("<div class=\"error\">Failed to copy $obtain_soundfile...</div>\n");
-		}
-	}
-if ($obtain_method==2) {
-	exec('wget http://' . $obtain_soundfile . ' -O ' . $target_path . $filename, $lastline, $retval);
-	if ($retvar!=0) {
-		die("<div class=\"error\">Could not find the file or there was a problem with wget.</div>");
-		}
-	}
-
-
-#Once the file is in the tmp/random dir, check it
-	exec('include/soundcheck.py tmp/' . $random_cookie . '/' . $filename, $lastline, $retval);
-	if ($retval==0) {
-		echo "<div class=\"success\"><img src=\"images/accept.png\"> The file has been obtained successfully.<br>";
-			$file_info=$lastline[0];
-			$file_info=explode(",",$file_info);
-			$sampling_rate=$file_info[0];
-			$no_channels=$file_info[1];
-			$file_format=$file_info[2];
-			$file_duration=$file_info[3];
-			#Get the size of the file
-			$soundfile_size=formatsize(filesize("tmp/$random_cookie/$filename"));
-			$fileID=$obtain_fileid;
-
-			echo "File name: $filename<br>
-			File format: $file_format<br>
-			File size: $soundfile_size<br>
-			Number of channels: $no_channels<br>
-			Duration: $file_duration seconds<br>
-			Sampling Rate: $sampling_rate Hz<br>
-			File ID: $fileID
-			</div>";
-
-			echo "<p><a href=\"openfile.php?filename=$filename&format=$file_format&duration=$file_duration&samprate=$sampling_rate&fileID=$fileID&no_channels=$no_channels\"><img src=\"images/drive_magnify.png\"> Open file</a>";
-		}
-	else {
-		echo "<div class=\"error\">There was an error opening the file or it is not a recognized sound file. Please try again.</div><p>The accepted file formats are:<br>";
-		exec('include/audiolab_formats.py', $lastline1);
-			$available_formats=$lastline1[0];
-			$available_formats=explode(",",$available_formats);
-			for ($f=0;$f<count($available_formats);$f++) {
-				echo $available_formats[$f] . " ";
+		#The file is in the same server
+		if ($obtain_method==1) {
+			if (!copy($obtain_soundfile, $target_path . $filename)) {
+				die ("<div class=\"error\">Failed to copy $obtain_soundfile...</div>\n");
 				}
-		#delete the folder and destroy cookie
-		delTree('tmp/' . $random_cookie . '/');
-		#setcookie("random_cookie", "", time()-3600);
-		}
+			}
+		if ($obtain_method==2) {
+			exec('wget http://' . $obtain_soundfile . ' -O ' . $target_path . $filename, $lastline, $retval);
+			if ($retvar!=0) {
+				die("<div class=\"error\">Could not find the file or there was a problem with wget.</div>");
+				}
+			}
 
-			?>
+
+		#Once the file is in the tmp/random dir, check it
+		exec('include/soundcheck.py tmp/' . $random_cookie . '/' . $filename, $lastline, $retval);
+		if ($retval==0) {
+			echo "<div class=\"success\"><img src=\"images/accept.png\"> The file has been obtained successfully.<br>";
+		$file_info=$lastline[0];
+		$file_info=explode(",",$file_info);
+		$sampling_rate=$file_info[0];
+		$no_channels=$file_info[1];
+		$file_format=$file_info[2];
+		$file_duration=$file_info[3];
+		#Get the size of the file
+		$soundfile_size=formatsize(filesize("tmp/$random_cookie/$filename"));
+		$fileID=$obtain_fileid;
+
+		echo "File name: $filename<br>
+		File format: $file_format<br>
+		File size: $soundfile_size<br>
+		Number of channels: $no_channels<br>
+		Duration: $file_duration seconds<br>
+		Sampling Rate: $sampling_rate Hz<br>
+		File ID: $fileID
+		</div>";
+
+		echo "<p><a href=\"openfile.php?filename=$filename&format=$file_format&duration=$file_duration&samprate=$sampling_rate&fileID=$fileID&no_channels=$no_channels\"><img src=\"images/drive_magnify.png\"> Open file</a>";
+			}
+		else {
+			echo "<div class=\"error\">There was an error opening the file or it is not a recognized sound file. Please try again.</div><p>The accepted file formats are:<br>";
+			exec('include/audiolab_formats.py', $lastline1);
+				$available_formats=$lastline1[0];
+				$available_formats=explode(",",$available_formats);
+				for ($f=0;$f<count($available_formats);$f++) {
+					echo $available_formats[$f] . " ";
+					}
+			#delete the folder and destroy cookie
+			delTree('tmp/' . $random_cookie . '/');
+			#setcookie("random_cookie", "", time()-3600);
+			}
+
+		?>
 
 		</div>
 		<div class="span-24 last">

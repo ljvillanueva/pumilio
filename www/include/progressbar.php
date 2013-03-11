@@ -1,23 +1,12 @@
 <?php
-session_start();
 
-echo "<html>
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+<html>
 <head>
 ";
 
-require("include/functions.php");
-
-$config_file = 'config.php';
-if (file_exists($config_file)) {
-    require("config.php");
-} else {
-    header("Location: error.php?e=config");
-    die();
-}
-
-require("include/apply_config.php");
-require("include/get_css.php");
-require("include/get_jqueryui.php");
+require("get_css_include.php");
+require("get_jqueryui_include.php");
 
 $percent=$_GET["per"];
 

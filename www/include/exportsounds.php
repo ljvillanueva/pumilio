@@ -13,7 +13,7 @@ flush(); @ob_flush();
 
 $archive_name=date("YMd_His");
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 
@@ -109,28 +109,28 @@ if ($total_no_sounds>0) {
 		<input type=\"hidden\" name=\"archivefrom\" value=\"SiteID\">
 		<strong>Export all files from a site</strong>: <br><select name=\"SiteID\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">";
 
-	for ($i=0;$i<$nrows;$i++) {
-		$row = mysqli_fetch_array($result);
-		extract($row);
-		//How many sounds associated with that source
-		$no_sounds=query_one("SELECT COUNT(*) as no_sounds FROM Sounds WHERE SiteID='$SiteID' AND SoundStatus!='9'", $connection);
+		for ($i=0;$i<$nrows;$i++) {
+			$row = mysqli_fetch_array($result);
+			extract($row);
+			//How many sounds associated with that source
+			$no_sounds=query_one("SELECT COUNT(*) as no_sounds FROM Sounds WHERE SiteID='$SiteID' AND SoundStatus!='9'", $connection);
 
-		#Get filesize of all the files
-		$thisfilesize=0;
-		$result_f = mysqli_query($connection, "SELECT DirID, ColID, OriginalFilename, FileSize from Sounds WHERE SiteID='$SiteID' AND Sounds.SoundStatus!='9'")
-			or die (mysqli_error($connection));
-		$nrows_f = mysqli_num_rows($result_f);
-		for ($f=0;$f<$nrows_f;$f++) {
-			$row_f = mysqli_fetch_array($result_f);
-			extract($row_f);
-			#$thisfilesize=$thisfilesize + filesize("../sounds/sounds/$ColID/$DirID/$OriginalFilename");
-			$thisfilesize=$thisfilesize + $FileSize;
+			#Get filesize of all the files
+			$thisfilesize=0;
+			$result_f = mysqli_query($connection, "SELECT DirID, ColID, OriginalFilename, FileSize from Sounds WHERE SiteID='$SiteID' AND Sounds.SoundStatus!='9'")
+				or die (mysqli_error($connection));
+			$nrows_f = mysqli_num_rows($result_f);
+			for ($f=0;$f<$nrows_f;$f++) {
+				$row_f = mysqli_fetch_array($result_f);
+				extract($row_f);
+				#$thisfilesize=$thisfilesize + filesize("../sounds/sounds/$ColID/$DirID/$OriginalFilename");
+				$thisfilesize=$thisfilesize + $FileSize;
+				}
+			#if ($no_sounds>0)
+			$thisfilesize = formatsize($thisfilesize);
+			echo "<option value=\"$SiteID\">$SiteName ($thisfilesize)</option>\n";
+			unset($thisfilesize);
 			}
-		#if ($no_sounds>0)
-		$thisfilesize = formatsize($thisfilesize);
-		echo "<option value=\"$SiteID\">$SiteName ($thisfilesize)</option>\n";
-		unset($thisfilesize);
-		}
 		echo "</select><br>";
 
 		echo "Archive format: <select name=\"method\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">";
@@ -148,8 +148,7 @@ if ($total_no_sounds>0) {
 
 		echo "</select><br>";
 		echo "<input type=submit value=\" Package files from this site \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">
-			</form>";
-				
+	</form>";
 	}
 else {
 	echo "<div class=\"notice\">There are no sound files in the system.</div>";
@@ -167,7 +166,6 @@ else {
 		echo "<div class=\"success\">";
 		}
 	echo "Free disk space available on this server: $dfh</div>";
-
 ?>
 
 <br><p><a href="#" onClick="window.close();">Close window</a>

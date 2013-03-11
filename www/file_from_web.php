@@ -13,7 +13,6 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 $force_loggedin = TRUE;
 require("include/check_login.php");
 
@@ -23,16 +22,18 @@ if (!$allow_upload){
 	}
 
 
-echo "	<html>
-	<head>
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+<html>
+<head>
 <title>$app_custom_name - Get a file from the web</title>";
 
 require("include/get_css.php");
 require("include/get_jqueryui.php");
 ?>
+
 	<script src="js/jquery.validate.js"></script>
 
-<!-- Form validation from http://bassistance.de/jquery-plugins/jquery-plugin-validation/ -->
+	<!-- Form validation from http://bassistance.de/jquery-plugins/jquery-plugin-validation/ -->
 
 	<script type="text/javascript">
 	$().ready(function() {
@@ -63,8 +64,9 @@ require("include/get_jqueryui.php");
 	</style>
 
 <?php
-if ($use_googleanalytics)
-	{echo $googleanalytics_code;}
+if ($use_googleanalytics){
+	echo $googleanalytics_code;
+	}
 ?>
 
 </head>
@@ -83,10 +85,10 @@ if ($use_googleanalytics)
 			<h3>Get a sound file from the web:</h3>
 
 			<p><form action="file_obtain.php" method="get" id="fileForm">
-				Address of the file: <input name="file" type="text" id="file" size="40" value="http://" class="fg-button ui-state-default ui-corner-all" style="font-size:12px">
-				<p>Assign a numeric ID to the file: <input type="text" name="fileid" id="fileid" class="fg-button ui-state-default ui-corner-all" style="font-size:12px">
+				Address of the file: <input name="file" type="text" id="file" size="40" value="http://" class="fg-button ui-state-default ui-corner-all">
+				<p>Assign a numeric ID to the file: <input type="text" name="fileid" id="fileid" class="fg-button ui-state-default ui-corner-all">
 				<input type="hidden" name="method" value="2">
-				<p><input type="submit" value=" Get the file " class="fg-button ui-state-default ui-corner-all" style="font-size:12px"> <br>
+				<p><input type="submit" value=" Get the file " class="fg-button ui-state-default ui-corner-all"> <br>
 			</form>
 			<br>
 			<p class="notice">The file has to be in one of these formats:

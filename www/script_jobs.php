@@ -13,17 +13,14 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 require("include/check_login.php");
 
-?>
 
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
+<title>$app_custom_name - Sample the archive</title>";
 
-<?php
-
-echo "<title>$app_custom_name - Sample the archive</title>";
 require("include/get_css.php");
 require("include/get_jqueryui.php");
 
@@ -207,16 +204,15 @@ if ($use_googleanalytics) {
 			echo "<hr noshade>
 			<p><strong>Save a new script:</strong>
 			<form method=\"POST\" action=\"include/addscript.php\" target=\"R\" onsubmit=\"window.open('', 'R', 'width=700,height=400,status=yes,resizable=yes,scrollbars=yes')\">
-			Name of script: <input type=\"text\" name=\"scriptname\" size=\"30\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">
-			<br>Script version: <input type=\"text\" name=\"scriptver\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">
-			<br>Language: <select name=\"Lang\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">
-				<option>R</option>
-				<option>Python</option>
-			</select><br>
-			<textarea name=\"script\" class=\"ui-corner-all\" style=\"font-size:12px; width: 500px; height: 300px;\"></textarea>
-			<p><input type=submit value=\" Save new script \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">
+				Name of script: <input type=\"text\" name=\"scriptname\" size=\"30\" class=\"fg-button ui-state-default ui-corner-all\">
+				<br>Script version: <input type=\"text\" name=\"scriptver\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\">
+				<br>Language: <select name=\"Lang\" class=\"ui-state-default ui-corner-all\">
+					<option>R</option>
+					<option>Python</option>
+				</select><br>
+				<textarea name=\"script\" class=\"ui-corner-all\" style=\"width: 500px; height: 300px;\"></textarea>
+				<p><input type=submit value=\" Save new script \" class=\"fg-button ui-state-default ui-corner-all\">
 			</form>\n";
-
 		?>
 			
 		<br>
@@ -224,7 +220,6 @@ if ($use_googleanalytics) {
 		<div class="span-24 last">
 			<?php
 			require("include/bottom.php");
-			
 			?>
 		</div>
 	</div>

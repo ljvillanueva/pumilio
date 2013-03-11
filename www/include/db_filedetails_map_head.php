@@ -7,7 +7,6 @@ if ($googlemaps_ver == "3"){
 	echo "<script src=\"http://maps.googleapis.com/maps/api/js?key=$googlemaps3_key&sensor=false\" type=\"text/javascript\"></script>\n";
 	
 	echo "<script type=\"text/javascript\">
-
 	$(document).ready(function () { initialize();  });
 
 	function initialize() {
@@ -39,9 +38,6 @@ if ($googlemaps_ver == "3"){
 		    map: map,
 		    title: '$SiteName'
 		});
-
-		
-		
 	      }
 	</script>\n";
 	}

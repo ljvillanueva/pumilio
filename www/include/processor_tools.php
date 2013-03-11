@@ -12,7 +12,12 @@ echo "<input type=\"hidden\" name=\"ch\" value=\"$ch\">
 if (isset($tool)) {
 	echo "<input type=\"hidden\" name=\"tool\" value=\"$tool\">";
 	}
-if ($_GET["showmarks"]) {
+	
+if (!isset($showmarks)){
+	$showmarks = 0;
+	}
+	
+if ($showmarks) {
 	echo "<input type=\"hidden\" name=\"showmarks\" value=\"1\">";
 	}
 ?>

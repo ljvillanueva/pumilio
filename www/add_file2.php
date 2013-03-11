@@ -13,24 +13,23 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 $force_loggedin = TRUE;
 require("include/check_login.php");
 
 $ColID=filter_var($_POST["ColID"], FILTER_SANITIZE_NUMBER_INT);
 $SiteID=filter_var($_POST["SiteID"], FILTER_SANITIZE_NUMBER_INT);
 
-echo "	<html>
-	<head>
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+<html>
+<head>
 <title>$app_custom_name - Upload file</title>";
 
 require("include/get_css.php");
 require("include/get_jqueryui.php");
-?>
 
-<?php
-if ($use_googleanalytics)
-	{echo $googleanalytics_code;}
+if ($use_googleanalytics){
+	echo $googleanalytics_code;
+	}
 ?>
 
 </head>
@@ -45,7 +44,7 @@ if ($use_googleanalytics)
 		</div>
 		<div class="span-24 last">
 
-			<?php
+		<?php
 			$random_cookie=mt_rand();
 			mkdir("tmp/$random_cookie", 0777);
 			$target_path = "tmp/$random_cookie/";
@@ -83,15 +82,7 @@ if ($use_googleanalytics)
 						$result_file = mysqli_query($connection, $query_file)
 							or die (mysqli_error($connection));
 						}
-					/*
-					echo "File name: $filename<br>
-					File format: $file_format<br>
-					File size: $soundfile_size<br>
-					Number of channels: $no_channels<br>
-					Duration: $file_duration seconds<br>
-					Sampling Rate: $sampling_rate Hz<br>
-					File ID: $fileID";
-					*/
+					
 					echo "</div>";
 
 					$SoundID=mysqli_insert_id($connection);
@@ -110,7 +101,6 @@ if ($use_googleanalytics)
 				}
 			else {
 				$max=ini_get("upload_max_filesize");
-				
 				echo "<div class=\"error\">There was a problem with the upload or the file is too big. The maximum file size is $max. Please try again.</div>";
 				}
 

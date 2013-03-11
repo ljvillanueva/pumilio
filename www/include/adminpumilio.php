@@ -1,74 +1,73 @@
 <?php
 
 //Custom name of the app
-if ($_GET["tt"]==1) {
+if ($tt==1) {
 	echo "<div class=\"success\" id=\"tt1\">The database was updated.</div>";
 	}
 
-	$app_custom_name=query_one("SELECT Value from PumilioSettings WHERE Settings='app_custom_name'", $connection);
-	if ($app_custom_name==""){
-		$app_custom_name="Pumilio";
-		}
-	
-	echo "<strong>General settings:</strong>
-		<div style=\"margin-left: 10px;\">This installation custom name: $app_custom_name";
-	
-	echo "<form action=\"include/editpumiliosettings.php\" method=\"POST\">
-		<input type=\"hidden\" name=\"settings\" value=\"top\">
-		<input type=\"text\" name=\"app_custom_name\" maxlength=\"250\" size=\"36\" value=\"$app_custom_name\" class=\"fg-button ui-state-default ui-corner-all formedge\">";
-	
-	#app_custom_text
-	$app_custom_text=query_one("SELECT Value from PumilioSettings WHERE Settings='app_custom_text'", $connection);
-	
-	echo "<br>Short description of this system: $app_custom_text";
-	
-	echo "<input type=\"text\" name=\"app_custom_text\" maxlength=\"250\" size=\"50\" value=\"$app_custom_text\" class=\"fg-button ui-state-default ui-corner-all formedge\">";
-		
-	#use_googlemaps
-	$use_googlemaps=query_one("SELECT Value from PumilioSettings WHERE Settings='use_googlemaps'", $connection);
-	
-	if ($use_googlemaps=="1"){
-		$use_googlemaps_d="No";
-		$use_googlemaps="0";
-		}
-	elseif ($use_googlemaps=="0"){
-		$use_googlemaps_d="No";
-		}
-	elseif ($use_googlemaps=="3"){
-		$use_googlemaps_d="Yes";
-		}
-	else{
-		$use_googlemaps_d="Not set";
-		}
-		
-	echo "<br>Use the Google Maps system (using the v3 API): $use_googlemaps_d";
-	
-	echo "<select name=\"use_googlemaps\" class=\"ui-state-default ui-corner-all formedge\">";
+$app_custom_name=query_one("SELECT Value from PumilioSettings WHERE Settings='app_custom_name'", $connection);
+if ($app_custom_name==""){
+	$app_custom_name="Pumilio";
+	}
 
-		if ($use_googlemaps=="0") {
-			echo "<option SELECTED value=\"0\">No</option>
-				<option value=\"3\">Yes</option>";
-			}
-		elseif ($use_googlemaps=="3") {
-			echo "<option SELECTED value=\"3\">Yes</option>
-				<option value=\"0\">No</option>";
-			}
-		else {
-			echo "<option value=\"3\">Yes</option>
-				<option value=\"0\">No</option>";
-			}
+echo "<strong>General settings:</strong>
+	<div style=\"margin-left: 10px;\">This installation custom name: $app_custom_name";
 
-		echo "</select>\n";
-		
-	#googlemaps_key
-	if ($use_googlemaps=="3") {
-		echo "<p>
-		<a href=\"https://developers.google.com/maps/documentation/javascript/tutorial\" target=_blank>Request a key for Google Maps JavaScript API v3</a> (free and required for each server) <a href=\"#\" onclick=\"window.open('help.php?topic=GoogleMaps3', 'help', 'width=650,height=550,status=yes,resizable=yes,scrollbars=auto')\"><img src=\"images/help.png\" title=\"Help\" alt=\"Help\"></a><br>
-			GoogleMaps v3 key: $googlemaps3_key";
-		
-		echo "<input type=\"text\" name=\"googlemaps3_key\" size=\"50\" maxlength=\"250\" value=\"$googlemaps3_key\" class=\"fg-button ui-state-default ui-corner-all formedge\">\n";
-		}	
+echo "<form action=\"include/editpumiliosettings.php\" method=\"POST\">
+	<input type=\"hidden\" name=\"settings\" value=\"top\">
+	<input type=\"text\" name=\"app_custom_name\" maxlength=\"250\" size=\"36\" value=\"$app_custom_name\" class=\"fg-button ui-state-default ui-corner-all formedge\">";
+
+#app_custom_text
+$app_custom_text=query_one("SELECT Value from PumilioSettings WHERE Settings='app_custom_text'", $connection);
+
+echo "<br>Short description of this system: $app_custom_text";
+
+echo "<input type=\"text\" name=\"app_custom_text\" maxlength=\"250\" size=\"50\" value=\"$app_custom_text\" class=\"fg-button ui-state-default ui-corner-all formedge\">";
 	
+#use_googlemaps
+$use_googlemaps=query_one("SELECT Value from PumilioSettings WHERE Settings='use_googlemaps'", $connection);
+
+if ($use_googlemaps=="1"){
+	$use_googlemaps_d="No";
+	$use_googlemaps="0";
+	}
+elseif ($use_googlemaps=="0"){
+	$use_googlemaps_d="No";
+	}
+elseif ($use_googlemaps=="3"){
+	$use_googlemaps_d="Yes";
+	}
+else{
+	$use_googlemaps_d="Not set";
+	}
+	
+echo "<br>Use the Google Maps system (using the v3 API): $use_googlemaps_d";
+
+echo "<select name=\"use_googlemaps\" class=\"ui-state-default ui-corner-all formedge\">";
+
+	if ($use_googlemaps=="0") {
+		echo "<option SELECTED value=\"0\">No</option>
+			<option value=\"3\">Yes</option>";
+		}
+	elseif ($use_googlemaps=="3") {
+		echo "<option SELECTED value=\"3\">Yes</option>
+			<option value=\"0\">No</option>";
+		}
+	else {
+		echo "<option value=\"3\">Yes</option>
+			<option value=\"0\">No</option>";
+		}
+
+echo "</select>\n";
+		
+#googlemaps_key
+if ($use_googlemaps=="3") {
+	echo "<p>
+	<a href=\"https://developers.google.com/maps/documentation/javascript/tutorial\" target=_blank>Request a key for Google Maps JavaScript API v3</a> (free and required for each server) <a href=\"#\" onclick=\"window.open('help.php?topic=GoogleMaps3', 'help', 'width=650,height=550,status=yes,resizable=yes,scrollbars=auto')\"><img src=\"images/help.png\" title=\"Help\" alt=\"Help\"></a><br>
+	GoogleMaps v3 key: $googlemaps3_key";
+		
+	echo "<input type=\"text\" name=\"googlemaps3_key\" size=\"50\" maxlength=\"250\" value=\"$googlemaps3_key\" class=\"fg-button ui-state-default ui-corner-all formedge\">\n";
+	}	
 	
 	$map_only=query_one("SELECT Value from PumilioSettings WHERE Settings='map_only'", $connection);
 	
@@ -79,21 +78,21 @@ if ($_GET["tt"]==1) {
 		$map_only_d="Full menu";
 		}
 
-	echo "<br>Main menu: $map_only_d";
+echo "<br>Main menu: $map_only_d";
 	
-	echo "<select name=\"map_only\" class=\"ui-state-default ui-corner-all formedge\">";
-		if ($map_only=="1") {
-			echo "<option value=\"0\">Full menu</option>
-				<option SELECTED value=\"1\">Map only</option>";
-			}
-		elseif ($map_only=="0" || $map_only=="") {
-			echo "<option SELECTED value=\"0\">Full menu</option>
-				<option value=\"1\">Map only</option>";
-			}
-	echo "</select>\n";
+echo "<select name=\"map_only\" class=\"ui-state-default ui-corner-all formedge\">";
+	if ($map_only=="1") {
+		echo "<option value=\"0\">Full menu</option>
+			<option SELECTED value=\"1\">Map only</option>";
+		}
+	elseif ($map_only=="0" || $map_only=="") {
+		echo "<option SELECTED value=\"0\">Full menu</option>
+			<option value=\"1\">Map only</option>";
+		}
+echo "</select>\n";
 	
 	
-	#Copyright or CC?
+#Copyright or CC?
 	$files_license = query_one("SELECT Value from PumilioSettings WHERE Settings='files_license'", $connection);
 	$files_license_detail = query_one("SELECT Value from PumilioSettings WHERE Settings='files_license_detail'", $connection);
 
@@ -179,7 +178,7 @@ if ($_GET["tt"]==1) {
 				
 		echo " </select>
 		
-		<input type=\"text\" name=\"files_license_detail\" size=\"40\" maxlength=\"250\" value=\"$files_license_detail\" class=\"fg-button ui-state-default ui-corner-all\">";
+	<input type=\"text\" name=\"files_license_detail\" size=\"40\" maxlength=\"250\" value=\"$files_license_detail\" class=\"fg-button ui-state-default ui-corner-all\">";
 	
 	#Max freq to draw in spectrograms
 	$max_spec_freq=query_one("SELECT Value from PumilioSettings WHERE Settings='max_spec_freq'", $connection);
@@ -222,6 +221,16 @@ if ($_GET["tt"]==1) {
 				<option value=\"3000\">3000 Hz</option>";
 				}
 		else {
+			$m1 = "";
+			$m2 = "";
+			$m3 = "";
+			$m4 = "";
+			$m5 = "";
+			$m6 = "";
+			$m7 = "";
+			$m8 = "";
+			$m9 = "";
+		
 			if ($max_spec_freq==24000)
 				$m1="SELECTED";
 			elseif ($max_spec_freq==22050)
@@ -240,6 +249,7 @@ if ($_GET["tt"]==1) {
 				$m8="SELECTED";
 			elseif ($max_spec_freq==3000)
 				$m9="SELECTED";
+				
 			echo "<option SELECTED value=\"max\">Maximum for each file</option>
 				<option $m1 value=\"24000\">24000 Hz</option>
 				<option $m2 value=\"22050\">22050 Hz</option>
@@ -252,7 +262,7 @@ if ($_GET["tt"]==1) {
 				<option $m9 value=\"3000\">3000 Hz</option>";
 			}
 
-		echo " </select>";
+	echo " </select>";
 
 	$temp_add_dir=query_one("SELECT Value from PumilioSettings WHERE Settings='temp_add_dir'", $connection);
 	if ($temp_add_dir!=""){ 
@@ -325,10 +335,9 @@ if ($_GET["tt"]==1) {
 				}
 			}
 
-		echo " </select>
-		<p><input type=submit value=\" Update system settings \" class=\"fg-button ui-state-default ui-corner-all\">
-		</form>";
-
+	echo " </select>
+	<p><input type=submit value=\" Update system settings \" class=\"fg-button ui-state-default ui-corner-all\">
+	</form>";
 
 
 
@@ -338,7 +347,7 @@ if ($_GET["tt"]==1) {
 	<div style=\"margin-left: 10px;\">
 	<form action=\"include/editpumiliosettings.php\" method=\"POST\">";	
 		
-	if ($_GET["tt"]==2) {
+	if ($tt==2) {
 		echo "<div class=\"success\" id=\"tt2\">The database was updated.</div>";
 		}
 	
@@ -399,8 +408,7 @@ if ($_GET["tt"]==1) {
 			echo "<option SELECTED value=\"1\">Yes</option>
 				<option value=\"0\">No</option>";
 			}
-
-		echo " </select>";
+	echo " </select>";
 
 	
 	#use tag cloud
@@ -427,8 +435,8 @@ if ($_GET["tt"]==1) {
 			echo "<option value=\"1\">Yes</option>
 				<option SELECTED value=\"0\">No</option>";
 			}
+	echo " </select>";
 
-		echo " </select>";
 
 	#audio preview format
 	$audiopreview_format=query_one("SELECT Value from PumilioSettings WHERE Settings='audiopreview_format'", $connection);
@@ -463,12 +471,15 @@ if ($_GET["tt"]==1) {
 	#hide_latlon_guests
 	$hide_latlon_guests=query_one("SELECT Value from PumilioSettings WHERE Settings='hide_latlon_guests'", $connection);
 
-	if ($hide_latlon_guests=="1")
+	if ($hide_latlon_guests=="1"){
 		$hide_latlon_guests_d="Yes";
-	elseif ($hide_latlon_guests=="0")
+		}
+	elseif ($hide_latlon_guests=="0"){
 		$hide_latlon_guests_d="No";
-	else
+		}
+	else{
 		$hide_latlon_guests_d="Not set";
+		}
 			
 	echo "<br>Hide the coordinates from users that are not logged in: $hide_latlon_guests_d";
 	
@@ -482,18 +493,21 @@ if ($_GET["tt"]==1) {
 				<option SELECTED value=\"0\">No</option>";
 			}
 
-		echo " </select>";
+	echo " </select>";
 
 
 	#use side-to-side comparison
 	$sidetoside_comparison=query_one("SELECT Value from PumilioSettings WHERE Settings='sidetoside_comp'", $connection);
 
-	if ($sidetoside_comparison=="1")
+	if ($sidetoside_comparison=="1"){
 		$sidetoside_comparison_d="Yes";
-	elseif ($sidetoside_comparison=="0")
+		}
+	elseif ($sidetoside_comparison=="0"){
 		$sidetoside_comparison_d="No";
-	else
+		}
+	else{
 		$sidetoside_comparison_d="Not set";
+		}
 			
 	echo "<br>Use Side-to-side comparison: $sidetoside_comparison_d";
 	
@@ -505,18 +519,21 @@ if ($_GET["tt"]==1) {
 			{echo "<option value=\"1\">Yes</option>
 				<option SELECTED value=\"0\">No</option>";}
 
-		echo " </select>";
+	echo " </select>";
 
 
 	#allow_upload
 	$allow_upload=query_one("SELECT Value from PumilioSettings WHERE Settings='allow_upload'", $connection);
 
-	if ($allow_upload=="1")
+	if ($allow_upload=="1"){
 		$allow_upload_d="Yes";
-	elseif ($allow_upload=="0")
+		}
+	elseif ($allow_upload=="0"){
 		$allow_upload_d="No";
-	else
+		}
+	else{
 		$allow_upload_d="Not set";
+		}
 			
 	echo "<br>Allow users to upload files: $allow_upload_d";
 	
@@ -530,18 +547,21 @@ if ($_GET["tt"]==1) {
 				<option SELECTED value=\"0\">No</option>";
 			}
 
-		echo " </select>";
+	echo " </select>";
 
 
 	#compress wav to flac
 	$wav_toflac=query_one("SELECT Value from PumilioSettings WHERE Settings='wav_toflac'", $connection);
 
 	if ($wav_toflac=="1") {
-		$wav_toflac_d="Yes";}
+		$wav_toflac_d="Yes";
+		}
 	elseif ($wav_toflac=="0") {
-		$wav_toflac_d="No";}
+		$wav_toflac_d="No";
+		}
 	else {
-		$wav_toflac_d="Not set";}
+		$wav_toflac_d="Not set";
+		}
 			
 	echo "<br>Compress uploaded wav files to flac: $wav_toflac_d";
 	
@@ -555,18 +575,21 @@ if ($_GET["tt"]==1) {
 				<option SELECTED value=\"0\">No</option>";
 			}
 
-		echo " </select>";
+	echo " </select>";
 
 
 	#guests_can_open
 	$guests_can_open=query_one("SELECT Value from PumilioSettings WHERE Settings='guests_can_open'", $connection);
 
-	if ($guests_can_open=="1")
+	if ($guests_can_open=="1"){
 		$guests_can_open_d="Yes";
-	elseif ($guests_can_open=="0")
+		}
+	elseif ($guests_can_open=="0"){
 		$guests_can_open_d="No";
-	else
+		}
+	else{
 		$guests_can_open_d="Not set";
+		}
 
 	echo "<br>Allow users that are not logged in to open the files: $guests_can_open_d";
 	
@@ -580,30 +603,34 @@ if ($_GET["tt"]==1) {
 				<option SELECTED value=\"0\">No</option>";
 			}
 
-		echo " </select>";
+	echo " </select>";
 
 
 	#guests_can_download
 	$guests_can_dl=query_one("SELECT Value from PumilioSettings WHERE Settings='guests_can_dl'", $connection);
 
-	if ($guests_can_dl=="1")
+	if ($guests_can_dl=="1"){
 		$guests_can_dl_d="Yes";
-	elseif ($guests_can_dl=="0")
+		}
+	elseif ($guests_can_dl=="0"){
 		$guests_can_dl_d="No";
-	else
+		}
+	else{
 		$guests_can_dl_d="Not set";
+		}
 
 	echo "<br>Allow users that are not logged in to download the files: $guests_can_dl_d";
 	
 	echo "<select name=\"guests_can_dl\" class=\"ui-state-default ui-corner-all formedge\">";
-		if ($guests_can_dl)
-			{echo "<option SELECTED value=\"1\">Yes</option>
-				<option value=\"0\">No</option>";}
-		else
-			{echo "<option value=\"1\">Yes</option>
-				<option SELECTED value=\"0\">No</option>";}
-
-		echo " </select>";
+		if ($guests_can_dl){
+			echo "<option SELECTED value=\"1\">Yes</option>
+				<option value=\"0\">No</option>";
+			}
+		else{
+			echo "<option value=\"1\">Yes</option>
+				<option SELECTED value=\"0\">No</option>";
+			}
+	echo " </select>";
 
 
 
@@ -628,23 +655,26 @@ if ($_GET["tt"]==1) {
 	$spectrogram_palette=query_one("SELECT Value from PumilioSettings WHERE Settings='spectrogram_palette'", $connection);
 	
 	echo "<br>Color palette to use for the spectrograms: ";
-	if ($spectrogram_palette=="1")
+	if ($spectrogram_palette=="1"){
 		echo "dark background";
-	elseif ($spectrogram_palette=="2")
+		}
+	elseif ($spectrogram_palette=="2"){
 		echo "white background";
-
+		}
 	
 	echo "<select name=\"spectrogram_palette\" class=\"ui-state-default ui-corner-all formedge\">";
 		if ($spectrogram_palette==2 || $spectrogram_palette=="") {
-				echo "<option value=\"1\">dark background</option>
-				<option SELECTED value=\"2\">white background</option>";}
+			echo "<option value=\"1\">dark background</option>
+			<option SELECTED value=\"2\">white background</option>";
+			}
 		else {
-				echo "<option SELECTED value=\"1\">dark background</option>
-				<option value=\"2\">white background</option>";}
+			echo "<option SELECTED value=\"1\">dark background</option>
+			<option value=\"2\">white background</option>";
+			}
 
-		echo "</select>
-		<p><input type=submit value=\" Update system behavior \" class=\"fg-button ui-state-default ui-corner-all\">
-		</form>";
+	echo "</select>
+	<p><input type=submit value=\" Update system behavior \" class=\"fg-button ui-state-default ui-corner-all\">
+	</form>";
 
 	echo "</div>";
 ?>

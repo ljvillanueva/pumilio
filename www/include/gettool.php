@@ -1,8 +1,10 @@
 <?php
 $tool=filter_var($_GET["tool"], FILTER_SANITIZE_STRING);
 
-if ($tool=="none")
+if ($tool=="none"){
 	echo "&nbsp;";
-else
+	}
+else{
 	require("../tools/$tool");
+	}
 ?>

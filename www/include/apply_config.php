@@ -144,11 +144,6 @@ if (!isset($force_login)){
 	$force_login = FALSE;
 	}
 
-#Execute custom code, if set
-if (is_file("$absolute_dir/customcode.php")) {
-		include("customcode.php");
-	}
-
 if ($login_wordpress == TRUE){
 	if (is_file($wordpress_require)){
 		require_once($wordpress_require);
@@ -165,6 +160,9 @@ if ($login_wordpress == TRUE){
 		}
 	}
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n";
+#Execute custom code, if set
+if (is_file("$absolute_dir/customcode.php")) {
+		include("customcode.php");
+	}
 
 ?>

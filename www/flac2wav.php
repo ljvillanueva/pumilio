@@ -38,7 +38,7 @@ if ($allow_flac2wav) {
 	$config_file = 'config.php';
 
 	if (file_exists($config_file)) {
-		require("config.php");
+		require($config_file);
 		}
 	else {
 		header("Location: error.php?e=config");

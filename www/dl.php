@@ -14,7 +14,6 @@ else {
 	}
 
 require("include/apply_config.php");
-
 require("include/check_login.php");
 
 //From http://elouai.com/force-download.php

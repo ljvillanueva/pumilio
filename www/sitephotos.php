@@ -17,7 +17,7 @@ require("include/apply_config.php");
 
 $SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 
@@ -54,10 +54,12 @@ $nrows = mysqli_num_rows($result);
 			extract($row);
 			echo "<p><strong>$PhotoDate_f</strong><br>
 			<div style=\"padding: 10px;\"><a href=\"#\" onclick=\"window.open('sitephotos/$SiteID/$PhotoFilename', 'pics1', 'width=1000,height=800,status=yes,resizable=yes,scrollbars=yes'); return false;\"><img src=\"sitephotos/$SiteID/$PhotoFilename\" width=\"200\"></a><br>";
-			if (isset($ViewDegrees) && $ViewDegrees!="")
+			if (isset($ViewDegrees) && $ViewDegrees!=""){
 				echo "Direction: $ViewDegrees<br>";
-			if (isset($PhotoNotes) && $PhotoNotes!="")
+				}
+			if (isset($PhotoNotes) && $PhotoNotes!=""){
 				echo "Notes: $PhotoNotes<br>";
+				}
 
 			echo "(ID: $SitesPhotoID)</div>";
 			}

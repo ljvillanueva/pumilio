@@ -17,17 +17,18 @@ require("include/apply_config.php");
 require("include/check_admin.php");
 
 #If user is not logged in, add check for QF
-if ($pumilio_user == FALSE) {
+if ($pumilio_loggedin == FALSE) {
 	$qf_check = "AND Sounds.QualityFlagID>='$default_qf'";
 	}
 else {
 	$qf_check = "";
 	}
 
-echo "<html>
-<head>\n";
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+<html>
+<head>
+<title>$app_custom_name</title>";
 
-echo "<title>$app_custom_name</title>";
 require("include/get_css.php");
 
 echo "<!-- IE Fix for accordion http://dev.jqueryui.com/ticket/4444 -->
@@ -301,7 +302,7 @@ else{
 
 			<?php
 
-			echo "<h2>Welcome to $app_custom_name $this_time</h2>";
+			echo "<h2>Welcome to $app_custom_name</h2>";
 
 			echo "<h4>$app_custom_text</h4>";
 

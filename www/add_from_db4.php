@@ -13,7 +13,6 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 $force_loggedin = TRUE;
 require("include/check_login.php");
 
@@ -73,17 +72,13 @@ if ($Notes)
 if (substr($fields_to_use, -1)==",")
 	$fields_to_use=substr($fields_to_use, 0, -1);
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
-
 <title>$app_custom_name - Add from a database or spreadsheet</title>";
 
 require("include/get_css.php");
-?>
-
-<?php
-	require("include/get_jqueryui.php");
+require("include/get_jqueryui.php");
 ?>
 
 <script src="js/jquery.validate.js"></script>
@@ -114,8 +109,9 @@ require("include/get_css.php");
 	</style>
 
 <?php
-if ($use_googleanalytics)
-	{echo $googleanalytics_code;}
+if ($use_googleanalytics){
+	echo $googleanalytics_code;
+	}
 ?>
 
 </head>
@@ -146,17 +142,22 @@ if ($use_googleanalytics)
 			echo "There are $fields_to_use_counter fields: $fields_to_use<br>
 				OriginalFilename is the file name, it must match the file in the directory.";
 
-
-			echo "<form action=\"add_from_db5.php\" method=\"POST\" id=\"AddForm\">";
-			echo "<p>Add one line for each file (use [enter] for a new line) with $fields_to_use_counter fields separated by pipes (|). If the data is missing, enter \"NULL\" without the quotes. <br>There must be $files_to_process_counter lines, one for each file in the directory to import.<br>";
-			echo "<textarea name=\"commadata\" cols=\"60\" rows=\"10\"></textarea>\n";
-			echo "<input type=\"hidden\" name=\"fields\" value=\"$fields_to_use\"><input type=\"hidden\" name=\"dir\" value=\"$dir\"><input type=\"hidden\" name=\"files_format\" value=\"$files_format\"><input type=\"hidden\" name=\"ColID\" value=\"$ColID\">
-			<input type=\"hidden\" name=\"ColID\" value=\"$ColID\">
-			<input type=\"hidden\" name=\"fields_to_use_counter\" value=\"$fields_to_use_counter\">
-			<input type=\"hidden\" name=\"files_to_process_counter\" value=\"$files_to_process_counter\">
-			<input type=\"hidden\" name=\"files_to_process\" value=\"$files_to_process\">";
-			echo " <br><br><input type=submit value=\" Check data and insert to database \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">
-			<span class=\"notice\">This operation may take some time, do not click more than once.</span></form>";
+			echo "<form action=\"add_from_db5.php\" method=\"POST\" id=\"AddForm\">
+				<p>Add one line for each file (use [enter] for a new line) with $fields_to_use_counter fields separated by pipes (|). 
+					If the data is missing, enter \"NULL\" without the quotes. <br>There must be $files_to_process_counter lines, 
+					one for each file in the directory to import.<br>
+				<textarea name=\"commadata\" cols=\"60\" rows=\"10\"></textarea>
+				<input type=\"hidden\" name=\"fields\" value=\"$fields_to_use\">
+				<input type=\"hidden\" name=\"dir\" value=\"$dir\">
+				<input type=\"hidden\" name=\"files_format\" value=\"$files_format\">
+				<input type=\"hidden\" name=\"ColID\" value=\"$ColID\">
+				<input type=\"hidden\" name=\"fields_to_use_counter\" value=\"$fields_to_use_counter\">
+				<input type=\"hidden\" name=\"files_to_process_counter\" value=\"$files_to_process_counter\">
+				<input type=\"hidden\" name=\"files_to_process\" value=\"$files_to_process\">
+				<br><br>
+				<input type=submit value=\" Check data and insert to database \" class=\"fg-button ui-state-default ui-corner-all\">
+				<span class=\"notice\">This operation may take some time, do not click more than once.</span>
+			</form>";
 			echo "<br><br>";
 			?>
 

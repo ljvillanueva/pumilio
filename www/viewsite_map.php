@@ -23,18 +23,15 @@ $SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
 
 $this_page_title="Browse Map";
 
-?>
-
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
+<title>$app_custom_name - $this_page_title</title>";
 
-<?php
+require("include/get_css.php");
+require("include/get_jqueryui.php");
 
-echo "<title>$app_custom_name - $this_page_title</title>";
-	require("include/get_css.php");
-	require("include/get_jqueryui.php");
-
-	#Get points from the database
+#Get points from the database
 	$query = "SELECT * FROM Sites WHERE SiteID='$SiteID'";
 
 	$result=query_several($query, $connection);
@@ -42,7 +39,7 @@ echo "<title>$app_custom_name - $this_page_title</title>";
 	$row = mysqli_fetch_array($result);
 	extract($row);
 
-	require("include/viewsite_map_head.php");
+require("include/viewsite_map_head.php");
 	
 if ($use_googleanalytics) {
 	echo $googleanalytics_code;
@@ -80,10 +77,12 @@ if ($use_googleanalytics) {
 					for ($d=0;$d<$nrows_dates;$d++) {
 						$row_dates = mysqli_fetch_array($result_dates);
 						extract($row_dates);
-						if ($date_to_browse==$Date)
+						if ($date_to_browse==$Date){
 							echo "\n<option value=\"$Date\" SELECTED>$Date_f</option>";
-						else
+							}
+						else{
 							echo "\n<option value=\"$Date\">$Date_f</option>";
+							}
 						}
 					echo "</select>
 					<input type=submit value=\" Select \" class=\"fg-button ui-state-default ui-corner-all\">

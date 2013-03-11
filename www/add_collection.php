@@ -17,17 +17,14 @@ require("include/apply_config.php");
 $force_loggedin = TRUE;
 require("include/check_login.php");
 
-echo "
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 
 <title>$app_custom_name - Add Collection</title>";
 
 require("include/get_css.php");
-?>
-
-<?php
-	require("include/get_jqueryui.php");
+require("include/get_jqueryui.php");
 ?>
 
 <script src="js/jquery.validate.js"></script>
@@ -62,8 +59,9 @@ require("include/get_css.php");
 	</style>
 
 <?php
-if ($use_googleanalytics)
-	{echo $googleanalytics_code;}
+if ($use_googleanalytics) {
+	echo $googleanalytics_code;
+	}
 ?>
 
 </head>
@@ -84,31 +82,32 @@ if ($use_googleanalytics)
 			&nbsp;
 		</div>
 		<div class="span-24 last">
-			<?php
-			echo "<h3>Add collections to the database</h3>";
-			echo "<form action=\"add_collection2.php\" method=\"POST\" id=\"EditForm\">";
-			echo "<p>Name of the collection: &nbsp;&nbsp;<input type=\"text\" name=\"CollectionName\" maxlength=\"100\" size=\"40\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"><br>";
-			echo "Author of the collection: &nbsp;&nbsp;<input type=\"text\" name=\"Author\" maxlength=\"80\" size=\"40\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"><br>";
-			echo "Media of the collection: &nbsp;&nbsp;<select name=\"FilesSource\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">
-			<option></option>
-			<option>Field Recording</option>
-			<option>Book with CD</option>
-			<option>Automated Audio Logger</option>
-			<option>Audio CD</option>
-			<option>CD-ROM</option>
-			<option>DVD</option>
-			<option>Tape</option>
-			<option>LP</option>
-			<option>Internet</option>
-			<option>Donation</option>
-			<option>Other</option>
-			</select><br>";
-			echo "Full citation of the collection: &nbsp;&nbsp;<input type=\"text\" name=\"CollectionFullCitation\" maxlength=\"250\" size=\"60\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"><br>";
-			echo "Website: &nbsp;&nbsp;<input type=\"text\" name=\"MiscURL\" maxlength=\"250\" size=\"60\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"><br>";
-			echo "Notes of the collection: &nbsp;&nbsp;<input type=\"text\" name=\"Notes\" maxlength=\"255\" size=\"60\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"><br>";
+		<?php
+			echo "<h3>Add collections to the database</h3>
+			<form action=\"add_collection2.php\" method=\"POST\" id=\"EditForm\">
+				<p>Name of the collection: &nbsp;&nbsp;<input type=\"text\" name=\"CollectionName\" maxlength=\"100\" size=\"40\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"><br>
+				Author of the collection: &nbsp;&nbsp;<input type=\"text\" name=\"Author\" maxlength=\"80\" size=\"40\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"><br>
+				Media of the collection: &nbsp;&nbsp;
+				<select name=\"FilesSource\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">
+					<option></option>
+					<option>Field Recording</option>
+					<option>Book with CD</option>
+					<option>Automated Audio Logger</option>
+					<option>Audio CD</option>
+					<option>CD-ROM</option>
+					<option>DVD</option>
+					<option>Tape</option>
+					<option>LP</option>
+					<option>Internet</option>
+					<option>Donation</option>
+					<option>Other</option>
+				</select><br>
+				Full citation of the collection: &nbsp;&nbsp;<input type=\"text\" name=\"CollectionFullCitation\" maxlength=\"250\" size=\"60\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"><br>
+				Website: &nbsp;&nbsp;<input type=\"text\" name=\"MiscURL\" maxlength=\"250\" size=\"60\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"><br>
+				Notes of the collection: &nbsp;&nbsp;<input type=\"text\" name=\"Notes\" maxlength=\"255\" size=\"60\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"><br>&nbsp;&nbsp;
 
-			echo " &nbsp;&nbsp;<input type=submit value=\" Add Collection \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"></form>";
-
+				<input type=submit value=\" Add Collection \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">
+			</form>";
 			?>
 
 		</div>

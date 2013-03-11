@@ -391,7 +391,7 @@ if ($mobile==TRUE) {
 				echo "<p>Add tags:<br>
 					<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
 					<input type=\"hidden\" name=\"this_i\" value=\"$i\">
-					<input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
+					<input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\">
 					<INPUT TYPE=\"image\" src=\"images/tag_blue_add.png\" BORDER=\"0\" alt=\"Add new tag\">
 					<em>Separate tags with a space</em></form><br></div>";
 				}
@@ -409,7 +409,7 @@ if ($mobile==TRUE) {
 				echo "<p><form method=\"GET\" action=\"add_to_sample.php\" target=\"add\" onsubmit=\"window.open('', 'add', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
 				Add this sound to a sample set:<br>
 				<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">";
-				echo "<select name=\"SampleID\" class=\"ui-state-default ui-corner-all\" style=\"font-size:10px\">";
+				echo "<select name=\"SampleID\" class=\"ui-state-default ui-corner-all\">";
 
 				for ($sa=0;$sa<$nrows_sample;$sa++) {
 					$row_sample = mysqli_fetch_array($result_sample);
@@ -418,7 +418,7 @@ if ($mobile==TRUE) {
 					}
 
 				echo "</select>
-				<input type=submit value=\" Add \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\"></form>";
+				<input type=submit value=\" Add \" class=\"fg-button ui-state-default ui-corner-all\"></form>";
 				}
 			}
 
@@ -523,7 +523,7 @@ else {
 				or die (mysqli_error($connection));
 			$nrows_qf = mysqli_num_rows($result_qf);
 
-			echo "<select name=\"newqf\" class=\"ui-state-default ui-corner-all\" style=\"font-size:10px\">";
+			echo "<select name=\"newqf\" class=\"ui-state-default ui-corner-all\">";
 
 			for ($f=0;$f<$nrows_qf;$f++) {
 				$row_qf = mysqli_fetch_array($result_qf);
@@ -538,7 +538,7 @@ else {
 				}
 
 			echo "</select><br>
-			<input type=submit value=\" Change \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
+			<input type=submit value=\" Change \" class=\"fg-button ui-state-default ui-corner-all\">
 			</form></div>";
 			}
 
@@ -570,7 +570,7 @@ else {
 					<input type=\"hidden\" name=\"where_to\" value=\"$where_to\">
 					<input type=\"hidden\" name=\"where_toq\" value=\"$where_toq\">
 	
-					<input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
+					<input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\">
 					<INPUT TYPE=\"image\" src=\"images/tag_blue_add.png\" BORDER=\"0\" alt=\"Add new tag\">
 					<em>Separate tags with a space</em></form><br></div>";
 					}
@@ -589,7 +589,7 @@ else {
 				echo "<p><form method=\"GET\" action=\"add_to_sample.php\" target=\"add\" onsubmit=\"window.open('', 'add', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
 				Add this sound to a sample set:<br>
 				<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">";
-				echo "<select name=\"SampleID\" class=\"ui-state-default ui-corner-all\" style=\"font-size:10px\">";
+				echo "<select name=\"SampleID\" class=\"ui-state-default ui-corner-all\">";
 
 				for ($sa=0;$sa<$nrows_sample;$sa++) {
 					$row_sample = mysqli_fetch_array($result_sample);
@@ -598,7 +598,7 @@ else {
 					}
 
 				echo "</select>
-				<input type=submit value=\" Add \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\"></form>";
+				<input type=submit value=\" Add \" class=\"fg-button ui-state-default ui-corner-all\"></form>";
 				}
 			}
 

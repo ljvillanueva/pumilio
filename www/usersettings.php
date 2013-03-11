@@ -20,13 +20,12 @@ require("include/check_login.php");
 
 $jquerycss = $_COOKIE["jquerycss"];
 
-?>
-
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 
-<?php
-echo "<title>$app_custom_name - User Settings Page</title>";
+<title>$app_custom_name - User Settings Page</title>";
+
 require("include/get_css.php");
 require("include/get_jqueryui.php");
 
@@ -46,14 +45,11 @@ if ($use_googleanalytics) {
 		<div class="span-24 last">
 			<hr noshade>
 		</div>
-
-		
 		<div class="span-24 last">
 			<?php
 
-		echo "<h3>User settings</h3>";
-			
-			echo "<form action=\"set_cookies.php\" method=\"post\">
+			echo "<h3>User settings</h3>
+			<form action=\"set_cookies.php\" method=\"post\">
 				<input type=\"hidden\" name=\"cookie_to_set\" value=\"jquerycss\">
 				Select a theme for the application:
 				<select name=\"css\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">\n";
@@ -112,13 +108,10 @@ if ($use_googleanalytics) {
 					<option value=\"start\" $start_s>Start</option>
 					<option value=\"sunny\" $sunny_s>Sunny</option>\n";
 
-
 			echo "</select> 
 				<br><br>
-				<input type=submit value=\" Change theme \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">";
-
-			echo "<br><br>";
-
+				<input type=submit value=\" Change theme \" class=\"fg-button ui-state-default ui-corner-all\">
+				<br><br>";
 			?>
 
 		</div>

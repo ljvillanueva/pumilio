@@ -13,16 +13,14 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
-
 $force_admin = TRUE;
 require("include/check_admin.php");
 
-
 $SoundID=filter_var($_POST["SoundID"], FILTER_SANITIZE_NUMBER_INT);
 
-echo "	<html>
-	<head>
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+<html>
+<head>
 <title>$app_custom_name - Delete file</title>";
 
 require("include/get_css.php");
@@ -42,7 +40,7 @@ require("include/get_jqueryui.php");
 		</div>
 		<div class="span-24 last">
 
-			<?php
+		<?php
 			$filename=query_one("SELECT OriginalFilename FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
 			$ColID=query_one("SELECT ColID FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
 			$DirID=query_one("SELECT DirID FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);

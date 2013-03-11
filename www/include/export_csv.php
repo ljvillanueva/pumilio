@@ -9,14 +9,12 @@ $ColID=filter_var($_POST["ColID"], FILTER_SANITIZE_NUMBER_INT);
 $force_loggedin = TRUE;
 require("check_login.php");
 
-?>
-
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
-<head>
+<head>";
 
-<?php
-	require("get_css_include.php");
-	require("get_jqueryui_include.php");
+require("get_css_include.php");
+require("get_jqueryui_include.php");
 ?>
 
 </head>
