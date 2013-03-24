@@ -60,6 +60,8 @@ $nyquist_freq = $samp_rate/2;
 #Get the max freq to draw from db
 $max_spec_freq = query_one("SELECT Value from PumilioSettings WHERE Settings='max_spec_freq'", $connection);
 
+$max_spec_freq_rate = round(($max_spec_freq * 2) / 1000, 2);
+
 	if ($max_spec_freq=="max") {
 		$max_spec_freq=$nyquist_freq;
 		}
@@ -81,22 +83,54 @@ if (!is_dir("sounds/images/$ColID/$DirID")) {
 	}
 
 $spectrogram_palette=query_one("SELECT Value FROM PumilioSettings WHERE Settings='spectrogram_palette' LIMIT 1", $connection);
+	
+if ($sox_images){
+	#Palette to use
+	if ($spectrogram_palette == "") {
+		if ($spectrogram_palette < 1 || $spectrogram_palette > 6) {
+			$spectrogram_palette=6;
+			}
+		}
+	else {
+		$spectrogram_palette=6;
+		}
 
-#Palette to use
-if (isset($spectrogram_palette)) {
-	if ($spectrogram_palette!=1 || $spectrogram_palette!=2) {
-		$spectrogram_palette=2;
+	if ($spectrogram_palette==1) {
+		$letter_color="black";
+		}
+	elseif ($spectrogram_palette==2) {
+		$letter_color="black";
+		}
+	elseif ($spectrogram_palette==3) {
+		$letter_color="black";
+		}
+	elseif ($spectrogram_palette==4) {
+		$letter_color="black";
+		}
+	elseif ($spectrogram_palette==5) {
+		$letter_color="black";
+		}
+	elseif ($spectrogram_palette==6) {
+		$letter_color="black";
 		}
 	}
 else {
-	$spectrogram_palette=2;
-	}
+	#Palette to use
+	if ($spectrogram_palette == "") {
+		if ($spectrogram_palette!=1 || $spectrogram_palette!=2) {
+			$spectrogram_palette=2;
+			}
+		}
+	else {
+		$spectrogram_palette=2;
+		}
 
-if ($spectrogram_palette==1) {
-	$letter_color="white";
-	}
-elseif ($spectrogram_palette==2) {
-	$letter_color="black";
+	if ($spectrogram_palette==1) {
+		$letter_color="white";
+		}
+	elseif ($spectrogram_palette==2) {
+		$letter_color="black";
+		}
 	}
 
 
@@ -104,9 +138,15 @@ elseif ($spectrogram_palette==2) {
 # small = 300x150
 # mid = 600x300
 # large = 920x460					
+$image_width_small = 300;
+$image_height_small = 150;
+$image_width_med = 600;
+$image_height_med = 300;
+$image_width_large = 920;
+$image_height_large = 460;
 
 
-#MID Size images
+#MED Size images
 	$random_dir=mt_rand();
 	mkdir("tmp/$random_dir", 0777);
 
@@ -114,32 +154,48 @@ elseif ($spectrogram_palette==2) {
 		$Channels=query_one("SELECT Channels FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
 		}
 
-
 	if ($Channels==1) {
-		exec('include/svt.py -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '_s1.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '_w1.png -w 600 -o 1 -h 300 -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
+		if ($sox_images){
+			$image_height_med1 = $image_height_med + 1;
+			exec('sox tmp/' . $random_value . '/' . $file2 . ' -n rate ' . $max_spec_freq_rate . 'k spectrogram -x ' . $image_width_med . ' -y ' . $image_height_med1 . ' -a -r -l -p ' . $spectrogram_palette . ' -o tmp/' . $random_dir . '/' . $fileName_exp[0] . '_st1.png', $lastline, $retval);
+			if ($retval!=0){
+				die("<div class=\"error\">There was a problem with SoX...</div>");
+				}
+			#Trim
+			exec('convert tmp/' . $random_dir . '/' . $fileName_exp[0] . '_st1.png -crop ' . $image_width_med . 'x' . $image_height_med . '+0+0 tmp/' . $random_dir . '/' . $fileName_exp[0] . '_s1.png', $lastline, $retval);
+			if ($retval!=0){
+				die('<div class=\"error\">There was a problem with Imagemagick...</div>');
+				}
+			}
+		else{
+			exec('include/svt.py -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '_s1.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '_w1.png -w ' . $image_width_med . ' -o 1 -h ' . $image_height_med . ' -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
 			if ($retval!=0)
 			die("<div class=\"error\">There was a problem with svt...</div>");
-			
-		#Quality to resize
-		exec("convert tmp/" . $random_dir . "/" . $fileName_exp[0] . "_w1.png -quality 10 tmp/" . $random_dir . "/" . $fileName_exp[0] . "_w.png", $lastline, $retval);
-			if ($retval!=0)
-			die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+			}
 
+		if ($sox_images == FALSE){
+			#Quality to resize
+			exec("convert tmp/" . $random_dir . "/" . $fileName_exp[0] . "_w1.png -quality 10 tmp/" . $random_dir . "/" . $fileName_exp[0] . "_w.png", $lastline, $retval);
+			if ($retval!=0){
+				die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+				}
+			}
+			
 		#Draw the max freq
 		exec("convert -fill " . $letter_color . " -draw \"text 5,15 '" . $max_spec_freq_t . "'\" -draw \"text 5,155 '" . $half_max_spec_freq_t . "'\" tmp/" . $random_dir . "/" . $fileName_exp[0] . "_s1.png -quality 10 tmp/" . $random_dir . "/" . $fileName_exp[0] . "_s.png", $lastline, $retval);
 			if ($retval!=0)
 			die("<div class=\"error\">There was a problem with Imagemagick...</div>");
-
 			
 		}
 	elseif ($Channels==2) {
 		#left
-		exec('include/svt.py -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_s.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_w.png -w 600 -o 1 -h 150 -c 1 -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
+		$image_height_med = $image_height_med / 2;
+		exec('include/svt.py -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_s.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_w.png -w ' . $image_width_med . ' -o 1 -h ' . $image_height_med . ' -c 1 -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
 			if ($retval!=0)
 			die("<div class=\"error\">There was a problem with svt...</div>");
 
 		#right
-		exec('include/svt.py -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_s.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_w.png -w 600 -o 1 -h 150 -c 2 -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
+		exec('include/svt.py -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_s.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_w.png -w ' . $image_width_med . ' -o 1 -h ' . $image_height_med . ' -c 2 -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
 			if ($retval!=0)
 			die("<div class=\"error\">There was a problem with svt...</div>");
 
@@ -175,18 +231,26 @@ elseif ($spectrogram_palette==2) {
 	$where_to_s="sounds/images/" . $ColID . "/" . $DirID . "/" . $s_file_done;
 	$where_to_w="sounds/images/" . $ColID . "/" . $DirID . "/" . $w_file_done;
 
+	if ($sox_images == TRUE){
+		$ImageCreator = "SoX";
+		}
+	else{
+		$ImageCreator = "svt";
+		}
+		
 	copy($from_file_s,$where_to_s);
-	copy($from_file_w,$where_to_w);
-
-	$query_imgw = "INSERT INTO SoundsImages (SoundID,ImageFile,ImageType,ColorPalette) 
-				VALUES ('$SoundID', '$w_file_done', 'waveform', '$spectrogram_palette')";
-		$result_imgw = mysqli_query($connection, $query_imgw)
-			or die (mysqli_error($connection));
-
-	$query_imgs = "INSERT INTO SoundsImages (SoundID,ImageFile,ImageType,ColorPalette,SpecMaxFreq) 
-				VALUES ('$SoundID', '$s_file_done', 'spectrogram', '$spectrogram_palette', '$max_spec_freq')";
+	$query_imgs = "INSERT INTO SoundsImages (SoundID,ImageFile,ImageType,ColorPalette,SpecMaxFreq,ImageCreator) 
+				VALUES ('$SoundID', '$s_file_done', 'spectrogram', '$spectrogram_palette', '$max_spec_freq', '$ImageCreator')";
 		$result_imgw = mysqli_query($connection, $query_imgs)
 			or die (mysqli_error($connection));
+
+	if ($sox_images == FALSE){
+		copy($from_file_w,$where_to_w);
+		$query_imgw = "INSERT INTO SoundsImages (SoundID,ImageFile,ImageType,ColorPalette) 
+					VALUES ('$SoundID', '$w_file_done', 'waveform', '$spectrogram_palette')";
+		$result_imgw = mysqli_query($connection, $query_imgw)
+			or die (mysqli_error($connection));
+		}
 
 	delTree("tmp/" . $random_dir);
 
@@ -195,16 +259,32 @@ elseif ($spectrogram_palette==2) {
 	mkdir("tmp/$random_dir", 0777);
 
 	if ($Channels==1) {
-		exec('include/svt.py -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '-small_s1.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '-small_w1.png -w 300 -o 1 -h 150 -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
-			if ($retval!=0)
-			die("<div class=\"error\">There was a problem with svt...</div>");
-
+		if ($sox_images){
+			$image_height_small1 = $image_height_small + 1;
+			exec('sox tmp/' . $random_value . '/' . $file2 . ' -n rate ' . $max_spec_freq_rate . 'k spectrogram -x ' . $image_width_small . ' -y ' . $image_height_small1 . ' -a -r -l -p ' . $spectrogram_palette . ' -o tmp/' . $random_dir . '/' . $fileName_exp[0] . '_st1.png', $lastline, $retval);
+			if ($retval!=0){
+				die("<div class=\"error\">There was a problem with SoX...</div>");
+				}
+			#Trim
+			exec('convert tmp/' . $random_dir . '/' . $fileName_exp[0] . '_st1.png -crop ' . $image_width_small . 'x' . $image_height_small . '+0+0 tmp/' . $random_dir . '/' . $fileName_exp[0] . '-small_s1.png', $lastline, $retval);
+			if ($retval!=0){
+				die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+				}
+			}
+		else{
+			exec('include/svt.py -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '-small_s1.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '-small_w1.png -w ' . $image_width_small . ' -o 1 -h ' . $image_height_small . ' -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
+			if ($retval!=0){
+				die("<div class=\"error\">There was a problem with svt...</div>");
+				}
+			}
 			
-		#Quality to resize
-		exec("convert tmp/" . $random_dir . "/" . $fileName_exp[0] . "-small_w1.png -quality 10 tmp/" . $random_dir . "/" . $fileName_exp[0] . "-small_w.png", $lastline, $retval);
-			if ($retval!=0)
-			die("<div class=\"error\">There was a problem with Imagemagick...</div>");
-
+		if ($sox_images == FALSE){
+			#Quality to resize
+			exec("convert tmp/" . $random_dir . "/" . $fileName_exp[0] . "-small_w1.png -quality 10 tmp/" . $random_dir . "/" . $fileName_exp[0] . "-small_w.png", $lastline, $retval);
+			if ($retval!=0){
+				die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+				}
+			}
 
 		#Draw the max freq
 		exec("convert -fill " . $letter_color . " -draw \"text 5,15 '" . $max_spec_freq_t . "'\" tmp/" . $random_dir . "/" . $fileName_exp[0] . "-small_s1.png -quality 10 tmp/" . $random_dir . "/" . $fileName_exp[0] . "-small_s.png", $lastline, $retval);
@@ -213,13 +293,14 @@ elseif ($spectrogram_palette==2) {
 			
 		}
 	elseif ($Channels==2) {
+		$image_height_small = $image_height_small / 2;
 		#left
-		exec('include/svt.py -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_s.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_w.png -w 300 -o 1 -h 75 -c 1 -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
+		exec('include/svt.py -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_s.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_w.png -w ' . $image_width_small . ' -o 1 -h ' . $image_height_small . ' -c 1 -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
 			if ($retval!=0)
 			die("<div class=\"error\">There was a problem with svt...</div>");
 
 		#right
-		exec('include/svt.py -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_s.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_w.png -w 300 -o 1 -h 75 -c 2 -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
+		exec('include/svt.py -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_s.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_w.png -w ' . $image_width_small . ' -o 1 -h ' . $image_height_small . ' -c 2 -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
 			if ($retval!=0)
 			die("<div class=\"error\">There was a problem with svt...</div>");
 
@@ -255,18 +336,28 @@ elseif ($spectrogram_palette==2) {
 	$where_to_s="sounds/images/" . $ColID . "/" . $DirID . "/" . $s_file_done;
 	$where_to_w="sounds/images/" . $ColID . "/" . $DirID . "/" . $w_file_done;
 
-	copy($from_file_s,$where_to_s);
-	copy($from_file_w,$where_to_w);
+	if ($sox_images == TRUE){
+		$ImageCreator = "SoX";
+		}
+	else{
+		$ImageCreator = "svt";
+		}
 
-	$query_imgw = "INSERT INTO SoundsImages (SoundID,ImageFile,ImageType,ColorPalette) 
+	copy($from_file_s,$where_to_s);
+	
+	$query_imgs = "INSERT INTO SoundsImages (SoundID,ImageFile,ImageType,ColorPalette,SpecMaxFreq,ImageCreator) 
+				VALUES ('$SoundID', '$s_file_done', 'spectrogram-small', '$spectrogram_palette', '$max_spec_freq','$ImageCreator')";
+	$result_imgw = mysqli_query($connection, $query_imgs)
+		or die (mysqli_error($connection));
+	
+	if ($sox_images == FALSE){
+		copy($from_file_w,$where_to_w);
+
+		$query_imgw = "INSERT INTO SoundsImages (SoundID,ImageFile,ImageType,ColorPalette) 
 				VALUES ('$SoundID', '$w_file_done', 'waveform-small', '$spectrogram_palette')";
 		$result_imgw = mysqli_query($connection, $query_imgw)
 			or die (mysqli_error($connection));
-
-	$query_imgs = "INSERT INTO SoundsImages (SoundID,ImageFile,ImageType,ColorPalette,SpecMaxFreq) 
-				VALUES ('$SoundID', '$s_file_done', 'spectrogram-small', '$spectrogram_palette', '$max_spec_freq')";
-		$result_imgw = mysqli_query($connection, $query_imgs)
-			or die (mysqli_error($connection));
+		}
 
 	delTree("tmp/" . $random_dir);
 
@@ -276,14 +367,32 @@ elseif ($spectrogram_palette==2) {
 	mkdir("tmp/$random_dir", 0777);
 
 	if ($Channels==1) {
-		exec('include/svt.py -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '-large_s1.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '-large_w1.png -w 920 -o 1 -h 460 -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
-			if ($retval!=0)
-			die("<div class=\"error\">There was a problem with svt...</div>");
-			
-		#Quality to resize
-		exec("convert tmp/" . $random_dir . "/" . $fileName_exp[0] . "-large_w1.png -quality 10 tmp/" . $random_dir . "/" . $fileName_exp[0] . "-large_w.png", $lastline, $retval);
-			if ($retval!=0)
-			die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+		if ($sox_images){
+			$image_height_large1 = $image_height_large + 1;
+			exec('sox tmp/' . $random_value . '/' . $file2 . ' -n rate ' . $max_spec_freq_rate . 'k spectrogram -x ' . $image_width_large . ' -y ' . $image_height_large1 . ' -a -r -l -p ' . $spectrogram_palette . ' -o tmp/' . $random_dir . '/' . $fileName_exp[0] . '_st1.png', $lastline, $retval);
+			if ($retval!=0){
+				die("<div class=\"error\">There was a problem with SoX...</div>");
+				}
+			#Trim
+			exec('convert tmp/' . $random_dir . '/' . $fileName_exp[0] . '_st1.png -crop ' . $image_width_large . 'x' . $image_height_large . '+0+0 tmp/' . $random_dir . '/' . $fileName_exp[0] . '-large_s1.png', $lastline, $retval);
+			if ($retval!=0){
+				die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+				}
+			}
+		else{
+			exec('include/svt.py -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '-large_s1.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '-large_w1.png -w ' . $image_width_large . ' -o 1 -h ' . $image_height_large . ' -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
+			if ($retval!=0){
+				die("<div class=\"error\">There was a problem with svt...</div>");
+				}
+			}
+		
+		if ($sox_images == FALSE){
+			#Quality to resize
+			exec("convert tmp/" . $random_dir . "/" . $fileName_exp[0] . "-large_w1.png -quality 10 tmp/" . $random_dir . "/" . $fileName_exp[0] . "-large_w.png", $lastline, $retval);
+			if ($retval!=0){
+				die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+				}
+			}
 		
 		#Draw the max freq
 		exec("convert -fill " . $letter_color . " -draw \"text 5,15 '" . $max_spec_freq_t . "'\" -draw \"text 5,235 '" . $half_max_spec_freq_t . "'\" tmp/" . $random_dir . "/" . $fileName_exp[0] . "-large_s1.png -quality 10 tmp/" . $random_dir . "/" . $fileName_exp[0] . "-large_s.png", $lastline, $retval);
@@ -291,13 +400,14 @@ elseif ($spectrogram_palette==2) {
 			die("<div class=\"error\">There was a problem with Imagemagick...</div>");
 		}
 	elseif ($Channels==2) {
+		$image_height_large = $image_height_large / 2;
 		#left
-		exec('include/svt.py -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_s.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_w.png -w 920 -o 1 -h 230 -c 1 -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
+		exec('include/svt.py -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_s.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_w.png -w ' . $image_width_large . ' -o 1 -h ' . $image_height_large . ' -c 1 -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
 			if ($retval!=0)
 			die("<div class=\"error\">There was a problem with svt...</div>");
 
 		#right
-		exec('include/svt.py -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_s.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_w.png -w 920 -o 1 -h 230 -c 2 -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
+		exec('include/svt.py -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_s.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_w.png -w ' . $image_width_large . ' -o 1 -h ' . $image_height_large . ' -c 2 -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
 			if ($retval!=0)
 			die("<div class=\"error\">There was a problem with svt...</div>");
 
@@ -333,18 +443,27 @@ elseif ($spectrogram_palette==2) {
 	$where_to_s="sounds/images/" . $ColID . "/" . $DirID . "/" . $s_file_done;
 	$where_to_w="sounds/images/" . $ColID . "/" . $DirID . "/" . $w_file_done;
 
+	if ($sox_images == TRUE){
+		$ImageCreator = "SoX";
+		}
+	else{
+		$ImageCreator = "svt";
+		}
+		
 	copy($from_file_s,$where_to_s);
-	copy($from_file_w,$where_to_w);
 
-	$query_imgw = "INSERT INTO SoundsImages (SoundID,ImageFile,ImageType,ColorPalette) 
-				VALUES ('$SoundID', '$w_file_done', 'waveform-large', '$spectrogram_palette')";
+	$query_imgs = "INSERT INTO SoundsImages (SoundID,ImageFile,ImageType,ColorPalette,SpecMaxFreq,ImageCreator) 
+				VALUES ('$SoundID', '$s_file_done', 'spectrogram-large', '$spectrogram_palette', '$max_spec_freq','$ImageCreator')";
+	$result_imgw = mysqli_query($connection, $query_imgs)
+		or die (mysqli_error($connection));
+				
+	if ($sox_images == FALSE){
+		copy($from_file_w,$where_to_w);
+		$query_imgw = "INSERT INTO SoundsImages (SoundID,ImageFile,ImageType,ColorPalette) 
+			VALUES ('$SoundID', '$w_file_done', 'waveform-large', '$spectrogram_palette')";
 		$result_imgw = mysqli_query($connection, $query_imgw)
 			or die (mysqli_error($connection));
-
-	$query_imgs = "INSERT INTO SoundsImages (SoundID,ImageFile,ImageType,ColorPalette,SpecMaxFreq) 
-				VALUES ('$SoundID', '$s_file_done', 'spectrogram-large', '$spectrogram_palette', '$max_spec_freq')";
-		$result_imgw = mysqli_query($connection, $query_imgs)
-			or die (mysqli_error($connection));
+		}
 
 	delTree("tmp/" . $random_dir);
 	}
@@ -356,8 +475,10 @@ else {
 	echo "<div class=\"error\">Could not create temporary folder.</div>";
 	}
 
-if ($err_code=="1") {
-	echo "<div class=\"error\">The original sound file could not be found. Sound ID: $SoundID</div>";
+if (isset($err_code)) {
+	if ($err_code=="1") {
+		echo "<div class=\"error\">The original sound file could not be found. Sound ID: $SoundID</div>";
+		}
 	}
 
 ?>

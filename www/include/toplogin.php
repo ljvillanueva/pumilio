@@ -6,7 +6,7 @@ $q=$_SERVER['QUERY_STRING'];
 $q_logout = str_replace("&", "%", $q);
 
 echo "<p style=\"text-align: right;\">";
-	
+
 if ($no_login==TRUE) {
 	echo "&nbsp;";
 	}

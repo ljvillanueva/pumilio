@@ -94,11 +94,10 @@ elseif ($AudioPreviewFormat==""){
 	#$player_encoder="dir2ogg";
 	$AudioPreviewFormat="mp3";
 	$player_encoder="lame";
-
 	}
 
 $player_format = $AudioPreviewFormat;
-	
+
 if (!sessionAuthenticate($connection) && isset($_COOKIE["usercookie"])) {
 	$cookie_to_test = $_COOKIE["usercookie"];
 	$cookie_to_testa = explode(".", $cookie_to_test);
@@ -159,6 +158,43 @@ if ($login_wordpress == TRUE){
 			}
 		}
 	}
+
+#Check sox version
+$sox_version=query_one("SELECT Value from PumilioSettings WHERE Settings='sox_version'", $connection);
+# using only forward of version 14.3.2 (w: 5000 h: )
+if ($sox_version == ""){
+	exec('sox --version', $soxout, $soxretval);
+	$sox_version=explode("v",$soxout[0]);
+	$sox_version = $sox_version[1];
+	$soxver=explode(".",$sox_version);
+	query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('sox_version', '$sox_version')", $connection);
+	}
+
+	$soxver=explode(".",$sox_version);
+	if ($soxver[0] > 14){
+		$sox_images = TRUE;
+		}
+	elseif ($soxver[0] = 14){
+		if ($soxver[1] > 3){
+			$sox_images = TRUE;
+			}
+		elseif ($soxver[1] < 3){
+			$sox_images = FALSE;
+			}
+		else{
+			if ($soxver[2] >= 2){
+				$sox_images = TRUE;
+				}
+			else{
+				$sox_images = FALSE;
+				}
+			}
+		}
+	else{
+		$sox_images = FALSE;
+		}
+	
+	
 
 #Execute custom code, if set
 if (is_file("$absolute_dir/customcode.php")) {

@@ -51,7 +51,7 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 
-<title>$app_custom_name - File Details</title>";
+<title>$app_custom_name - File Details</title>\n";
 
 require("include/get_css.php");
 
@@ -241,47 +241,76 @@ $(document).ready(function(){
 $makefigures = FALSE;
 $query_img = "SELECT COUNT(*) FROM SoundsImages WHERE SoundID='$SoundID'";
 	$sound_images=query_one($query_img, $connection);
-	if ($sound_images!=6) {
-		$makefigures=TRUE;
-	}
-else {	
-$query_img2 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform'", $connection);
-	if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img2")) {
-		$makefigures=TRUE;
-		}
+	if ($sox_images==FALSE){
+		if ($sound_images!=6) {
+			$makefigures=TRUE;
+			}
+		else{
+			$query_img2 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform'", $connection);
+			if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img2")) {
+				$makefigures=TRUE;
+				}
 	
-	$query_img3 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram'", $connection);
-	if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img3")) {
-		$makefigures=TRUE;
-		}
+			$query_img3 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram'", $connection);
+			if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img3")) {
+				$makefigures=TRUE;
+				}
 	
-	$query_img4 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform-small'", $connection);
-	if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img4")) {
-		$makefigures=TRUE;
-		}
+			$query_img4 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform-small'", $connection);
+			if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img4")) {
+				$makefigures=TRUE;
+				}
 	
-	$query_img5 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-small'", $connection);
-	if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img5"))	{
-		$makefigures=TRUE;
-		}
+			$query_img5 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-small'", $connection);
+			if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img5"))	{
+				$makefigures=TRUE;
+				}
 	
-	$query_img6 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform-large'", $connection);
-	if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img6"))	{
-		$makefigures=TRUE;
-		}
+			$query_img6 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform-large'", $connection);
+			if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img6"))	{
+				$makefigures=TRUE;
+				}
 	
-	$query_img7 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-large'", $connection);
-	if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img7"))	{
-		$makefigures=TRUE;
+			$query_img7 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-large'", $connection);
+			if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img7"))	{
+				$makefigures=TRUE;
+				}
+			}
 		}
-}
+	elseif($sox_images==TRUE){
+		if ($sound_images!=3) {
+			$makefigures=TRUE;
+			}
+		else{
+			$query_img3 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram'", $connection);
+			if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img3")) {
+				$makefigures=TRUE;
+				}
+	
+			$query_img5 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-small'", $connection);
+			if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img5"))	{
+				$makefigures=TRUE;
+				}
+	
+			$query_img7 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-large'", $connection);
+			if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img7"))	{
+				$makefigures=TRUE;
+				}
+			}
+		}
 
 if ($makefigures==TRUE) {
 	require("include/make_figs.php");
 	}
 
 $sound_spectrogram=query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' AND ImageType='spectrogram-large'", $connection);
-$sound_waveform=query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' AND ImageType='waveform-large'", $connection);
+
+if ($sox_images==FALSE){
+	$sound_waveform=query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' AND ImageType='waveform-large'", $connection);
+	}
+else{
+	$spectrogram_palette=query_one("SELECT ColorPalette FROM SoundsImages WHERE SoundID='$SoundID' AND ImageType='spectrogram-large' AND ImageCreator='SoX' LIMIT 1", $connection);
+	}
 
 if ($use_googleanalytics) {
 	echo $googleanalytics_code;
@@ -297,6 +326,7 @@ if ($use_googlemaps=="1" || $use_googlemaps=="3") {
 else {
 	echo "<body>";
 	}
+	
 ?>
 
 	<!-- Scripts for Javascript tooltip from http://www.walterzorn.com/tooltip/tooltip_e.htm -->
@@ -404,10 +434,15 @@ else {
 
 			echo "	<div style=\"height: 460px; width: 920px; position: relative;\">";
 
-			if ($d=="w"){
-				echo "<img src=\"$app_url/sounds/images/$ColID/$DirID/$sound_waveform\">";
+			if ($sox_images==FALSE){
+				if ($d=="w"){
+					echo "<img src=\"$app_url/sounds/images/$ColID/$DirID/$sound_waveform\">";
+					}
+				else {
+					echo "<img src=\"$app_url/sounds/images/$ColID/$DirID/$sound_spectrogram\">";
+					}
 				}
-			else {
+			else{
 				echo "<img src=\"$app_url/sounds/images/$ColID/$DirID/$sound_spectrogram\">";
 				}
 
@@ -439,13 +474,18 @@ else {
 				</div>\n";
 
 
-			if ($d=="w"){
-				echo "&nbsp;<a href=\"db_filedetails.php?SoundID=$SoundID&hidekml=$hidekml&hidemarks=$hidemarks\" style=\"position: relative; top: -28px; left: 200px; z-index: 2500;\" id=\"clickMe\">show spectrogram</a>";
+			if ($sox_images==FALSE){
+				#dropped waveform when using SoX
+				if ($d=="w"){
+					echo "&nbsp;<a href=\"db_filedetails.php?SoundID=$SoundID&hidekml=$hidekml&hidemarks=$hidemarks\" style=\"position: relative; top: -28px; left: 200px; z-index: 2500;\" id=\"clickMe\">show spectrogram</a>";
+					}
+				else {
+					echo "&nbsp;<a href=\"db_filedetails.php?SoundID=$SoundID&d=w&hidekml=$hidekml&hidemarks=$hidemarks\" style=\"position: relative; top: -28px; left: 200px; z-index: 2500;\" id=\"clickMe\">show waveform</a>";
+					}
 				}
-			else {
-				echo "&nbsp;<a href=\"db_filedetails.php?SoundID=$SoundID&d=w&hidekml=$hidekml&hidemarks=$hidemarks\" style=\"position: relative; top: -28px; left: 200px; z-index: 2500;\" id=\"clickMe\">show waveform</a>";
+			else{
+				echo "&nbsp;<a href=\"#\" style=\"position: relative; top: -28px; left: 200px; z-index: 2500;\" onclick=\"window.open('images/SoX$spectrogram_palette.png', 'scale', 'width=20,height=434,status=no,resizable=no,scrollbars=no')\">show scale</a>";
 				}
-
 
 		echo "</div>";
 				
@@ -477,7 +517,7 @@ else {
 			}
 
 		echo "<div class=\"span-10\">";							
-			
+		
 		#Marks
 		if ($d!="w") {
 			$resultm=mysqli_query($connection, "SELECT marks_ID FROM SoundsMarks WHERE SoundID='$SoundID'")
