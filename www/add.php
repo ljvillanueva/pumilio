@@ -85,7 +85,7 @@ if ($use_googleanalytics) {
 		
 		echo "<p><a href=\"add_from_field.php?sm=1&local=1\">Add sound files from a Wildlife Acoustics SongMeter</a> (stored locally in server)";
 					
-		echo "<p><a href=\"add_from_field.php&local=1\">Add sound files from the field</a> (stored locally in server)";
+		echo "<p><a href=\"add_from_field.php?local=1\">Add sound files from the field</a> (stored locally in server)";
 		
 		echo "<p><a href=\"add_from_db.php\">Import files from a database/spreadsheet</a>";
 		
