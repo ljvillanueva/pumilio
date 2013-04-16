@@ -264,6 +264,7 @@ echo "</select>\n";
 
 	echo " </select>";
 
+	$temp_add_dir_f = "";
 	$temp_add_dir=query_one("SELECT Value from PumilioSettings WHERE Settings='temp_add_dir'", $connection);
 	if ($temp_add_dir!=""){ 
 		if (!is_dir($temp_add_dir)){
@@ -273,7 +274,9 @@ echo "</select>\n";
 			$temp_add_dir_d="<em style=\"color:red;\">Could not read directory</em>";
 			query_one("DELETE from PumilioSettings WHERE Settings='temp_add_dir'", $connection);}
 		else {
-			$temp_add_dir_d="<em>$temp_add_dir</em>";}
+			$temp_add_dir_d="<em>$temp_add_dir</em>";
+			$temp_add_dir_f="$temp_add_dir";
+			}
 		}
 	else {
 		$temp_add_dir_d="Not set";
@@ -281,7 +284,7 @@ echo "</select>\n";
 
 	echo "<br>Local directory for adding multiple files: $temp_add_dir_d";
 	
-	echo "<input type=\"text\" name=\"temp_add_dir\" class=\"fg-button ui-state-default ui-corner-all formedge\">";
+	echo "<input type=\"text\" name=\"temp_add_dir\" value=\"$temp_add_dir_f\" class=\"fg-button ui-state-default ui-corner-all formedge\">";
 
 
 /*
