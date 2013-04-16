@@ -335,8 +335,10 @@ echo "</select>\n";
 				}
 			}
 
-	echo " </select>
-	<p><input type=submit value=\" Update system settings \" class=\"fg-button ui-state-default ui-corner-all\">
+	echo " </select>";
+	
+	
+	echo "<p><input type=submit value=\" Update system settings \" class=\"fg-button ui-state-default ui-corner-all\">
 	</form>";
 
 
@@ -655,14 +657,59 @@ echo "</select>\n";
 	$spectrogram_palette=query_one("SELECT Value from PumilioSettings WHERE Settings='spectrogram_palette'", $connection);
 	
 	echo "<br>Color palette to use for the spectrograms: ";
-	if ($spectrogram_palette=="1"){
-		echo "dark background";
-		}
-	elseif ($spectrogram_palette=="2"){
-		echo "white background";
-		}
 	
-	echo "<select name=\"spectrogram_palette\" class=\"ui-state-default ui-corner-all formedge\">";
+	if ($sox_images == TRUE){
+		$sox_pal1 = "yellow, red, purple";
+		$sox_pal2 = "yellow, green, blue";
+		$sox_pal3 = "blue, green red";
+		$sox_pal4 = "pink, red, green";
+		$sox_pal5 = "pink, blue, green";
+		$sox_pal6 = "blue, purple, red";
+		
+		if ($spectrogram_palette=="1"){
+			echo $sox_pal1;
+			$selected1 = "SELECTED";
+			}
+		elseif ($spectrogram_palette=="2"){
+			echo $sox_pal2;
+			$selected2 = "SELECTED";
+			}
+		elseif ($spectrogram_palette=="3"){
+			echo $sox_pal3;
+			$selected3 = "SELECTED";
+			}
+		elseif ($spectrogram_palette=="4"){
+			echo $sox_pal4;
+			$selected4 = "SELECTED";
+			}
+		elseif ($spectrogram_palette=="5"){
+			echo $sox_pal5;
+			$selected5 = "SELECTED";
+			}
+		elseif ($spectrogram_palette=="6"){
+			echo $sox_pal6;
+			$selected6 = "SELECTED";
+			}
+	
+		echo "<select name=\"spectrogram_palette\" class=\"ui-state-default ui-corner-all formedge\">";
+			echo "<option $selected1 value=\"1\">$sox_pal1</option>
+			<option $selected2 value=\"2\">$sox_pal2</option>
+			<option $selected3 value=\"3\">$sox_pal3</option>
+			<option $selected4 value=\"4\">$sox_pal4</option>
+			<option $selected5 value=\"5\">$sox_pal5</option>
+			<option $selected6 value=\"6\">$sox_pal6</option>";
+			
+		echo "</select>";
+		}
+	else{
+		if ($spectrogram_palette=="1"){
+			echo "dark background";
+			}
+		elseif ($spectrogram_palette=="2"){
+			echo "white background";
+			}
+	
+		echo "<select name=\"spectrogram_palette\" class=\"ui-state-default ui-corner-all formedge\">";
 		if ($spectrogram_palette==2 || $spectrogram_palette=="") {
 			echo "<option value=\"1\">dark background</option>
 			<option SELECTED value=\"2\">white background</option>";
@@ -671,8 +718,13 @@ echo "</select>\n";
 			echo "<option SELECTED value=\"1\">dark background</option>
 			<option value=\"2\">white background</option>";
 			}
-
-	echo "</select>
+		echo "</select>";
+		}
+	
+	
+	
+	
+	echo "
 	<p><input type=submit value=\" Update system behavior \" class=\"fg-button ui-state-default ui-corner-all\">
 	</form>";
 
