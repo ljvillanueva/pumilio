@@ -281,7 +281,7 @@ try:
 		status, output = commands.getstatusoutput('cp ' + FullPath + ' ' + server_dir + 'tmp/' + OriginalFilename)
 		FullPath = server_dir + 'tmp/' + OriginalFilename
 			
-		p = subprocess.Popen(['./soundcheck.py', FullPath],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+		p = subprocess.Popen(['python', 'soundcheck.py', FullPath],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 		output, errors = p.communicate()
 		FileFormat = output[:-1]
 		
