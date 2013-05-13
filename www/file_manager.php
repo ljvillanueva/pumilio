@@ -237,11 +237,11 @@ if ($use_googleanalytics) {
 								}
 							elseif ($ReturnCode == 2){
 								echo "<td> <img src=\"images/ajax-loader.gif\"> Working... ";
-								$mins_working = query_one("SELECT TIMESTAMPDIFF(MINUTE, TimeStamp, NOW()) FROM FilesToAddMembers
-										WHERE ToAddMemberID='$ToAddMemberID'", $connection);
-								if ($mins_working > 5){
-									echo "(working for more than five minutes, <a href=\"file_manager.php?ToAddMemberID=$ToAddMemberID&tab=$i\" title=\"Reset\">reset</a>?)";
-									}
+								#$mins_working = query_one("SELECT TIMESTAMPDIFF(MINUTE, TimeStamp, NOW()) FROM FilesToAddMembers
+								#		WHERE ToAddMemberID='$ToAddMemberID'", $connection);
+								#if ($mins_working > 5){
+								#	echo "(working for more than five minutes, <a href=\"file_manager.php?ToAddMemberID=$ToAddMemberID&tab=$i\" title=\"Reset\">reset</a>?)";
+								#	}
 								echo "</td></tr>\n";
 								}
 							elseif ($ReturnCode == 9){
