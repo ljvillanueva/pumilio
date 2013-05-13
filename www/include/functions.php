@@ -611,7 +611,7 @@ function add_in_background($absolute_dir, $connection) {
 			
 			copy('include/add/add_to_pumiliodb.py', $tmp_dir . '/add_to_pumiliodb.py');
 			copy('include/add/soundcheck.py', $tmp_dir . '/soundcheck.py');
-			exec('chmod +x ' . $tmp_dir . '/*', $out, $retval);
+			#exec('chmod +x ' . $tmp_dir . '/*', $out, $retval);
 			exec('cd ' . $tmp_dir . '; python add_to_pumiliodb.py > /dev/null 2> /dev/null & echo $!', $out, $retval);
 			}
 		}
