@@ -5,5 +5,5 @@ ALTER TABLE `SoundsImages`  ADD `ImageCreator` VARCHAR(10) CHARACTER SET utf8 CO
 
 ALTER TABLE `SoundsImages` CHANGE `ColorPalette` `ColorPalette` INT(11) NOT NULL DEFAULT '1' COMMENT 'The color palette used for the images. For either svt.py or SoX';
 
-UPDATE `PumilioSettings` SET `Value` = '24' WHERE `PumilioSettings`.`Settings` = 'db_version' LIMIT 1;
+UPDATE `PumilioSettings` SET `Value` = '24' WHERE `Settings` = 'db_version' LIMIT 1;
 
