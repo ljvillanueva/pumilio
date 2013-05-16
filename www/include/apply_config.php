@@ -194,7 +194,7 @@ if ($sox_version == ""){
 		$sox_images = FALSE;
 		}
 	
-	
+$sox_images = FALSE;
 
 #Execute custom code, if set
 if (is_file("$absolute_dir/customcode.php")) {
