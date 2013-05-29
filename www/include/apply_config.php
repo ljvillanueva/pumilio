@@ -1,18 +1,24 @@
 <?php
 
-if ($app_url == ""){
-	header("Location: error.php?e=appurl");
-	die();
-	}
-	
+$absolute_dir=dirname(__FILE__);
+
+$absolute_dir = preg_replace('/include$/', '', $absolute_dir);
+
+$app_dir = substr($absolute_dir, strlen($_SERVER['DOCUMENT_ROOT']));
+
+$app_url = "http://" . $_SERVER['SERVER_NAME'] . $app_dir;
+
+$app_url = preg_replace('/include$/', '', $app_url);
+
 #Maintenance mode
 # just add an empty file named maintenance to the root of the application
-
 if (is_file("$absolute_dir/maintenance")) {
 	header("Location: $app_url/error.php?e=maint");
 	die();
 	}
 
+
+#Try to connect to the db
 $connection = @mysqli_connect($host, $user, $password, $database);
 
 #If could not connect, redirect
@@ -143,6 +149,10 @@ if (!isset($force_login)){
 	$force_login = FALSE;
 	}
 
+if (!isset($mark_tag_name)){
+	$mark_tag_name = "Species";
+	}
+
 if ($login_wordpress == TRUE){
 	if (is_file($wordpress_require)){
 		require_once($wordpress_require);
@@ -193,7 +203,9 @@ if ($sox_version == ""){
 	else{
 		$sox_images = FALSE;
 		}
-	
+
+################
+#Turn SoX option off while finishing rest of code
 $sox_images = FALSE;
 
 #Execute custom code, if set

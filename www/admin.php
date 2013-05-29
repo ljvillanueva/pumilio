@@ -16,7 +16,9 @@ require("include/apply_config.php");
 $force_admin = TRUE;
 require("include/check_admin.php");
 
-$u=filter_var($_GET["u"], FILTER_SANITIZE_NUMBER_INT);
+if (isset($_GET["u"])){
+	$u=filter_var($_GET["u"], FILTER_SANITIZE_NUMBER_INT);
+	}
 
 if (!isset($_GET["t"])){
 	$t = 0;

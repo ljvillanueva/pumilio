@@ -1,22 +1,18 @@
 <?php
-#Configuration for your local installation of Pumilio
+#===============================
+# MAIN SETTINGS                #
+#===============================
+
+#Database settings
+$host="localhost";
+$user="";
+$password="";
+$database = "";
 
 
 #Custom logo and name
 # If you want to display a logo, just enter its relative address here
 $app_logo="images/logo2.png";
-
-
-#URL (web address) of the application, no trailing slash
-$app_url="http://";
-#Relative address in the server, no trailing slash
-# if its http://server/pumilio, then its: /pumilio
-# if its http://server/apps/pumilio, then its: /apps/pumilio
-$app_dir="/";
-#Absolute directory in the server, no trailing slash
-# Typically under /var/www/
-# As in the example above (http://server/apps/pumilio), then this is probably /var/www/apps/pumilio
-$absolute_dir="/var/www/pumilio";
 
 
 #Administrator email
@@ -27,19 +23,16 @@ $app_admin_email="";
 $app_allow_email=FALSE; #FALSE or TRUE
 
 
-#Database settings
-$host="localhost";
-$user="";
-$password="";
-$database = "";
 
+#===============================
+# OPTIONAL SETTINGS            #
+#===============================
 
 #Name for the tag for the marking tool
-# This can be something like species, the name of the song or syllable, a unique code for the
-# type of sound, etc.
+# This can be something like species, the name of the song or 
+# syllable, a unique code for the type of sound, etc.
 # This variable must be set for the tool to be active.
-$mark_tag_name="Species";
-
+$mark_tag_name = "Species";
 
 
 #Use R?
@@ -54,12 +47,12 @@ $useR = FALSE; #TRUE or FALSE
 	#ADI settings
 		$R_ADI_db_value = "-50"; #dBFS
 
-		##The spectrogram should be drawn from 0 to this frequency, in Hertz. Default is 10000
+		##The spectrogram should be drawn from 0 to this
+		## frequency, in Hertz. Default is 10000 Hz.
 		$R_ADI_max_freq = "10000"; #in Hz
 
 		##How wide is each frequency band
 		$R_ADI_freq_step = "1000"; #in Hz
-
 
 
 #Use Wordpress for users?
@@ -97,7 +90,8 @@ $googleanalytics_code="<script type=\"text/javascript\">
 
 	</script>";
 	
-#Special variables for rare cases
+
+#More special variables for rare cases
 $special_wrapper=FALSE;
 $special_noopen=FALSE;
 $special_noprocess=FALSE;
