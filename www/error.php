@@ -82,6 +82,12 @@ echo "\n<link rel=\"stylesheet\" href=\"css/custom.css\" type=\"text/css\" media
 			echo "<p><div class=\"notice\"> <img src=\"images/error.png\"> This installation is not set up to upload files.
 				Please contact the administrator: <a href=\"mailto:$app_admin_email\">$app_admin_email</a>.</div>";
 			}
+		elseif ($e=="script") {
+			$error_script = $_SERVER['HTTP_REFERER'];
+			echo "<p><div class=\"notice\"> <img src=\"images/error.png\"> There was an error in a script or there was an invalid manual request.
+				Please contact the administrator: <a href=\"mailto:$app_admin_email\">$app_admin_email</a>.<br>
+				Error from: $error_script</div>";
+			}
 		?>
 
 	</div>

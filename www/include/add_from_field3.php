@@ -1,21 +1,4 @@
 <?php
-session_start();
-
-require("include/functions.php");
-
-$config_file = 'config.php';
-
-if (file_exists($config_file)) {
-    require("config.php");
-} else {
-    header("Location: error.php?e=config");
-    die();
-}
-
-require("include/apply_config.php");
-
-$force_loggedin = TRUE;
-require("include/check_login.php");
 
 $dir=filter_var($_POST["dir"], FILTER_SANITIZE_URL);
 $files_to_process_counter=filter_var($_POST["files_to_process_counter"], FILTER_SANITIZE_NUMBER_INT);
@@ -28,11 +11,6 @@ if ($dir=="") {
 	die();
 	}
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
-<html>
-<head>
-";
-
 if ($sm==1) {
 	echo "<title>$app_custom_name - Add files from a Wildlife Acoustic SongMeter</title>";
 	}
@@ -40,12 +18,6 @@ else {
 	echo "<title>$app_custom_name - Add files from the field</title>";
 	}
 
-require("include/get_css.php");
-require("include/get_jqueryui.php");
-
-if ($use_googleanalytics) {
-	echo $googleanalytics_code;
-	}
 ?>
 
 </head>
@@ -72,7 +44,8 @@ if ($use_googleanalytics) {
 				echo "<h3>Add sound files from the field</h3>";
 				}
 
-			echo "<form action=\"add_from_field4.php\" method=\"POST\" id=\"AddForm\">";
+			echo "<form action=\"add_from_field.php\" method=\"POST\" id=\"AddForm\">
+				<input type=\"hidden\" name=\"step\" value=\"4\">";
 			
 				if ($sm==1) {
 					echo "<p>The date and time will be extracted from the filename. It is assumed to be encoded as: *YYYYMMDD_HHMMSS.(wav/flac), where * is
@@ -152,17 +125,3 @@ if ($use_googleanalytics) {
 			</form>";
 			?>
 
-		</div>
-		<div class="span-24 last">
-			&nbsp;
-		</div>
-		<div class="span-24 last">
-			<?php
-			require("include/bottom.php");
-			?>
-
-		</div>
-	</div>
-
-</body>
-</html>

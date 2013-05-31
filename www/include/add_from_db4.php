@@ -1,20 +1,4 @@
 <?php
-session_start();
-
-require("include/functions.php");
-
-$config_file = 'config.php';
-
-if (file_exists($config_file)) {
-    require("config.php");
-} else {
-    header("Location: error.php?e=config");
-    die();
-}
-
-require("include/apply_config.php");
-$force_loggedin = TRUE;
-require("include/check_login.php");
 
 $dir=filter_var($_POST["dir"], FILTER_SANITIZE_URL);
 $files_format=strtolower(filter_var($_POST["files_format"], FILTER_SANITIZE_STRING));
@@ -72,17 +56,9 @@ if ($Notes)
 if (substr($fields_to_use, -1)==",")
 	$fields_to_use=substr($fields_to_use, 0, -1);
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
-<html>
-<head>
-<title>$app_custom_name - Add from a database or spreadsheet</title>";
-
-require("include/get_css.php");
-require("include/get_jqueryui.php");
 ?>
 
 <script src="js/jquery.validate.js"></script>
-
 <!-- Form validation from http://bassistance.de/jquery-plugins/jquery-plugin-validation/ -->
 
 	<script type="text/javascript">
@@ -108,17 +84,8 @@ require("include/get_jqueryui.php");
 	}
 	</style>
 
-<?php
-if ($use_googleanalytics){
-	echo $googleanalytics_code;
-	}
-?>
-
 </head>
 <body>
-
-	<!-- Scripts for Javascript tooltip from http://www.walterzorn.com/tooltip/tooltip_e.htm -->
-	<script type="text/javascript" src="include/wz_tooltip/wz_tooltip.js"></script>
 
 	<!--Blueprint container-->
 	<div class="container">
@@ -142,7 +109,8 @@ if ($use_googleanalytics){
 			echo "There are $fields_to_use_counter fields: $fields_to_use<br>
 				OriginalFilename is the file name, it must match the file in the directory.";
 
-			echo "<form action=\"add_from_db5.php\" method=\"POST\" id=\"AddForm\">
+			echo "<form action=\"add_from_db.php\" method=\"POST\" id=\"AddForm\">
+				<input type=\"hidden\" name=\"step\" value=\"5\">
 				<p>Add one line for each file (use [enter] for a new line) with $fields_to_use_counter fields separated by pipes (|). 
 					If the data is missing, enter \"NULL\" without the quotes. <br>There must be $files_to_process_counter lines, 
 					one for each file in the directory to import.<br>
@@ -161,17 +129,3 @@ if ($use_googleanalytics){
 			echo "<br><br>";
 			?>
 
-		</div>
-		<div class="span-24 last">
-			&nbsp;
-		</div>
-		<div class="span-24 last">
-			<?php
-			require("include/bottom.php");
-			?>
-
-		</div>
-	</div>
-
-</body>
-</html>

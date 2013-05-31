@@ -1,26 +1,10 @@
 <?php
-session_start();
 
 ignore_user_abort(true);
 set_time_limit(0);
 
 #Calculate time to complete
 $Time0=strtotime("now");
-
-require("include/functions.php");
-
-$config_file = 'config.php';
-
-if (file_exists($config_file)) {
-    require("config.php");
-} else {
-    header("Location: error.php?e=config");
-    die();
-}
-
-require("include/apply_config.php");
-$force_loggedin = TRUE;
-require("include/check_login.php");
 
 $dir=filter_var($_POST["dir"], FILTER_SANITIZE_URL);
 $files_format=strtolower(filter_var($_POST["files_format"], FILTER_SANITIZE_STRING));
@@ -42,24 +26,10 @@ if ($files_format=="") {
 
 $files_format_length=strlen($files_format);
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
-<html>
-<head>
-<title>$app_custom_name - Add from a database or spreadsheet</title>";
-
-require("include/get_css.php");
-require("include/get_jqueryui.php");
-
-if ($use_googleanalytics) {
-	echo $googleanalytics_code;
-	}
 ?>
 
 </head>
 <body>
-
-	<!-- Scripts for Javascript tooltip from http://www.walterzorn.com/tooltip/tooltip_e.htm -->
-	<script type="text/javascript" src="include/wz_tooltip/wz_tooltip.js"></script>
 
 	<!--Blueprint container-->
 	<div class="container">
@@ -135,19 +105,4 @@ if ($use_googleanalytics) {
 				<p><a href=\"db_browse.php?ColID=$ColID\">Browse this collection</a>.";
 
 			?>
-
-		</div>
-		<div class="span-24 last">
-			&nbsp;
-		</div>
-		<div class="span-24 last">
-			<?php
-			require("include/bottom.php");
-			?>
-
-		</div>
-	</div>
-
-</body>
-</html>
 
