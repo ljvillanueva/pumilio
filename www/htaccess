@@ -1,0 +1,15 @@
+#If you want to avoid hotlinking or people trying to download the files without 
+# a legitimate reason, rename this file to .htaccess (starting with a dot) and
+# change the 'server.com' below to the address of the server.
+# This requires the Apache rewrite module. In Ubuntu, enable with:
+#  sudo a2enmod rewrite
+#  sudo service apache2 restart
+#
+# Make sure Apache allows htaccess files. In the configuration file, 
+#  /etc/apache2/sites-enabled/000-default
+# make sure the AllowOverride option is like this:
+#  AllowOverride All
+
+RewriteEngine on
+RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?server.com [NC]
+RewriteRule \.(png|mp3|flac|wav|ogg|aac|mp4|aiff)$ - [NC,F,L]
