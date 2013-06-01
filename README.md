@@ -51,9 +51,15 @@ Feel free to contribute code, ideas, suggestions, bugs, etc.
 Read the INSTALLATION file to install and the UPGRADE file to upgrade.
 
 To prevent access to the original sound files from the web (for example, someone trying to 
- download your whole dataset), rename the file "htaccess.txt" to ".htaccess" (starting with a period) in:
-  /pumilio_directory/sounds/sounds/
- The apache server must be configured to allow this option. Please consult with your administrator.
+ download your whole dataset), rename the file "htaccess" to ".htaccess" (starting with a period)
+ and place it in the main folder of the application.
+ The apache server must be configured to allow this option. 
+
+ In Ubuntu:
+  sudo a2enmod rewrite
+  sudo service apache2 restart
+  
+ For other distros or options, please consult your administrator.
  
 You can also visit the project page for more information: 
  http://pumilio.sourceforge.net
