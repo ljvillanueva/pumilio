@@ -56,9 +56,10 @@ To prevent access to the original sound files from the web (for example, someone
  The apache server must be configured to allow this option. 
 
  In Ubuntu:
+ ```bash
   sudo a2enmod rewrite
   sudo service apache2 restart
-  
+  ```
  For other distros or options, please consult your administrator.
  
 You can also visit the project page for more information: 
