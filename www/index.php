@@ -418,17 +418,32 @@ else{
 				if ($pumilio_loggedin == TRUE) {
 					echo "<h3><a href=\"#\">Quality control</a></h3>
 					<div>\n";
-						echo "<p><a href=\"qc.php\">Data extraction for quality control</a>
-							<p><a href=\"qa.php\">Figures for quality control</a>
+						echo "
+						
+						
+						<form action=\"qc.php\" method=\"GET\">
+							<input type=submit value=\" Data extraction for quality control \" class=\"fg-button ui-state-default ui-corner-all\">
+						</form>
+						<form action=\"qa.php\" method=\"GET\">
+							<input type=submit value=\" Figures for quality control \" class=\"fg-button ui-state-default ui-corner-all\">
+						</form>
+						
 					</div>";
 
 					echo "<h3><a href=\"#\">Other tasks</a></h3>
 					<div>\n";
-						echo "<ul>
-							<li><a href=\"sample_archive.php\">Sample the archive</a></li>
-							<li><a href=\"script_jobs.php\">Script jobs</a></li>
-							<li><a href=\"export_marks.php\">Export marks data</a></li>\n
-						</ul>
+						echo "
+						
+						<form action=\"sample_archive.php\" method=\"GET\">
+							<input type=submit value=\" Sample the archive \" class=\"fg-button ui-state-default ui-corner-all\">
+						</form>
+						<form action=\"script_jobs.php\" method=\"GET\">
+							<input type=submit value=\" Script jobs \" class=\"fg-button ui-state-default ui-corner-all\">
+						</form>
+						<form action=\"export_marks.php\" method=\"GET\">
+							<input type=submit value=\" Export marks data \" class=\"fg-button ui-state-default ui-corner-all\">
+						</form>
+						
 					</div>";
 
 					#Special section for plugins
