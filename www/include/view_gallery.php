@@ -4,7 +4,7 @@
 require_once("include/Mobile_Detect.php");
 $detect = new Mobile_Detect();
 
-if ($detect->isMobile()) {
+if ($detect->isMobile() || $detect->isTablet()) {
 	$mobile = TRUE;
 	}
 else {
