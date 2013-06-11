@@ -21,14 +21,6 @@ if ($use_xml==""){
 	$use_xml="0";
 	}
 
-#JSON instead of XML?
-if (isset($_GET["json"])){
-	$json = filter_var($_GET["json"], FILTER_SANITIZE_STRING);
-	}
-else{
-	$json = FALSE;
-	}
-
 #Allowed?
 if ($use_xml==0) {
 	}
