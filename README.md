@@ -14,7 +14,8 @@ Licensed under the GPLv3
 Citation: Villanueva-Rivera, Luis J., and Bryan C. Pijanowski. 2012.
  Pumilio: A Web-Based Management System for Ecological Recordings.
  Bulletin of the Ecological Society of America 93: 71-81.
- doi: 10.1890/0012-9623-93.1.71
+ doi: [10.1890/0012-9623-93.1.71](http://dx.doi.org/10.1890/0012-9623-93.1.71)
+ 
 
 ##Folder structure
 
