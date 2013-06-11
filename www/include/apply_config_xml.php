@@ -1,5 +1,15 @@
 <?php
 
+$absolute_dir=dirname(__FILE__);
+
+$absolute_dir = preg_replace('/include$/', '', $absolute_dir);
+
+$app_dir = substr($absolute_dir, strlen($_SERVER['DOCUMENT_ROOT']));
+
+$app_url = "http://" . $_SERVER['SERVER_NAME'] . $app_dir;
+
+$app_url = preg_replace('/include$/', '', $app_url);
+
 #Maintenance mode
 # just add an empty file named maintenance to the root of the application
 
