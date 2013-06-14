@@ -110,7 +110,8 @@ if ($pumilio_admin==TRUE) {
 	elseif (!is_dir("sounds/previewsounds") || !is_writable("sounds/previewsounds")) {
 		$sys_errors++;
 		}
-	elseif ($special_nofiles == FALSE && (!is_dir("sounds/sounds") || !is_writable("sounds/sounds"))) {
+		
+	if ($special_nofiles == FALSE && (!is_dir("sounds/sounds") || !is_writable("sounds/sounds"))) {
 		$sys_errors++;
 		}
 
