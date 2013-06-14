@@ -609,13 +609,15 @@ else {
 			<ul>
 			<li>Original filename: $OriginalFilename";
 				if ($guests_can_dl || $pumilio_loggedin) {
+					echo "<br>&nbsp;&nbsp;&nbsp;Download: ";
 					if ($special_nofiles == FALSE){
-						echo "<br>&nbsp;&nbsp;&nbsp;Download: <a href=\"dl.php?file=sounds/sounds/$ColID/$DirID/$OriginalFilename\">$SoundFormat</a>";
+						echo "<a href=\"dl.php?file=sounds/sounds/$ColID/$DirID/$OriginalFilename\">$SoundFormat</a>";
 						if ($SoundFormat != "wav" && $special_noprocess==FALSE){
 							echo " | <a href=\"dl.php?from_detail=1&SoundID=$SoundID\">wav</a>";
 							}
+						echo " | ";
 						}
-					echo " | <a href=\"dl.php?file=sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename\">$AudioPreviewFormat</a>
+					echo "<a href=\"dl.php?file=sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename\">$AudioPreviewFormat</a>
 						</li>";
 					}
 
