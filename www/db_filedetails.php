@@ -490,7 +490,7 @@ else {
 		echo "</div>";
 				
 		#MD5 hash calculation
-		if ($pumilio_loggedin) {
+		if ($pumilio_loggedin && $special_nofiles == FALSE) {
 			if (!file_exists("sounds/sounds/$ColID/$DirID/$OriginalFilename")) {
 				echo "<div class=\"span-24 last\" style=\"text-align: center;\"><div class=\"error\"><img src=\"images/exclamation.png\"> The file could not be found.</div></div>";
 				$file_error = 1;
@@ -609,9 +609,11 @@ else {
 			<ul>
 			<li>Original filename: $OriginalFilename";
 				if ($guests_can_dl || $pumilio_loggedin) {
-					echo "<br>&nbsp;&nbsp;&nbsp;Download: <a href=\"dl.php?file=sounds/sounds/$ColID/$DirID/$OriginalFilename\">$SoundFormat</a>";
-					if ($SoundFormat != "wav" && $special_noprocess==FALSE){
-						echo " | <a href=\"dl.php?from_detail=1&SoundID=$SoundID\">wav</a>";
+					if ($special_nofiles == FALSE){
+						echo "<br>&nbsp;&nbsp;&nbsp;Download: <a href=\"dl.php?file=sounds/sounds/$ColID/$DirID/$OriginalFilename\">$SoundFormat</a>";
+						if ($SoundFormat != "wav" && $special_noprocess==FALSE){
+							echo " | <a href=\"dl.php?from_detail=1&SoundID=$SoundID\">wav</a>";
+							}
 						}
 					echo " | <a href=\"dl.php?file=sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename\">$AudioPreviewFormat</a>
 						</li>";

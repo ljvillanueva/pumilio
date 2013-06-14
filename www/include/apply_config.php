@@ -145,6 +145,10 @@ if (!isset($special_noprocess)){
 	$special_noprocess = FALSE;
 	}
 
+if (!isset($special_nofiles)){
+	$special_nofiles = FALSE;
+	}
+
 if (!isset($force_login)){
 	$force_login = FALSE;
 	}
