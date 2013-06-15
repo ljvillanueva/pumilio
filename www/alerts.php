@@ -157,7 +157,7 @@ require("include/get_jqueryui.php");
 
 
 
-	if ($useR){
+	if ($useR == TRUE){
 	#Test if the R and the packages are installed
 	exec($Rscript . ' include/R/test.R', $lastline, $R_retval);
 	#seewave_1.5.8.tar.gz uses tuneR and does not fail with fftw3

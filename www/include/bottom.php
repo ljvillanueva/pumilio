@@ -30,4 +30,14 @@ if ($special_wrapper == FALSE && $special_iframe == FALSE){
 		<small>Powered by <a href=\"http://pumilio.sourceforge.net\" target=_blank>Pumilio</a> v. $website_version<br>
 		<a href=\"#\" onClick=\"window.open('include/copyright.php', 'copyright', 'width=650,height=400,status=yes,resizable=yes,scrollbars=yes')\">&copy; 2010-2013 LJV</a>. Licensed under the GPLv3.</small>";
 	}
+
+if (isset($_GET["debug"])){
+	$debug = filter_var($_GET["debug"], FILTER_SANITIZE_NUMBER_INT);
+	if ($debug == "1"){
+		echo "<br>";
+		print_r(DB::$q);
+		echo "<br>";
+		print_r($settings);
+		}
+	}
 ?>

@@ -17,7 +17,10 @@ $force_admin = TRUE;
 require("include/check_admin.php");
 
 if (isset($_GET["u"])){
-	$u=filter_var($_GET["u"], FILTER_SANITIZE_NUMBER_INT);
+	$u = filter_var($_GET["u"], FILTER_SANITIZE_NUMBER_INT);
+	}
+else{
+	$u = "";
 	}
 
 if (!isset($_GET["t"])){

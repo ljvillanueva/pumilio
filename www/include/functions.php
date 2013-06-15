@@ -677,4 +677,17 @@ function bgHowManyStats_PID() {
 	exec("pgrep stats_pumiliodb*", $bg_processes);
 	return $bg_processes;
 	}
+	
+	
+
+#From http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions	
+function endsWith($haystack,$needle,$case=true){
+	$expectedPosition = strlen($haystack) - strlen($needle);
+
+	if($case)
+	return strrpos($haystack, $needle, 0) === $expectedPosition;
+
+	return strripos($haystack, $needle, 0) === $expectedPosition;
+	}
+		
 ?>

@@ -13,12 +13,11 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 require("include/check_admin.php");
 
 #If user is not logged in, add check for QF
 if ($pumilio_loggedin == FALSE) {
-	$qf_check = "AND Sounds.QualityFlagID>='$default_qf'";
+	$qf_check = "AND `Sounds`.`QualityFlagID`>=$default_qf";
 	}
 else {
 	$qf_check = "";
@@ -37,8 +36,6 @@ echo "<!-- IE Fix for accordion http://dev.jqueryui.com/ticket/4444 -->
 	</style>\n";
 
 require("include/get_jqueryui.php");
-
-$map_only=query_one("SELECT Value from PumilioSettings WHERE Settings='map_only'", $connection);
 
 if ($map_only=="1"){
 	require("include/index_map_head.php");
@@ -171,10 +168,15 @@ else{
 	</style>";
 
 
-	$DateLow=query_one("SELECT DATE_FORMAT(Date,'%Y, %c-1, %e') FROM Sounds WHERE SoundStatus!='9' $qf_check ORDER BY Date LIMIT 1", $connection);
-	$DateHigh=query_one("SELECT DATE_FORMAT(Date,'%Y, %c-1, %e') FROM Sounds WHERE SoundStatus!='9' $qf_check ORDER BY Date DESC LIMIT 1", $connection);
-	$DateLow1=query_one("SELECT DATE_FORMAT(Date,'%d-%b-%Y') FROM Sounds WHERE SoundStatus!='9' $qf_check ORDER BY Date LIMIT 1", $connection);
-	$DateHigh1=query_one("SELECT DATE_FORMAT(Date,'%d-%b-%Y') FROM Sounds WHERE SoundStatus!='9' $qf_check ORDER BY Date DESC LIMIT 1", $connection);
+	$DateLow = DB::column('SELECT DATE_FORMAT(`Date`,"%Y, %c-1, %e") FROM `Sounds` WHERE `SoundStatus`!=9 ' . $qf_check . ' ORDER BY `Date` LIMIT 1');
+	$DateHigh = DB::column('SELECT DATE_FORMAT(`Date`, "%Y, %c-1, %e") FROM `Sounds` WHERE `SoundStatus`!=9 ' . $qf_check . ' ORDER BY `Date` DESC LIMIT 1');
+	$DateLow1 = DB::column('SELECT DATE_FORMAT(`Date`, "%d-%b-%Y") FROM `Sounds` WHERE `SoundStatus`!=9 ' . $qf_check . ' ORDER BY `Date` LIMIT 1');
+	$DateHigh1 = DB::column('SELECT DATE_FORMAT(`Date`, "%d-%b-%Y") FROM `Sounds` WHERE `SoundStatus`!=9 ' . $qf_check . ' ORDER BY `Date` DESC LIMIT 1');
+
+	#$DateLow=query_one("SELECT DATE_FORMAT(Date,'%Y, %c-1, %e') FROM Sounds WHERE SoundStatus!='9' $qf_check ORDER BY Date LIMIT 1", $connection);
+	#$DateHigh=query_one("SELECT DATE_FORMAT(Date,'%Y, %c-1, %e') FROM Sounds WHERE SoundStatus!='9' $qf_check ORDER BY Date DESC LIMIT 1", $connection);
+	#$DateLow1=query_one("SELECT DATE_FORMAT(Date,'%d-%b-%Y') FROM Sounds WHERE SoundStatus!='9' $qf_check ORDER BY Date LIMIT 1", $connection);
+	#$DateHigh1=query_one("SELECT DATE_FORMAT(Date,'%d-%b-%Y') FROM Sounds WHERE SoundStatus!='9' $qf_check ORDER BY Date DESC LIMIT 1", $connection);
 	#from http://jsbin.com/orora3/75/
 	echo "	
 	<script type=\"text/javascript\">
@@ -255,8 +257,10 @@ else{
 	
 	#Duration slider
 	#Get min and max
-	$DurationLow=floor(query_one("SELECT DISTINCT Duration FROM Sounds WHERE Duration IS NOT NULL AND SoundStatus!='9' $qf_check ORDER BY Duration LIMIT 1", $connection));
-	$DurationHigh=ceil(query_one("SELECT DISTINCT Duration FROM Sounds WHERE Duration IS NOT NULL AND SoundStatus!='9' $qf_check ORDER BY Duration DESC LIMIT 1", $connection));
+	#$DurationLow=floor(query_one("SELECT DISTINCT Duration FROM Sounds WHERE Duration IS NOT NULL AND SoundStatus!='9' $qf_check ORDER BY Duration LIMIT 1", $connection));
+	$DurationLow = floor(DB::column('SELECT DISTINCT `Duration` FROM `Sounds` WHERE `Duration` IS NOT NULL AND `SoundStatus`!=9 ' . $qf_check . ' ORDER BY `Duration` LIMIT 1'));
+	#$DurationHigh=ceil(query_one("SELECT DISTINCT Duration FROM Sounds WHERE Duration IS NOT NULL AND SoundStatus!='9' $qf_check ORDER BY Duration DESC LIMIT 1", $connection));
+	$DurationHigh = ceil(DB::column('SELECT DISTINCT `Duration` FROM `Sounds` WHERE `Duration` IS NOT NULL AND `SoundStatus`!=9 ' . $qf_check . ' ORDER BY `Duration` DESC LIMIT 1'));
 
 	echo "<script type=\"text/javascript\">
 		$(function() {
@@ -306,10 +310,13 @@ else{
 
 			echo "<h4>$app_custom_text</h4>";
 
-			$no_Collections=query_one("SELECT COUNT(*) FROM Collections", $connection);
-			$no_sounds=query_one("SELECT COUNT(*) as no_sounds FROM Sounds WHERE SoundStatus!='9' $qf_check", $connection);
-			$no_sites=query_one("SELECT COUNT(DISTINCT SiteID) FROM Sounds WHERE SoundStatus!='9' $qf_check", $connection);
-
+			#$no_Collections=query_one("SELECT COUNT(*) FROM Collections", $connection);
+			$no_Collections = DB::column('SELECT COUNT(*) FROM `Collections`');
+			#$no_sounds=query_one("SELECT COUNT(*) as no_sounds FROM Sounds WHERE SoundStatus!='9' $qf_check", $connection);
+			$no_sounds = DB::column('SELECT COUNT(*) FROM `Sounds` WHERE SoundStatus!=9 ' . $qf_check);
+			#$no_sites=query_one("SELECT COUNT(DISTINCT SiteID) FROM Sounds WHERE SoundStatus!='9' $qf_check", $connection);
+			$no_sites = DB::column('SELECT COUNT(DISTINCT SiteID) FROM `Sounds` WHERE SoundStatus!=9 ' . $qf_check);
+			
 			#Special when in iframe or inside another site
 			if ($special_wrapper==TRUE){
 				$browse_map_link = "$wrapper";
@@ -328,6 +335,7 @@ else{
 				$no_sounds_f = number_format($no_sounds);
 				$no_Collections_f = number_format($no_Collections);
 				$no_sites_f = number_format($no_sites);		
+				
 				echo "<h4>This archive has $no_sounds_f soundfiles ";
 				if ($no_sites>0){
 					echo "from $no_sites_f sites ";
@@ -385,7 +393,6 @@ else{
 								</form>";
 							}
 						}
-												
 				echo "</div>";
 
 				#Search
@@ -395,8 +402,8 @@ else{
 				echo "</div>";
 
 				#Compare sites
-				$sidetoside_comparison=query_one("SELECT Value from PumilioSettings WHERE Settings='sidetoside_comp'", $connection);
-				if ($sidetoside_comparison=="1" || $sidetoside_comparison=="") {
+				#$sidetoside_comp=query_one("SELECT Value from PumilioSettings WHERE Settings='sidetoside_comp'", $connection);
+				if ($sidetoside_comp=="1" || $sidetoside_comp=="") {
 					echo "<h3><a href=\"#\">Side-to-side comparison</a></h3>
 						<div>
 						<p>Select up to three sites to compare their sounds side-to-side on a particular date.</p>";
@@ -405,7 +412,7 @@ else{
 					}
 
 				#Tag cloud
-				$use_tags=query_one("SELECT Value from PumilioSettings WHERE Settings='use_tags'", $connection);
+				#$use_tags=query_one("SELECT Value from PumilioSettings WHERE Settings='use_tags'", $connection);
 				if ($use_tags=="1" || $use_tags=="") {
 					echo "<h3><a href=\"#\">Tag cloud</a></h3>
 						<div>
@@ -503,6 +510,7 @@ else{
 			<?php
 			require("include/bottom.php");
 			?>
+			
 		</div>
 	</div>
 

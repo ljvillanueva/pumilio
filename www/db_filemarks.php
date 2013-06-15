@@ -14,7 +14,7 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
-$SoundID=filter_var($_GET["SoundID"], FILTER_SANITIZE_STRING);
+$SoundID=filter_var($_GET["SoundID"], FILTER_SANITIZE_NUMBER_INT);
 $username = $_COOKIE["username"];
 $UserID = query_one("SELECT UserID FROM Users WHERE UserName='$username'", $connection);
 

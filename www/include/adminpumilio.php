@@ -5,11 +5,6 @@ if ($tt==1) {
 	echo "<div class=\"success\" id=\"tt1\">The database was updated.</div>";
 	}
 
-$app_custom_name=query_one("SELECT Value from PumilioSettings WHERE Settings='app_custom_name'", $connection);
-if ($app_custom_name==""){
-	$app_custom_name="Pumilio";
-	}
-
 echo "<strong>General settings:</strong>
 	<div style=\"margin-left: 10px;\">This installation custom name: $app_custom_name";
 
@@ -17,16 +12,10 @@ echo "<form action=\"include/editpumiliosettings.php\" method=\"POST\">
 	<input type=\"hidden\" name=\"settings\" value=\"top\">
 	<input type=\"text\" name=\"app_custom_name\" maxlength=\"250\" size=\"36\" value=\"$app_custom_name\" class=\"fg-button ui-state-default ui-corner-all formedge\">";
 
-#app_custom_text
-$app_custom_text=query_one("SELECT Value from PumilioSettings WHERE Settings='app_custom_text'", $connection);
-
 echo "<br>Short description of this system: $app_custom_text";
 
 echo "<input type=\"text\" name=\"app_custom_text\" maxlength=\"250\" size=\"50\" value=\"$app_custom_text\" class=\"fg-button ui-state-default ui-corner-all formedge\">";
 	
-#use_googlemaps
-$use_googlemaps=query_one("SELECT Value from PumilioSettings WHERE Settings='use_googlemaps'", $connection);
-
 if ($use_googlemaps=="1"){
 	$use_googlemaps_d="No";
 	$use_googlemaps="0";
@@ -69,7 +58,7 @@ if ($use_googlemaps=="3") {
 	echo "<input type=\"text\" name=\"googlemaps3_key\" size=\"50\" maxlength=\"250\" value=\"$googlemaps3_key\" class=\"fg-button ui-state-default ui-corner-all formedge\">\n";
 	}	
 	
-	$map_only=query_one("SELECT Value from PumilioSettings WHERE Settings='map_only'", $connection);
+	#$map_only=query_one("SELECT Value from PumilioSettings WHERE Settings='map_only'", $connection);
 	
 	if ($map_only=="1"){
 		$map_only_d="Map only";
@@ -93,8 +82,8 @@ echo "</select>\n";
 	
 	
 #Copyright or CC?
-	$files_license = query_one("SELECT Value from PumilioSettings WHERE Settings='files_license'", $connection);
-	$files_license_detail = query_one("SELECT Value from PumilioSettings WHERE Settings='files_license_detail'", $connection);
+	#$files_license = query_one("SELECT Value from PumilioSettings WHERE Settings='files_license'", $connection);
+	#$files_license_detail = query_one("SELECT Value from PumilioSettings WHERE Settings='files_license_detail'", $connection);
 
 	if ($files_license=="") {
 		$files_license = "Not set";
@@ -181,7 +170,7 @@ echo "</select>\n";
 	<input type=\"text\" name=\"files_license_detail\" size=\"40\" maxlength=\"250\" value=\"$files_license_detail\" class=\"fg-button ui-state-default ui-corner-all\">";
 	
 	#Max freq to draw in spectrograms
-	$max_spec_freq=query_one("SELECT Value from PumilioSettings WHERE Settings='max_spec_freq'", $connection);
+	#$max_spec_freq=query_one("SELECT Value from PumilioSettings WHERE Settings='max_spec_freq'", $connection);
 
 	if ($max_spec_freq=="max") {
 		$max_spec_freq_d="Maximum for each file";
@@ -265,7 +254,7 @@ echo "</select>\n";
 	echo " </select>";
 
 	$temp_add_dir_f = "";
-	$temp_add_dir=query_one("SELECT Value from PumilioSettings WHERE Settings='temp_add_dir'", $connection);
+	#$temp_add_dir=query_one("SELECT Value from PumilioSettings WHERE Settings='temp_add_dir'", $connection);
 	if ($temp_add_dir!=""){ 
 		if (!is_dir($temp_add_dir)){
 			$temp_add_dir_d="<em style=\"color:red;\">Invalid directory</em>";
@@ -316,7 +305,7 @@ echo "</select>\n";
 */
 
 	#Cores to use
-	$cores_to_use=query_one("SELECT Value from PumilioSettings WHERE Settings='cores_to_use'", $connection);
+	#$cores_to_use=query_one("SELECT Value from PumilioSettings WHERE Settings='cores_to_use'", $connection);
 	if ($cores_to_use==""){ 
 		$cores_to_use_d = "Not set (use 1)";
 		}
@@ -357,7 +346,7 @@ echo "</select>\n";
 		}
 	
 	#allow chorus
-	$use_chorus=query_one("SELECT Value from PumilioSettings WHERE Settings='use_chorus'", $connection);
+	#$use_chorus=query_one("SELECT Value from PumilioSettings WHERE Settings='use_chorus'", $connection);
 
 	if ($use_chorus=="1"){
 		$use_chorus_d="Yes";
@@ -386,7 +375,7 @@ echo "</select>\n";
 
 
 	#allow access using XML
-	$use_xml=query_one("SELECT Value from PumilioSettings WHERE Settings='use_xml'", $connection);
+	#$use_xml=query_one("SELECT Value from PumilioSettings WHERE Settings='use_xml'", $connection);
 
 	if ($use_xml=="1"){
 		$use_xml_d="Yes";
@@ -417,7 +406,7 @@ echo "</select>\n";
 
 	
 	#use tag cloud
-	$use_tags=query_one("SELECT Value from PumilioSettings WHERE Settings='use_tags'", $connection);
+	#$use_tags=query_one("SELECT Value from PumilioSettings WHERE Settings='use_tags'", $connection);
 
 	if ($use_tags=="1"){
 		$use_tags_d="Yes";
@@ -444,7 +433,7 @@ echo "</select>\n";
 
 
 	#audio preview format
-	$audiopreview_format=query_one("SELECT Value from PumilioSettings WHERE Settings='audiopreview_format'", $connection);
+	#$audiopreview_format=query_one("SELECT Value from PumilioSettings WHERE Settings='audiopreview_format'", $connection);
 	if ($audiopreview_format==""){
 		$audiopreview_format = "mp3";
 		}
@@ -474,7 +463,7 @@ echo "</select>\n";
 */
 	
 	#hide_latlon_guests
-	$hide_latlon_guests=query_one("SELECT Value from PumilioSettings WHERE Settings='hide_latlon_guests'", $connection);
+	#$hide_latlon_guests=query_one("SELECT Value from PumilioSettings WHERE Settings='hide_latlon_guests'", $connection);
 
 	if ($hide_latlon_guests=="1"){
 		$hide_latlon_guests_d="Yes";
@@ -502,33 +491,35 @@ echo "</select>\n";
 
 
 	#use side-to-side comparison
-	$sidetoside_comparison=query_one("SELECT Value from PumilioSettings WHERE Settings='sidetoside_comp'", $connection);
+	#$sidetoside_comp=query_one("SELECT Value from PumilioSettings WHERE Settings='sidetoside_comp'", $connection);
 
-	if ($sidetoside_comparison=="1"){
-		$sidetoside_comparison_d="Yes";
+	if ($sidetoside_comp=="1"){
+		$sidetoside_comp_d="Yes";
 		}
-	elseif ($sidetoside_comparison=="0"){
-		$sidetoside_comparison_d="No";
+	elseif ($sidetoside_comp=="0"){
+		$sidetoside_comp_d="No";
 		}
 	else{
-		$sidetoside_comparison_d="Not set";
+		$sidetoside_comp_d="Not set";
 		}
 			
-	echo "<br>Use Side-to-side comparison: $sidetoside_comparison_d";
+	echo "<br>Use Side-to-side comparison: $sidetoside_comp_d";
 	
 	echo "<select name=\"sidetoside_comp\" class=\"ui-state-default ui-corner-all formedge\">";
-		if ($sidetoside_comparison)
-			{echo "<option SELECTED value=\"1\">Yes</option>
-				<option value=\"0\">No</option>";}
-		else
-			{echo "<option value=\"1\">Yes</option>
-				<option SELECTED value=\"0\">No</option>";}
+		if ($sidetoside_comp){
+			echo "<option SELECTED value=\"1\">Yes</option>
+			<option value=\"0\">No</option>";
+			}
+		else {
+			echo "<option value=\"1\">Yes</option>
+			<option SELECTED value=\"0\">No</option>";
+			}
 
 	echo " </select>";
 
 
 	#allow_upload
-	$allow_upload=query_one("SELECT Value from PumilioSettings WHERE Settings='allow_upload'", $connection);
+	#$allow_upload=query_one("SELECT Value from PumilioSettings WHERE Settings='allow_upload'", $connection);
 
 	if ($allow_upload=="1"){
 		$allow_upload_d="Yes";
@@ -556,7 +547,7 @@ echo "</select>\n";
 
 
 	#compress wav to flac
-	$wav_toflac=query_one("SELECT Value from PumilioSettings WHERE Settings='wav_toflac'", $connection);
+	#$wav_toflac=query_one("SELECT Value from PumilioSettings WHERE Settings='wav_toflac'", $connection);
 
 	if ($wav_toflac=="1") {
 		$wav_toflac_d="Yes";
@@ -584,7 +575,7 @@ echo "</select>\n";
 
 
 	#guests_can_open
-	$guests_can_open=query_one("SELECT Value from PumilioSettings WHERE Settings='guests_can_open'", $connection);
+	#$guests_can_open=query_one("SELECT Value from PumilioSettings WHERE Settings='guests_can_open'", $connection);
 
 	if ($guests_can_open=="1"){
 		$guests_can_open_d="Yes";
@@ -612,7 +603,7 @@ echo "</select>\n";
 
 
 	#guests_can_download
-	$guests_can_dl=query_one("SELECT Value from PumilioSettings WHERE Settings='guests_can_dl'", $connection);
+	#$guests_can_dl=query_one("SELECT Value from PumilioSettings WHERE Settings='guests_can_dl'", $connection);
 
 	if ($guests_can_dl=="1"){
 		$guests_can_dl_d="Yes";
@@ -640,7 +631,7 @@ echo "</select>\n";
 
 
 	#level data to share
-	$public_leveldata=query_one("SELECT Value from PumilioSettings WHERE Settings='public_leveldata'", $connection);
+	#$public_leveldata=query_one("SELECT Value from PumilioSettings WHERE Settings='public_leveldata'", $connection);
 	
 	if ($public_leveldata==""){
 		$public_leveldata = "0";
@@ -657,7 +648,7 @@ echo "</select>\n";
 
 
 	#spectrogram_palette
-	$spectrogram_palette=query_one("SELECT Value from PumilioSettings WHERE Settings='spectrogram_palette'", $connection);
+	#$spectrogram_palette=query_one("SELECT Value from PumilioSettings WHERE Settings='spectrogram_palette'", $connection);
 	
 	echo "<br>Color palette to use for the spectrograms: ";
 	

@@ -70,7 +70,7 @@ $AudioPreviewFormat=query_one("SELECT Value from PumilioSettings WHERE Settings=
 # using 
 # https://github.com/Xeoncross/DByte
 // We need this!
-require('include/db/DB.php');
+require('db/DB.php');
 
 // Create a new PDO connection to MySQL
 $pdo = new PDO(

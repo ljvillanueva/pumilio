@@ -3,7 +3,7 @@ session_start();
 
 require("functions.php");
 require("../config.php");
-require("apply_config.php");
+require("apply_config_include.php");
 
 function authenticateUser($connection, $username, $password) {
 	// Test the username and password parameters

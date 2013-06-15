@@ -3,7 +3,7 @@ session_start();
 
 require("functions.php");
 require("../config.php");
-require("apply_config.php");
+require("apply_config_include.php");
 
 $Settings = filter_var($_POST["Settings"], FILTER_SANITIZE_STRING);
 $Value = filter_var($_POST["Value"], FILTER_SANITIZE_STRING);

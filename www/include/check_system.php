@@ -125,7 +125,7 @@ if ($pumilio_admin==TRUE) {
 		}
 
 
-	if ($useR){
+	if ($useR == TRUE){
 	#Test if the R and the packages are installed
 	exec($Rscript . ' include/R/test.R', $lastline, $R_retval);
 
