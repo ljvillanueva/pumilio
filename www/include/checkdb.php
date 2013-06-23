@@ -3,7 +3,28 @@ session_start();
 
 require("functions.php");
 require("../config.php");
-require("apply_config.php");
+#require("apply_config.php");
+
+$absolute_dir=dirname(__FILE__);
+
+$absolute_dir = preg_replace('/include$/', '', $absolute_dir);
+
+$app_dir = substr($absolute_dir, strlen($_SERVER['DOCUMENT_ROOT']));
+
+$app_url = "http://" . $_SERVER['SERVER_NAME'] . $app_dir;
+
+$app_url = rtrim(preg_replace('/include$/', '', $app_url), "/");
+
+$connection = @mysqli_connect($host, $user, $password, $database);
+
+#If could not connect, redirect
+if (!$connection) {
+	header("Location: ../error.php?e=db");
+	die();
+	}
+
+mb_language('uni');
+mb_internal_encoding('UTF-8');
 
 $force_admin = TRUE;
 require("check_admin.php");
@@ -12,7 +33,7 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 
-<title>$app_custom_name - Administration Area</title>";
+<title>Administration Area</title>";
 
 #Get CSS
 	require("get_css_include.php");
@@ -141,6 +162,12 @@ if ($run){
 				query_one("ALTER TABLE $TABLE_NAME DEFAULT CHARSET=utf8 COLLATE='utf8_unicode_ci'", $connection);
 				}
 			}
+	
+	#Change OtherSoundID to null
+		$query="UPDATE Sounds SET OtherSoundID = NULL WHERE OtherSoundID = '0'";
+		$result = mysqli_query($connection, $query)
+			or die (mysqli_error($connection));
+
 	
 	
 	#Optimize tables

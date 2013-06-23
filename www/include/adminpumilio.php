@@ -258,10 +258,24 @@ echo "</select>\n";
 	if ($temp_add_dir!=""){ 
 		if (!is_dir($temp_add_dir)){
 			$temp_add_dir_d="<em style=\"color:red;\">Invalid directory</em>";
-			query_one("DELETE from PumilioSettings WHERE Settings='temp_add_dir'", $connection);}
+			
+			$this_query = array(
+				'Settings' => NULL
+				);
+			DB::update('PumilioSettings', $this_query, 'temp_add_dir', 'Settings');
+			
+			#query_one("DELETE from PumilioSettings WHERE Settings='temp_add_dir'", $connection);
+			}
 		elseif(!is_readable($temp_add_dir)){
 			$temp_add_dir_d="<em style=\"color:red;\">Could not read directory</em>";
-			query_one("DELETE from PumilioSettings WHERE Settings='temp_add_dir'", $connection);}
+			
+			$this_query = array(
+				'Settings' => NULL
+				);
+			DB::update('PumilioSettings', $this_query, 'temp_add_dir', 'Settings');
+		
+			#query_one("DELETE from PumilioSettings WHERE Settings='temp_add_dir'", $connection);
+			}
 		else {
 			$temp_add_dir_d="<em>$temp_add_dir</em>";
 			$temp_add_dir_f="$temp_add_dir";

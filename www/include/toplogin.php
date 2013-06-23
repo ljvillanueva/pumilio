@@ -7,13 +7,12 @@ $q_logout = str_replace("&", "%", $q);
 
 echo "<p style=\"text-align: right;\">";
 
-if ($no_login==TRUE) {
+if ($no_login == TRUE) {
 	echo "&nbsp;";
 	}
 else {
 	if ($login_wordpress == TRUE){
-		if (is_user_logged_in()==TRUE){
-#		if (WordpressSessionAuthenticate($wordpress_require)) {
+		if (is_user_logged_in() == TRUE){
 			require_once($wordpress_require);
 			wp_get_current_user();
 

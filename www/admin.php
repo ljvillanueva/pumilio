@@ -7,10 +7,11 @@ $config_file = 'config.php';
 
 if (file_exists($config_file)) {
 	require($config_file);
-} else {
+	}
+else {
 	header("Location: error.php?e=config");
 	die();
-}
+	}
 
 require("include/apply_config.php");
 $force_admin = TRUE;
@@ -505,15 +506,17 @@ if ($use_googleanalytics) {
 					echo "<p><div class=\"success\">Change was made successfully</div>";
 					}
 
+				$no_users = DB::column('SELECT COUNT(*) FROM `Users` WHERE `UserActive` LIKE 1');
+				
 				$query = "SELECT * from Users WHERE UserActive='1' ORDER BY UserName";
 				$result = mysqli_query($connection, $query)
 					or die (mysqli_error($connection));
 				$nrows = mysqli_num_rows($result);
 
-				echo "<p>This system has $nrows users:
+				echo "<p>This system has $no_users users:
 					<table border=\"0\">";
 
-				for ($i=0;$i<$nrows;$i++) {
+				for ($i=0; $i<$nrows; $i++) {
 					$row = mysqli_fetch_array($result);
 					extract($row);
 					
@@ -522,9 +525,10 @@ if ($use_googleanalytics) {
 						</tr><tr>";
 					
 					echo "<td><form action=\"include/edit_user.php\" method=\"POST\">$UserFullname</td><td>&nbsp;</td><td>$UserName</td><td>&nbsp;</td><td>";
-					if ($UserRole=="admin") {
-						$other_admins=query_one("SELECT COUNT(*) FROM Users WHERE UserRole='admin' AND UserID!='$UserID'", $connection);
-						if ($other_admins>0 && $UserName!=$username) {
+					if ($UserRole == "admin") {
+						#$other_admins=query_one("SELECT COUNT(*) FROM Users WHERE UserRole='admin' AND UserID!='$UserID'", $connection);
+						$other_admins = DB::column('SELECT COUNT(*) FROM `Users` WHERE  `UserRole`=`admin` AND `UserID`!= ?', $UserID);
+						if ($other_admins > 0 && $UserName != $username) {
 							echo "<input type=\"hidden\" name=\"ac\" value=\"remadmin\">
 							<input type=\"hidden\" name=\"UserID\" value=\"$UserID\">
 							<input type=submit value=\" Remove from administrators \" class=\"fg-button ui-state-default ui-corner-all\"></form>";
@@ -581,7 +585,7 @@ if ($use_googleanalytics) {
 					<input type=\"hidden\" name=\"ac\" value=\"inactive\">
 					<select name=\"UserID\" class=\"ui-state-default ui-corner-all\">";
 
-					for ($j=0;$j<$nrows;$j++) {
+					for ($j=0; $j<$nrows; $j++) {
 						$row = mysqli_fetch_array($result);
 						extract($row);
 						echo "<option value=\"$UserID\">$UserFullname ($UserName)</option>";

@@ -642,8 +642,13 @@ else {
 			#Check if the file size is in the database
 			if ($FileSize==NULL || $FileSize==0) {
 				$file_filesize=filesize("sounds/sounds/$ColID/$DirID/$OriginalFilename");
-				$result_size = mysqli_query($connection, "UPDATE Sounds SET FileSize='$file_filesize' WHERE SoundID='$SoundID' LIMIT 1")
-					or die (mysqli_error($connection));
+				#$result_size = mysqli_query($connection, "UPDATE Sounds SET FileSize='$file_filesize' WHERE SoundID='$SoundID' LIMIT 1")
+				#	or die (mysqli_error($connection));
+				$this_array = array(
+					'FileSize' => $file_filesize,
+					);
+				DB::update('Sounds', $this_array, $SoundID, 'SoundID');
+				
 				$FileSize=formatSize($file_filesize);
 				}
 			else {
@@ -656,9 +661,12 @@ else {
 				}
 			
 			if ($SensorID!="") {
-				$Recorder=query_one("SELECT Recorder from Sensors WHERE SensorID=$SensorID LIMIT 1", $connection);
-				$Microphone=query_one("SELECT Microphone from Sensors WHERE SensorID=$SensorID LIMIT 1", $connection);
-				$SensorNotes=query_one("SELECT Notes from Sensors WHERE SensorID=$SensorID LIMIT 1", $connection);
+				#$Recorder=query_one("SELECT Recorder from Sensors WHERE SensorID=$SensorID LIMIT 1", $connection);
+				$Recorder = DB::column('SELECT `Recorder` from `Sensors` WHERE `SensorID`=' . $SensorID . ' LIMIT 1');
+				#$Microphone=query_one("SELECT Microphone from Sensors WHERE SensorID=$SensorID LIMIT 1", $connection);
+				$Microphone = DB::column('SELECT `Microphone` from `Sensors` WHERE `SensorID`=' . $SensorID . ' LIMIT 1');
+				#$SensorNotes=query_one("SELECT Notes from Sensors WHERE SensorID=$SensorID LIMIT 1", $connection);
+				$SensorNotes = DB::column('SELECT `Notes` from `Sensors` WHERE `SensorID`=' . $SensorID . ' LIMIT 1');
 				echo "<li>Sensor used: $Recorder, $Microphone ($SensorNotes)</li>";
 				}
 			elseif ($SensorID == "1") {
