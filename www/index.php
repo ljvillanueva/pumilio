@@ -425,14 +425,14 @@ else{
 				if ($pumilio_loggedin == TRUE) {
 					echo "<h3><a href=\"#\">Quality control</a></h3>
 					<div>\n";
-						echo "
-						
-						
-						<form action=\"qc.php\" method=\"GET\">
+											
+					if ($useR==TRUE){
+						echo "<form action=\"qc.php\" method=\"GET\">
 							<input type=submit value=\" Data extraction for quality control \" class=\"fg-button ui-state-default ui-corner-all\">
-						</form>
-						<form action=\"qa.php\" method=\"GET\">
-							<input type=submit value=\" Figures for quality control \" class=\"fg-button ui-state-default ui-corner-all\">
+						</form>";
+						}
+					echo "<form action=\"qa.php\" method=\"GET\">
+						<input type=submit value=\" Figures for quality control \" class=\"fg-button ui-state-default ui-corner-all\">
 						</form>
 						
 					</div>";

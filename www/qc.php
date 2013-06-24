@@ -51,8 +51,11 @@ if (isset($_GET["SoundID"])){
 echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
-<title>$app_custom_name - Files manager</title>
-<meta http-equiv=\"refresh\" content=\"30\">\n";
+<title>$app_custom_name - Files manager</title>\n";
+
+if ($useR==TRUE){
+	echo "<meta http-equiv=\"refresh\" content=\"30\">\n";
+	}
 
 require("include/get_css.php");
 require("include/get_jqueryui.php");
@@ -294,7 +297,9 @@ if ($use_googleanalytics) {
 <?php
 session_write_close();
 flush(); @ob_flush();
-stats_in_background($absolute_dir, $connection);
+if ($useR==TRUE){
+	stats_in_background($absolute_dir, $connection);
+	}
 ?>
 
 </body>
