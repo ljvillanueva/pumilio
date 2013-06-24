@@ -42,13 +42,22 @@ else{
 	$order_dir = "ASC";
 	}
 	
+
+#Display type saved as a cookie
 if (isset($_GET["display_type"])){
-	$display_type=filter_var($_GET["display_type"], FILTER_SANITIZE_STRING);
+	$display_type = filter_var($_GET["display_type"], FILTER_SANITIZE_STRING);
+	setcookie("display_type", $display_type, time()+(3600*24*30), $app_dir);
 	}
 else{
-	$display_type = "summary";
+	if(isset($_COOKIE["display_type"])) {
+		$display_type = $_COOKIE["display_type"];
+		}
+	else {
+		$display_type = "summary";
+		setcookie("display_type", $display_type, time()+(3600*24*30), $app_dir);
+		}
 	}
-	
+
 
 if ($order_by=="Date")
 	$order_byq = "Date $order_dir, Time";
@@ -157,6 +166,19 @@ for ($ajax=0;$ajax<10;$ajax++) {
 if ($use_googleanalytics) {
 	echo $googleanalytics_code;
 	}
+
+<!-- Hide success messages -->
+<script type="text/javascript">
+$(function() {
+    // setTimeout() function will be fired after page is loaded
+    // it will wait for 5 sec. and then will fire
+    // $("#successMessage").hide() function
+    setTimeout(function() {
+        $("#md").hide('blind', {}, 500)
+    }, 5000);
+});
+</script>
+
 ?>
 
 </head>
@@ -215,28 +237,28 @@ if ($use_googleanalytics) {
 
 			if ($startid>1) {
 				$go_to=$startid-$how_many_to_show;
-				echo "<a href=\"browse_by_tag.php?Tag=$Tagq&startid=$go_to&order_by=$order_by&order_dir=$order_dir&display_type=$display_type\"><img src=\"images/arrowleft.png\"></a> ";
+				echo "<a href=\"browse_by_tag.php?Tag=$Tagq&startid=$go_to&order_by=$order_by&order_dir=$order_dir\"><img src=\"images/arrowleft.png\"></a> ";
 				}
 
 			echo "$startid - $endid_show of $no_sounds";
 
 			if ($endid_show<$no_sounds) {
 				$go_to=$startid+$how_many_to_show;
-				echo "<a href=\"browse_by_tag.php?Tag=$Tagq&startid=$go_to&order_by=$order_by&order_dir=$order_dir&display_type=$display_type\"><img src=\"images/arrowright.png\"></a> ";
+				echo "<a href=\"browse_by_tag.php?Tag=$Tagq&startid=$go_to&order_by=$order_by&order_dir=$order_dir\"><img src=\"images/arrowright.png\"></a> ";
 				}
 			?>
 		</div>
 		<div class="span-3">
 			<?php
 			#Order by sound name
-			echo "<p>Name <a href=\"browse_by_tag.php?Tag=$Tagq&order_by=SoundName&order_dir=ASC&display_type=$display_type\"><img src=\"images/arrowdown.png\"></a> <a href=\"browse_by_tag.php?Tag=$Tagq&order_by=SoundName&order_dir=DESC&display_type=$display_type\"><img src=\"images/arrowup.png\"></a>";
+			echo "<p>Name <a href=\"browse_by_tag.php?Tag=$Tagq&order_by=SoundName&order_dir=ASC\"><img src=\"images/arrowdown.png\"></a> <a href=\"browse_by_tag.php?Tag=$Tagq&order_by=SoundName&order_dir=DESC\"><img src=\"images/arrowup.png\"></a>";
 
 			?>
 		</div>
 		<div class="span-3">
 			<?php
 			#Order by sound date
-			echo "<p>Date <a href=\"browse_by_tag.php?Tag=$Tagq&order_by=Date&order_dir=ASC&display_type=$display_type\"><img src=\"images/arrowdown.png\"></a> <a href=\"browse_by_tag.php?Tag=$Tagq&order_by=Date&order_dir=DESC&display_type=$display_type\"><img src=\"images/arrowup.png\"></a>";
+			echo "<p>Date <a href=\"browse_by_tag.php?Tag=$Tagq&order_by=Date&order_dir=ASC\"><img src=\"images/arrowdown.png\"></a> <a href=\"browse_by_tag.php?Tag=$Tagq&order_by=Date&order_dir=DESC\"><img src=\"images/arrowup.png\"></a>";
 
 			?>
 		</div>
@@ -250,8 +272,19 @@ if ($use_googleanalytics) {
 			<?php
 
 			echo "<div class=\"span-24 last\">
-				<hr noshade style=\"margin-top: 10px;\">
-			</div>";
+				<hr noshade style=\"margin-top: 10px;\">";
+				
+			#Confirm delete
+			if (isset($_GET["md"])){
+				$md=filter_var($_GET["md"], FILTER_SANITIZE_NUMBER_INT);
+				if ($md == 1){
+					echo "<div <div class=\"success\" id=\"md\">One file was deleted.</div>";
+					}
+				else{
+					echo "<div <div class=\"success\" id=\"md\">$md files were deleted.</div>";
+					}
+				}
+			echo "</div>";
 
 			$query = "SELECT *, DATE_FORMAT(Sounds.Date, '%d-%b-%Y') AS Date_h FROM Sounds,Tags WHERE Tags.Tag='$Tagq' AND Tags.SoundID=Sounds.SoundID AND Sounds.SoundStatus!='9' $qf_check ORDER BY $order_byq $order_dir LIMIT $sql_limit";
 
@@ -310,14 +343,14 @@ if ($use_googleanalytics) {
 
 				if ($startid>1) {
 					$go_to=$startid-$how_many_to_show;
-					echo "<a href=\"browse_by_tag.php?Tag=$Tagq&startid=$go_to&order_by=$order_by&order_dir=$order_dir&display_type=$display_type\"><img src=\"images/arrowleft.png\"></a> ";
+					echo "<a href=\"browse_by_tag.php?Tag=$Tagq&startid=$go_to&order_by=$order_by&order_dir=$order_dir\"><img src=\"images/arrowleft.png\"></a> ";
 					}
 
 				echo "$startid - $endid_show of $no_sounds";
 
 				if ($endid_show<$no_sounds) {
 					$go_to=$startid+$how_many_to_show;
-					echo "<a href=\"browse_by_tag.php?Tag=$Tagq&startid=$go_to&order_by=$order_by&order_dir=$order_dir&display_type=$display_type\"><img src=\"images/arrowright.png\"></a> ";
+					echo "<a href=\"browse_by_tag.php?Tag=$Tagq&startid=$go_to&order_by=$order_by&order_dir=$order_dir\"><img src=\"images/arrowright.png\"></a> ";
 					}
 
 				echo "</div>
@@ -332,8 +365,7 @@ if ($use_googleanalytics) {
 					echo "<form action=\"browse_by_tag.php\" method=\"GET\">Jump to page:<br> 
 						<input type=\"hidden\" name=\"Tag\" value=\"$Tagq\">
 						<input type=\"hidden\" name=\"order_by\" value=\"$order_by\">
-						<input type=\"hidden\" name=\"order_dir\" value=\"$order_dir\">
-						<input type=\"hidden\" name=\"display_type\" value=\"$display_type\">";
+						<input type=\"hidden\" name=\"order_dir\" value=\"$order_dir\">";
 
 					echo "<select name=\"startid\" class=\"ui-state-default ui-corner-all\">";
 

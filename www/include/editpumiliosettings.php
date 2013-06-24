@@ -93,8 +93,8 @@ require("check_admin.php");
 		query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('guests_can_dl', '$value') 
 				ON DUPLICATE KEY UPDATE Value='$value'", $connection);
 				
-		$value = filter_var($_POST["public_leveldata"], FILTER_SANITIZE_STRING);
-		query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('public_leveldata', '$value') 
+		$value = filter_var($_POST["default_qf"], FILTER_SANITIZE_STRING);
+		query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('default_qf', '$value') 
 				ON DUPLICATE KEY UPDATE Value='$value'", $connection);
 				
 		$value = filter_var($_POST["spectrogram_palette"], FILTER_SANITIZE_STRING);

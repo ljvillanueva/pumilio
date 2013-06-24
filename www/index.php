@@ -311,7 +311,7 @@ else{
 			echo "<h4>$app_custom_text</h4>";
 
 			#$no_Collections=query_one("SELECT COUNT(*) FROM Collections", $connection);
-			$no_Collections = DB::column('SELECT COUNT(*) FROM `Collections`');
+			$no_Collections = DB::column('SELECT COUNT(DISTINCT ColID) FROM `Sounds` WHERE SoundStatus!=9 ' . $qf_check);
 			#$no_sounds=query_one("SELECT COUNT(*) as no_sounds FROM Sounds WHERE SoundStatus!='9' $qf_check", $connection);
 			$no_sounds = DB::column('SELECT COUNT(*) FROM `Sounds` WHERE SoundStatus!=9 ' . $qf_check);
 			#$no_sites=query_one("SELECT COUNT(DISTINCT SiteID) FROM Sounds WHERE SoundStatus!='9' $qf_check", $connection);

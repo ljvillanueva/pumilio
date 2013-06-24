@@ -19,6 +19,21 @@ require("include/check_login.php");
 #Sanitize inputs
 $SampleID=filter_var($_GET["SampleID"], FILTER_SANITIZE_NUMBER_INT);
 
+#Display type saved as a cookie
+if (isset($_GET["display_type"])){
+	$display_type = filter_var($_GET["display_type"], FILTER_SANITIZE_STRING);
+	setcookie("display_type", $display_type, time()+(3600*24*30), $app_dir);
+	}
+else{
+	if(isset($_COOKIE["display_type"])) {
+		$display_type = $_COOKIE["display_type"];
+		}
+	else {
+		$display_type = "summary";
+		setcookie("display_type", $display_type, time()+(3600*24*30), $app_dir);
+		}
+	}
+
 if (isset($_GET["startid"])){
 	$startid=filter_var($_GET["startid"], FILTER_SANITIZE_NUMBER_INT);
 	}
@@ -38,13 +53,6 @@ if (isset($_GET["order_dir"])){
 	}
 else{
 	$order_dir = "ASC";
-	}
-
-if (isset($_GET["display_type"])){
-	$display_type=filter_var($_GET["display_type"], FILTER_SANITIZE_STRING);
-	}
-else{
-	$display_type = "summary";
 	}
 
 $SampleIDq = $SampleID;
@@ -190,9 +198,22 @@ for ($ajax=0;$ajax<10;$ajax++) {
 ?>
 
 <?php
-if ($use_googleanalytics)
-	{echo $googleanalytics_code;}
+if ($use_googleanalytics){
+	echo $googleanalytics_code;
+	}
 ?>
+
+<!-- Hide success messages -->
+<script type="text/javascript">
+$(function() {
+    // setTimeout() function will be fired after page is loaded
+    // it will wait for 5 sec. and then will fire
+    // $("#successMessage").hide() function
+    setTimeout(function() {
+        $("#md").hide('blind', {}, 500)
+    }, 5000);
+});
+</script>
 
 </head>
 <body>
@@ -270,35 +291,35 @@ if ($use_googleanalytics)
 
 			if ($startid>1)	{
 				$go_to=$startid-$how_many_to_show;
-				echo "<a href=\"browse_sample.php?SampleID=$SampleIDq&startid=$go_to&order_by=$order_by&order_dir=$order_dir&display_type=$display_type\"><img src=\"images/arrowleft.png\"></a> ";
+				echo "<a href=\"browse_sample.php?SampleID=$SampleIDq&startid=$go_to&order_by=$order_by&order_dir=$order_dir\"><img src=\"images/arrowleft.png\"></a> ";
 				}
 
 			echo "$startid - $endid_show of $no_sounds";
 
 			if ($endid_show<$no_sounds) {
 				$go_to=$startid+$how_many_to_show;
-				echo "<a href=\"browse_sample.php?SampleID=$SampleIDq&startid=$go_to&order_by=$order_by&order_dir=$order_dir&display_type=$display_type\"><img src=\"images/arrowright.png\"></a> ";
+				echo "<a href=\"browse_sample.php?SampleID=$SampleIDq&startid=$go_to&order_by=$order_by&order_dir=$order_dir\"><img src=\"images/arrowright.png\"></a> ";
 				}
 			?>
 		</div>
 		<div class="span-3">
 			<?php
 			#Order by original order
-			echo "<a href=\"browse_sample.php?SampleID=$SampleIDq&order_by=SampleMembersID&order_dir=ASC&display_type=$display_type\">Original order</a>";
+			echo "<a href=\"browse_sample.php?SampleID=$SampleIDq&order_by=SampleMembersID&order_dir=ASC\">Original order</a>";
 
 			?>
 		</div>
 		<div class="span-3">
 			<?php
 			#Order by sound name
-			echo "<p>Name <a href=\"browse_sample.php?SampleID=$SampleIDq&order_by=SoundName&order_dir=ASC&display_type=$display_type\"><img src=\"images/arrowdown.png\"></a> <a href=\"browse_sample.php?SampleID=$SampleIDq&order_by=SoundName&order_dir=DESC&display_type=$display_type\"><img src=\"images/arrowup.png\"></a>";
+			echo "<p>Name <a href=\"browse_sample.php?SampleID=$SampleIDq&order_by=SoundName&order_dir=ASC\"><img src=\"images/arrowdown.png\"></a> <a href=\"browse_sample.php?SampleID=$SampleIDq&order_by=SoundName&order_dir=DESC\"><img src=\"images/arrowup.png\"></a>";
 
 			?>
 		</div>
 		<div class="span-3">
 			<?php
 			#Order by sound date
-			echo "<p>Date <a href=\"browse_sample.php?SampleID=$SampleIDq&order_by=Date&order_dir=ASC&display_type=$display_type\"><img src=\"images/arrowdown.png\"></a> <a href=\"browse_sample.php?SampleID=$SampleIDq&order_by=Date&order_dir=DESC&display_type=$display_type\"><img src=\"images/arrowup.png\"></a>";
+			echo "<p>Date <a href=\"browse_sample.php?SampleID=$SampleIDq&order_by=Date&order_dir=ASC\"><img src=\"images/arrowdown.png\"></a> <a href=\"browse_sample.php?SampleID=$SampleIDq&order_by=Date&order_dir=DESC\"><img src=\"images/arrowup.png\"></a>";
 
 			?>
 		</div>
@@ -312,8 +333,19 @@ if ($use_googleanalytics)
 			<?php
 
 			echo "<div class=\"span-24 last\">
-				<hr noshade style=\"margin-top: 10px;\">
-			</div>";
+				<hr noshade style=\"margin-top: 10px;\">";
+				
+			#Confirm delete
+			if (isset($_GET["md"])){
+				$md=filter_var($_GET["md"], FILTER_SANITIZE_NUMBER_INT);
+				if ($md == 1){
+					echo "<div <div class=\"success\" id=\"md\">One file was deleted.</div>";
+					}
+				else{
+					echo "<div <div class=\"success\" id=\"md\">$md files were deleted.</div>";
+					}
+				}
+			echo "</div>";
 
 
 			$query = "SELECT *, DATE_FORMAT(Sounds.Date, '%d-%b-%Y') AS Date_h FROM Sounds,SampleMembers 
@@ -366,14 +398,14 @@ if ($use_googleanalytics)
 
 			if ($startid>1)	{
 				$go_to=$startid-$how_many_to_show;
-				echo "<a href=\"browse_sample.php?SampleID=$SampleIDq&startid=$go_to&order_by=$order_by&order_dir=$order_dir&display_type=$display_type\"><img src=\"images/arrowleft.png\"></a> ";
+				echo "<a href=\"browse_sample.php?SampleID=$SampleIDq&startid=$go_to&order_by=$order_by&order_dir=$order_dir\"><img src=\"images/arrowleft.png\"></a> ";
 				}
 
 			echo "$startid - $endid_show of $no_sounds";
 
 			if ($endid_show<$no_sounds) {
 				$go_to=$startid+$how_many_to_show;
-				echo "<a href=\"browse_sample.php?SampleID=$SampleIDq&startid=$go_to&order_by=$order_by&order_dir=$order_dir&display_type=$display_type\"><img src=\"images/arrowright.png\"></a> ";
+				echo "<a href=\"browse_sample.php?SampleID=$SampleIDq&startid=$go_to&order_by=$order_by&order_dir=$order_dir\"><img src=\"images/arrowright.png\"></a> ";
 				}
 			?>
 
@@ -389,8 +421,7 @@ if ($use_googleanalytics)
 			echo "<form action=\"browse_sample.php\" method=\"GET\">Jump to page:<br> 
 				<input type=\"hidden\" name=\"SampleID\" value=\"$SampleIDq\">
 				<input type=\"hidden\" name=\"order_by\" value=\"$order_by\">
-				<input type=\"hidden\" name=\"order_dir\" value=\"$order_dir\">
-				<input type=\"hidden\" name=\"display_type\" value=\"$display_type\">";
+				<input type=\"hidden\" name=\"order_dir\" value=\"$order_dir\">";
 
 			echo "<select name=\"startid\" class=\"ui-state-default ui-corner-all\">";
 

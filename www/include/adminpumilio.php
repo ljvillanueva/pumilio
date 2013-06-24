@@ -647,18 +647,24 @@ echo "</select>\n";
 	#level data to share
 	#$public_leveldata=query_one("SELECT Value from PumilioSettings WHERE Settings='public_leveldata'", $connection);
 	
-	if ($public_leveldata==""){
-		$public_leveldata = "0";
+	if ($default_qf==""){
+		$default_qf = "0";
 		}
 
-	echo "<br>Level of data to display to guests: $public_leveldata";
+	echo "<br>Level of data to display to guests: $default_qf";
 	
-	echo "<select name=\"public_leveldata\" class=\"ui-state-default ui-corner-all formedge\">";
-		echo "<option value=\"0\">0</option>
-			<option value=\"1\">1</option>
-			<option value=\"2\">2</option>
-			<option value=\"3\">3</option>";
-		echo "</select>";
+	echo "<select name=\"default_qf\" class=\"ui-state-default ui-corner-all formedge\">";
+
+	$query_level = "SELECT * FROM QualityFlags ORDER BY QualityFlagID";
+	$result_level=query_several($query_level, $connection);
+	$nrows_level = mysqli_num_rows($result_level);
+
+	for ($i=0; $i<$nrows_level; $i++){
+		$row_level = mysqli_fetch_array($result_level);
+		extract($row_level);
+		echo "\n<option value=\"$QualityFlagID\">$QualityFlagID - $QualityFlag</option>";
+		}
+	echo "</select>";
 
 
 	#spectrogram_palette

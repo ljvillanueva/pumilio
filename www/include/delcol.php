@@ -3,7 +3,7 @@ session_start();
 
 require("functions.php");
 require("../config.php");
-require("apply_config.php");
+require("apply_config_include.php");
 
 $force_admin = TRUE;
 require("check_admin.php");
@@ -117,9 +117,9 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 			if ($this_no_sounds>0) {
 				echo "<option value=\"$ColID\">$CollectionName - $this_no_sounds sound files</option>\n";
 				}
-			else {
-				echo "<option value=\"$ColID\">$CollectionName</option>\n";
-				}
+			#else {
+			#	echo "<option value=\"$ColID\">$CollectionName</option>\n";
+			#	}
 			}
 
 		echo "</select> 

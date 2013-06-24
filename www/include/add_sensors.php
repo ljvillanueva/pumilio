@@ -6,13 +6,13 @@ require("functions.php");
 $config_file = '../config.php';
 
 if (file_exists($config_file)) {
-    require("config.php");
+    require($config_file);
 } else {
-    header("Location: error.php?e=config");
+    header("Location: ../error.php?e=config");
     die();
 }
 
-require("apply_config.php");
+require("apply_config_include.php");
 require("check_admin.php");
 
 if ($pumilio_admin == FALSE){
