@@ -303,7 +303,9 @@ if ($makefigures==TRUE) {
 	require("include/make_figs.php");
 	}
 
-$sound_spectrogram=query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' AND ImageType='spectrogram-large'", $connection);
+#$sound_spectrogram=query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' AND ImageType='spectrogram-large'", $connection);
+$sound_spectrogram = DB::column('SELECT `ImageFile` FROM `SoundsImages` WHERE ImageType="spectrogram-large"
+	AND SoundID = ' . $SoundID);
 
 if ($sox_images==FALSE){
 	$sound_waveform=query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' AND ImageType='waveform-large'", $connection);
@@ -550,7 +552,7 @@ else {
 				}
 
 			#Tags
-			$use_tags=query_one("SELECT Value from PumilioSettings WHERE Settings='use_tags'", $connection);
+			#$use_tags=query_one("SELECT Value from PumilioSettings WHERE Settings='use_tags'", $connection);
 			if ($use_tags=="1" || $use_tags=="") {
 				if ($pumilio_loggedin) {
 					require("include/managetags_db.php");
@@ -566,7 +568,8 @@ else {
 				}
 
 			#File quality data
-			$QualityFlag=query_one("SELECT QualityFlag from QualityFlags WHERE QualityFlagID='$QualityFlagID'", $connection);
+			#$QualityFlag=query_one("SELECT QualityFlag from QualityFlags WHERE QualityFlagID='$QualityFlagID'", $connection);
+			$QualityFlag = DB::column('SELECT `QualityFlag` from `QualityFlags` WHERE `QualityFlagID` = ' . $QualityFlagID);
 			echo "<p><strong>Record quality data</strong>:
 				<ul>";
 			echo "<li>Quality flag: $QualityFlagID ($QualityFlag)</li>";
