@@ -5,7 +5,7 @@ set_time_limit(0);
 
 require("functions.php");
 require("../config.php");
-require("apply_config.php");
+require("apply_config_include.php");
 require("version.php");
 
 $force_admin = TRUE;

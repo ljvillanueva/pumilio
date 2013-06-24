@@ -3,7 +3,7 @@ session_start();
 
 require("functions.php");
 require("../config.php");
-require("apply_config.php");
+require("apply_config_include.php");
 
 #Check if user can edit files (i.e. has admin privileges)
 $username = $_COOKIE["username"];

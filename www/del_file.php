@@ -41,17 +41,23 @@ require("include/get_jqueryui.php");
 		<div class="span-24 last">
 
 		<?php
-			$filename=query_one("SELECT OriginalFilename FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
-			$ColID=query_one("SELECT ColID FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
-			$DirID=query_one("SELECT DirID FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
-			$AudioPreviewFilename=query_one("SELECT AudioPreviewFilename FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
+			#$filename=query_one("SELECT OriginalFilename FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
+			#$ColID=query_one("SELECT ColID FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
+			#$DirID=query_one("SELECT DirID FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
+			#$AudioPreviewFilename=query_one("SELECT AudioPreviewFilename FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
+			
+			$filename = DB::column('SELECT `OriginalFilename` FROM `Sounds` WHERE `SoundID` = ? LIMIT 1', $SoundID);
+			$ColID = DB::column('SELECT `ColID` FROM `Sounds` WHERE `SoundID` = ? LIMIT 1', $SoundID);
+			$DirID = DB::column('SELECT `DirID` FROM `Sounds` WHERE `SoundID` = ? LIMIT 1', $SoundID);
+			$AudioPreviewFilename = DB::column('SELECT `AudioPreviewFilename` FROM `Sounds` WHERE `SoundID` = ? LIMIT 1', $SoundID);
+			
 			$source_dir="sounds/sounds/$ColID/$DirID";
 			if (unlink($source_dir . "/" . $filename)) {
 				$query_file = "UPDATE Sounds SET SoundStatus='9' WHERE SoundID='$SoundID' LIMIT 1";
 				$result_file = mysqli_query($connection, $query_file)
 					or die (mysqli_error($connection));
 					
-				save_log($connection, $SoundID, "90", "The file sounds/sounds/$ColID/$DirID/$OriginalFilename was deleted.");
+				save_log($connection, $SoundID, "90", "The file sounds/sounds/$ColID/$DirID/$filename was deleted.");
 
 				#Check if there are images
 				$query_img = "SELECT COUNT(*) FROM SoundsImages WHERE SoundID='$SoundID'";

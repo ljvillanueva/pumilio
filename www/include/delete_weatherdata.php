@@ -11,7 +11,7 @@ if (file_exists($config_file)) {
     die();
 }
 
-require("apply_config.php");
+require("apply_config_include.php");
 $force_admin = TRUE;
 require("check_admin.php");
 

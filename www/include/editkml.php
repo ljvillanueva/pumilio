@@ -3,7 +3,7 @@ session_start();
 
 require("functions.php");
 require("../config.php");
-require("apply_config.php");
+require("apply_config_include.php");
 
 $KmlName=filter_var($_POST["KmlName"], FILTER_SANITIZE_STRING);
 $KmlNotes=filter_var($_POST["KmlNotes"], FILTER_SANITIZE_STRING);

@@ -3,7 +3,7 @@ session_start();
 
 require("functions.php");
 require("../config.php");
-require("apply_config.php");
+require("apply_config_include.php");
 
 $force_loggedin = TRUE;
 require("check_login.php");
@@ -57,8 +57,7 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 
 </head>
 <body>
-	<!-- Scripts for Javascript tooltip from http://www.walterzorn.com/tooltip/tooltip_e.htm -->
-	<script type="text/javascript" src="include/wz_tooltip/wz_tooltip.js"></script>
+
 <?php
 // Relocate back to the first page of the application
 	echo "<form method=\"get\" action=\"include/addtag_ajax2.php\" id=\"addtags$i\">";

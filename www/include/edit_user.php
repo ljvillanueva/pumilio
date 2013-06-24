@@ -2,7 +2,7 @@
 
 require("functions.php");
 require("../config.php");
-require("apply_config.php");
+require("apply_config_include.php");
 
 require("check_admin.php");
 

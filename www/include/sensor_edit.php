@@ -12,7 +12,7 @@ if (file_exists($config_file)) {
     die();
 }
 
-require("apply_config.php");
+require("apply_config_include.php");
 $force_loggedin = TRUE;
 require("check_login.php");
 

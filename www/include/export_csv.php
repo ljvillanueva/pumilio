@@ -2,7 +2,7 @@
 
 require("functions.php");
 require("../config.php");
-require("apply_config.php");
+require("apply_config_include.php");
 
 $ColID=filter_var($_POST["ColID"], FILTER_SANITIZE_NUMBER_INT);
 

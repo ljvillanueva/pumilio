@@ -2,7 +2,7 @@
 session_start();
 require("../config.php");
 require("functions.php");
-require("apply_config.php");
+require("apply_config_include.php");
 
 $cookie_to_test = $_COOKIE["usercookie"];
 $cookie_to_testa = explode(".", $cookie_to_test);
@@ -24,8 +24,8 @@ $q=filter_var($_GET["q"], FILTER_SANITIZE_URL);
 
 $q = str_replace("%", "&", $q);
 
-$pos1 = strpos($where_to,"advancedsearch.php");
-$pos2 = strpos($where_to,"admin.php");
+$pos1 = strpos($where_to, "advancedsearch.php");
+$pos2 = strpos($where_to, "admin.php");
 
 if($pos1 != false) {
 	header("Location: ../");
