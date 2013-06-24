@@ -13,7 +13,6 @@ if (file_exists($config_file)) {
 }
 
 require("include/apply_config.php");
-
 $force_loggedin = TRUE;
 require("include/check_login.php");
 
@@ -39,6 +38,27 @@ $ColID_q=$ColID;
 $DateFrom_q=$DateFrom;
 $DateTo_q=$DateTo;
 $data_q=$data;
+
+#In case dates fall outside, reload
+if ($type == "col"){
+	$db_sel = "ColID";
+	$db_val = $ColID;
+	}
+elseif ($type == "site"){
+	$db_sel = "SiteID";
+	$db_val = $SiteID;
+	}
+
+if ($startDate != ""){
+	$no_files = query_one("SELECT COUNT(*) FROM Sounds WHERE Sounds.SoundStatus!='9' AND
+			$db_sel='$db_val' AND Sounds.Date >= '$startDate' AND Sounds.Date <= '$endDate'", $connection);
+
+	if ($no_files == 0){
+		header("Location: qa.php?type=$type&ColID=$ColID&SiteID=$SiteID&data=$data");
+		die();
+		}
+	}
+
 
 echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
@@ -80,22 +100,20 @@ if ($type != ""){
 	$(function () {
 	    var d = [";
     
-		if ($type == "col"){
-			$db_sel = "ColID";
-			$db_val = $ColID;
-			}
-		elseif ($type == "site"){
-			$db_sel = "SiteID";
-			$db_val = $SiteID;
-			}
-
+		#Set time to UTC because flot only displays in UTC
+		query_one("SET SESSION time_zone = '+0:00'", $connection);
+		
 		if ($startDate == ""){
-			$startDate = query_one("SELECT Date FROM Sounds WHERE $db_sel='$db_val' AND Sounds.SoundStatus!='9' ORDER BY Date LIMIT 1", $connection);
-			$endDate = query_one("SELECT Date FROM Sounds WHERE $db_sel='$db_val' AND Sounds.SoundStatus!='9' ORDER BY Date DESC LIMIT 1", $connection);
+			$startDate = query_one("SELECT Date FROM Sounds WHERE $db_sel='$db_val' AND Sounds.SoundStatus!='9'
+					ORDER BY Date LIMIT 1", $connection);
+			$endDate = query_one("SELECT Date FROM Sounds WHERE $db_sel='$db_val' AND Sounds.SoundStatus!='9'
+					ORDER BY Date DESC LIMIT 1", $connection);
 			}
 		else {
-			$startDate2 = query_one("SELECT Date FROM Sounds WHERE $db_sel='$db_val' AND Sounds.SoundStatus!='9' ORDER BY Date LIMIT 1", $connection);
-			$endDate2 = query_one("SELECT Date FROM Sounds WHERE $db_sel='$db_val' AND Sounds.SoundStatus!='9' ORDER BY Date DESC LIMIT 1", $connection);
+			$startDate2 = query_one("SELECT Date FROM Sounds WHERE $db_sel='$db_val' AND Sounds.SoundStatus!='9'
+					ORDER BY Date LIMIT 1", $connection);
+			$endDate2 = query_one("SELECT Date FROM Sounds WHERE $db_sel='$db_val' AND Sounds.SoundStatus!='9'
+					ORDER BY Date DESC LIMIT 1", $connection);
 			if ((strtotime($startDate) - strtotime($startDate2)) > 0){
 				$startDate = $startDate2;
 				}
@@ -105,8 +123,6 @@ if ($type != ""){
 				}
 			}
 		
-		#Set time to UTC because flot only displays in UTC
-		query_one("SET SESSION time_zone = '+0:00'", $connection);
 		if ($Rdata){
 			$data = query_one("SELECT DISTINCT Stat FROM SoundsStatsResults WHERE Stat LIKE '$data_q%left' LIMIT 1", $connection);
 			$query = "SELECT Sounds.SoundID, Sounds.QualityFlagID, 
@@ -122,12 +138,16 @@ if ($type != ""){
 			#echo $query;
 			}
 		else{
-			$query = "SELECT SoundID, QualityFlagID, $data AS this_data, 
-				DATE_FORMAT(Date,'%d-%b-%Y') AS HumanDate, TIME_FORMAT(Time,'%H:%i:%s') AS HumanTime,
+			$query = "SELECT Sounds.SoundID AS SoundID, Sounds.QualityFlagID AS QualityFlagID, 
+				Sounds.ColID AS ColID, Sounds.DirID AS DirID, SoundsImages.ImageFile AS ImageFile,
+				$data AS this_data, DATE_FORMAT(Date,'%d-%b-%Y') AS HumanDate,
+				TIME_FORMAT(Time,'%H:%i:%s') AS HumanTime, 
 				UNIX_TIMESTAMP(CONCAT(Date, ' ', Time)) AS UnixTime
-				FROM Sounds 
+				FROM Sounds, SoundsImages
 				WHERE $db_sel='$db_val' AND Sounds.SoundStatus!='9' AND
-				Sounds.Date >= '$startDate' AND Sounds.Date <= '$endDate'
+				Sounds.Date >= '$startDate' AND Sounds.Date <= '$endDate' AND
+				Sounds.SoundID=SoundsImages.SoundID AND
+				SoundsImages.ImageType='spectrogram-small'
 				ORDER BY Date, Time";
 			}
 		
@@ -147,10 +167,10 @@ if ($type != ""){
 					}
 				
 				if ($r == ($nrows-1)){
-					echo "[$UnixTime, $this_data, '$SoundID', '$QualityFlagID', '$HumanDate', '$HumanTime'] ";
+					echo "[$UnixTime, $this_data, '$SoundID', '$QualityFlagID', '$HumanDate', '$HumanTime', '$ColID', '$DirID', '$ImageFile'] ";
 					}
 				else{
-					echo "[$UnixTime, $this_data, '$SoundID', '$QualityFlagID', '$HumanDate', '$HumanTime'], ";
+					echo "[$UnixTime, $this_data, '$SoundID', '$QualityFlagID', '$HumanDate', '$HumanTime', '$ColID', '$DirID', '$ImageFile'], ";
 					}
 				}
 			}
@@ -170,7 +190,7 @@ if ($type != ""){
 		dvalue = $(this).find('d').text()
 		$(\"#SoundIDtocheck\").val(item.series.data[item.dataIndex][2]);
 		plot.highlight(item.series, item.datapoint);
-		$(\"#clickdata\").text(\"You clicked the point for the SoundID \" + item.series.data[item.dataIndex][2] + \", recorded on \" + item.series.data[item.dataIndex][4] + \" \" + item.series.data[item.dataIndex][5] + \" which had a $data_d of \" + item.series.data[item.dataIndex][1] + \" and a QualityFlag of \" + item.series.data[item.dataIndex][3] + \".\");
+		$(\"#clickdata\").html('<div style=\"height:156;\"><img src=\"$app_url/sounds/images/' + item.series.data[item.dataIndex][6] + '/' + item.series.data[item.dataIndex][7] + '/' + '/' + item.series.data[item.dataIndex][8] + '\" width=\"300\" height=\"150\" style=\"float:right;\">You clicked the point for the SoundID ' + item.series.data[item.dataIndex][2] + ', recorded on ' + item.series.data[item.dataIndex][4] + ' ' + item.series.data[item.dataIndex][5] + ',<br>which had a $data_d of ' + item.series.data[item.dataIndex][1] + ' and a QualityFlag of ' + item.series.data[item.dataIndex][3] + '.<br><br><form action=\"db_filedetails.php\" method=\"GET\" id=\"openfile\" target=\"_blank\"><input type=\"hidden\" name=\"SoundID\" value=\"' + item.series.data[item.dataIndex][2] + '\" id=\"SoundIDtocheck\" /><input type=submit value=\" Open file page \" class=\"fg-button ui-state-default ui-corner-all\" /></form></div>');
 		$(\"#clickdata\").addClass(\"notice\");
 	        }
 	    });
@@ -456,18 +476,10 @@ if ($use_googleanalytics) {
 			echo "</h3>
 			<br><!--Div that will hold the chart-->
 			<div id=\"placeholder\" style=\"width:930px;height:500px\"></div><br>
+			<p>Click on a point in the figure to show the file data and spectrogram.
 			<div id=\"clickdata\"></div>
-			<p>Click on a point in the figure to autoselect the SoundID to open in a new window:
-			<div style=\"margin-left: 10px;\">
-			<form action=\"db_filedetails.php\" method=\"GET\" id=\"openfile\" target=\"_blank\">
-				SoundID to check: 
-				<input type=\"text\" size=\"6\" name=\"SoundID\" value=\"\" id=\"SoundIDtocheck\" />
-				<input type=submit value=\" Check file \" class=\"fg-button ui-state-default ui-corner-all\" />
-			</form>
-			</div>";
-
-
-			echo "<br><hr noshade>";
+			
+			<br><hr noshade>";
 			
 			#ALL CHECKS PASSED
 			echo "<p><h3>All checks passed</h3>
