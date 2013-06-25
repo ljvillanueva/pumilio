@@ -46,10 +46,10 @@ require("include/get_jqueryui.php");
 			#$DirID=query_one("SELECT DirID FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
 			#$AudioPreviewFilename=query_one("SELECT AudioPreviewFilename FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
 			
-			$filename = DB::column('SELECT `OriginalFilename` FROM `Sounds` WHERE `SoundID` = ? LIMIT 1', $SoundID);
-			$ColID = DB::column('SELECT `ColID` FROM `Sounds` WHERE `SoundID` = ? LIMIT 1', $SoundID);
-			$DirID = DB::column('SELECT `DirID` FROM `Sounds` WHERE `SoundID` = ? LIMIT 1', $SoundID);
-			$AudioPreviewFilename = DB::column('SELECT `AudioPreviewFilename` FROM `Sounds` WHERE `SoundID` = ? LIMIT 1', $SoundID);
+			$filename = DB::column('SELECT `OriginalFilename` FROM `Sounds` WHERE `SoundID` = ' . $SoundID);
+			$ColID = DB::column('SELECT `ColID` FROM `Sounds` WHERE `SoundID` = ' . $SoundID);
+			$DirID = DB::column('SELECT `DirID` FROM `Sounds` WHERE `SoundID` = ' . $SoundID);
+			$AudioPreviewFilename = DB::column('SELECT `AudioPreviewFilename` FROM `Sounds` WHERE `SoundID` = ' . $SoundID);
 			
 			$source_dir="sounds/sounds/$ColID/$DirID";
 			if (unlink($source_dir . "/" . $filename)) {

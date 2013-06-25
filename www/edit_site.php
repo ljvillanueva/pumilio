@@ -98,7 +98,7 @@ if ($use_googleanalytics){
 					<h3>Edit site information</h3>";
 
 				if ($d==1) {
-					echo "<p><div class=\"success\">Collection was updated successfully. 
+					echo "<p><div class=\"success\">Site was updated successfully. 
 					Return to <a href=\"browse_site.php?SiteID=$SiteID\">browsing</a></div>";
 					}
 

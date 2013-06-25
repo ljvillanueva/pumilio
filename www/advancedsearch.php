@@ -260,16 +260,16 @@ if ($use_googleanalytics)
 
 			//How many sounds associated with that search
 			if ($Tags!="0" && $Col=="0") {
-				$q = "SELECT COUNT(*) FROM Sounds,Sites,Tags WHERE Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq";
+				$q = "SELECT COUNT(*) FROM Sounds,Sites,Tags WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq";
 				}
 			elseif ($Col!="0" && $Tags=="0") {
-				$q = "SELECT COUNT(*) FROM Sounds,Sites,Collections WHERE Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Colq";
+				$q = "SELECT COUNT(*) FROM Sounds,Sites,Collections WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Colq";
 				}
 			elseif ($Col!="0" && $Tags!="0") {
-				$q = "SELECT COUNT(*) FROM Sounds,Sites,Tags,Collections WHERE Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Colq, $Tagq";
+				$q = "SELECT COUNT(*) FROM Sounds,Sites,Tags,Collections WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Colq, $Tagq";
 				}
 			else {
-				$q = "SELECT COUNT(*) FROM Sounds,Sites WHERE Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq";
+				$q = "SELECT COUNT(*) FROM Sounds,Sites WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq";
 				}
 			#debug
 			#echo $q;
@@ -313,16 +313,16 @@ if ($use_googleanalytics)
 
 
 			if ($Tags!="0" && $Col=="0") {
-				$query = "SELECT *, DATE_FORMAT(Date, '%d-%b-%Y') AS Date_h FROM Sounds,Sites,Tags WHERE Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq ORDER BY $order_byq LIMIT $sql_limit";
+				$query = "SELECT *, DATE_FORMAT(Date, '%d-%b-%Y') AS Date_h FROM Sounds,Sites,Tags WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq ORDER BY $order_byq LIMIT $sql_limit";
 			}
 			elseif ($Col!="0" && $Tags=="0") {
-				$query = "SELECT *, DATE_FORMAT(Date, '%d-%b-%Y') AS Date_h FROM Sounds,Sites,Collections WHERE Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Colq ORDER BY $order_byq LIMIT $sql_limit";
+				$query = "SELECT *, DATE_FORMAT(Date, '%d-%b-%Y') AS Date_h FROM Sounds,Sites,Collections WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Colq ORDER BY $order_byq LIMIT $sql_limit";
 			}
 			elseif ($Col!="0" && $Tags!="0") {
-				$query = "SELECT *, DATE_FORMAT(Date, '%d-%b-%Y') AS Date_h FROM Sounds,Sites,Collections,Tags WHERE Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq $Colq ORDER BY $order_byq LIMIT $sql_limit";
+				$query = "SELECT *, DATE_FORMAT(Date, '%d-%b-%Y') AS Date_h FROM Sounds,Sites,Collections,Tags WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq $Colq ORDER BY $order_byq LIMIT $sql_limit";
 			}
 			else {
-				$query = "SELECT *, DATE_FORMAT(Date, '%d-%b-%Y') AS Date_h FROM Sounds,Sites WHERE Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq ORDER BY $order_byq LIMIT $sql_limit";
+				$query = "SELECT *, DATE_FORMAT(Date, '%d-%b-%Y') AS Date_h FROM Sounds,Sites WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq ORDER BY $order_byq LIMIT $sql_limit";
 			}
 
 			#debug
@@ -500,19 +500,19 @@ if ($use_googleanalytics)
 			#Quick form to select a file based on its name
 			echo "<form action=\"db_filedetails.php\" method=\"GET\">Select a file from this search:<br>";
 			if ($Tags!="0" && $Col=="0") {
-				$query_q = "SELECT * FROM Sounds,Sites,Tags WHERE Sounds.SiteID=Sites.SiteID 
+				$query_q = "SELECT * FROM Sounds,Sites,Tags WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID 
 					$Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq ORDER BY $order_byq LIMIT $sql_limit";
 				}
 			elseif ($Col!="0" && $Tags=="0") {
-				$query_q = "SELECT * FROM Sounds,Sites,Collections WHERE Sounds.SiteID=Sites.SiteID 
+				$query_q = "SELECT * FROM Sounds,Sites,Collections WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID 
 					$Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Colq ORDER BY $order_byq LIMIT $sql_limit";
 				}
 			elseif ($Col!="0" && $Tags!="0") {
-				$query_q = "SELECT * FROM Sounds,Sites,Collections,Tags WHERE Sounds.SiteID=Sites.SiteID 
+				$query_q = "SELECT * FROM Sounds,Sites,Collections,Tags WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID 
 					$Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq $Colq ORDER BY $order_byq LIMIT $sql_limit";
 				}
 			else {
-				$query_q = "SELECT * FROM Sounds,Sites WHERE Sounds.SiteID=Sites.SiteID 
+				$query_q = "SELECT * FROM Sounds,Sites WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID 
 					$Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq ORDER BY $order_byq LIMIT $sql_limit";
 				}
 

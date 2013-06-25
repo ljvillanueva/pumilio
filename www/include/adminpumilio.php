@@ -662,7 +662,12 @@ echo "</select>\n";
 	for ($i=0; $i<$nrows_level; $i++){
 		$row_level = mysqli_fetch_array($result_level);
 		extract($row_level);
-		echo "\n<option value=\"$QualityFlagID\">$QualityFlagID - $QualityFlag</option>";
+		if ($QualityFlagID == $default_qf){
+			echo "\n<option value=\"$QualityFlagID\" SELECTED>$QualityFlagID - $QualityFlag</option>";
+			}
+		else{
+			echo "\n<option value=\"$QualityFlagID\">$QualityFlagID - $QualityFlag</option>";
+			}
 		}
 	echo "</select>";
 
