@@ -37,7 +37,13 @@ if ($valid_token==1) {
 	}
 
 $SoundID=$soundfile_id;
-$palette=$_COOKIE["palette"];
+if (isset($_COOKIE["palette"])){
+	$palette=$_COOKIE["palette"];
+	}
+else{
+	$palette="";
+	}
+
 
 #Sanitize
 $ch=filter_var($_GET["ch"], FILTER_SANITIZE_NUMBER_INT);
@@ -155,7 +161,7 @@ else {
 $fileName_exp=explode(".", $soundfile_wav);
 
 #Get color palette
-$spectrogram_palette=query_one("SELECT Value FROM PumilioSettings WHERE Settings='spectrogram_palette' LIMIT 1", $connection);
+#$spectrogram_palette=query_one("SELECT Value FROM PumilioSettings WHERE Settings='spectrogram_palette' LIMIT 1", $connection);
 if ($spectrogram_palette=="")
 	$spectrogram_palette=2;
 	

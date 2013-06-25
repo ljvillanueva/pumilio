@@ -37,7 +37,14 @@ else {
 	}
 
 
-if ($_GET["showmarks"]) {
+if (isset($_GET["showmarks"])){
+	$showmarks = $_GET["showmarks"];
+	}
+else{
+	$showmarks = FALSE;
+	}
+
+if ($showmarks) {
 	echo "<a href=\"$link\" onmouseover=\"Tip(' Hide marked regions ', FONTCOLOR, '#fff',BGCOLOR, '#4aa0e0', FADEIN, '400', FADEOUT, '400', ABOVE, 'true', CENTERMOUSE, 'true')\" onmouseout=\"UnTip()\"><img src=\"images/database.png\"></a> &nbsp;";
 	}
 else {
@@ -45,7 +52,7 @@ else {
 	}
 
 #Window to manage marks
-if ($_GET["showmarks"]){
+if ($showmarks){
 	echo "[<a href=\"managemarks.php?Token=$Token\" target=\"managemarks$add_id\" onclick=\"window.open('managemarks.php?SoundID=$SoundID', 'managemarks$add_id', 'width=600,height=500,status=yes,resizable=yes,scrollbars=auto')\">Manage marks</a>]";
 	}
 						

@@ -18,7 +18,11 @@ if ($filter=="yes") {
 
 	exec('sox tmp/1.' . $sound_zoom . ' tmp/' . $random_cookie . '/' . $sound_zoom . ' filter ' . $frequency_min . '-' . $frequency_max . ' 512', $lastline, $retval);
 	if ($retval!=0){
-		die("<div class=\"error\"><img src=\"images/exclamation.png\"> There was a problem with SoX. Please contact the administrator.</div>");
+		#filter was deprecated, replaced with "sinc"
+		exec('sox tmp/1.' . $sound_zoom . ' tmp/' . $random_cookie . '/' . $sound_zoom . ' sinc ' . $frequency_min . '-' . $frequency_max, $lastline, $retval);
+		if ($retval!=0){
+			die("<div class=\"error\"><img src=\"images/exclamation.png\"> There was a problem with SoX. Please contact the administrator.</div>");
+			}
 		}
 
 	exec('include/svt.py -s tmp/' . $random_cookie . '/' . $imgfile . ' -w ' . $spectrogram_width . ' -h ' . $spectrogram_height . ' -i ' . $frequency_min . ' -m ' . $frequency_max . ' -f ' . $fft_size . ' -c ' . $ch . ' -p ' . $spectrogram_palette . ' tmp/' . $random_cookie . '/' . $sound_zoom, $lastline, $retval);

@@ -1,10 +1,10 @@
 <?php
 require("../../include/functions.php");
 require("../../config.php");
-require("../../include/apply_config.php");
+require("../../include/apply_config_tools.php");
 require("../../include/check_login.php");
 
-echo <!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
 
