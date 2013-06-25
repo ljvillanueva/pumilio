@@ -44,7 +44,8 @@ if ($use_googleanalytics) {
 
 		<?php
 			echo "<h3>Script jobs</h3>\n";
-					
+			echo "This option has been disabled until the next version.";
+			/*	
 			echo "<p>This option allows users to create a queue to run a script on sample sets. 
 					The scripts should be in R or Python.
 					Each script ran in a sample set is stored as a job.";
@@ -213,6 +214,7 @@ if ($use_googleanalytics) {
 				<textarea name=\"script\" class=\"ui-corner-all\" style=\"width: 500px; height: 300px;\"></textarea>
 				<p><input type=submit value=\" Save new script \" class=\"fg-button ui-state-default ui-corner-all\">
 			</form>\n";
+			*/
 		?>
 			
 		<br>

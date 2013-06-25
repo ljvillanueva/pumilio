@@ -34,12 +34,7 @@ else{
 		}
 	}
 
-if (isset($_GET["startid"])){
-	$QDate=filter_var($_GET["Date"], FILTER_SANITIZE_NUMBER_INT);
-	}
-else{
-	
-	}
+$QDate=filter_var($_GET["Date"], FILTER_SANITIZE_STRING);
 	
 if (isset($_GET["startid"])){
 	$startid=filter_var($_GET["startid"], FILTER_SANITIZE_NUMBER_INT);

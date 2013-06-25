@@ -20,6 +20,22 @@ require("include/apply_config.php");
 $Col_comparison=filter_var($_GET["Col_comparison"], FILTER_SANITIZE_NUMBER_INT);
 $Col=filter_var($_GET["Col"], FILTER_SANITIZE_NUMBER_INT);
 
+#Display type saved as a cookie
+if (isset($_GET["display_type"])){
+	$display_type = filter_var($_GET["display_type"], FILTER_SANITIZE_STRING);
+	setcookie("display_type", $display_type, time()+(3600*24*30), $app_dir);
+	}
+else{
+	if(isset($_COOKIE["display_type"])) {
+		$display_type = $_COOKIE["display_type"];
+		}
+	else {
+		$display_type = "summary";
+		setcookie("display_type", $display_type, time()+(3600*24*30), $app_dir);
+		}
+	}
+
+
 if ($Col!="0"){
 	if ($Col_comparison==1) {
 		$Col_comparisonq = "=";}
@@ -108,12 +124,11 @@ if ($Tags!="0"){
 
 #Sanitize browsing vars
 $startid=filter_var($_GET["startid"], FILTER_SANITIZE_NUMBER_INT);
-$display_type=filter_var($_GET["display_type"], FILTER_SANITIZE_STRING);
 
-if ($startid=="")
+if ($startid==""){
 	$startid=1;
-if ($display_type=="")
-	$display_type = "summary";
+	}
+
 
 echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
@@ -282,10 +297,12 @@ if ($use_googleanalytics)
 				
 			$startid_q=$startid-1;
 
-			if ($display_type=="summary")
+			if ($display_type=="summary"){
 				$how_many_to_show=10;
-			elseif ($display_type=="gallery")
+				}
+			elseif ($display_type=="gallery"){
 				$how_many_to_show=18;
+				}
 			$endid = $how_many_to_show;
 			$endid_show=$startid_q+$endid;
 
@@ -350,7 +367,6 @@ if ($use_googleanalytics)
 				<input type=\"hidden\" value=\"$Orderby\" name=\"Orderby\">
 				<input type=\"hidden\" value=\"$Orderby_dir\" name=\"Orderby_dir\">
 				<input type=\"hidden\" value=\"$go_to\" name=\"startid\">
-				<input type=\"hidden\" value=\"$display_type\" name=\"display_type\">
 				<input type=\"hidden\" value=\"$Tags\" name=\"Tags\">
 				<input type=\"hidden\" value=\"$Tag_comparison\" name=\"Tag_comparison\">
 				<input type=\"hidden\" value=\"$Col\" name=\"Col\">
@@ -383,7 +399,6 @@ if ($use_googleanalytics)
 				<input type=\"hidden\" value=\"$Orderby\" name=\"Orderby\">
 				<input type=\"hidden\" value=\"$Orderby_dir\" name=\"Orderby_dir\">
 				<input type=\"hidden\" value=\"$go_to\" name=\"startid\">
-				<input type=\"hidden\" value=\"$display_type\" name=\"display_type\">
 				<input type=\"hidden\" value=\"$Tags\" name=\"Tags\">
 				<input type=\"hidden\" value=\"$Tag_comparison\" name=\"Tag_comparison\">
 				<input type=\"hidden\" value=\"$Col\" name=\"Col\">
@@ -542,7 +557,6 @@ if ($use_googleanalytics)
 			$Orderby_dir=filter_var($_GET["Orderby_dir"], FILTER_SANITIZE_STRING);
 			$Tag_comparison=filter_var($_GET["Tag_comparison"], FILTER_SANITIZE_STRING);
 			$Tags=filter_var($_GET["Tags"], FILTER_SANITIZE_STRING);
-			$display_type=filter_var($_GET["display_type"], FILTER_SANITIZE_STRING);
 
 			#count and prev
 			if ($startid>1) {
@@ -564,7 +578,6 @@ if ($use_googleanalytics)
 				<input type=\"hidden\" value=\"$Orderby\" name=\"Orderby\">
 				<input type=\"hidden\" value=\"$Orderby_dir\" name=\"Orderby_dir\">
 				<input type=\"hidden\" value=\"$go_to\" name=\"startid\">
-				<input type=\"hidden\" value=\"$display_type\" name=\"display_type\">
 				<input type=\"hidden\" value=\"$Tags\" name=\"Tags\">
 				<input type=\"hidden\" value=\"$Tag_comparison\" name=\"Tag_comparison\">
 				<input type=\"hidden\" value=\"$Col\" name=\"Col\">
@@ -597,7 +610,6 @@ if ($use_googleanalytics)
 				<input type=\"hidden\" value=\"$Orderby\" name=\"Orderby\">
 				<input type=\"hidden\" value=\"$Orderby_dir\" name=\"Orderby_dir\">
 				<input type=\"hidden\" value=\"$go_to\" name=\"startid\">
-				<input type=\"hidden\" value=\"$display_type\" name=\"display_type\">
 				<input type=\"hidden\" value=\"$Tags\" name=\"Tags\">
 				<input type=\"hidden\" value=\"$Tag_comparison\" name=\"Tag_comparison\">
 				<input type=\"hidden\" value=\"$Col\" name=\"Col\">
@@ -631,7 +643,6 @@ if ($use_googleanalytics)
 					<input type=\"hidden\" value=\"$SamplingRate\" name=\"SamplingRate\">
 					<input type=\"hidden\" value=\"$Orderby\" name=\"Orderby\">
 					<input type=\"hidden\" value=\"$Orderby_dir\" name=\"Orderby_dir\">
-					<input type=\"hidden\" value=\"$display_type\" name=\"display_type\">
 					<input type=\"hidden\" value=\"$Tags\" name=\"Tags\">
 					<input type=\"hidden\" value=\"$Tag_comparison\" name=\"Tag_comparison\">
 					<input type=\"hidden\" value=\"$Col\" name=\"Col\">

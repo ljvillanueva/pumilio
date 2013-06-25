@@ -52,9 +52,9 @@ if ($run){
 
 	<!--Blueprint container-->
 	<div class=\"container\">";
-		require(\"include/topbar.php\");
+		require("include/topbar.php");
 
-		<div class=\"span-24 last\">
+	echo "	<div class=\"span-24 last\">
 			<hr noshade>
 		</div>
 		<div class=\"span-24 last\">

@@ -409,6 +409,13 @@ else {
 					else {
 						echo "Site: <a href=\"browse_site.php?SiteID=$SiteID\" title=\"Browse the recordings made at this site\" style=\"color: white;\"><strong>$SiteName</strong></a>";
 						}
+					
+					#Check if there are images of the site
+					$site_pics=query_one("SELECT COUNT(*) FROM SitesPhotos WHERE SiteID='$SiteID'", $connection);
+					if ($site_pics>0) {
+						echo " <a href=\"#\" title=\"Show photographs of this site\" onclick=\"window.open('sitephotos.php?SiteID=$SiteID', 'pics', 'width=550,height=400,status=yes,resizable=yes,scrollbars=yes'); return false;\">
+							<img src=\"images/image.png\" alt=\"Show photographs of this site\"></a>";
+						}
 
 					if ($pumilio_loggedin==FALSE && $hide_latlon_guests){
 						}

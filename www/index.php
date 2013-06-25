@@ -443,11 +443,13 @@ else{
 						
 						<form action=\"sample_archive.php\" method=\"GET\">
 							<input type=submit value=\" Sample the archive \" class=\"fg-button ui-state-default ui-corner-all\">
-						</form>
-						<form action=\"script_jobs.php\" method=\"GET\">
+						</form>";
+						/*
+						echo "<form action=\"script_jobs.php\" method=\"GET\">
 							<input type=submit value=\" Script jobs \" class=\"fg-button ui-state-default ui-corner-all\">
-						</form>
-						<form action=\"export_marks.php\" method=\"GET\">
+						</form>";
+						*/
+						echo "<form action=\"export_marks.php\" method=\"GET\">
 							<input type=submit value=\" Export marks data \" class=\"fg-button ui-state-default ui-corner-all\">
 						</form>
 						
@@ -471,6 +473,8 @@ else{
 			 				}
 			 			}
 
+					#Deprecated
+					/*
 					if ($allow_upload) {
 						echo "<h3><a href=\"#\">Upload a file</a></h3>
 						<div>
@@ -487,7 +491,7 @@ else{
 						</form></p>
 						</div>\n";
 						}
-
+					*/
 
 					echo "<h3><a href=\"#\">Upload site photographs</a></h3>
 					<div>
