@@ -168,7 +168,7 @@ elseif ($type==4) {
 		</html>"; 
 	die();
 	}
-if ($type==5) {
+elseif ($type==5) {
 	$query = ("INSERT INTO Samples 
 		(SampleName,SampleNotes) 
 		VALUES ('$samplename','$samplenotes')");
@@ -194,7 +194,16 @@ if ($type==5) {
 		</html>"; 
 	die();
 	}
+elseif ($type==6) {
+	$query = ("INSERT INTO Samples (SampleName,SampleNotes) VALUES ('$samplename','$samplenotes')");
+	$result = mysqli_query($connection, $query)
+		or die (mysqli_error($connection));
+	$SampleID=mysqli_insert_id($connection);
 
+	$query = ("INSERT INTO SampleMembers (SampleID, SoundID) SELECT '$SampleID', SoundID FROM Sounds WHERE Time>='$time_min' AND Time<='$time_max' ORDER BY RAND()");
+	$result = mysqli_query($connection, $query)
+		or die (mysqli_error($connection));
+	}
 // Relocate
 	header("Location: browse_sample.php?SampleID=$SampleID");
 	die();

@@ -207,6 +207,24 @@ if ($use_googleanalytics) {
 				<br><input type=submit value=\" Create sample sets \" class=\"fg-button ui-state-default ui-corner-all\">
 				</form>";
 
+
+				#Sample from whole archive by time
+				echo "<hr noshade>
+				<p><strong>Sample set from the whole archive:</strong><br>
+					<form action=\"add_sample.php\" method=\"POST\" id=\"AddSample2\">
+					<input type=\"hidden\" name=\"type\" value=\"6\">
+
+				<br>Select all the sounds in the archive between:
+				<br><input type=\"text\" name=\"time_min\" maxlength=\"10\" size=\"6\" value=\"00:00:00\" class=\"fg-button ui-state-default ui-corner-all\"> and 
+					<input type=\"text\" name=\"time_max\" maxlength=\"10\" size=\"6\" value=\"23:59:59\" class=\"fg-button ui-state-default ui-corner-all\"> (hh:mm:ss)
+				<br>Name this sample set:
+				<input type=\"text\" name=\"samplename\" id=\"samplename\" maxlength=\"80\" size=\"30\" class=\"fg-button ui-state-default ui-corner-all\">
+				<br>Notes about this set:
+				<input type=\"text\" name=\"samplenotes\" size=\"30\" class=\"fg-button ui-state-default ui-corner-all\">
+				<br><input type=submit value=\" Create random sample set \" class=\"fg-button ui-state-default ui-corner-all\">
+				</form><br>
+				";
+
 				#Empty set
 				echo "<hr noshade>
 				<p><strong>Create an empty sample set:</strong>
