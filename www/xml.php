@@ -62,14 +62,14 @@ else{
 				$row1 = mysqli_fetch_array($result1);
 				extract($row1);
 
-				echo "<site>
+				echo "<Site>
 				<SiteID>$SiteID</SiteID>
 				<SiteName>$SiteName</SiteName>
 				<latitude>$SiteLat</latitude>
 				<longitude>$SiteLon</longitude>
 				<elevation>$SiteElevation</elevation>
 				<notes>$SiteNotes</notes>
-				</site>\n";
+				</Site>\n";
 				}
 			echo "</Sites>";
 			}
