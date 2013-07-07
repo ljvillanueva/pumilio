@@ -388,37 +388,6 @@ echo "</select>\n";
 		echo " </select>\n";
 
 
-	#allow access using XML
-	#$use_xml=query_one("SELECT Value from PumilioSettings WHERE Settings='use_xml'", $connection);
-
-	if ($use_xml=="1"){
-		$use_xml_d="Yes";
-		}
-	elseif ($use_xml=="0"){
-		$use_xml_d="No";
-		}
-	else {
-		$use_xml_d="Not set";
-		}
-
-	echo "<br>Allow access using XML: $use_xml_d";
-	
-	echo "<select name=\"use_xml\" class=\"ui-state-default ui-corner-all formedge\">";
-		if ($use_xml) {
-			echo "<option SELECTED value=\"1\">Yes</option>
-				<option value=\"0\">No</option>";
-			}
-		elseif ($use_xml=="0"){
-			echo "<option value=\"1\">Yes</option>
-				<option SELECTED value=\"0\">No</option>";
-			}
-		else {
-			echo "<option SELECTED value=\"1\">Yes</option>
-				<option value=\"0\">No</option>";
-			}
-	echo " </select>";
-
-	
 	#use tag cloud
 	#$use_tags=query_one("SELECT Value from PumilioSettings WHERE Settings='use_tags'", $connection);
 
@@ -642,6 +611,44 @@ echo "</select>\n";
 			}
 	echo " </select>";
 
+
+	if($guests_can_dl == 1){
+		
+		#allow access using XML
+		#$use_xml=query_one("SELECT Value from PumilioSettings WHERE Settings='use_xml'", $connection);
+
+		if ($use_xml=="1"){
+			$use_xml_d="Yes";
+			}
+		elseif ($use_xml=="0"){
+			$use_xml_d="No";
+			}
+		else {
+			$use_xml_d="Not set";
+			}
+
+		echo "<br>Allow access using XML: $use_xml_d";
+	
+		echo "<select name=\"use_xml\" class=\"ui-state-default ui-corner-all formedge\">";
+			if ($use_xml) {
+				echo "<option SELECTED value=\"1\">Yes</option>
+					<option value=\"0\">No</option>";
+				}
+			elseif ($use_xml=="0"){
+				echo "<option value=\"1\">Yes</option>
+					<option SELECTED value=\"0\">No</option>";
+				}
+			else {
+				echo "<option SELECTED value=\"1\">Yes</option>
+					<option value=\"0\">No</option>";
+				}
+		echo " </select>";
+		}
+	else{
+		query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('use_xml', '0') 
+				ON DUPLICATE KEY UPDATE Value='0'", $connection);
+
+		}
 
 
 	#level data to share
