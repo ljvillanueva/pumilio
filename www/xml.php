@@ -16,7 +16,7 @@ else {
 require("include/apply_config_xml.php");
 
 #Check if allowed
-$use_xml=query_one("SELECT Value from PumilioSettings WHERE Settings='use_xml'", $connection);
+#$use_xml=query_one("SELECT Value from PumilioSettings WHERE Settings='use_xml'", $connection);
 if ($use_xml==""){
 	$use_xml="0";
 	}
@@ -117,6 +117,8 @@ else{
 			$query_subset = "AND SiteID='$SiteID'";
 			}
 		elseif ($type == "both"){
+			$ColID = filter_var($_GET["ColID"], FILTER_SANITIZE_NUMBER_INT);
+			$SiteID = filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
 			$query_subset = "AND SiteID='$SiteID' AND ColID='$ColID'";
 			}
 		elseif ($type == "all"){

@@ -39,17 +39,31 @@ header("Content-type: text/xml");
 $queryutf = "SET NAMES 'utf8' COLLATE 'utf8_unicode_ci'";
 $result = mysqli_query($connection, $queryutf)
 		or die ("Could not execute query. Please try again later.");
-		
-#Get variables from db
-$app_custom_name=query_one("SELECT Value from PumilioSettings WHERE Settings='app_custom_name'", $connection);
-if ($app_custom_name==""){
-	$app_custom_name="Pumilio";
-	}
-	
-$app_custom_text=query_one("SELECT Value from PumilioSettings WHERE Settings='app_custom_text'", $connection);
 
-if ($app_custom_text=="") {
-	$app_custom_text="Pumilio is a free and open source sound archive manager for the visualization and manipulation of sound files.";
-	}
+
+
+#Get variables from db - new way
+# using 
+# https://github.com/Xeoncross/DByte
+// We need this!
+require('include/db/DB.php');
+
+// Create a new PDO connection to MySQL
+$pdo = new PDO(
+	"mysql:dbname=$database;host=$host",
+	"$user",
+	"$password",
+	array(
+		PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+		PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+	)
+);
+
+DB::$c = $pdo;
+
+$settings = DB::pairs('SELECT `Settings`, `Value` FROM `PumilioSettings`');
+
+extract($settings, EXTR_OVERWRITE);
 					 
 ?>
