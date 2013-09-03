@@ -324,6 +324,7 @@ function delTree($dir) {
 	if (is_dir($dir)) rmdir( $dir );
 	} 
 
+
 function delSubTree($dir) {
 	#delete everything but the dir
 	$files = glob( $dir . '*', GLOB_MARK );
