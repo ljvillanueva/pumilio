@@ -109,6 +109,19 @@ if ($app_custom_text=="") {
 	$app_custom_text="Pumilio is a free and open source sound archive manager for the visualization and manipulation of sound files.";
 	}
 
+
+if (isset($fft)==FALSE) {
+	$fft=2048;
+	query_one("REPLACE INTO PumilioSettings (Settings, Value) VALUES ('fft', '$fft')", $connection);
+	}
+else{
+	if ($fft=="") {
+		$fft=2048;
+		query_one("REPLACE INTO PumilioSettings (Settings, Value) VALUES ('fft', '$fft')", $connection);
+		}
+	}
+	
+	
 if ($googlemaps_ver=="2") {
 	$googlemaps_key=query_one("SELECT Value from PumilioSettings WHERE Settings='googlemaps_key'", $connection);
 	}

@@ -665,6 +665,16 @@ else {
 				$FileSize=formatSize($FileSize);
 				}
 			echo "<li>File size: $FileSize</li>";
+			
+			$SpecMaxFreq = DB::column("SELECT `SpecMaxFreq` from `SoundsImages` WHERE `SoundID`=" . $SoundID . " AND `ImageType`='spectrogram'");
+			$ImageFFT = DB::column("SELECT `ImageFFT` from `SoundsImages` WHERE `SoundID`=" . $SoundID . " AND `ImageType`='spectrogram'");
+			echo "<li>Spectrogram settings:
+				<ul>
+					<li>Max frequency: $SpecMaxFreq Hz</li>
+					<li>FFT size: $ImageFFT</li>
+				</ul>
+				</li>";
+			
 			echo "<li>Database ID: $SoundID</li>";
 			if ($OtherSoundID!="") {
 				echo "<li>Custom ID: $OtherSoundID</li>";
@@ -777,6 +787,7 @@ else {
 
 			echo "&nbsp;</div>";	
 			echo "<div class=\"span-9 last\">";
+			
 			#Add small GMap
 			if ($use_googlemaps=="1" || $use_googlemaps=="3") {
 				if ($SiteID!="" && $SiteLat!="" && $SiteLon!=""){

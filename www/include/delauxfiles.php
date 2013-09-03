@@ -116,6 +116,38 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 		});
 
 	</script>
+	
+<script type="text/javascript">
+	$(function() {
+		$("#dialog7").dialog({
+			autoOpen: false,
+			bgiframe: true,
+			resizable: false,
+			draggable: false,
+			height:140,
+			modal: true,
+			overlay: {
+				backgroundColor: '#000',
+				opacity: 0.5
+			},
+		 buttons: {
+		                "Delete files": function() {
+		                    document.del7.submit();
+		                },
+		                "Cancel": function() {
+		                    $(this).dialog("close");
+		                }
+		            }
+		        });
+
+		        $('form#del7').submit(function(){
+		            $("p#dialog-email").html($("input#ColID").val());
+		            $('#dialog7').dialog('open');
+		            return false;
+		        });
+		});
+
+	</script>
 </head>
 <body>
 
@@ -136,6 +168,26 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 	elseif ($op == "3") {
 			delTree('../sounds/previewsounds/' . $ColID . '/');
 			header("Location: delauxfiles.php?op=9");
+			die();
+		}
+	elseif ($op == "7") {
+		#Delete file div
+		echo "<p><strong>Delete all the image files (spectrograms and waveforms) from the archive?</strong><br>";
+		echo "<div id=\"dialog7\" title=\"Delete the images?\">
+		<p><span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>The image files
+			(spectrograms and waveforms) in the archive will be permanently deleted and cannot be 
+			recovered. Are you sure?</p>
+		</div>";
+		echo "<form method=\"GET\" action=\"delauxfiles.php\" id=\"del7\" name=\"del7\">
+		<input type=\"hidden\" name=\"op\" value=\"8\">
+		<input type=submit value=\" Delete all images from system \" class=\"fg-button ui-state-default ui-corner-all\">
+		</form>";
+		die();
+		}
+	elseif ($op == "8") {
+		delSubTree('../sounds/images/');
+		echo "<p><div class=\"success\">The files were deleted successfully.<br>
+			<a href=\"#\" onClick=\"window.close();\">Close window</a></div>";
 			die();
 		}
 	elseif ($op == "9") {

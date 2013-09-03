@@ -510,5 +510,17 @@ CREATE TABLE IF NOT EXISTS `SoundsStats` (`SoundsStatsID` int(11) NOT NULL AUTO_
 
 ALTER TABLE `Kml` CHANGE `KmlDefault` `KmlDefault` ENUM('0','1','2') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '0';
 
-UPDATE `PumilioSettings` SET `Value` = '23' WHERE `PumilioSettings`.`Settings` = 'db_version' LIMIT 1;
+ALTER TABLE `Sites`  ADD `SiteURL` VARCHAR(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT 'URL for more info on the site, can be relative to the installation.' AFTER `WeatherSiteID`;
+
+ALTER TABLE `SoundsImages`  ADD `ImageCreator` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'svt' COMMENT 'Which program created the images.' AFTER `SpecMaxFreq`;
+
+ALTER TABLE `SoundsImages` CHANGE `ColorPalette` `ColorPalette` INT(11) NOT NULL DEFAULT '1' COMMENT 'The color palette used for the images. For either svt.py or SoX';
+
+ALTER TABLE `Sounds` CHANGE `DerivedSound` `DerivedSound` ENUM('0','1') CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'Is this soundfile derived from another in the database?';
+
+UPDATE Sounds SET `OtherSoundID` = NULL WHERE `OtherSoundID` = '0';
+
+ALTER TABLE `SoundsImages`  ADD `ImageFFT` INT NOT NULL DEFAULT '2048' AFTER `SpecMaxFreq`;
+
+UPDATE `PumilioSettings` SET `Value` = '26' WHERE `PumilioSettings`.`Settings` = 'db_version' LIMIT 1;
 

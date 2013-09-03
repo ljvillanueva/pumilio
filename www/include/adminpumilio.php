@@ -169,90 +169,8 @@ echo "</select>\n";
 		
 	<input type=\"text\" name=\"files_license_detail\" size=\"40\" maxlength=\"250\" value=\"$files_license_detail\" class=\"fg-button ui-state-default ui-corner-all\">";
 	
-	#Max freq to draw in spectrograms
-	#$max_spec_freq=query_one("SELECT Value from PumilioSettings WHERE Settings='max_spec_freq'", $connection);
-
-	if ($max_spec_freq=="max") {
-		$max_spec_freq_d="Maximum for each file";
-		}
-	elseif ($max_spec_freq=="") {
-		$max_spec_freq_d="22050 Hz";
-		}
-	else {
-		$max_spec_freq_d=$max_spec_freq . " Hz";
-		}
-
-	echo "<br>Maximum acoustic frequency for the spectrograms: $max_spec_freq_d";
-	
-	echo "<select name=\"max_spec_freq\" class=\"ui-state-default ui-corner-all formedge\">";
-		if ($max_spec_freq=="max") {
-			echo "<option SELECTED value=\"max\">Maximum for each file</option>
-				<option value=\"24000\">24000 Hz</option>
-				<option value=\"22050\">22050 Hz</option>
-				<option value=\"16000\">16000 Hz</option>
-				<option value=\"11025\">11025 Hz</option>
-				<option value=\"10000\">10000 Hz</option>
-				<option value=\"8000\">8000 Hz</option>
-				<option value=\"6000\">6000 Hz</option>
-				<option value=\"4000\">4000 Hz</option>
-				<option value=\"3000\">3000 Hz</option>";
-				}
-		elseif ($max_spec_freq=="") {
-			echo "<option value=\"max\">Maximum for each file</option>
-				<option value=\"24000\">24000 Hz</option>
-				<option value=\"22050\">22050 Hz</option>
-				<option value=\"16000\">16000 Hz</option>
-				<option value=\"11025\">11025 Hz</option>
-				<option value=\"10000\">10000 Hz</option>
-				<option value=\"8000\">8000 Hz</option>
-				<option value=\"6000\">6000 Hz</option>
-				<option value=\"4000\">4000 Hz</option>
-				<option value=\"3000\">3000 Hz</option>";
-				}
-		else {
-			$m1 = "";
-			$m2 = "";
-			$m3 = "";
-			$m4 = "";
-			$m5 = "";
-			$m6 = "";
-			$m7 = "";
-			$m8 = "";
-			$m9 = "";
 		
-			if ($max_spec_freq==24000)
-				$m1="SELECTED";
-			elseif ($max_spec_freq==22050)
-				$m2="SELECTED";
-			elseif ($max_spec_freq==16000)
-				$m3="SELECTED";
-			elseif ($max_spec_freq==11025)
-				$m4="SELECTED";
-			elseif ($max_spec_freq==10000)
-				$m5="SELECTED";
-			elseif ($max_spec_freq==8000)
-				$m6="SELECTED";
-			elseif ($max_spec_freq==6000)
-				$m7="SELECTED";
-			elseif ($max_spec_freq==4000)
-				$m8="SELECTED";
-			elseif ($max_spec_freq==3000)
-				$m9="SELECTED";
-				
-			echo "<option SELECTED value=\"max\">Maximum for each file</option>
-				<option $m1 value=\"24000\">24000 Hz</option>
-				<option $m2 value=\"22050\">22050 Hz</option>
-				<option $m3 value=\"16000\">16000 Hz</option>
-				<option $m4 value=\"11025\">11025 Hz</option>
-				<option $m5 value=\"10000\">10000 Hz</option>
-				<option $m6 value=\"8000\">8000 Hz</option>
-				<option $m7 value=\"6000\">6000 Hz</option>
-				<option $m8 value=\"4000\">4000 Hz</option>
-				<option $m9 value=\"3000\">3000 Hz</option>";
-			}
-
-	echo " </select>";
-
+	#Temp dir
 	$temp_add_dir_f = "";
 	#$temp_add_dir=query_one("SELECT Value from PumilioSettings WHERE Settings='temp_add_dir'", $connection);
 	if ($temp_add_dir!=""){ 
@@ -349,9 +267,219 @@ echo "</select>\n";
 
 
 
+
+
+
+	#Image settings
 	echo "</div>
-	<p><strong>System behavior:</strong>
-	<br>
+	<br><p><strong>Image settings:</strong>
+	<div style=\"margin-left: 10px;\">";
+
+	if ($imgset==1) {
+		echo "<div class=\"success\" id=\"imgset\">The database was updated. To force the system to recreate the images:<br>
+		<form method=\"GET\" action=\"include/delauxfiles.php\" target=\"delauxfiles\" onsubmit=\"window.open('', 'delauxfiles', 'width=450,height=700,status=yes,resizable=yes,scrollbars=auto')\">
+			<input type=\"hidden\" name=\"op\" value=\"7\">
+			<input type=submit value=\" Delete all images from system \" class=\"fg-button ui-state-default ui-corner-all\"></form>
+		</div>";
+		}
+
+	echo "<form action=\"include/editpumiliosettings.php\" method=\"POST\">
+		<input type=\"hidden\" name=\"settings\" value=\"image\">";
+	#Max freq to draw in spectrograms
+	#$max_spec_freq=query_one("SELECT Value from PumilioSettings WHERE Settings='max_spec_freq'", $connection);
+
+	if ($max_spec_freq=="max") {
+		$max_spec_freq_d="Maximum for each file";
+		}
+	elseif ($max_spec_freq=="") {
+		$max_spec_freq_d="22050 Hz";
+		}
+	else {
+		$max_spec_freq_d=$max_spec_freq . " Hz";
+		}
+
+	echo "Maximum acoustic frequency for the spectrograms: $max_spec_freq_d";
+	
+	echo "<select name=\"max_spec_freq\" class=\"ui-state-default ui-corner-all formedge\">";
+		if ($max_spec_freq=="max") {
+			echo "<option SELECTED value=\"max\">Maximum for each file</option>
+				<option value=\"24000\">24000 Hz</option>
+				<option value=\"22050\">22050 Hz</option>
+				<option value=\"16000\">16000 Hz</option>
+				<option value=\"11025\">11025 Hz</option>
+				<option value=\"10000\">10000 Hz</option>
+				<option value=\"8000\">8000 Hz</option>
+				<option value=\"6000\">6000 Hz</option>
+				<option value=\"4000\">4000 Hz</option>
+				<option value=\"3000\">3000 Hz</option>";
+				}
+		elseif ($max_spec_freq=="") {
+			echo "<option value=\"max\">Maximum for each file</option>
+				<option value=\"24000\">24000 Hz</option>
+				<option value=\"22050\">22050 Hz</option>
+				<option value=\"16000\">16000 Hz</option>
+				<option value=\"11025\">11025 Hz</option>
+				<option value=\"10000\">10000 Hz</option>
+				<option value=\"8000\">8000 Hz</option>
+				<option value=\"6000\">6000 Hz</option>
+				<option value=\"4000\">4000 Hz</option>
+				<option value=\"3000\">3000 Hz</option>";
+				}
+		else {
+			$m1 = "";
+			$m2 = "";
+			$m3 = "";
+			$m4 = "";
+			$m5 = "";
+			$m6 = "";
+			$m7 = "";
+			$m8 = "";
+			$m9 = "";
+		
+			if ($max_spec_freq==24000)
+				$m1="SELECTED";
+			elseif ($max_spec_freq==22050)
+				$m2="SELECTED";
+			elseif ($max_spec_freq==16000)
+				$m3="SELECTED";
+			elseif ($max_spec_freq==11025)
+				$m4="SELECTED";
+			elseif ($max_spec_freq==10000)
+				$m5="SELECTED";
+			elseif ($max_spec_freq==8000)
+				$m6="SELECTED";
+			elseif ($max_spec_freq==6000)
+				$m7="SELECTED";
+			elseif ($max_spec_freq==4000)
+				$m8="SELECTED";
+			elseif ($max_spec_freq==3000)
+				$m9="SELECTED";
+				
+			echo "<option SELECTED value=\"max\">Maximum for each file</option>
+				<option $m1 value=\"24000\">24000 Hz</option>
+				<option $m2 value=\"22050\">22050 Hz</option>
+				<option $m3 value=\"16000\">16000 Hz</option>
+				<option $m4 value=\"11025\">11025 Hz</option>
+				<option $m5 value=\"10000\">10000 Hz</option>
+				<option $m6 value=\"8000\">8000 Hz</option>
+				<option $m7 value=\"6000\">6000 Hz</option>
+				<option $m8 value=\"4000\">4000 Hz</option>
+				<option $m9 value=\"3000\">3000 Hz</option>";
+			}
+
+	echo " </select>";
+
+	#FFT window size
+	echo "<br>FFT window size: $fft";
+	
+	echo "<select name=\"fft\" class=\"ui-state-default ui-corner-all formedge\">";
+			
+		if ($fft==4096)
+			$fft1="SELECTED";
+		elseif ($fft==2048)
+			$fft2="SELECTED";
+		elseif ($fft==1024)
+			$fft3="SELECTED";
+		elseif ($fft==512)
+			$fft4="SELECTED";
+		elseif ($fft==256)
+			$fft5="SELECTED";
+		elseif ($fft==128)
+			$fft6="SELECTED";
+			
+		echo "<option $fft1>4096</option>
+			<option $fft2>2048</option>
+			<option $fft3>1024</option>
+			<option $fft4>512</option>
+			<option $fft5>256</option>
+			<option $fft6>128</option>";
+
+	echo " </select>";
+
+
+	#spectrogram_palette
+	#$spectrogram_palette=query_one("SELECT Value from PumilioSettings WHERE Settings='spectrogram_palette'", $connection);
+	
+	echo "<br>Color palette to use for the spectrograms: ";
+	
+	if ($sox_images == TRUE){
+		$sox_pal1 = "yellow, red, purple";
+		$sox_pal2 = "yellow, green, blue";
+		$sox_pal3 = "blue, green red";
+		$sox_pal4 = "pink, red, green";
+		$sox_pal5 = "pink, blue, green";
+		$sox_pal6 = "blue, purple, red";
+		
+		if ($spectrogram_palette=="1"){
+			echo $sox_pal1;
+			$selected1 = "SELECTED";
+			}
+		elseif ($spectrogram_palette=="2"){
+			echo $sox_pal2;
+			$selected2 = "SELECTED";
+			}
+		elseif ($spectrogram_palette=="3"){
+			echo $sox_pal3;
+			$selected3 = "SELECTED";
+			}
+		elseif ($spectrogram_palette=="4"){
+			echo $sox_pal4;
+			$selected4 = "SELECTED";
+			}
+		elseif ($spectrogram_palette=="5"){
+			echo $sox_pal5;
+			$selected5 = "SELECTED";
+			}
+		elseif ($spectrogram_palette=="6"){
+			echo $sox_pal6;
+			$selected6 = "SELECTED";
+			}
+	
+		echo "<select name=\"spectrogram_palette\" class=\"ui-state-default ui-corner-all formedge\">";
+			echo "<option $selected1 value=\"1\">$sox_pal1</option>
+			<option $selected2 value=\"2\">$sox_pal2</option>
+			<option $selected3 value=\"3\">$sox_pal3</option>
+			<option $selected4 value=\"4\">$sox_pal4</option>
+			<option $selected5 value=\"5\">$sox_pal5</option>
+			<option $selected6 value=\"6\">$sox_pal6</option>";
+			
+		echo "</select>";
+		}
+	else{
+		if ($spectrogram_palette=="1"){
+			echo "dark background";
+			}
+		elseif ($spectrogram_palette=="2"){
+			echo "white background";
+			}
+	
+		echo "<select name=\"spectrogram_palette\" class=\"ui-state-default ui-corner-all formedge\">";
+		if ($spectrogram_palette==2 || $spectrogram_palette=="") {
+			echo "<option value=\"1\">dark background</option>
+			<option SELECTED value=\"2\">white background</option>";
+			}
+		else {
+			echo "<option SELECTED value=\"1\">dark background</option>
+			<option value=\"2\">white background</option>";
+			}
+		echo "</select>";
+		}
+		
+
+
+	echo "
+	<p><input type=submit value=\" Update system behavior \" class=\"fg-button ui-state-default ui-corner-all\">
+	</form>";
+
+
+
+
+
+
+
+	#Bottom
+	echo "</div>
+	<br><p><strong>System behavior:</strong>
 	<div style=\"margin-left: 10px;\">
 	<form action=\"include/editpumiliosettings.php\" method=\"POST\">";	
 		
@@ -372,7 +500,7 @@ echo "</select>\n";
 		$use_chorus_d="Not set";
 		}
 
-	echo "<br>Allow this website to be indexed in the <a href=\"http://pumilio.sourceforge.net/chorus.php\" target=_blank>Pumilio Chorus</a>: $use_chorus_d";
+	echo "Allow this website to be indexed in the <a href=\"http://pumilio.sourceforge.net/chorus.php\" target=_blank>Pumilio Chorus</a>: $use_chorus_d";
 	
 	echo "<input type=\"hidden\" name=\"settings\" value=\"bottom\">
 		<select name=\"use_chorus\" class=\"ui-state-default ui-corner-all formedge\">";
@@ -678,77 +806,6 @@ echo "</select>\n";
 		}
 	echo "</select>";
 
-
-	#spectrogram_palette
-	#$spectrogram_palette=query_one("SELECT Value from PumilioSettings WHERE Settings='spectrogram_palette'", $connection);
-	
-	echo "<br>Color palette to use for the spectrograms: ";
-	
-	if ($sox_images == TRUE){
-		$sox_pal1 = "yellow, red, purple";
-		$sox_pal2 = "yellow, green, blue";
-		$sox_pal3 = "blue, green red";
-		$sox_pal4 = "pink, red, green";
-		$sox_pal5 = "pink, blue, green";
-		$sox_pal6 = "blue, purple, red";
-		
-		if ($spectrogram_palette=="1"){
-			echo $sox_pal1;
-			$selected1 = "SELECTED";
-			}
-		elseif ($spectrogram_palette=="2"){
-			echo $sox_pal2;
-			$selected2 = "SELECTED";
-			}
-		elseif ($spectrogram_palette=="3"){
-			echo $sox_pal3;
-			$selected3 = "SELECTED";
-			}
-		elseif ($spectrogram_palette=="4"){
-			echo $sox_pal4;
-			$selected4 = "SELECTED";
-			}
-		elseif ($spectrogram_palette=="5"){
-			echo $sox_pal5;
-			$selected5 = "SELECTED";
-			}
-		elseif ($spectrogram_palette=="6"){
-			echo $sox_pal6;
-			$selected6 = "SELECTED";
-			}
-	
-		echo "<select name=\"spectrogram_palette\" class=\"ui-state-default ui-corner-all formedge\">";
-			echo "<option $selected1 value=\"1\">$sox_pal1</option>
-			<option $selected2 value=\"2\">$sox_pal2</option>
-			<option $selected3 value=\"3\">$sox_pal3</option>
-			<option $selected4 value=\"4\">$sox_pal4</option>
-			<option $selected5 value=\"5\">$sox_pal5</option>
-			<option $selected6 value=\"6\">$sox_pal6</option>";
-			
-		echo "</select>";
-		}
-	else{
-		if ($spectrogram_palette=="1"){
-			echo "dark background";
-			}
-		elseif ($spectrogram_palette=="2"){
-			echo "white background";
-			}
-	
-		echo "<select name=\"spectrogram_palette\" class=\"ui-state-default ui-corner-all formedge\">";
-		if ($spectrogram_palette==2 || $spectrogram_palette=="") {
-			echo "<option value=\"1\">dark background</option>
-			<option SELECTED value=\"2\">white background</option>";
-			}
-		else {
-			echo "<option SELECTED value=\"1\">dark background</option>
-			<option value=\"2\">white background</option>";
-			}
-		echo "</select>";
-		}
-	
-	
-	
 	
 	echo "
 	<p><input type=submit value=\" Update system behavior \" class=\"fg-button ui-state-default ui-corner-all\">

@@ -41,10 +41,6 @@ require("check_admin.php");
 		query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('files_license_detail', '$value') 
 				ON DUPLICATE KEY UPDATE Value='$value'", $connection);
 				
-		$value = filter_var($_POST["max_spec_freq"], FILTER_SANITIZE_STRING);
-		query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('max_spec_freq', '$value') 
-				ON DUPLICATE KEY UPDATE Value='$value'", $connection);
-				
 		$value = filter_var($_POST["temp_add_dir"], FILTER_SANITIZE_STRING);
 		query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('temp_add_dir', '$value') 
 				ON DUPLICATE KEY UPDATE Value='$value'", $connection);
@@ -55,6 +51,23 @@ require("check_admin.php");
 
 		header("Location: ../admin.php?t=1&tt=1");
 		die();
+		}
+	elseif ($settings == "image"){
+	
+		$value = filter_var($_POST["spectrogram_palette"], FILTER_SANITIZE_STRING);
+		query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('spectrogram_palette', '$value') 
+				ON DUPLICATE KEY UPDATE Value='$value'", $connection);
+				
+		$value = filter_var($_POST["fft"], FILTER_SANITIZE_STRING);
+		query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('fft', '$value') 
+				ON DUPLICATE KEY UPDATE Value='$value'", $connection);
+
+		$value = filter_var($_POST["max_spec_freq"], FILTER_SANITIZE_STRING);
+		query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('max_spec_freq', '$value') 
+				ON DUPLICATE KEY UPDATE Value='$value'", $connection);
+
+		header("Location: ../admin.php?t=1&imgset=1");
+		die();	
 		}
 	elseif ($settings == "bottom"){
 		$value = filter_var($_POST["use_chorus"], FILTER_SANITIZE_STRING);
@@ -95,10 +108,6 @@ require("check_admin.php");
 				
 		$value = filter_var($_POST["default_qf"], FILTER_SANITIZE_STRING);
 		query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('default_qf', '$value') 
-				ON DUPLICATE KEY UPDATE Value='$value'", $connection);
-				
-		$value = filter_var($_POST["spectrogram_palette"], FILTER_SANITIZE_STRING);
-		query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('spectrogram_palette', '$value') 
 				ON DUPLICATE KEY UPDATE Value='$value'", $connection);
 		
 		header("Location: ../admin.php?t=1&tt=2");

@@ -38,6 +38,13 @@ else{
 	$tt = $_GET["tt"];
 	}
 
+if (!isset($_GET["imgset"])){
+	$imgset = 0;
+	}
+else{
+	$imgset = $_GET["imgset"];
+	}
+
 echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
 <head>
@@ -391,6 +398,9 @@ $(function() {
     }, 8000);
 });
 </script>
+
+
+
 
 <?php
 if ($use_googleanalytics) {

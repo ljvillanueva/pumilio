@@ -324,6 +324,20 @@ function delTree($dir) {
 	if (is_dir($dir)) rmdir( $dir );
 	} 
 
+function delSubTree($dir) {
+	#delete everything but the dir
+	$files = glob( $dir . '*', GLOB_MARK );
+	foreach( $files as $file ){
+		if( substr( $file, -1 ) == '/' ){
+			delTree( $file );
+			}
+		else {
+			unlink( $file );
+			}
+		}
+	#if (is_dir($dir)) rmdir( $dir );
+	} 
+
 
 function sessionAuthenticate($connection) {
 	// Get the cookie
