@@ -64,6 +64,7 @@
 	<li> <a href="http://www.jquery.com" target="_blank">JQuery Javascript library</a>
 	<li> <a href="http://jqueryui.com" target="_blank">JQuery UI</a>
 	<li> <a href="http://deepliquid.com/content/Jcrop.html" target="_blank">JCrop image cropping plugin</a>
+	<li> <a href="http://github.com/Xeoncross/DByte">DByte database layer</a>
 	<li> <a href="http://www.plupload.com" target="_blank">Plupload</a>
 	<li> <a href="http://maps.google.com" target="_blank">Google Maps</a>
 	<li> <a href="http://www.google.com/webfonts" target="_blank">Google Web Fonts</a>

@@ -8,7 +8,7 @@ Pumilio is a PHP/MySQL application that serves as a sound archive manager
 
 http://pumilio.sourceforge.net
 
-Copyright (©) 2010-2013 Luis J. Villanueva-Rivera (lvillanu@purdue.edu)
+Copyright (©) 2010-2013 Luis J. Villanueva-Rivera (ljvillanueva@coquipr.com)
 Licensed under the GPLv3
 
 Citation: Villanueva-Rivera, Luis J., and Bryan C. Pijanowski. 2012.
@@ -27,6 +27,8 @@ This application uses several other open source tools and programs like:
     * Audiolab Python module (http://www.ar.media.kyoto-u.ac.jp/members/david/softwares/audiolab/sphinx/index.html)
     * JQuery Javascript library (http://www.jquery.com/)
     * JCrop image cropping plugin (http://deepliquid.com/content/Jcrop.html)
+    * DByte (http://github.com/Xeoncross/DByte)
+    * Plupload (http://www.plupload.com)
     * Google Maps (http://maps.google.com)
     * Google Web Fonts (http://www.google.com/webfonts)
     * Ajax wait icons by Andrew B. Davidson (http://www.andrewdavidson.com/articles/spinning-wait-icons/)
@@ -48,4 +50,7 @@ To prevent access to the original sound files from the web (for example, someone
  
 You can also visit the project page for more information: 
  http://pumilio.sourceforge.net
+
+The code is hosted in Github:
+ http://github.com/ljvillanueva/pumilio
 

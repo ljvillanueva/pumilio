@@ -37,6 +37,8 @@ This application uses several other open source tools and programs like:
     * Audiolab Python module (http://www.ar.media.kyoto-u.ac.jp/members/david/softwares/audiolab/sphinx/index.html)
     * JQuery Javascript library (http://www.jquery.com/)
     * JCrop image cropping plugin (http://deepliquid.com/content/Jcrop.html)
+    * DByte (http://github.com/Xeoncross/DByte)
+    * Plupload (http://www.plupload.com)
     * Google Maps (http://maps.google.com)
     * Google Web Fonts (http://www.google.com/webfonts)
     * Ajax wait icons by Andrew B. Davidson (http://www.andrewdavidson.com/articles/spinning-wait-icons/)
