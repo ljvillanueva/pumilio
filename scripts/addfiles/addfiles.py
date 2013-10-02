@@ -387,6 +387,21 @@ def confirmsource(colID):
         con.close ()
 
 
+
+def checkduplicate(filename):
+        try:
+                con = MySQLdb.connect(host=db_hostname, user=db_username, passwd=db_password, db=db_database)
+        except MySQLdb.Error, e:
+                print "Error %d: %s" % (e.args[0], e.args[1])
+                sys.exit (1)
+        cursor = con.cursor()
+        query = "SELECT OriginalFilename FROM Sounds WHERE OriginalFilename='" + filename + "' LIMIT 1";
+        cursor.execute (query)
+        cursor.close ()
+        con.close ()
+        return cursor.rowcount
+        
+
 #########################################################################
 # EXECUTE THE SCRIPT							#
 #########################################################################
@@ -451,6 +466,11 @@ try:
 		if item_flac[-5:] == ".flac" or item_flac[-5:] == ".FLAC":
 			print '\nChecking file ' + item_flac
 
+			duplicate = checkduplicate(item_flac)
+			if duplicate == 1:
+				print "\n File " + item_flac + " exists. Skipping."
+				continue
+				
 			#Get a random integer between 1 and 100
 			DirID = str(random.randint(1, 100))
 
