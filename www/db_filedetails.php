@@ -319,6 +319,18 @@ if ($use_googleanalytics) {
 	}
 ?>
 
+<script>
+  $(function() {
+    $( document ).tooltip();
+  });
+  </script>
+<style>
+  label {
+    display: inline-block;
+    width: 5em;
+  }
+  </style>
+    
 </head>
 <?php
 
@@ -620,14 +632,20 @@ else {
 			<li>Original filename: $OriginalFilename";
 				if ($guests_can_dl || $pumilio_loggedin) {
 					echo "<br>&nbsp;&nbsp;&nbsp;Download: ";
+					/*
 					if ($special_nofiles == FALSE){
-						echo "<a href=\"dl.php?file=sounds/sounds/$ColID/$DirID/$OriginalFilename\">$SoundFormat</a>";
+						echo "<a href=\"dl.php?file=sounds/sounds/$ColID/$DirID/$OriginalFilename\" title=\"Please read the license field on the right for legal limitations on the use of these files.\">$SoundFormat</a>";
 						if ($SoundFormat != "wav" && $special_noprocess==FALSE){
-							echo " | <a href=\"dl.php?from_detail=1&SoundID=$SoundID\">wav</a>";
+							echo " | <a href=\"dl.php?from_detail=1&SoundID=$SoundID\" title=\"Please read the license field on the right for legal limitations on the use of these files.\">wav</a>";
 							}
 						echo " | ";
 						}
-					echo "<a href=\"dl.php?file=sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename\">$AudioPreviewFormat</a>
+					*/
+					
+					
+					echo "<a href=\"dl.php?file=sounds/sounds/$ColID/$DirID/$OriginalFilename\" title=\"Please read the license field on the right for legal limitations on the use of these files.\">$SoundFormat</a>";
+					echo " | ";					
+					echo "<a href=\"dl.php?file=sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename\" title=\"Please read the license field on the right for legal limitations on the use of these files.\">$AudioPreviewFormat</a>
 						</li>";
 					}
 
