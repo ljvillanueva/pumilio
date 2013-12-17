@@ -61,7 +61,7 @@ if ($use_googlemaps=="3") {
 	#$map_only=query_one("SELECT Value from PumilioSettings WHERE Settings='map_only'", $connection);
 	
 	if ($map_only=="1"){
-		$map_only_d="Map only";
+		$map_only_d="Main map";
 		}
 	elseif ($map_only=="0" || $map_only==""){
 		$map_only_d="Full menu";
@@ -72,11 +72,11 @@ echo "<br>Main menu: $map_only_d";
 echo "<select name=\"map_only\" class=\"ui-state-default ui-corner-all formedge\">";
 	if ($map_only=="1") {
 		echo "<option value=\"0\">Full menu</option>
-			<option SELECTED value=\"1\">Map only</option>";
+			<option SELECTED value=\"1\">Main map</option>";
 		}
 	elseif ($map_only=="0" || $map_only=="") {
 		echo "<option SELECTED value=\"0\">Full menu</option>
-			<option value=\"1\">Map only</option>";
+			<option value=\"1\">Main map</option>";
 		}
 echo "</select>\n";
 	

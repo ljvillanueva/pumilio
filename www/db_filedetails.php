@@ -308,10 +308,12 @@ $sound_spectrogram = DB::column('SELECT `ImageFile` FROM `SoundsImages` WHERE Im
 	AND SoundID = ' . $SoundID);
 
 if ($sox_images==FALSE){
-	$sound_waveform=query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' AND ImageType='waveform-large'", $connection);
+	#$sound_waveform=query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' AND ImageType='waveform-large'", $connection);
+	$sound_waveform = DB::column('SELECT `ImageFile` FROM `SoundsImages` WHERE ImageType="waveform-large" AND SoundID = ' . $SoundID);
 	}
 else{
-	$spectrogram_palette=query_one("SELECT ColorPalette FROM SoundsImages WHERE SoundID='$SoundID' AND ImageType='spectrogram-large' AND ImageCreator='SoX' LIMIT 1", $connection);
+	#$spectrogram_palette=query_one("SELECT ColorPalette FROM SoundsImages WHERE SoundID='$SoundID' AND ImageType='spectrogram-large' AND ImageCreator='SoX' LIMIT 1", $connection);
+	$spectrogram_palette = DB::column('SELECT `ColorPalette` FROM `SoundsImages` WHERE ImageType="spectrogram-large" AND ImageCreator="SoX" LIMIT 1');
 	}
 
 if ($use_googleanalytics) {

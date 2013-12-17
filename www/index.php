@@ -40,13 +40,17 @@ require("include/get_jqueryui.php");
 if ($map_only=="1"){
 	require("include/index_map_head.php");
 	}
-else{
+#else{
 	echo "
 	<script type=\"text/javascript\">
 	$(function() {
 		$(\"#accordion\").accordion({
 			autoHeight: false,
-			Collapsible: true
+			Collapsible: true,\n";
+		if ($map_only=="1"){
+			echo "active: false\n";
+			}
+		echo "
 		});
 	});
 	</script>
@@ -173,10 +177,7 @@ else{
 	$DateLow1 = DB::column('SELECT DATE_FORMAT(`Date`, "%d-%b-%Y") FROM `Sounds` WHERE `SoundStatus`!=9 ' . $qf_check . ' ORDER BY `Date` LIMIT 1');
 	$DateHigh1 = DB::column('SELECT DATE_FORMAT(`Date`, "%d-%b-%Y") FROM `Sounds` WHERE `SoundStatus`!=9 ' . $qf_check . ' ORDER BY `Date` DESC LIMIT 1');
 
-	#$DateLow=query_one("SELECT DATE_FORMAT(Date,'%Y, %c-1, %e') FROM Sounds WHERE SoundStatus!='9' $qf_check ORDER BY Date LIMIT 1", $connection);
-	#$DateHigh=query_one("SELECT DATE_FORMAT(Date,'%Y, %c-1, %e') FROM Sounds WHERE SoundStatus!='9' $qf_check ORDER BY Date DESC LIMIT 1", $connection);
-	#$DateLow1=query_one("SELECT DATE_FORMAT(Date,'%d-%b-%Y') FROM Sounds WHERE SoundStatus!='9' $qf_check ORDER BY Date LIMIT 1", $connection);
-	#$DateHigh1=query_one("SELECT DATE_FORMAT(Date,'%d-%b-%Y') FROM Sounds WHERE SoundStatus!='9' $qf_check ORDER BY Date DESC LIMIT 1", $connection);
+	
 	#from http://jsbin.com/orora3/75/
 	echo "	
 	<script type=\"text/javascript\">
@@ -257,9 +258,7 @@ else{
 	
 	#Duration slider
 	#Get min and max
-	#$DurationLow=floor(query_one("SELECT DISTINCT Duration FROM Sounds WHERE Duration IS NOT NULL AND SoundStatus!='9' $qf_check ORDER BY Duration LIMIT 1", $connection));
 	$DurationLow = floor(DB::column('SELECT DISTINCT `Duration` FROM `Sounds` WHERE `Duration` IS NOT NULL AND `SoundStatus`!=9 ' . $qf_check . ' ORDER BY `Duration` LIMIT 1'));
-	#$DurationHigh=ceil(query_one("SELECT DISTINCT Duration FROM Sounds WHERE Duration IS NOT NULL AND SoundStatus!='9' $qf_check ORDER BY Duration DESC LIMIT 1", $connection));
 	$DurationHigh = ceil(DB::column('SELECT DISTINCT `Duration` FROM `Sounds` WHERE `Duration` IS NOT NULL AND `SoundStatus`!=9 ' . $qf_check . ' ORDER BY `Duration` DESC LIMIT 1'));
 
 	echo "<script type=\"text/javascript\">
@@ -278,7 +277,7 @@ else{
 			$( \"#endDuration\" ).val( $( \"#durationslider\" ).slider( \"values\", 1 ));
 			});
 		</script>";
-	}
+#	}
 
 if ($use_googleanalytics) {
 	echo $googleanalytics_code;
@@ -292,6 +291,7 @@ if ($map_only=="1"){
 else{
 	echo "<body>";
 	}
+
 ?>
 
 	<!--Blueprint container-->
@@ -310,11 +310,8 @@ else{
 
 			echo "<h4>$app_custom_text</h4>";
 
-			#$no_Collections=query_one("SELECT COUNT(*) FROM Collections", $connection);
 			$no_Collections = DB::column('SELECT COUNT(DISTINCT ColID) FROM `Sounds` WHERE SoundStatus!=9 ' . $qf_check);
-			#$no_sounds=query_one("SELECT COUNT(*) as no_sounds FROM Sounds WHERE SoundStatus!='9' $qf_check", $connection);
 			$no_sounds = DB::column('SELECT COUNT(*) FROM `Sounds` WHERE SoundStatus!=9 ' . $qf_check);
-			#$no_sites=query_one("SELECT COUNT(DISTINCT SiteID) FROM Sounds WHERE SoundStatus!='9' $qf_check", $connection);
 			$no_sites = DB::column('SELECT COUNT(DISTINCT SiteID) FROM `Sounds` WHERE SoundStatus!=9 ' . $qf_check);
 			
 			#Special when in iframe or inside another site
@@ -354,15 +351,10 @@ else{
 		if ($map_only=="1"){
 			echo "<hr noshade></div>";
 			require("include/index_map_body.php");
-			if ($pumilio_loggedin == TRUE) {
-				if ($pumilio_admin == TRUE || $allow_upload){
-					echo "<hr noshade>
-					<p><strong><a href=\"add.php\">Add files to the archive</a></strong><br>";
-					}
-				}
 			}
-		else{
-			echo "<!--JQuery accordion container-->
+			
+		#else{
+			echo "\n<!--JQuery accordion container-->
 			<div id=\"accordion\">";
 
 				echo "<h3><a href=\"#\">Main Menu</a></h3>
@@ -402,7 +394,6 @@ else{
 				echo "</div>";
 
 				#Compare sites
-				#$sidetoside_comp=query_one("SELECT Value from PumilioSettings WHERE Settings='sidetoside_comp'", $connection);
 				if ($sidetoside_comp=="1" || $sidetoside_comp=="") {
 					echo "<h3><a href=\"#\">Side-to-side comparison</a></h3>
 						<div>
@@ -412,7 +403,6 @@ else{
 					}
 
 				#Tag cloud
-				#$use_tags=query_one("SELECT Value from PumilioSettings WHERE Settings='use_tags'", $connection);
 				if ($use_tags=="1" || $use_tags=="") {
 					echo "<h3><a href=\"#\">Tag cloud</a></h3>
 						<div>
@@ -473,26 +463,7 @@ else{
 			 				}
 			 			}
 
-					#Deprecated
-					/*
-					if ($allow_upload) {
-						echo "<h3><a href=\"#\">Upload a file</a></h3>
-						<div>
-						<p>Upload a file to the system from your computer or from the web for
-							visualization and analysis. <br>
-							The files uploaded with this method
-							will not be added to the database.</p>
-						<p><form action=\"fileupload.php\" method=\"GET\">
-						<input type=submit value=\" Upload a file from your computer \" class=\"fg-button ui-state-default ui-corner-all\">
-						</form></p>
-				
-						<p><form action=\"file_from_web.php\" method=\"GET\">
-						<input type=submit value=\" Obtain a file from the web \" class=\"fg-button ui-state-default ui-corner-all\">
-						</form></p>
-						</div>\n";
-						}
-					*/
-
+					
 					echo "<h3><a href=\"#\">Upload site photographs</a></h3>
 					<div>
 					<p>Upload photographs of the sites to serve as a reference.</p>
@@ -505,7 +476,7 @@ else{
 			
 			
 				echo "</div>";
-			}
+			#}
 			?>
 
 		<br>
