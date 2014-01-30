@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Pumilio by ljvillanueva</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Pumilio</h1>
+          <h2>Pumilio: A Web-Based Management System for Ecological Recordings</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/ljvillanueva/pumilio/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/ljvillanueva/pumilio/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/ljvillanueva/pumilio" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a name="welcome-to-pumilio" class="anchor" href="#welcome-to-pumilio"><span class="octicon octicon-link"></span></a>Welcome to Pumilio</h1>
+
+<h2>
+<a name="version-261-is-out" class="anchor" href="#version-261-is-out"><span class="octicon octicon-link"></span></a>Version 2.6.1 is out!</h2>
+
+<p>Citation: Villanueva-Rivera, Luis J., and Bryan C. Pijanowski. 2012. Pumilio: A Web-Based Management System for Ecological Recordings. Bulletin of the Ecological Society of America 93: 71-81. doi: <a href="http://dx.doi.org/10.1890/0012-9623-93.1.71">10.1890/0012-9623-93.1.71</a></p>
+
+<p>Pumilio is a free and open source PHP/MySQL application for the management of sound archives and the visualization and manipulation of sound files. The system allows the user to load sound files in many formats, see the spectrogram of the sound, select regions of the sound for further analysis and insertion in a database, filtering, and many other manipulations.</p>
+
+<p>All that is needed to browse and navigate the archive in the application is a modern browser with JavaScript and either Adobe Flash or HTML5. This means that it will work with the iPad, iPhone, iPod Touch, and newer versions of current browsers without Flash installed. The application has been tested with all recent versions of Firefox, Safari, Internet Explorer, and Chrome.</p>
+
+<p>The concept of this application is to use a graphical front-end to edit, manipulate, convert, visualize and extract information of sound files. The code uses several scripts and command-line programs to achieve its purposes.</p>
+
+<p>The major intended audience of the application is bioacoustics research groups. Other groups that may be interested include people interested in sounds, musicians, wildlife and nature sounds fans, and many more.</p>
+
+<p><a href="http://pumilio.coquipr.com/pumilio/">Demo of Pumilio</a></p>
+
+<p>Have ideas, suggestions, or want to contribute code? All help is welcomed, just send an email to <a href="mailto:ljvillanueva@coquipr.com">ljvillanueva@coquipr.com</a> or using the Github system.</p>
+
+<p>A VMware virtual machine is available at this location (NOTICE: The zip file is 1.4 GB). The VM requires the free VMWare Player version 3 or higher (or another compatible software). Please read the README file or post your questions in the help forum.
+The application will continue to be in active development to add new features and improve its performance. If you want to contribute to the development, please visit the Developer Section of SourceForge.</p>
+
+<h2>
+<a name="r-package" class="anchor" href="#r-package"><span class="octicon octicon-link"></span></a>R package</h2>
+
+<p>A new package for R, <a href="http://cran.r-project.org/web/packages/pumilioR">pumilioR</a>, is available from CRAN that allows to query a Pumilio system, version 2.6.0 or newer, and get a data frame with the data. </p>
+
+<h2>
+<a name="download-pumilio" class="anchor" href="#download-pumilio"><span class="octicon octicon-link"></span></a>Download Pumilio</h2>
+
+<h2>
+<a name="change-history" class="anchor" href="#change-history"><span class="octicon octicon-link"></span></a>Change history</h2>
+
+<h3>
+<a name="the-last-release-to-date-is-261-sep-3-2013" class="anchor" href="#the-last-release-to-date-is-261-sep-3-2013"><span class="octicon octicon-link"></span></a>The last release to date is 2.6.1 (Sep 3, 2013)</h3>
+
+<p>New for release 2.6.1:</p>
+
+<ul>
+<li>Reconfigured options of the spectrogram images, in particular adding a way to change the FFT window.</li>
+<li>Moved some database calls to the abstraction layer.</li>
+</ul><p>New for release 2.6.0:</p>
+
+<ul>
+<li>New version of the xml file to allow query from pumilioR.</li>
+<li>Fixed a number of bugs.</li>
+</ul><p>New for release 2.5.4:</p>
+
+<ul>
+<li>Updated a deprecated sox effect (filter, replaced by sinc).</li>
+<li>Fixed a number of bugs.</li>
+</ul><p>New for release 2.5.3:</p>
+
+<ul>
+<li>Added a database layer to some of the code.</li>
+<li>Cleaned up some of the code.</li>
+<li>Fixed a number of bugs.</li>
+</ul><p>New for release 2.5.2:</p>
+
+<ul>
+<li>Fixed a few bugs in version 2.5.1 that did not pointed to the correct path in some scripts.</li>
+</ul><p>New for release 2.5.1:</p>
+
+<ul>
+<li>Fixed a few bugs in version 2.5.0 that did not followed the current permission system, could deny access even when set to allow it.</li>
+</ul><p>New for release 2.5.0:</p>
+
+<ul>
+<li>Added option for external authentication, in particular using Wordpress.</li>
+<li>Added option to always show particular KML layers in map.</li>
+<li>Cleaned up some of the code.</li>
+</ul><p>New for release 2.4.2:</p>
+
+<ul>
+<li>Fixed a bug in the add files system that parsed incorrectly the time when the file was made.</li>
+</ul><p>New for release 2.4.1:</p>
+
+<ul>
+<li>Exclusive use of v3 of the Google Maps API.</li>
+<li>Simplified size calculation for exporting files.</li>
+</ul><p>New for release 2.4.0:</p>
+
+<ul>
+<li>Added the option to use Google Maps v3. The version 2 has been deprecated by Google.</li>
+<li>Added a system for quality control by using technical details of the files, like filesize and duration, to detect problem files. In addition, if R is enabled in the server, additional indices are extracted.</li>
+<li>The process to add files to the database can be done in another machine.</li>
+<li>Added a license information field, with options for Copyright or CreativeCommons.</li>
+<li>Fixed a number of bugs.</li>
+</ul><p>New for release 2.3.1:</p>
+
+<ul>
+<li>Moved some menu options to make them easier to use.</li>
+<li>Fixed a number of bugs.</li>
+</ul><p>New for release 2.3.0:</p>
+
+<ul>
+<li>The system now will use all the resources of the server to draw the spectrogram and waveform images as well as to write the mp3 files when these files do not exist. This feature will take advantage of current multicore computers.</li>
+</ul><p>New for release 2.2.1:</p>
+
+<ul>
+<li>Fixed a small bugs that was using an old name for a database field in version 2.2.0.</li>
+</ul><p>New for release 2.2.0:</p>
+
+<ul>
+<li>Added an XML data export option. This is a first version, but should help when analyzing data using other languages or systems.</li>
+<li>New Pumilio Chorus index of Pumilio instances.</li>
+<li>Added quality control flags.</li>
+<li>Improved way to document the sensors used.</li>
+<li>Fixed small bugs and made improvements in the code.</li>
+</ul><p>New for release 2.1.2:</p>
+
+<ul>
+<li>Added site selection to the main menu.</li>
+<li>New script to convert flac files to wav files in the server (useful for analysis nodes).</li>
+<li>Fixed small bugs and made improvements in the code.</li>
+</ul><p>New for release 2.1.1:</p>
+
+<ul>
+<li>New HTML5 file uploader (plupload) that allows to easily upload many files and avoids the problems with PHP size limits.</li>
+<li>Added form to delete multiple files at the same time in gallery view (admin users only).</li>
+<li>Updated some libraries, like JQuery.</li>
+<li>Better advanced search by using date pickers and sliders.</li>
+<li>Notes for KML layers now appear as a JQuery UI dialog.</li>
+<li>Fixed small bugs and made improvements in the code.</li>
+</ul><p>New for release 2.1.0:</p>
+
+<ul>
+<li>Changed the way the files are organized. This was necessary to hold large archives with thousands of files and avoid problems of too many files in a directory.</li>
+<li>Fixed small bugs and made improvements in the code.</li>
+</ul><p>New for release 2.0.3:</p>
+
+<ul>
+<li>Added option to edit the metadata of all files in a collection or site.</li>
+<li>Temporary fix for Chrome when browsing summary view of files. Now tries first to play audio with Flash, HTML5 player was not working with multiple files.</li>
+<li>Fixed small bugs and made improvements in the code.</li>
+</ul><p>New for release 2.0.2:</p>
+
+<ul>
+<li>Replaced the JWPlayer with an older version to avoid a conflict with the analysis window.</li>
+<li>Added a maintenance mode (just add an empty file called 'maintenance' to the root of the application).</li>
+<li>Added option to delete a whole collection.</li>
+<li>Fixed code to display marks in mono and stereo files correctly.</li>
+<li>Added a default option for KML/KMZ layers.</li>
+<li>Fixed a bug in IE where pulldown menus did not work.</li>
+<li>Fixed small bugs and made improvements in the code.</li>
+</ul><p>New for release 2.0.1:</p>
+
+<ul>
+<li>Updated the R plugin for v. 2.x.</li>
+<li>Fixed bug when the spectrogram palette has not been selected.</li>
+</ul><p>New for release 2.0.0:</p>
+
+<ul>
+<li>New sound player that uses the HTML5 audio for newer browsers or Adobe Flash for versions that do not support HTML5 yet.</li>
+<li>Renamed the "sources" to "collections" as mayor organizational units. The database was changed too. This means that scripts and tools written for version 1.x will need to be updated for version 2.x.
+Helper scripts were updated to work with the new version.</li>
+<li>Users can now change the theme, which is stored in a cookie.</li>
+<li>Fixed many bugs and made improvements in the code.</li>
+</ul><p>New for release 1.7.0:</p>
+
+<ul>
+<li>Added a new feature: allowing admin users to specify KML/KMZ layers to have as options for the maps.</li>
+<li>Small improvements to the visualization window.</li>
+<li>Fixed small bugs and made small improvements.</li>
+</ul><p>New for release 1.6.2:</p>
+
+<ul>
+<li>Added an option to display the marks, or annotations, on a file by default.</li>
+<li>Fixed bug on the addmarks script that prevented it from working.</li>
+<li>Fixed other small bugs.</li>
+</ul><p>New for release 1.6.1:</p>
+
+<ul>
+<li>Fixed small bug where it shows the sql query in advanced search results.</li>
+</ul><p>New for release 1.6.0:</p>
+
+<ul>
+<li>Added a search tool for Sound ID or by characteristics like date, time, duration, site, sampling rate, and number of channels.</li>
+<li>Fixed other small bugs.</li>
+</ul><p>New for release 1.5.3:</p>
+
+<ul>
+<li>Fixed bugs in the administrative options that prevented some features.</li>
+</ul><p>New for release 1.5.2 (removed due to bug in administration options):</p>
+
+<ul>
+<li>Fixed bugs in the administrative options.</li>
+<li>Updated the process and check_auxfiles scripts.</li>
+<li>Fixed other small bugs.</li>
+</ul><p>New for release 1.5.1 (removed due to serious bug):</p>
+
+<ul>
+<li>All spectrograms will show the maximum acoustic frequency that it displays.</li>
+<li>An option for the maximum acoustic frequency for the spectrograms was added to the administration menu.</li>
+<li>The layout of the administration menu and browsing pages were improved.</li>
+<li>Fixed other small bugs.</li>
+</ul><p>New for release 1.5.0:</p>
+
+<ul>
+<li>New option to display the recordings side-by-side from up to three sites.</li>
+<li>Fixed other small bugs.</li>
+</ul><p>New for release 1.4.1:</p>
+
+<ul>
+<li>Easier way to import files from Wildlife Acoustics SongMeter boxes. Date and time are automatically determined from the filename.</li>
+<li>Added an option to find and delete orphaned files. This should be a rarely used option.</li>
+<li>Fixed other small bugs.</li>
+</ul><p>New for release 1.4.0:</p>
+
+<ul>
+<li>Cleaned up some of the code, moved some administrative options to the admin panel instead of the config.php file.</li>
+<li>Easier management of users.</li>
+<li>Added an easy way to import files from the field, for example, when using Wildlife Acoustic recorders. * The only data you need to provide is the site, the rest is determined from the file name.</li>
+<li>Replaced a JS plugin with a standard tag.</li>
+<li>Added a file export option. You can export all the files in a source or site to a tar or zip file with a csv file that contains the data of each file.</li>
+<li>Fixed other small bugs.</li>
+</ul><p>New for release 1.3.1:</p>
+
+<ul>
+<li>This version was removed due to serious bugs.</li>
+<li>New for release 1.3.0:</li>
+<li>Added a script job management system. Now you can schedule jobs on sample sets to be run in other computers.</li>
+<li>Fixed other small bugs.</li>
+</ul><p>New for release 1.2.3:</p>
+
+<ul>
+<li>Fixed a bug in the map browsing page. If the browser does not have JavaScript enabled, it will say so.</li>
+<li>Fixed other small bugs when JS is not enabled (which is not recommended) and styling.</li>
+</ul><p>New for release 1.2.2:</p>
+
+<ul>
+<li>Added a management window for the marks in the files.</li>
+<li>Fixed a bug in the version checking code.</li>
+<li>Fixed other small bugs.</li>
+</ul><p>New for release 1.2.1:</p>
+
+<ul>
+<li>Added a large viewing player when viewing the file details.</li>
+<li>Added the option for optional plugins. A sample one available in the plugin folder will run an R script on all the files of a source.</li>
+<li>Added an option to create a sample set of all the sources based on percentages.</li>
+<li>Small performance improvements to the code and the database.</li>
+<li>Fixed several bugs and other minor errors.</li>
+</ul><p>New for release 1.1:</p>
+
+<ul>
+<li>The administration area indicates when a new version is available.</li>
+<li>Added a maintenance option to check for missing data and to optimize the database.</li>
+<li>Since this software is intended for scientific use, a feature was added that allows to create sample sets from the sound files in the archive.</li>
+<li>Preview sound files (mp3) of files with a sampling rate of less than 44.1kHz should be smaller. This will also improve speed of the application.</li>
+<li>Small performance improvements to the code and the database.</li>
+<li>Fixed several bugs and other minor errors.</li>
+</ul><p>New for release 1.01:</p>
+
+<ul>
+<li>The sound archive can be browsed using a gallery of the spectrograms.</li>
+<li>An administrative option allows to create all the preview sounds and images for the files.</li>
+<li>Added an easy way to upgrade the database structure.</li>
+<li>Small performance improvements to the code and the database.</li>
+<li>Fixed several bugs and other minor errors.</li>
+</ul><p>New for release 1.0:</p>
+
+<ul>
+<li>Added a tagging system and a tag cloud to the homepage.</li>
+<li>The sound preview now displays the whole range of frequencies of the sound, up to the Nyquist frequency of the file.</li>
+<li>Added a progress bar when importing files from another database or spreadsheet.</li>
+<li>Small performance improvements.</li>
+<li>Fixed several bugs and other minor errors.</li>
+</ul><p>New for release 0.4.3:</p>
+
+<ul>
+<li>Added a GoogleMaps browsing option. Sounds can be selected by site and date using a GoogleMaps application.</li>
+<li>Browsing the sounds can now play a sound preview in mp3 format as well as display the spectrogram and waveform.</li>
+<li>User passwords can be recovered using email, if the server supports sending email.</li>
+<li>Fixed several bugs and other minor errors.</li>
+</ul><p>New for release 0.4.2:</p>
+
+<ul>
+<li>Added a MySQL-backed sound archive. Sounds can be uploaded one by one or imported from another database or a spreadsheet using comma-separated values.</li>
+<li>Added the JQuery UI Start theme for forms.</li>
+<li>Fixed several bugs and other minor errors.</li>
+<li>Now requires at least version 14.3.0 of SoX (included with Ubuntu 9.10).</li>
+</ul><p>New for release 0.3.2:</p>
+
+<ul>
+<li>Fixed several bugs and other minor errors.</li>
+<li>Sound file information is now parsed using sox or flac instead of audiolab.</li>
+<li>The list of file formats available is huge, depending on the local sox installation. My development machine (Ubuntu 9.10 with SoX v14.3.0) lists the following options: 8svx aif aifc aiff aiffc al amb au avi avr caf cdda cdr cvs cvsd cvu dat dvms f32 f4 f64 f8 fap ffmpeg flac fssd gsm hcom htk ima ircam la lpc lpc10 lu m4a mat mat4 mat5 maud mp2 mp3 mp4 mpg nist ogg paf prc pvf raw s1 s16 s2 s24 s3 s32 s4 s8 sb sd2 sds sf sl smp snd sndfile sndr sndt sou sox sph sw txw u1 u16 u2 u24 u3 u32 u4 u8 ub ul uw vms voc vorbis vox w64 wav wavpcm wmv wv wve xa xi</li>
+</ul><p>New for release 0.3.1:</p>
+
+<ul>
+<li>Fixed several bugs and other minor errors.</li>
+<li>The default media encoder is now LAME for mp3 files.</li>
+<li>Added an option to obtain files from other sound databases or from the web.</li>
+</ul>
+        </section>
+
+        <footer>
+          Pumilio is maintained by <a href="https://github.com/ljvillanueva">ljvillanueva</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
