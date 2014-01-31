@@ -16,14 +16,6 @@ Citation: Villanueva-Rivera, Luis J., and Bryan C. Pijanowski. 2012.
  Bulletin of the Ecological Society of America 93: 71-81.
  doi: [10.1890/0012-9623-93.1.71](http://dx.doi.org/10.1890/0012-9623-93.1.71)
  
-
-##Folder structure
-
-* www - contains the files that go in the webserver (i.e. /var/www/)
-* scripts - contains helper scripts that are run from the command line
-* tools - optional scripts that can be added to the www/tools/ folder to expand the visualization tool
-* plugins - optional scripts that are shown in the main menu
-
 ##Thanks to
 
 This application uses several other open source tools and programs like:
