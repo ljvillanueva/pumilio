@@ -6,9 +6,9 @@ Pumilio is a PHP/MySQL application that serves as a sound archive manager
  spectrogram of the sound, select regions of the sound for further
  analysis and insertion in a database, filter, and many other manipulations.
 
-http://pumilio.sourceforge.net
+http://ljvillanueva.github.io/pumilio
 
-Copyright (©) 2010-2013 Luis J. Villanueva-Rivera (ljvillanueva@coquipr.com)
+Copyright (©) 2010-2014 Luis J. Villanueva-Rivera (ljvillanueva@coquipr.com)
 Licensed under the GPLv3
 
 Citation: Villanueva-Rivera, Luis J., and Bryan C. Pijanowski. 2012.
@@ -66,5 +66,5 @@ To prevent access to the original sound files from the web (for example, someone
  For other distros or options, please consult your administrator.
  
 You can also visit the project page for more information: 
- http://pumilio.sourceforge.net
+ http://ljvillanueva.github.io/pumilio
 
