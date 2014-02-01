@@ -427,7 +427,7 @@ if ($use_googleanalytics) {
 
 			<?php
 			#Check last version
-			$last_ver=file("http://pumilio.sourceforge.net/cur_ver.txt", FILE_IGNORE_NEW_LINES);
+			$last_ver=file("http://ljvillanueva.github.io/pumilio/cur_ver.txt", FILE_IGNORE_NEW_LINES);
 			$last_ver=$last_ver[0];
 			$last_ver_e=explode(".",$last_ver);
 			#get this version
@@ -641,6 +641,9 @@ if ($use_googleanalytics) {
 
 					echo "<p><form method=\"GET\" action=\"admin_generate.php\">
 					<input type=submit value=\" Generate mp3 and image files \" class=\"fg-button ui-state-default ui-corner-all\"></form> <br><hr noshade>";
+					
+					echo "<p><form method=\"GET\" action=\"include/emptytmp.php\" target=\"tmp\" onsubmit=\"window.open('', 'tmp', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
+					<input type=submit value=\" Cleanup temp folder \" class=\"fg-button ui-state-default ui-corner-all\"></form> <br><hr noshade>";
 
 					#Check database values
 					echo "<p><form method=\"GET\" action=\"include/checkdb.php\" target=\"checkdb\" onsubmit=\"window.open('', 'checkdb', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">

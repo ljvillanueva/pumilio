@@ -78,6 +78,10 @@ require("check_admin.php");
 		query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('use_xml', '$value') 
 				ON DUPLICATE KEY UPDATE Value='$value'", $connection);
 				
+		$value = filter_var($_POST["xml_access"], FILTER_SANITIZE_STRING);
+		query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('xml_access', '$value') 
+				ON DUPLICATE KEY UPDATE Value='$value'", $connection);
+				
 		$value = filter_var($_POST["use_tags"], FILTER_SANITIZE_STRING);
 		query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('use_tags', '$value') 
 				ON DUPLICATE KEY UPDATE Value='$value'", $connection);

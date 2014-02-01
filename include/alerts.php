@@ -1,22 +1,12 @@
 <?php
 session_start();
 
-require("include/functions.php");
-
-$config_file = 'config.php';
-
-if (file_exists($config_file)) {
-	require("config.php");
-	}
-else {
-	header("Location: error.php?e=config");
-	die();
-	}
-
-require("include/apply_config.php");
+require("functions.php");
+require("../config.php");
+require("apply_config_include.php");
 
 $force_admin = TRUE;
-require("include/check_admin.php");
+require("check_admin.php");
 
 if (isset($_GET["op"])) {
 	$op=filter_var($_GET["op"], FILTER_SANITIZE_NUMBER_INT);
@@ -30,8 +20,8 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <head>
 <title>$app_custom_name</title>";
 
-require("include/get_css.php");
-require("include/get_jqueryui.php");
+require("get_css.php");
+require("get_jqueryui.php");
 ?>
 
 </head>
@@ -42,8 +32,8 @@ require("include/get_jqueryui.php");
 <?php
 	echo "<p>";
 	if ($op == 1){
-		delete_old('tmp/',3);
-		echo "<div class=\"success\" >Deleted temporary files older than 1 day. <a href=\"alerts.php?op=2\">Delete all temporary files</a>.</div>";
+		delete_old('../tmp/',3);
+		echo "<div class=\"success\" >Deleted temporary files older than 3 days. <a href=\"alerts.php?op=2\">Delete all temporary files</a>.</div>";
 		}
 	elseif ($op == 2){
 		delete_old('tmp/',0);
@@ -159,7 +149,7 @@ require("include/get_jqueryui.php");
 
 	if ($useR == TRUE){
 	#Test if the R and the packages are installed
-	exec($Rscript . ' include/R/test.R', $lastline, $R_retval);
+	exec($Rscript . ' R/test.R', $lastline, $R_retval);
 	#seewave_1.5.8.tar.gz uses tuneR and does not fail with fftw3
 	# signal, rpanel needed
 		if ($R_retval=="91") {
@@ -195,7 +185,7 @@ require("include/get_jqueryui.php");
 	unset($out, $retval);
 	#$tmpperms=substr(decoct(fileperms("$absolute_dir/tmp/")),2);
 	#if ($tmpperms!=777)
-	if (!is_dir("tmp/") || !is_writable("tmp/")) {
+	if (!is_dir("../tmp/") || !is_writable("../tmp/")) {
 		echo "<div class=\"error\"><strong>The server can not write to the temporary folder, tmp/, 
 			some features will not work.</strong> Please set the webserver as the owner of the
 			directory or change the permissions to read and write.</div>";
@@ -205,22 +195,22 @@ require("include/get_jqueryui.php");
 	unset($out, $retval);
 	#$tmpperms=substr(decoct(fileperms("$absolute_dir/sounds/")),2);
 	#if ($tmpperms!=777)
-	if (!is_dir("sounds/") || !is_writable("sounds/")) {
+	if (!is_dir("../sounds/") || !is_writable("../sounds/")) {
 		echo "<div class=\"error\"><strong>The server can not write to the archive folder, sounds/, 
 			some features will not work.</strong> Please set the webserver as the owner of the 
 			directory or change the permissions to read and write.</div>";
 		}
-	elseif (!is_dir("sounds/images") || !is_writable("sounds/images")) {
+	elseif (!is_dir("../sounds/images") || !is_writable("../sounds/images")) {
 		echo "<div class=\"error\"><strong>The server can not write to the archive folder, sounds/images,
 			some features will not work.</strong> Please set the webserver as the owner of the
 			directory or change the permissions to read and write.</div>";
 		}
-	elseif (!is_dir("sounds/previewsounds") || !is_writable("sounds/previewsounds")) {
+	elseif (!is_dir("../sounds/previewsounds") || !is_writable("../sounds/previewsounds")) {
 		echo "<div class=\"error\"><strong>The server can not write to the archive folder, sounds/previewsounds,
 			some features will not work.</strong> Please set the webserver as the owner of the
 			directory or change the permissions to read and write.</div>";
 		}
-	elseif (!is_dir("sounds/sounds") || !is_writable("sounds/sounds")) {
+	elseif (!is_dir("../sounds/sounds") || !is_writable("../sounds/sounds")) {
 		echo "<div class=\"error\"><strong>The server can not write to the archive folder, sounds/sounds,
 			some features will not work.</strong> Please set the webserver as the owner of the
 			directory or change the permissions to read and write.</div>";
@@ -230,7 +220,7 @@ require("include/get_jqueryui.php");
 	unset($out, $retval);
 	#$tmpperms=substr(decoct(fileperms("$absolute_dir/sitephotos/")),2);
 	#if ($tmpperms!=777)
-	if (!is_dir("sitephotos/") || !is_writable("sitephotos/")) {
+	if (!is_dir("../sitephotos/") || !is_writable("../sitephotos/")) {
 		echo "<div class=\"error\"><strong>The server can not write to the site photographs folder, sitephotos/,
 			some features will not work.</strong> Please set the webserver as the owner of the 
 			directory or change the permissions to read and write.</div>";

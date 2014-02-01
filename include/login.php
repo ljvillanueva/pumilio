@@ -5,44 +5,6 @@ require("functions.php");
 require("../config.php");
 require("apply_config_include.php");
 
-function authenticateUser($connection, $username, $password) {
-	// Test the username and password parameters
-	if (!isset($username) || !isset($password))
-		return false;
-
-	#Use plain text passwords
-	$enc_password = md5($password);
-
-	// Formulate the SQL find the user
-	$query = "SELECT * FROM Users WHERE UserName = '$username' AND UserPassword = '$enc_password' AND UserActive='1'";
-
-	// Execute the query
-	$result = mysqli_query($connection, $query)
-		or die ("Could not execute query. Please try again later.");
-
-	// exactly one row? then we have found the user
-	if (mysqli_num_rows($result) != 1)
-		return false;
-	else
-		return true;
-	}
-	
-function WordpressAuthenticateUser() {
-	// Test the username and password parameters
-	if (!file_exists($wordpress_require)) {
-		return false;
-		}
-	else {
-		require_once('../wp-blog-header.php');
-
-		if (is_user_logged_in()==TRUE){
-			return true;
-			}
-		else{
-			return false;
-			}
-		}
-	}
 
 $username=filter_var($_POST["username"], FILTER_SANITIZE_STRING);
 $password=filter_var($_POST["password"], FILTER_SANITIZE_STRING);

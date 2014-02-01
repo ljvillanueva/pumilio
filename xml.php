@@ -15,6 +15,22 @@ else {
 
 require("include/apply_config_xml.php");
 
+#XML head
+	echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
+	<pumilio>
+	<pumilio_xml_version>1.2</pumilio_xml_version>";
+	if ($app_admin_email==""){
+		$app_admin_email="unknown";
+		}
+	$pumilio_version = trim(file_get_contents($absolute_dir . '/include/version.txt', true));
+	echo "<pumilio_title>$app_custom_name</pumilio_title>
+	<pumilio_description>$app_custom_text</pumilio_description>
+	<pumilio_administrator_email>$app_admin_email</pumilio_administrator_email>
+	<pumilio_logo>$app_url/$app_logo</pumilio_logo>
+	<pumilio_url>$app_url</pumilio_url>
+	<pumilio_version>$pumilio_version</pumilio_version>\n";
+	
+	
 #Check if allowed
 #$use_xml=query_one("SELECT Value from PumilioSettings WHERE Settings='use_xml'", $connection);
 if ($use_xml==""){
@@ -23,28 +39,24 @@ if ($use_xml==""){
 
 #Allowed?
 if ($use_xml==0) {
+	echo "<pumilio_xml_access>FALSE</pumilio_xml_access>\n";
 	}
-else{
-
-	$type = filter_var($_GET["type"], FILTER_SANITIZE_STRING);
-		
-	#XML Format
-	echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
-	<pumilio>
-	<pumilio_xml_version>1.1</pumilio_xml_version>";
-	if ($app_admin_email==""){
-		$app_admin_email="unknown";
-		}
-	$pumilio_version = file_get_contents($absolute_dir . '/include/version.txt', true);
-	echo "<pumilio_title>$app_custom_name</pumilio_title>
-	<pumilio_description>$app_custom_text</pumilio_description>
-	<pumilio_administrator_email>$app_admin_email</pumilio_administrator_email>
-	<pumilio_logo>$app_url/$app_logo</pumilio_logo>
-	<pumilio_url>$app_url</pumilio_url>
-	<pumilio_version>$pumilio_version</pumilio_version>\n";
+elseif ($use_xml==1){
 	
+	if ($xml_access=="0") {
+		$login = filter_var($_GET["login"], FILTER_SANITIZE_STRING);
+		$login_exp = explode(":", $login);
+		if (!authenticateUser($connection, $login_exp[0], $login_exp[1])){
+			echo "<pumilio_xml_access>FALSE</pumilio_xml_access>\n";
+			echo "</pumilio>";
+			die();
+			}
+		}
+	echo "<pumilio_xml_access>TRUE</pumilio_xml_access>\n";
+	$type = filter_var($_GET["type"], FILTER_SANITIZE_STRING);
+
 	if ($type == ""){
-		
+
 		$query = "SELECT DISTINCT SiteID from Sounds WHERE Sounds.SoundStatus!='9'";
 		$result = mysqli_query($connection, $query)
 			or die (mysqli_error($connection));
@@ -74,7 +86,7 @@ else{
 				}
 			echo "</Sites>";
 			}
-		
+
 		$query = "SELECT DISTINCT ColID from Sounds WHERE Sounds.SoundStatus!='9'";
 		$result = mysqli_query($connection, $query)
 			or die (mysqli_error($connection));
@@ -102,7 +114,7 @@ else{
 				<URL>$MiscURL</URL>
 				<Notes>$Notes</Notes>
 				</collection>\n";
-	
+
 				}
 			echo "</Collections>";
 			}
@@ -132,7 +144,7 @@ else{
 		$result_s = mysqli_query($connection, $query_s)
 			or die (mysqli_error($connection));
 		$nrows_s = mysqli_num_rows($result_s);
-		
+
 		if ($nrows_s > 0) {
 			echo "<Sounds>";
 			for ($s=0;$s<$nrows_s;$s++) {
@@ -168,7 +180,8 @@ else{
 			echo "</Sounds>";
 			}
 		}
-	echo "</pumilio>";
 	}
+
+echo "</pumilio>";
 
 ?>
