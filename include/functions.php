@@ -600,7 +600,7 @@ function add_in_background($absolute_dir, $connection) {
 			}
 		require("config.php");
 		#$bg_processes = bgHowMany();
-		$bg_processes = query_one("SELECT COUNT(*) from FilesToAddMembers WHERE WHERE ReturnCode='2'", $connection);
+		$bg_processes = query_one("SELECT COUNT(*) from FilesToAddMembers WHERE ReturnCode='2'", $connection);
 
 		if($bg_processes < $cores_to_use) {
 			$random_value=mt_rand();
