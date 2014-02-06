@@ -232,20 +232,7 @@ $(function() {
 		</div>
 		<div class="span-4">
 			<?php
-			#count and next
-			echo "<p>";
-
-			if ($startid>1) {
-				$go_to=$startid-$how_many_to_show;
-				echo "<a href=\"browse_by_tag.php?Tag=$Tagq&startid=$go_to&order_by=$order_by&order_dir=$order_dir\"><img src=\"images/arrowleft.png\"></a> ";
-				}
-
-			echo "$startid - $endid_show of $no_sounds";
-
-			if ($endid_show<$no_sounds) {
-				$go_to=$startid+$how_many_to_show;
-				echo "<a href=\"browse_by_tag.php?Tag=$Tagq&startid=$go_to&order_by=$order_by&order_dir=$order_dir\"><img src=\"images/arrowright.png\"></a> ";
-				}
+				require("include/backforward.php");
 			?>
 		</div>
 		<div class="span-3">
@@ -337,21 +324,9 @@ $(function() {
 
 				?>
 				<div class="span-8">
-				<?php
-				#count and next
-				echo "<p>";
-
-				if ($startid>1) {
-					$go_to=$startid-$how_many_to_show;
-					echo "<a href=\"browse_by_tag.php?Tag=$Tagq&startid=$go_to&order_by=$order_by&order_dir=$order_dir\"><img src=\"images/arrowleft.png\"></a> ";
-					}
-
-				echo "$startid - $endid_show of $no_sounds";
-
-				if ($endid_show<$no_sounds) {
-					$go_to=$startid+$how_many_to_show;
-					echo "<a href=\"browse_by_tag.php?Tag=$Tagq&startid=$go_to&order_by=$order_by&order_dir=$order_dir\"><img src=\"images/arrowright.png\"></a> ";
-					}
+					<?php
+						require("include/backforward.php");
+			
 
 				echo "</div>
 				

@@ -29,7 +29,7 @@ if ($googlemaps_ver == "3"){
 ########################
 # GOOGLE MAPS v3
 ########################
-	echo "<script src=\"http://maps.googleapis.com/maps/api/js?key=$googlemaps3_key&sensor=false\" type=\"text/javascript\"></script>\n";
+	echo "<script src=\"http://maps.googleapis.com/maps/api/js?key=$googlemaps3_key&amp;sensor=false\" type=\"text/javascript\"></script>\n";
 	
 	echo "<script type=\"text/javascript\">
 		var infowindow = null;

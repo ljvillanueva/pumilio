@@ -20,3 +20,7 @@ body {font-size:85%;font-family:"Ubuntu","Helvetica Neue", Arial, Helvetica, san
 .formedge {margin-left: 20px !important;}
 
 #ui-datepicker-div { display: none; }
+
+.center { text-align: center }
+
+label {display: inline-block; width: 5em;}

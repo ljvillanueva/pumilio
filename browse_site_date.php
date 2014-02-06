@@ -239,20 +239,7 @@ $(function() {
 		</div>
 		<div class="span-4">
 			<?php
-			#count and next
-			echo "<p>";
-
-			if ($startid>1) {
-				$go_to=$startid-$how_many_to_show;
-				echo "<a href=\"browse_site_date.php?SiteID=$SiteID&Date=$QDate&startid=$go_to&order_by=$order_by&order_dir=$order_dir\"><img src=\"$app_url/images/arrowleft.png\"></a> ";
-				}
-
-			echo "$startid - $endid_show of $no_sounds";
-
-			if ($endid_show<$no_sounds) {
-				$go_to=$startid+$how_many_to_show;
-				echo "<a href=\"browse_site_date.php?SiteID=$SiteID&Date=$QDate&startid=$go_to&order_by=$order_by&order_dir=$order_dir\"><img src=\"$app_url/images/arrowright.png\"></a> ";
-				}
+				require("include/backforward.php");
 			?>
 		</div>
 		<div class="span-3">
@@ -337,25 +324,15 @@ $(function() {
 
 				?>
 				<div class="span-8">
-				<?php
-				#count and next
-				echo "<p>";
+					<?php
+						require("include/backforward.php");
+					?>
 
-				if ($startid>1) {
-					$go_to=$startid-$how_many_to_show;
-					echo "<a href=\"browse_site_date.php?SiteID=$SiteID&Date=$QDate&startid=$go_to&order_by=$order_by&order_dir=$order_dir\"><img src=\"$app_url/images/arrowleft.png\"></a> ";
-					}
-
-				echo "$startid - $endid_show of $no_sounds";
-
-				if ($endid_show<$no_sounds) {
-					$go_to=$startid+$how_many_to_show;
-					echo "<a href=\"browse_site_date.php?SiteID=$SiteID&Date=$QDate&startid=$go_to&order_by=$order_by&order_dir=$order_dir\"><img src=\"$app_url/images/arrowright.png\"></a> ";
-					}
-
-				echo "</div>
+				</div>
 				
-				<div class=\"span-6 last\">";
+				<div class="span-6 last">
+				
+				<?php
 
 				if (($no_sounds%$how_many_to_show)==0)
 					$no_pages=floor($no_sounds/$how_many_to_show)-1;

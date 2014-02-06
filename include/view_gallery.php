@@ -43,7 +43,8 @@ ob_flush(); flush();
 		$multicore = TRUE;
 		}
 
-	if ($multicore) {
+
+	if ($multicore == TRUE) {
 		$run_multicore_all = FALSE;
 		for ($c=0;$c<$nrows;$c++) {
 			$run_multicore = FALSE;
@@ -58,6 +59,7 @@ ob_flush(); flush();
 			#Check if there are images
 			$query_img = "SELECT COUNT(*) FROM SoundsImages WHERE SoundID='$SoundID'";
 			$sound_images=query_one($query_img, $connection);
+
 			if ($sox_images==FALSE){
 				if ($sound_images!=6) {
 					$run_multicore = TRUE;
@@ -134,7 +136,6 @@ ob_flush(); flush();
 			}
 
 
-
 		if ($run_multicore_all) {
 			$result_check = mysqli_query($connection, "SELECT SoundID FROM CheckAuxfiles")
 				or die (mysqli_error($connection));
@@ -158,7 +159,6 @@ ob_flush(); flush();
 
 				exec('chmod +x ' . $absolute_dir . '/tmp/' . $random_val . '/*', $out, $retval);
 				exec('chmod -R 777 ' . $absolute_dir . '/tmp/' . $random_val, $out, $retval);
-
 				$ps = run_in_background("cd $absolute_dir/tmp/$random_val; ./check_auxfiles_db.py $SoundID");
 
 				array_push($ps_running, $ps);

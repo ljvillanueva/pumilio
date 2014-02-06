@@ -36,6 +36,8 @@ if ($local == 1){
 		die();
 		}
 	}
+
+
 ?>
 
 	<!--Blueprint container-->
@@ -62,23 +64,23 @@ if ($local == 1){
 			if ($local == 1){
 				$dir = $localdir;
 				if (is_dir($dir) && opendir($dir)) {
-				echo "<strong>These files were in the local folder:</strong><div style=\"width:450px; height: 200px; overflow:auto;\">";
-				$handle = opendir($dir);
-				$files_to_process = array();
-				$files_to_process_counter=0;
-				while (false !== ($file = readdir($handle))) {
-			     	   if ($file != "." && $file != "..") {
-				 		echo "$file<br>\n";
-						array_push($files_to_process, $file);
-						$files_to_process_counter+=1;
-						}
-			   		 }
+					echo "<strong>These files were in the local folder:</strong><div style=\"width:450px; height: 200px; overflow:auto;\">";
+					$handle = opendir($dir);
+					$files_to_process = array();
+					$files_to_process_counter=0;
+					while (false !== ($file = readdir($handle))) {
+				     		if ($file != "." && $file != "..") {
+					 		echo "$file<br>\n";
+							array_push($files_to_process, $file);
+							$files_to_process_counter+=1;
+							}
+				   		 }
 					echo "</div><br><br>";
 			    		closedir($handle);
 			    		setcookie("localdir", $localdir, time()+(3600*24*30), $app_dir);
 					}
 				else {
-					echo "<div class=\"error\">Could not read folder with the files. Please go back and try again.</div><br><br>";
+					echo "<div class=\"error\">Could not read folder \"$localdir\" with the files. Please go back and try again.</div><br><br>";
 					}
 				}
 			else {

@@ -578,7 +578,7 @@ def getsounds(SoundID):
 	con.close ()
 	return result
 	
-def getmax_freq():
+def getmax_freq(nyquist):
 	#Open MySQL
 	try:
 		con = MySQLdb.connect(host=db_hostname, user=db_username, passwd=db_password, db=db_database)
@@ -590,7 +590,10 @@ def getmax_freq():
 	cursor.execute (query)
 	if cursor.rowcount == 1:
 		result = cursor.fetchone()
-		result = int(result[0])
+		if result[0] == "max":
+			result = nyquist
+		else:
+			result = int(result[0])			
 	else:
 		result = 0
 	cursor.close ()
@@ -813,9 +816,6 @@ def find_values(wave_pointer):
 # EXECUTE THE SCRIPT							#
 #########################################################################
 
-#Get max sampling rate to draw
-max_freq_draw=getmax_freq()
-
 #Get spectrogram palette
 spectrogram_palette = getspectrogram_palette()
 
@@ -859,6 +859,10 @@ if c4!=13:
 	#Check if stereo
 	no_channels = checkifstereo(item_wav)
 	status, sampling_rate = commands.getstatusoutput('soxi -r ' + item_wav)
+	
+	nyquist = int(sampling_rate) / 2
+	#Get max sampling rate to draw
+	max_freq_draw=getmax_freq(nyquist)
 
 	if no_channels == 2:
 		delmysql(SoundID)

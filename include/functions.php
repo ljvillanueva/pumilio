@@ -630,9 +630,28 @@ function add_in_background($absolute_dir, $connection) {
 			copy('include/add/soundcheck.py', $tmp_dir . '/soundcheck.py');
 			#exec('chmod +x ' . $tmp_dir . '/*', $out, $retval);
 			exec('cd ' . $tmp_dir . '; python add_to_pumiliodb.py > /dev/null 2> /dev/null & echo $!', $out, $retval);
+			#$thisPID = $out[0];
+			#$username = $_COOKIE["username"];
+			#query_one("INSERT INTO BackgroundProcs (PID, username) VALUES ('$thisPID', '$username')", $connection);
+			
+			#CREATE TABLE IF NOT EXISTS `BackgroundProcs` (`PID` int(11) NOT NULL, `username` varchar(40) NOT NULL, `starttime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, KEY `PID` (`PID`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;			
 			}
 		}
 	}
+
+
+
+#function running_pid($PID) {
+#	#Check if PID is running
+#	#From http://stackoverflow.com/a/9874592
+#	if (file_exists( "/proc/$PID" )){
+#		return true;
+#		}
+#	else{
+#		return false;
+#		}
+#	}
+
 
 
 function stats_in_background($absolute_dir, $connection) {

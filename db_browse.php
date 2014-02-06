@@ -287,41 +287,25 @@ $(function() {
 		</div>
 		<div class="span-4">
 			<?php
-			#count and next
-			echo "<p>";
-
-			if ($startid>1) {
-				$go_to=$startid-$how_many_to_show;
-				echo "<a href=\"$db_browse_link&ColID=$ColID&startid=$go_to&order_by=$order_by&order_dir=$order_dir&show_tags=$show_tags\"><img src=\"$app_url/images/arrowleft.png\"></a> ";
-				}
-
-			echo "$startid - $endid_show of $no_sounds";
-
-			if ($endid_show<$no_sounds) {
-				$go_to=$startid+$how_many_to_show;
-				echo "<a href=\"$db_browse_link&ColID=$ColID&startid=$go_to&order_by=$order_by&order_dir=$order_dir&show_tags=$show_tags\"><img src=\"$app_url/images/arrowright.png\"></a> ";
-				}
+				require("include/backforward.php");
 			?>
 		</div>
 		<div class="span-3">
 			<?php
 			#Order by sound name
-			echo "<p>Name <a href=\"$db_browse_link&ColID=$ColID&order_by=SoundName&order_dir=ASC&show_tags=$show_tags\"><img src=\"$app_url/images/arrowdown.png\"></a> <a href=\"$db_browse_link&ColID=$ColID&order_by=SoundName&order_dir=DESC\"><img src=\"$app_url/images/arrowup.png\"></a>";
-
+			echo "<p>Name <a href=\"$db_browse_link&ColID=$ColID&order_by=SoundName&order_dir=ASC&show_tags=$show_tags\"><img src=\"$app_url/images/arrowdown.png\"></a> <a href=\"$db_browse_link&ColID=$ColID&order_by=SoundName&order_dir=DESC\"><img src=\"$app_url/images/arrowup.png\"></a></p>";
 			?>
 		</div>
 		<div class="span-3">
 			<?php
 			#Order by sound date
-			echo "<p>Date <a href=\"$db_browse_link&ColID=$ColID&order_by=Date&order_dir=ASC&show_tags=$show_tags\"><img src=\"$app_url/images/arrowdown.png\"></a> <a href=\"$db_browse_link&ColID=$ColID&order_by=Date&order_dir=DESC\"><img src=\"$app_url/images/arrowup.png\"></a>";
-
+			echo "<p>Date <a href=\"$db_browse_link&ColID=$ColID&order_by=Date&order_dir=ASC&show_tags=$show_tags\"><img src=\"$app_url/images/arrowdown.png\"></a> <a href=\"$db_browse_link&ColID=$ColID&order_by=Date&order_dir=DESC\"><img src=\"$app_url/images/arrowup.png\"></a></p>";
 			?>
 		</div>
 		<div class="span-3 last">
 			<?php
 			#Order by sound duration
-			echo "<p>Display: <a href=\"$db_browse_link&ColID=$ColID&order_by=$order_by&order_dir=$order_dir&display_type=summary&startid=$startid&show_tags=$show_tags\" title=\"Display as summary\"><img src=\"$app_url/images/application_view_columns.png\" alt=\"Display as summary\"></a> <a href=\"$db_browse_link&ColID=$ColID&order_by=$order_by&order_dir=$order_dir&display_type=gallery&startid=$startid&show_tags=$show_tags\" title=\"Display as gallery\"><img src=\"$app_url/images/application_view_tile.png\" alt=\"Display as gallery\"></a>";
-
+			echo "<p>Display: <a href=\"$db_browse_link&ColID=$ColID&order_by=$order_by&order_dir=$order_dir&display_type=summary&startid=$startid&show_tags=$show_tags\" title=\"Display as summary\"><img src=\"$app_url/images/application_view_columns.png\" alt=\"Display as summary\"></a> <a href=\"$db_browse_link&ColID=$ColID&order_by=$order_by&order_dir=$order_dir&display_type=gallery&startid=$startid&show_tags=$show_tags\" title=\"Display as gallery\"><img src=\"$app_url/images/application_view_tile.png\" alt=\"Display as gallery\"></a></p>";
 			?>
 		</div>
 			<?php
@@ -349,10 +333,10 @@ $(function() {
 
 			if ($nrows>0) {
 				if ($display_type=="summary") {
-						require("include/view_summary.php");
+					require("include/view_summary.php");
 					}
 				elseif ($display_type=="gallery") {
-						require("include/view_gallery.php");
+					require("include/view_gallery.php");
 					}
 				}
 
@@ -391,20 +375,7 @@ $(function() {
 			?>
 			<div class="span-6">
 				<?php
-				#count and next
-				echo "<p>";
-
-				if ($startid>1) {
-					$go_to=$startid-$how_many_to_show;
-					echo "<a href=\"$db_browse_link&ColID=$ColID&startid=$go_to&order_by=$order_by&order_dir=$order_dir&show_tags=$show_tags\"><img src=\"$app_url/images/arrowleft.png\"></a> ";
-					}
-
-				echo "$startid - $endid_show of $no_sounds";
-
-				if ($endid_show<$no_sounds) {
-					$go_to=$startid+$how_many_to_show;
-					echo "<a href=\"$db_browse_link&ColID=$ColID&startid=$go_to&order_by=$order_by&order_dir=$order_dir&show_tags=$show_tags\"><img src=\"$app_url/images/arrowright.png\"></a> ";
-					}
+					require("include/backforward.php");
 				?>
 			</div>
 			<?php
