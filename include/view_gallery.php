@@ -157,9 +157,9 @@ ob_flush(); flush();
 				fwrite($fh, $stringData);
 				fclose($fh);
 
-				exec('chmod +x ' . $absolute_dir . '/tmp/' . $random_val . '/*', $out, $retval);
-				exec('chmod -R 777 ' . $absolute_dir . '/tmp/' . $random_val, $out, $retval);
-				$ps = run_in_background("cd $absolute_dir/tmp/$random_val; ./check_auxfiles_db.py $SoundID");
+				#exec('chmod +x ' . $absolute_dir . '/tmp/' . $random_val . '/*', $out, $retval);
+				#exec('chmod -R 777 ' . $absolute_dir . '/tmp/' . $random_val, $out, $retval);
+				$ps = run_in_background("cd $absolute_dir/tmp/$random_val; python /check_auxfiles_db.py $SoundID");
 
 				array_push($ps_running, $ps);
 
