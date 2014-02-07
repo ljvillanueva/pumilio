@@ -34,159 +34,161 @@ if ($mult_delete==TRUE){
 ob_flush(); flush();
 
 #CHECK if multicore can happen
-	unset($out, $retval);
-	exec($absolute_dir . '/include/check_auxfiles/check.py', $out, $retval);
-	if ($retval != 0) {
-		$multicore = FALSE;
-		}
-	elseif ($retval == 0) {
-		$multicore = TRUE;
-		}
+#	unset($out, $retval);
+#	exec($absolute_dir . '/include/check_auxfiles/check.py', $out, $retval);
+#	if ($retval != 0) {
+#		$multicore = FALSE;
+#		}
+#	elseif ($retval == 0) {
+#		$multicore = TRUE;
+#		}
+
+#temp fix
+$multicore = FALSE;
+
+#	if ($multicore == TRUE) {
+#		$run_multicore_all = FALSE;
+#		for ($c=0;$c<$nrows;$c++) {
+#			$run_multicore = FALSE;
+#			$run_multicore_count = 0;
+#			$row_c = mysqli_fetch_array($check_result);
+#			extract($row_c);
+#			
+#			$ColID=query_one("SELECT ColID FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
+#			$SiteID=query_one("SELECT SiteID FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
+#			$DirID=query_one("SELECT DirID FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
+
+#			#Check if there are images
+#			$query_img = "SELECT COUNT(*) FROM SoundsImages WHERE SoundID='$SoundID'";
+#			$sound_images=query_one($query_img, $connection);
+
+#			if ($sox_images==FALSE){
+#				if ($sound_images!=6) {
+#					$run_multicore = TRUE;
+#					}
+
+#				#check if spectrogram exists
+#				$query_img2 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform'", $connection);
+#				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img2")) {
+#					$run_multicore = TRUE;
+#					}
+
+#				$query_img3 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram'", $connection);
+#				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img3")) {
+#					$run_multicore = TRUE;
+#					}
+
+#				$query_img4 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform-small'", $connection);
+#				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img4")) {
+#					$run_multicore = TRUE;
+#					}
+
+#				$query_img5 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-small'", $connection);
+#				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img5"))	{
+#					$run_multicore = TRUE;
+#					}
+
+#				$query_img6 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform-large'", $connection);
+#				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img6"))	{
+#					$run_multicore = TRUE;
+#					}
+
+#				$query_img7 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-large'", $connection);
+#				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img7"))	{
+#					$run_multicore = TRUE;
+#					}
+#				}
+#			elseif ($sox_images==TRUE){
+#				if ($sound_images!=3) {
+#					$run_multicore = TRUE;
+#					}
+
+#				#check if spectrogram exists
+#				$query_img3 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram'", $connection);
+#				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img3")) {
+#					$run_multicore = TRUE;
+#					}
+
+#				$query_img5 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-small'", $connection);
+#				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img5"))	{
+#					$run_multicore = TRUE;
+#					}
+
+#				$query_img7 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-large'", $connection);
+#				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img7"))	{
+#					$run_multicore = TRUE;
+#					}
+#				}
+
+#			#MP3
+#			$AudioPreviewFilename=query_one("SELECT AudioPreviewFilename FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
+#			if (($AudioPreviewFilename=="") || (is_null($AudioPreviewFilename))) {
+#				$run_multicore = TRUE;
+#				}
+#			if (!is_file("$absolute_dir/sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename")) {
+#				$run_multicore = TRUE;
+#				}
+#			
+#			if ($run_multicore) {
+#				$result_c = mysqli_query($connection, "INSERT INTO CheckAuxfiles (`SoundID`) VALUES ('$SoundID')")
+#					or die (mysqli_error($connection));
+#				$run_multicore_all = TRUE;
+#				$run_multicore_count++;
+#				}
+#			}
 
 
-	if ($multicore == TRUE) {
-		$run_multicore_all = FALSE;
-		for ($c=0;$c<$nrows;$c++) {
-			$run_multicore = FALSE;
-			$run_multicore_count = 0;
-			$row_c = mysqli_fetch_array($check_result);
-			extract($row_c);
-			
-			$ColID=query_one("SELECT ColID FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
-			$SiteID=query_one("SELECT SiteID FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
-			$DirID=query_one("SELECT DirID FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
+#		if ($run_multicore_all) {
+#			$result_check = mysqli_query($connection, "SELECT SoundID FROM CheckAuxfiles")
+#				or die (mysqli_error($connection));
+#			$nrows_check = mysqli_num_rows($result_check);
+#			for ($r=0;$r<$nrows_check;$r++) {
+#				$row_check = mysqli_fetch_array($result_check);
+#				extract($row_check);
+#		
+#				$ps_running = array();
 
-			#Check if there are images
-			$query_img = "SELECT COUNT(*) FROM SoundsImages WHERE SoundID='$SoundID'";
-			$sound_images=query_one($query_img, $connection);
+#				$random_val=mt_rand();
+#				mkdir("tmp/$random_val", 0777);
+#				copy($absolute_dir . '/include/check_auxfiles/check_auxfiles_db.py', $absolute_dir . '/tmp/' . $random_val . '/check_auxfiles_db.py');
+#				copy($absolute_dir . '/include/check_auxfiles/svt.py', $absolute_dir . '/tmp/' . $random_val . '/svt.py');
+#		
+#				$myFile = $absolute_dir . '/tmp/' . $random_val . '/configfile.py';
+#				$fh = fopen($myFile, 'w') or die("can't open file");
+#				$stringData = "use_section=1\ndb_hostname='$host'\ndb_database='$database'\ndb_username='$user'\ndb_password='$password'\nserver_dir='" . $absolute_dir . "/sounds/'\ncur_dir='" . $absolute_dir . "/tmp/" . $random_val . "'\n";
+#				fwrite($fh, $stringData);
+#				fclose($fh);
 
-			if ($sox_images==FALSE){
-				if ($sound_images!=6) {
-					$run_multicore = TRUE;
-					}
+#				#exec('chmod +x ' . $absolute_dir . '/tmp/' . $random_val . '/*', $out, $retval);
+#				#exec('chmod -R 777 ' . $absolute_dir . '/tmp/' . $random_val, $out, $retval);
+#				$ps = run_in_background("cd $absolute_dir/tmp/$random_val; python /check_auxfiles_db.py $SoundID");
 
-				#check if spectrogram exists
-				$query_img2 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform'", $connection);
-				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img2")) {
-					$run_multicore = TRUE;
-					}
+#				array_push($ps_running, $ps);
 
-				$query_img3 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram'", $connection);
-				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img3")) {
-					$run_multicore = TRUE;
-					}
+#				mysqli_query($connection, "TRUNCATE TABLE `CheckAuxfiles`")
+#					or die (mysqli_error($connection));
+#				}
 
-				$query_img4 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform-small'", $connection);
-				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img4")) {
-					$run_multicore = TRUE;
-					}
-
-				$query_img5 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-small'", $connection);
-				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img5"))	{
-					$run_multicore = TRUE;
-					}
-
-				$query_img6 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform-large'", $connection);
-				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img6"))	{
-					$run_multicore = TRUE;
-					}
-
-				$query_img7 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-large'", $connection);
-				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img7"))	{
-					$run_multicore = TRUE;
-					}
-				}
-			elseif ($sox_images==TRUE){
-				if ($sound_images!=3) {
-					$run_multicore = TRUE;
-					}
-
-				#check if spectrogram exists
-				$query_img3 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram'", $connection);
-				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img3")) {
-					$run_multicore = TRUE;
-					}
-
-				$query_img5 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-small'", $connection);
-				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img5"))	{
-					$run_multicore = TRUE;
-					}
-
-				$query_img7 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-large'", $connection);
-				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img7"))	{
-					$run_multicore = TRUE;
-					}
-				}
-
-			#MP3
-			$AudioPreviewFilename=query_one("SELECT AudioPreviewFilename FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
-			if (($AudioPreviewFilename=="") || (is_null($AudioPreviewFilename))) {
-				$run_multicore = TRUE;
-				}
-			if (!is_file("$absolute_dir/sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename")) {
-				$run_multicore = TRUE;
-				}
-			
-			if ($run_multicore) {
-				$result_c = mysqli_query($connection, "INSERT INTO CheckAuxfiles (`SoundID`) VALUES ('$SoundID')")
-					or die (mysqli_error($connection));
-				$run_multicore_all = TRUE;
-				$run_multicore_count++;
-				}
-			}
-
-
-		if ($run_multicore_all) {
-			$result_check = mysqli_query($connection, "SELECT SoundID FROM CheckAuxfiles")
-				or die (mysqli_error($connection));
-			$nrows_check = mysqli_num_rows($result_check);
-			for ($r=0;$r<$nrows_check;$r++) {
-				$row_check = mysqli_fetch_array($result_check);
-				extract($row_check);
-		
-				$ps_running = array();
-
-				$random_val=mt_rand();
-				mkdir("tmp/$random_val", 0777);
-				copy($absolute_dir . '/include/check_auxfiles/check_auxfiles_db.py', $absolute_dir . '/tmp/' . $random_val . '/check_auxfiles_db.py');
-				copy($absolute_dir . '/include/check_auxfiles/svt.py', $absolute_dir . '/tmp/' . $random_val . '/svt.py');
-		
-				$myFile = $absolute_dir . '/tmp/' . $random_val . '/configfile.py';
-				$fh = fopen($myFile, 'w') or die("can't open file");
-				$stringData = "use_section=1\ndb_hostname='$host'\ndb_database='$database'\ndb_username='$user'\ndb_password='$password'\nserver_dir='" . $absolute_dir . "/sounds/'\ncur_dir='" . $absolute_dir . "/tmp/" . $random_val . "'\n";
-				fwrite($fh, $stringData);
-				fclose($fh);
-
-				#exec('chmod +x ' . $absolute_dir . '/tmp/' . $random_val . '/*', $out, $retval);
-				#exec('chmod -R 777 ' . $absolute_dir . '/tmp/' . $random_val, $out, $retval);
-				$ps = run_in_background("cd $absolute_dir/tmp/$random_val; python /check_auxfiles_db.py $SoundID");
-
-				array_push($ps_running, $ps);
-
-				mysqli_query($connection, "TRUNCATE TABLE `CheckAuxfiles`")
-					or die (mysqli_error($connection));
-				}
-
-			$ps_running_count = count($ps_running);
-			$ps_still_running = TRUE;
-		
-			while($ps_still_running == TRUE){
-				for ($p=0;$p<$ps_running_count;$p++) {
-					$this_ps = $ps_running[$p];
-					if(is_process_running($this_ps)){
-						$ps_still_running = TRUE;
-						}
-					else {
-						$ps_still_running = FALSE;
-						}
-					}
-				}
-			mysqli_commit($connection);
-			mysqli_close($connection);
-			sleep(1);
-			$connection = @mysqli_connect($host, $user, $password, $database);
-			}
-		}
+#			$ps_running_count = count($ps_running);
+#			$ps_still_running = TRUE;
+#		
+#			while($ps_still_running == TRUE){
+#				for ($p=0;$p<$ps_running_count;$p++) {
+#					$this_ps = $ps_running[$p];
+#					if(is_process_running($this_ps)){
+#						$ps_still_running = TRUE;
+#						}
+#					else {
+#						$ps_still_running = FALSE;
+#						}
+#					}
+#				}
+#			mysqli_commit($connection);
+#			mysqli_close($connection);
+#			sleep(1);
+#			$connection = @mysqli_connect($host, $user, $password, $database);
+#			}
+#		}
 
 $row_break_counter=0;
 for ($i=0;$i<$nrows;$i++) {

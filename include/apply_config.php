@@ -221,7 +221,9 @@ if ($login_wordpress == TRUE){
 	}
 
 #Check sox version
-$sox_version=query_one("SELECT Value from PumilioSettings WHERE Settings='sox_version'", $connection);
+#$sox_version=query_one("SELECT Value from PumilioSettings WHERE Settings='sox_version'", $connection);
+$sox_version = DB::column('SELECT Value FROM `PumilioSettings` WHERE Settings = "sox_version"');
+
 # using only forward of version 14.3.2 (w: 5000 h: )
 if ($sox_version == ""){
 	exec('sox --version', $soxout, $soxretval);
