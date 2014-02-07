@@ -122,11 +122,9 @@ else{
 	}
 	
 	
-if ($googlemaps_ver=="2") {
-	$googlemaps_key=query_one("SELECT Value from PumilioSettings WHERE Settings='googlemaps_key'", $connection);
-	}
-elseif ($googlemaps_ver=="3") {
-	$googlemaps3_key=query_one("SELECT Value from PumilioSettings WHERE Settings='googlemaps3_key'", $connection);
+if ($googlemaps_ver=="3") {
+	#$googlemaps3_key=query_one("SELECT Value from PumilioSettings WHERE Settings='googlemaps3_key'", $connection);
+	$googlemaps3_key = DB::column('SELECT Value FROM `PumilioSettings` WHERE Settings = "googlemaps3_key"');
 	}
 
 if (!isset($AudioPreviewFormat)){
@@ -165,6 +163,10 @@ if (!sessionAuthenticate($connection) && isset($_COOKIE["usercookie"])) {
 
 if (!isset($special_wrapper)){
 	$special_wrapper = FALSE;
+	}
+
+if (!isset($useR)){
+	$useR = FALSE;
 	}
 
 if ($useR == TRUE){
