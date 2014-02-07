@@ -156,7 +156,7 @@ if ($nrows_all_tags>0) {
 	
 #flush();
 #require("include/update_sites.php");
-if ($use_googlemaps=="1" || $use_googlemaps=="3") {
+if ($use_googlemaps=="3") {
 	#Get points from the database
 	$query_site = "SELECT * FROM Sites,Sounds WHERE SiteLat IS NOT NULL AND SiteLon IS NOT NULL
 				AND Sites.SiteID=Sounds.SiteID AND Sounds.SoundID='$SoundID' 
@@ -174,10 +174,15 @@ if ($use_googlemaps=="1" || $use_googlemaps=="3") {
 		}
 
 	if ($nrows_site>0) {
-		$SiteID=query_one("SELECT Sites.SiteID FROM Sites,Sounds WHERE Sites.SiteID=Sounds.SiteID AND Sounds.SoundID='$SoundID' LIMIT 1", $connection);
-		$SiteLat=query_one("SELECT SiteLat FROM Sites WHERE SiteID='$SiteID' LIMIT 1", $connection);
-		$SiteLon=query_one("SELECT SiteLon FROM Sites WHERE SiteID='$SiteID' LIMIT 1", $connection);
-		$SiteName=query_one("SELECT SiteName FROM Sites WHERE SiteID='$SiteID' LIMIT 1", $connection);
+		#$SiteID=query_one("SELECT Sites.SiteID FROM Sites,Sounds WHERE Sites.SiteID=Sounds.SiteID AND Sounds.SoundID='$SoundID' LIMIT 1", $connection);
+		$SiteID = DB::column('SELECT SiteID FROM `Sounds` WHERE SoundID = ' . $SoundID);
+		
+		#$SiteLat=query_one("SELECT SiteLat FROM Sites WHERE SiteID='$SiteID' LIMIT 1", $connection);
+		$SiteLat = DB::column('SELECT SiteLat FROM `Sites` WHERE SiteID = ' . $SiteID);
+		#$SiteLon=query_one("SELECT SiteLon FROM Sites WHERE SiteID='$SiteID' LIMIT 1", $connection);
+		$SiteLon = DB::column('SELECT SiteLon FROM `Sites` WHERE SiteID = ' . $SiteID);
+		#$SiteName=query_one("SELECT SiteName FROM Sites WHERE SiteID='$SiteID' LIMIT 1", $connection);
+		$SiteName = DB::column('SELECT SiteName FROM `Sites` WHERE SiteID = ' . $SiteID);
 
 		require("include/db_filedetails_map_head.php");
 		}
@@ -344,7 +349,7 @@ if ($use_googleanalytics) {
 </head>
 <?php
 
-if ($use_googlemaps=="1" || $use_googlemaps=="3") {
+if ($use_googlemaps=="3") {
 	echo "<body onload=\"initialize()\" onunload=\"GUnload()\">";
 	}
 else {
