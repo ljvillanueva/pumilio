@@ -301,11 +301,6 @@ require("include/get_jqueryui.php");
 						
 if ($t==9) {
 	echo "$(function() {
-		$(\"#tabs0\").tabs({ selected: 8 });
-		});";
-	}
-elseif ($t==8) {
-	echo "$(function() {
 		$(\"#tabs0\").tabs({ selected: 7 });
 		});";
 	}
@@ -467,8 +462,7 @@ if ($use_googleanalytics) {
 					<li><a href="#tabs-5">Export sound files</a></li>
 					<li><a href="#tabs-6">Weather data</a></li>
 					<li><a href="#tabs-7">Maintenance</a></li>
-					<li><a href="#tabs-8">System log</a></li>
-					<li><a href="#tabs-9">Quality Control</a></li>
+					<li><a href="#tabs-8">Quality Control</a></li>
 				</ul>
 			<div id="tabs-1">
 				<h4>Settings</h4>
@@ -634,6 +628,7 @@ if ($use_googleanalytics) {
 					require("include/weather_sites.php");
 				?>
 			</div>
+			
 			<div id="tabs-7">
 				<h4>Maintenance</h4>
 				<?php
@@ -644,19 +639,14 @@ if ($use_googleanalytics) {
 					
 					echo "<p><form method=\"GET\" action=\"include/emptytmp.php\" target=\"tmp\" onsubmit=\"window.open('', 'tmp', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
 					<input type=submit value=\" Cleanup temp folder \" class=\"fg-button ui-state-default ui-corner-all\"></form> <br><hr noshade>";
+					
+					echo "<p><form method=\"GET\" action=\"include/systemlog.php\" target=\"systemlog\" onsubmit=\"window.open('', 'systemlog', 'width=850,height=620,status=yes,resizable=yes,scrollbars=auto')\">
+					<input type=submit value=\" System log \" class=\"fg-button ui-state-default ui-corner-all\"></form><br><hr noshade>";
 
 					#Check database values
 					echo "<p><form method=\"GET\" action=\"include/checkdb.php\" target=\"checkdb\" onsubmit=\"window.open('', 'checkdb', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
 					<input type=submit value=\" Check database for missing data and optimize tables \" class=\"fg-button ui-state-default ui-corner-all\"></form>";
 					
-					#Delete orphan files
-					#FIX CANCEL BUG
-					#Fix new organizational search
-					/*					
-					echo "<p><form method=\"GET\" action=\"include/orphanedfiles.php\" target=\"orphans\" onsubmit=\"window.open('', 'orphans', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
-					<input type=submit value=\" Delete orphaned and temporary files \" class=\"fg-button ui-state-default ui-corner-all\"></form>";
-					*/
-
 					#Window to get disk used
 					echo "<p><form method=\"GET\" action=\"include/diskused.php\" target=\"disk\" onsubmit=\"window.open('', 'disk', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
 					<input type=submit value=\" Check disk usage \" class=\"fg-button ui-state-default ui-corner-all\"></form><br><hr noshade>";
@@ -676,13 +666,6 @@ if ($use_googleanalytics) {
 			
 			
 			<div id="tabs-8">
-				<h4>System log</h4>
-					<?php
-						require("include/systemlog.php");
-					?>
-			</div>
-			
-			<div id="tabs-9">
 				<h4>Quality control</h4>
 					<?php
 						require("include/qf.php");

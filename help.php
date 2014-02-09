@@ -9,6 +9,7 @@ if (file_exists($config_file)) {
     die();
 }
 
+require("include/functions.php");
 require("include/apply_config.php");
 
 echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">

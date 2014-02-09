@@ -24,165 +24,7 @@ else {
 
 ob_flush(); flush();
 
-#CHECK if multicore can happen
-	#unset($out, $retval);
-	#exec($absolute_dir . '/include/check_auxfiles/check.py', $out, $retval);
-	#if ($retval != 0) {
-	#	$multicore = FALSE;
-	#	}
-	#elseif ($retval == 0) {
-	#	$multicore = TRUE;
-	#	}
 
-	#temp fix, this method doesn't work
-	$multicore = FALSE;
-
-#	if ($multicore) {
-#		$run_multicore_all = FALSE;
-#		for ($c=0;$c<$nrows;$c++) {
-#			$run_multicore = FALSE;
-#			$run_multicore_count = 0;
-#			$row_c = mysqli_fetch_array($check_result);
-#			extract($row_c);
-#			
-#			$ColID=query_one("SELECT ColID FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
-#			$SiteID=query_one("SELECT SiteID FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
-#			$DirID=query_one("SELECT DirID FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
-
-#			#Check if there are images
-#			$query_img = "SELECT COUNT(*) FROM SoundsImages WHERE SoundID='$SoundID'";
-#			$sound_images=query_one($query_img, $connection);
-#			
-#			if ($sox_images==FALSE){
-#				if ($sound_images!=6) {
-#					$run_multicore = TRUE;
-#					}
-
-#				#check if spectrogram exists
-#				$query_img2 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform'", $connection);
-#				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img2")) {
-#					$run_multicore = TRUE;
-#					}
-
-#				$query_img3 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram'", $connection);
-#				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img3")) {
-#					$run_multicore = TRUE;
-#					}
-
-#				$query_img4 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform-small'", $connection);
-#				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img4")) {
-#					$run_multicore = TRUE;
-#					}
-
-#				$query_img5 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-small'", $connection);
-#				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img5"))	{
-#					$run_multicore = TRUE;
-#					}
-
-#				$query_img6 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform-large'", $connection);
-#				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img6"))	{
-#					$run_multicore = TRUE;
-#					}
-
-#				$query_img7 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-large'", $connection);
-#				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img7"))	{
-#					$run_multicore = TRUE;
-#					}
-#				}
-#			elseif ($sox_images==TRUE){
-#				if ($sound_images!=3) {
-#					$run_multicore = TRUE;
-#					}
-
-#				#check if spectrogram exists
-#				$query_img3 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram'", $connection);
-#				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img3")) {
-#					$run_multicore = TRUE;
-#					}
-
-#				$query_img5 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-small'", $connection);
-#				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img5"))	{
-#					$run_multicore = TRUE;
-#					}
-
-#				$query_img7 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-large'", $connection);
-#				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img7"))	{
-#					$run_multicore = TRUE;
-#					}
-#				}
-#						
-
-#			#MP3
-#			$AudioPreviewFilename=query_one("SELECT AudioPreviewFilename FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
-#			if (($AudioPreviewFilename=="") || (is_null($AudioPreviewFilename))) {
-#				$run_multicore = TRUE;
-#				}
-#			if (!is_file("$absolute_dir/sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename")) {
-#				$run_multicore = TRUE;
-#				}
-#			
-#			if ($run_multicore) {
-#				$result_c = mysqli_query($connection, "INSERT INTO CheckAuxfiles (`SoundID`) VALUES ('$SoundID')")
-#					or die (mysqli_error($connection));
-#				$run_multicore_all = TRUE;
-#				$run_multicore_count++;
-#				}
-#			}
-
-
-
-#		if ($run_multicore_all) {
-#			$result_check = mysqli_query($connection, "SELECT SoundID FROM CheckAuxfiles")
-#				or die (mysqli_error($connection));
-#			$nrows_check = mysqli_num_rows($result_check);
-#			for ($r=0;$r<$nrows_check;$r++) {
-#				$row_check = mysqli_fetch_array($result_check);
-#				extract($row_check);
-
-#				$ps_running = array();
-
-#				$random_val=mt_rand();
-#				mkdir("tmp/$random_val", 0777);
-#				copy($absolute_dir . '/include/check_auxfiles/check_auxfiles_db.py', $absolute_dir . '/tmp/' . $random_val . '/check_auxfiles_db.py');
-#				copy($absolute_dir . '/include/check_auxfiles/svt.py', $absolute_dir . '/tmp/' . $random_val . '/svt.py');
-#		
-#				$myFile = $absolute_dir . '/tmp/' . $random_val . '/configfile.py';
-#				$fh = fopen($myFile, 'w') or die("can't open file");
-#				$stringData = "use_section=1\ndb_hostname='$host'\ndb_database='$database'\ndb_username='$user'\ndb_password='$password'\nserver_dir='" . $absolute_dir . "/sounds/'\ncur_dir='" . $absolute_dir . "/tmp/" . $random_val . "'\n";
-#				fwrite($fh, $stringData);
-#				fclose($fh);
-
-#				#exec('chmod +x ' . $absolute_dir . '/tmp/' . $random_val . '/*', $out, $retval);
-#				#exec('chmod -R 777 ' . $absolute_dir . '/tmp/' . $random_val, $out, $retval);
-
-#				$ps = run_in_background("cd $absolute_dir/tmp/$random_val; python check_auxfiles_db.py $SoundID");
-
-#				array_push($ps_running, $ps);
-
-#				mysqli_query($connection, "TRUNCATE TABLE `CheckAuxfiles`")
-#					or die (mysqli_error($connection));
-#				}
-
-#			$ps_running_count = count($ps_running);
-#			$ps_still_running = TRUE;
-#		
-#			while($ps_still_running == TRUE){
-#				for ($p=0;$p<$ps_running_count;$p++) {
-#					$this_ps = $ps_running[$p];
-#					if(is_process_running($this_ps)){
-#						$ps_still_running = TRUE;
-#						}
-#					else {
-#						$ps_still_running = FALSE;
-#						}
-#					}
-#				}
-#			mysqli_commit($connection);
-#			mysqli_close($connection);
-#			sleep(1);
-#			$connection = @mysqli_connect($host, $user, $password, $database);
-#			}
-#		}
 		
 if ($mobile==TRUE) {
 	#HTML5 player
@@ -202,128 +44,30 @@ if ($mobile==TRUE) {
 
 
 		echo "<strong><a href=\"$db_filedetails_link&SoundID=$SoundID\">$SoundName</a></strong>\n";
-		#$ColID=query_one("SELECT ColID FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
 		$ColID = DB::column('SELECT ColID FROM `Sounds` WHERE SoundID = ' . $SoundID);
-		#$SiteID=query_one("SELECT SiteID FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
 		$SiteID = DB::column('SELECT SiteID FROM `Sounds` WHERE SoundID = ' . $SoundID);
-		#$DirID=query_one("SELECT DirID FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
 		$DirID = DB::column('SELECT DirID FROM `Sounds` WHERE SoundID = ' . $SoundID);
 
-		#Check if there are images
-		if ($multicore == FALSE) {
-			$makefigures=FALSE;
-			flush();
-			#$query_img = "SELECT COUNT(*) FROM SoundsImages WHERE SoundID='$SoundID'";
-			#$sound_images=query_one($query_img, $connection);
-			$sound_images = DB::column('SELECT COUNT(*) FROM `SoundsImages` WHERE SoundID = ' . $SoundID);
-
-			if ($sox_images==FALSE){
-				if ($sound_images!=6) {
-					$makefigures=TRUE;
-					}
-
-				#check if spectrogram exists
-				#$query_img2 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform'", $connection);
-				$query_img2 = DB::column('SELECT ImageFile FROM `SoundsImages` WHERE ImageType="waveform" AND SoundID = ' . $SoundID);
-				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img2")) {
-					$makefigures=TRUE;
-					}
-
-				#$query_img3 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram'", $connection);
-				$query_img3 = DB::column('SELECT ImageFile FROM `SoundsImages` WHERE ImageType="spectrogram" AND SoundID = ' . $SoundID);
-				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img3")) {
-					$makefigures=TRUE;
-					}
-
-				#$query_img4 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform-small'", $connection);
-				$query_img4 = DB::column('SELECT ImageFile FROM `SoundsImages` WHERE ImageType="waveform-small" AND SoundID = ' . $SoundID);
-				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img4")) {
-					$makefigures=TRUE;
-					}
-
-				#$query_img5 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-small'", $connection);
-				$query_img5 = DB::column('SELECT ImageFile FROM `SoundsImages` WHERE ImageType="spectrogram-small" AND SoundID = ' . $SoundID);
-				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img5"))	{
-					$makefigures=TRUE;
-					}
-
-				#$query_img6 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform-large'", $connection);
-				$query_img6 = DB::column('SELECT ImageFile FROM `SoundsImages` WHERE ImageType="waveform-large" AND SoundID = ' . $SoundID);
-				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img6"))	{
-					$makefigures=TRUE;
-					}
-
-				#$query_img7 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-large'", $connection);
-				$query_img7 = DB::column('SELECT ImageFile FROM `SoundsImages` WHERE ImageType="spectrogram-large" AND SoundID = ' . $SoundID);
-				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img7"))	{
-					$makefigures=TRUE;
-					}
-				}
-			elseif ($sox_images==TRUE){
-				if ($sound_images!=3) {
-					$makefigures=TRUE;
-					}
-
-				#check if spectrogram exists
-				#$query_img3 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram'", $connection);
-				$query_img3 = DB::column('SELECT ImageFile FROM `SoundsImages` WHERE ImageType="spectrogram" AND SoundID = ' . $SoundID);
-				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img3")) {
-					$makefigures=TRUE;
-					}
-
-				#$query_img5 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-small'", $connection);
-				$query_img5 = DB::column('SELECT ImageFile FROM `SoundsImages` WHERE ImageType="spectrogram-small" AND SoundID = ' . $SoundID);
-				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img5"))	{
-					$makefigures=TRUE;
-					}
-
-				#$query_img7 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-large'", $connection);
-				$query_img7 = DB::column('SELECT ImageFile FROM `SoundsImages` WHERE ImageType="spectrogram-large" AND SoundID = ' . $SoundID);
-				if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img7"))	{
-					$makefigures=TRUE;
-					}
-				}
-			
-			
-
-			if ($makefigures==TRUE) {
-				require("include/make_figs.php");
-				}
-			#MP3
-			if (($AudioPreviewFilename=="") || (is_null($AudioPreviewFilename))) {
-				#File does not exists, create
-				$AudioPreviewFilename=dbfile_mp3($OriginalFilename,$SoundFormat,$ColID,$DirID,$SamplingRate);
-				$query_mp3 = "UPDATE Sounds SET AudioPreviewFilename='$AudioPreviewFilename' WHERE SoundID='$SoundID'";
-				$result_mp3 = mysqli_query($connection, $query_mp3)
-					or die (mysqli_error($connection));
-				}
-			if (!is_file("$absolute_dir/sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename")) {
-				#File does not exists, create
-
-				#Check if dir exists
-				if (!is_dir("sounds/previewsounds/$ColID")) {
-					mkdir("sounds/previewsounds/$ColID", 0777);
-					}
-				if (!is_dir("sounds/previewsounds/$ColID/$DirID")) {
-					mkdir("sounds/previewsounds/$ColID/$DirID", 0777);
-					}
-
-				$AudioPreviewFilename=dbfile_mp3($OriginalFilename,$SoundFormat,$ColID,$DirID,$SamplingRate);
-				$query_mp3 = "UPDATE Sounds SET AudioPreviewFilename='$AudioPreviewFilename' WHERE SoundID='$SoundID'";
-				$result_mp3 = mysqli_query($connection, $query_mp3)
-					or die (mysqli_error($connection));
-				}
-			}
-			
 		$iplayer = $i + 1;
 
-		mysqli_commit($connection);
+		#mysqli_commit($connection);
 
-		#$AudioPreviewFilename=query_one("SELECT AudioPreviewFilename FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
-		$AudioPreviewFilename = DB::column('SELECT AudioPreviewFilename FROM `Sounds` WHERE SoundID = ' . $SoundID);
-		#$sound_spectrogram=query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' AND ImageType='spectrogram' LIMIT 1", $connection);
 		$sound_spectrogram = DB::column('SELECT ImageFile FROM `SoundsImages` WHERE ImageType="spectrogram" AND SoundID = ' . $SoundID);
-		
+		$sound_spectrogram_path = "sounds/images/$ColID/$DirID/$sound_spectrogram";
+
+		if (!is_file("$absolute_dir/$sound_spectrogram_path"))	{
+			$sound_spectrogram_path = "images/notready-medium.png";
+			}
+
+		$AudioPreviewFilename = DB::column('SELECT AudioPreviewFilename FROM `Sounds` WHERE SoundID = ' . $SoundID);
+		$AudioPreviewFormat = DB::column('SELECT AudioPreviewFormat FROM `Sounds` WHERE SoundID = ' . $SoundID);
+		$AudioPreview_path = "sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename";
+
+		if (!is_file("$absolute_dir/$AudioPreview_path"))	{
+			$AudioPreview_path = "NULL";
+			}
+
+
 		echo "\n<script type=\"text/javascript\">
 		//<![CDATA[
 		$(document).ready(function(){
@@ -331,7 +75,7 @@ if ($mobile==TRUE) {
 		$(\"#jquery_jplayer_$iplayer\").jPlayer({
 			ready: function (event) {
 				$(this).jPlayer(\"setMedia\", {
-					$AudioPreviewFormat: \"$app_url/sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename\"
+					$AudioPreviewFormat: \"$AudioPreview_path\"
 				})
 				},
 				volume: \"0.9\",
@@ -353,7 +97,7 @@ if ($mobile==TRUE) {
 		echo "<div id=\"jquery_jplayer_$iplayer\" class=\"jp-jplayer\"></div>\n";
 
 		echo "	<div style=\"height: 460px; width: 920px; position: relative;\">
-			<img src=\"$app_url/sounds/images/$ColID/$DirID/$sound_spectrogram\" width=\"920\" height=\"460\">";
+			<img src=\"$sound_spectrogram_path\" width=\"920\" height=\"460\">";
 
 		echo "	\n</div>
 			<div class=\"jp-audio\">
@@ -524,13 +268,10 @@ else {
 		echo "<div class=\"span-8 summary-left\">";
 
 		echo "<strong><a href=\"$db_filedetails_link&SoundID=$SoundID\">$SoundName</a></strong>";
-		#$ColID=query_one("SELECT ColID FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
 		$ColID = DB::column('SELECT ColID FROM `Sounds` WHERE SoundID = ' . $SoundID);
-		#$SiteID=query_one("SELECT SiteID FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
 		$SiteID = DB::column('SELECT SiteID FROM `Sounds` WHERE SoundID = ' . $SoundID);
 
 		#Check if there are images of the site
-		#$site_pics=query_one("SELECT COUNT(*) FROM SitesPhotos WHERE SiteID='$SiteID'", $connection);
 		$site_pics = DB::column('SELECT COUNT(*) FROM `SitesPhotos` WHERE SiteID = ' . $SiteID);
 		if ($site_pics>0) {
 			echo " <a href=\"#\" title=\"Show photographs of this site\" onclick=\"window.open('sitephotos.php?SiteID=$SiteID', 'pics', 'width=550,height=400,status=yes,resizable=yes,scrollbars=yes'); return false;\"><img src=\"images/image.png\" alt=\"Show photographs of this site\"></a>";
@@ -681,105 +422,27 @@ else {
 		#Check if there are images
 		flush();
 		
-		if ($multicore == FALSE) {
-			$makefigures=FALSE;
-			
-			#$query_img = "SELECT COUNT(*) FROM SoundsImages WHERE SoundID='$SoundID'";
-			#$sound_images=query_one($query_img, $connection);
-			$sound_images = DB::column('SELECT COUNT(*) FROM `SoundsImages` WHERE SoundID = ' . $SoundID);
 
-			if ($sound_images!=6) {
-				$makefigures=TRUE;
-				}
-
-			#check if spectrogram exists
-			#$query_img2 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform'", $connection);
-			$query_img2 = DB::column('SELECT ImageFile FROM `SoundsImages` WHERE ImageType="waveform" AND SoundID = ' . $SoundID);
-			if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img2")) {
-				$makefigures=TRUE;
-				}
-
-			#$query_img3 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram'", $connection);
-			$query_img3 = DB::column('SELECT ImageFile FROM `SoundsImages` WHERE ImageType="spectrogram" AND SoundID = ' . $SoundID);
-			if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img3")) {
-				$makefigures=TRUE;
-				}
-
-			#$query_img4 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform-small'", $connection);
-			$query_img4 = DB::column('SELECT ImageFile FROM `SoundsImages` WHERE ImageType="waveform-small" AND SoundID = ' . $SoundID);
-			if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img4")) {
-				$makefigures=TRUE;
-				}
-
-			#$query_img5 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-small'", $connection);
-			$query_img5 = DB::column('SELECT ImageFile FROM `SoundsImages` WHERE ImageType="spectrogram-small" AND SoundID = ' . $SoundID);
-			if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img5"))	{
-				$makefigures=TRUE;
-				}
-
-			#$query_img6 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform-large'", $connection);
-			$query_img6 = DB::column('SELECT ImageFile FROM `SoundsImages` WHERE ImageType="waveform-large" AND SoundID = ' . $SoundID);
-			if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img6"))	{
-				$makefigures=TRUE;
-				}
-
-			#$query_img7 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-large'", $connection);
-			$query_img7 = DB::column('SELECT ImageFile FROM `SoundsImages` WHERE ImageType="spectrogram-large" AND SoundID = ' . $SoundID);
-			if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img7"))	{
-				$makefigures=TRUE;
-				}
-
-
-			if ($makefigures==TRUE) {
-				require("include/make_figs.php");
-				}
-
-			#MP3
-			if (($AudioPreviewFilename=="") || (is_null($AudioPreviewFilename))) {
-				#File does not exists, create
-				$AudioPreviewFilename=dbfile_mp3($OriginalFilename,$SoundFormat,$ColID,$DirID,$SamplingRate);
-				$query_mp3 = "UPDATE Sounds SET AudioPreviewFilename='$AudioPreviewFilename' WHERE SoundID='$SoundID'";
-				$result_mp3 = mysqli_query($connection, $query_mp3)
-					or die (mysqli_error($connection));
-				}
-			if (!is_file("$absolute_dir/sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename")) {
-				#File does not exists, create
-	
-				#Check if dir exists
-				if (!is_dir("sounds/previewsounds/$ColID")) {
-					mkdir("sounds/previewsounds/$ColID", 0777);
-					}
-				if (!is_dir("sounds/previewsounds/$ColID/$DirID")) {
-					mkdir("sounds/previewsounds/$ColID/$DirID", 0777);
-					}
-		
-				$AudioPreviewFilename=dbfile_mp3($OriginalFilename,$SoundFormat,$ColID,$DirID,$SamplingRate);
-				$query_mp3 = "UPDATE Sounds SET AudioPreviewFilename='$AudioPreviewFilename' WHERE SoundID='$SoundID'";
-				$result_mp3 = mysqli_query($connection, $query_mp3)
-					or die (mysqli_error($connection));
-				}
-			}
-	
-			echo "</div>
-				<div class=\"span-16 last summary-right\">\n";
+		echo "</div>
+			<div class=\"span-16 last summary-right\">\n";
 
 		$iplayer = $i + 1;
 
 		mysqli_commit($connection);
 
-		#$AudioPreviewFilename=query_one("SELECT AudioPreviewFilename FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
-		$AudioPreviewFilename = DB::column('SELECT AudioPreviewFilename FROM `Sounds` WHERE SoundID = ' . $SoundID);
-		#$ColID=query_one("SELECT ColID FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
-		$ColID = DB::column('SELECT ColID FROM `Sounds` WHERE SoundID = ' . $SoundID);
-		#$sound_spectrogram=query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' AND ImageType='spectrogram' LIMIT 1", $connection);
 		$sound_spectrogram = DB::column('SELECT ImageFile FROM `SoundsImages` WHERE ImageType="spectrogram" AND SoundID = ' . $SoundID);
-			
-		
-		
-		if ($sound_spectrogram==""){
-			mysqli_commit($connection);
-			#$sound_spectrogram=query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' AND ImageType='spectrogram'", $connection);
-			$sound_spectrogram = DB::column('SELECT ImageFile FROM `SoundsImages` WHERE ImageType="spectrogram" AND SoundID = ' . $SoundID);
+		$sound_spectrogram_path = "sounds/images/$ColID/$DirID/$sound_spectrogram";
+
+		if (!is_file("$absolute_dir/$sound_spectrogram_path"))	{
+			$sound_spectrogram_path = "images/notready-medium.png";
+			}
+
+		$AudioPreviewFilename = DB::column('SELECT AudioPreviewFilename FROM `Sounds` WHERE SoundID = ' . $SoundID);
+		$AudioPreviewFormat = DB::column('SELECT AudioPreviewFormat FROM `Sounds` WHERE SoundID = ' . $SoundID);
+		$AudioPreview_path = "sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename";
+
+		if (!is_file("$absolute_dir/$AudioPreview_path"))	{
+			$AudioPreview_path = "NULL";
 			}
 
 		echo "\n<script type=\"text/javascript\">
@@ -789,7 +452,7 @@ else {
 			$(\"#jquery_jplayer_$iplayer\").jPlayer({
 				ready: function () {
 					$(this).jPlayer(\"setMedia\", {
-						$AudioPreviewFormat: \"$app_url/sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename\"
+						$AudioPreviewFormat: \"$AudioPreview_path\"
 					})
 				},
 				volume: \"0.9\",
@@ -811,7 +474,7 @@ else {
 		echo "<div id=\"jquery_jplayer_$iplayer\" class=\"jp-jplayer\"></div>\n";
 
 		echo "	<div style=\"height: 300px; width: 600px; position: relative;\">
-			<img src=\"$app_url/sounds/images/$ColID/$DirID/$sound_spectrogram\" alt=\"Spectrogram\">";
+			<img src=\"$sound_spectrogram_path\" alt=\"Spectrogram\">";
 
 		echo "	\n</div>
 			<div class=\"jp-audio\">
