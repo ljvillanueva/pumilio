@@ -74,6 +74,7 @@ if (!isset($googlemaps_ver)){
 	$googlemaps_ver = "";
 	}
 
+
 if ($googlemaps_ver=="") {
 	if ($use_googlemaps == "3"){
 		$googlemaps_ver="3";
@@ -96,6 +97,11 @@ else{
 		}
 	}
 	
+
+if (!isset($special_noprocess)){
+	$special_noprocess = FALSE;
+	}
+
 	
 if ($googlemaps_ver=="3") {
 	$googlemaps3_key = DB::column('SELECT Value FROM `PumilioSettings` WHERE Settings = "googlemaps3_key"');

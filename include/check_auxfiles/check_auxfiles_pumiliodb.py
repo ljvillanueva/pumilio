@@ -38,6 +38,7 @@ import shutil
 import hashlib
 import types
 import MySQLdb
+import linecache
 
 # Place "global" variables in the namespace
 db_hostname=linecache.getline('configfile.php', 2)
@@ -69,34 +70,35 @@ if os.path.exists(server_dir + 'sounds/previewsounds')==0:
 	print "\n \n Could not find the previewsounds/ directory. Check your settings and try again.\n"
 	sys.exit(1)
 
+cur_dir=os.getcwd()
+
 #########################################################################
 # FUNCTION DECLARATIONS							#
 #########################################################################
 
+# Implementation of Ticker class
+# Creates a progress bar made of points to indicate that the script is working
+class Ticker(threading.Thread):
+    def __init__(self, msg):
+	threading.Thread.__init__(self)
+	self.msg = msg
+	self.event = threading.Event()
+    def __enter__(self):
+	self.start()
+    def __exit__(self, ex_type, ex_value, ex_traceback):
+	self.event.set()
+	self.join()
+    def run(self):
+	sys.stdout.write(self.msg)
+	while not self.event.isSet():
+	    sys.stdout.write(".")
+	    sys.stdout.flush()
+	    self.event.wait(1)
+
 #Extract wav from FLAC
-def extractflac(item_flac, FileFormat):
-	if FileFormat == 'flac':
-		item_wav = item_flac[:-5] + '.wav'
-		status, output = commands.getstatusoutput('flac -dFf ' + item_flac + ' -o ' + item_wav)
-		if status != 0:
-			print " "
-			print "There was a problem processing " + item_flac + "!"
-			print output
-			item_wav = 2
-	else:
-		FileFormat_len = len(FileFormat)
-		item_wav = item_flac[:-FileFormat_len] + 'wav'
-		status, output = commands.getstatusoutput('sox ' + item_flac + ' ' + item_wav)
-		if status != 0:
-			item_wav = 0
-	return item_wav
-	
-#Extract wav from another using sox
-def extractsox(item, item_flac, item_format):
-	suffix_len = len(item_format)
-	suffix_len1 = suffix_len + 1
-	item_wav = item_flac[:-suffix_len1] + '.wav'
-	status, output = commands.getstatusoutput('sox ' + item + ' ' + cur_dir + '/' + item_wav)
+def extractflac(item, item_flac):
+	item_wav = item_flac[:-5] + '.wav'
+	status, output = commands.getstatusoutput('flac -dFf ' + item + ' -o ' + cur_dir + '/' + item_wav)
 	if status != 0:
 		print " "
 		print "There was a problem processing " + item_flac + "!"
@@ -374,28 +376,28 @@ def makemp3(SoundID, item_wav, item_flac):
 
 def cleanup(server_dir, colID, DirID, item_flac, newpng, newmp3):
 	pathToUse = server_dir
-	pathToPNG = pathToUse + 'sounds/images/' + colID + '/' + DirID + '/'
-	pathToMP3 = pathToUse + 'sounds/previewsounds/' + colID + '/' + DirID + '/'
-	pathToSound = pathToUse + 'sounds/sounds/' + colID + '/' + DirID + '/'
+	pathToPNG = pathToUse + 'images/' + colID + '/' + DirID + '/'
+	pathToMP3 = pathToUse + 'previewsounds/' + colID + '/' + DirID + '/'
+	pathToSound = pathToUse + 'sounds/' + colID + '/' + DirID + '/'
 
-	if os.path.exists(pathToUse + 'sounds/images/' + colID)==0:
-		status, output = commands.getstatusoutput('mkdir ' + pathToUse + 'sounds/images/' + colID)
+	if os.path.exists(pathToUse + 'images/' + colID)==0:
+		status, output = commands.getstatusoutput('mkdir ' + pathToUse + 'images/' + colID)
 		if status != 0:
 			print output
                        	sys.exit(1)
-		status, output = commands.getstatusoutput('chmod 777 ' + pathToUse + 'sounds/images/' + colID)
+		status, output = commands.getstatusoutput('chmod 777 ' + pathToUse + 'images/' + colID)
 	if os.path.exists(pathToPNG)==0:
 		status, output = commands.getstatusoutput('mkdir ' + pathToPNG)
 		if status != 0:
 			print output
                        	sys.exit(1)
 		status, output = commands.getstatusoutput('chmod 777 ' + pathToPNG)
-	if os.path.exists(pathToUse + 'sounds/previewsounds/' + colID)==0:
-		status, output = commands.getstatusoutput('mkdir ' + pathToUse + 'sounds/previewsounds/' + colID)
+	if os.path.exists(pathToUse + 'previewsounds/' + colID)==0:
+		status, output = commands.getstatusoutput('mkdir ' + pathToUse + 'previewsounds/' + colID)
 		if status != 0:
 			print output
                        	sys.exit(1)
-		status, output = commands.getstatusoutput('chmod 777 ' + pathToUse + 'sounds/previewsounds/' + colID)
+		status, output = commands.getstatusoutput('chmod 777 ' + pathToUse + 'previewsounds/' + colID)
 	if os.path.exists(pathToMP3)==0:
 		status, output = commands.getstatusoutput('mkdir ' + pathToMP3)
 		if status != 0:
@@ -414,6 +416,15 @@ def cleanup(server_dir, colID, DirID, item_flac, newpng, newmp3):
 		if status != 0:
 			print output
 			sys.exit(1)
+	#delete the local files
+	status, output = commands.getstatusoutput('rm -f *.wav')
+	if status != 0:
+		print output
+        	sys.exit(1)
+	status, output = commands.getstatusoutput('rm -f ' + item_flac)
+	if status != 0:
+		print output
+        	sys.exit(1)
 	return
 
 def fileExists(f):
@@ -446,6 +457,7 @@ def insertmp3(SoundID, mp3filename):
 		print "Error %d: %s" % (e.args[0], e.args[1])
 		sys.exit (1)
 	cursor = con.cursor()
+	con.autocommit(True)
 	query = "UPDATE Sounds SET AudioPreviewFilename=" + \
 	`mp3filename` + " WHERE SoundID=" + SoundID
 	cursor.execute (query)
@@ -463,6 +475,7 @@ def insertmd5(SoundID, filemd5):
 		print "Error %d: %s" % (e.args[0], e.args[1])
 		sys.exit (1)
 	cursor = con.cursor()
+	con.autocommit(True)
 	query = "UPDATE Sounds SET MD5_hash=" + \
 	`filemd5` + " WHERE SoundID=" + \
 	`SoundID`
@@ -481,6 +494,7 @@ def insert_filesize(SoundID, FileSize):
 		print "Error %d: %s" % (e.args[0], e.args[1])
 		sys.exit (1)
 	cursor = con.cursor()
+	con.autocommit(True)
 	query = "UPDATE Sounds SET FileSize=" + \
 	`FileSize` + " WHERE SoundID=" + \
 	`SoundID`
@@ -575,13 +589,14 @@ def delmysql(SoundID):
 		print "Error %d: %s" % (e.args[0], e.args[1])
 		sys.exit (1)
 	cursor = con.cursor()
+	con.autocommit(True)
 	cursor.execute("""DELETE FROM SoundsImages WHERE SoundID=%s""", (SoundID,))
 	#Close MySQL
 	cursor.close ()
 	con.close ()
 	return
-
-def getsounds(SoundID):
+	
+def getallsounds():
 	#Open MySQL
 	try:
 		con = MySQLdb.connect(host=db_hostname, user=db_username, passwd=db_password, db=db_database)
@@ -589,18 +604,16 @@ def getsounds(SoundID):
 		print "Error %d: %s" % (e.args[0], e.args[1])
 		sys.exit (1)
 	cursor = con.cursor()
-	query = "SELECT SoundID, ColID, DirID, OriginalFilename, SoundFormat FROM Sounds WHERE SoundID='" + SoundID + "' LIMIT 1"
+	query = "SELECT SoundID, ColID, DirID, OriginalFilename, SoundFormat FROM Sounds WHERE SoundFormat='flac' AND SoundStatus!='9' ORDER BY RAND()"
 	cursor.execute (query)
-	if cursor.rowcount == 0:
-		print "\nSoundID Not found\n"
-		sys.exit(0)
-	else:
-		result = cursor.fetchone()
+	results = cursor.fetchall()
 	cursor.close ()
 	con.close ()
-	return result
+	return results
 	
-def getmax_freq():
+	
+
+def getmax_freq(nyquist):
 	#Open MySQL
 	try:
 		con = MySQLdb.connect(host=db_hostname, user=db_username, passwd=db_password, db=db_database)
@@ -612,12 +625,16 @@ def getmax_freq():
 	cursor.execute (query)
 	if cursor.rowcount == 1:
 		result = cursor.fetchone()
-		result = int(result[0])
+		if result[0] == "max":
+			result = nyquist
+		else:
+			result = int(result[0])			
 	else:
 		result = 0
 	cursor.close ()
 	con.close ()
 	return result
+
 
 
 def getspectrogram_palette():
@@ -638,6 +655,8 @@ def getspectrogram_palette():
 	cursor.close ()
 	con.close ()
 	return result
+
+
 
 def checkimages(SoundID):
 	#Open MySQL
@@ -687,42 +706,42 @@ def checkpngfiles(SoundID, ColID, DirID):
 	if cursor.rowcount == 1:
 		this_image = cursor.fetchone()
 		this_image = this_image[0]
-		if fileExists(server_dir + 'sounds/images/' + ColID + '/' + DirID + '/' + this_image):
+		if fileExists(server_dir + 'images/' + ColID + '/' + DirID + '/' + this_image):
 			check_val=check_val+1
 	#
 	cursor.execute("""SELECT ImageFile FROM SoundsImages WHERE ImageType=%s AND SoundID=%s""", ("spectrogram", SoundID,))
 	if cursor.rowcount == 1:
 		this_image = cursor.fetchone()
 		this_image = this_image[0]
-		if fileExists(server_dir + 'sounds/images/' + ColID + '/' + DirID + '/' + this_image):
+		if fileExists(server_dir + 'images/' + ColID + '/' + DirID + '/' + this_image):
 			check_val=check_val+1
 	#
 	cursor.execute("""SELECT ImageFile FROM SoundsImages WHERE ImageType=%s AND SoundID=%s""", ("waveform-small", SoundID,))
 	if cursor.rowcount == 1:
 		this_image = cursor.fetchone()
 		this_image = this_image[0]
-		if fileExists(server_dir + 'sounds/images/' + ColID + '/' + DirID + '/' + this_image):
+		if fileExists(server_dir + 'images/' + ColID + '/' + DirID + '/' + this_image):
 			check_val=check_val+1
 	#
 	cursor.execute("""SELECT ImageFile FROM SoundsImages WHERE ImageType=%s AND SoundID=%s""", ("spectrogram-small", SoundID,))
 	if cursor.rowcount == 1:
 		this_image = cursor.fetchone()
 		this_image = this_image[0]
-		if fileExists(server_dir + 'sounds/images/' + ColID + '/' + DirID + '/' + this_image):
+		if fileExists(server_dir + 'images/' + ColID + '/' + DirID + '/' + this_image):
 			check_val=check_val+1
 	#
 	cursor.execute("""SELECT ImageFile FROM SoundsImages WHERE ImageType=%s AND SoundID=%s""", ("waveform-large", SoundID,))
 	if cursor.rowcount == 1:
 		this_image = cursor.fetchone()
 		this_image = this_image[0]
-		if fileExists(server_dir + 'sounds/images/' + ColID + '/' + DirID + '/' + this_image):
+		if fileExists(server_dir + 'images/' + ColID + '/' + DirID + '/' + this_image):
 			check_val=check_val+1
 	#
 	cursor.execute("""SELECT ImageFile FROM SoundsImages WHERE ImageType=%s AND SoundID=%s""", ("spectrogram-large", SoundID,))
 	if cursor.rowcount == 1:
 		this_image = cursor.fetchone()
 		this_image = this_image[0]
-		if fileExists(server_dir + 'sounds/images/' + ColID + '/' + DirID + '/' + this_image):
+		if fileExists(server_dir + 'images/' + ColID + '/' + DirID + '/' + this_image):
 			check_val=check_val+1
 	#
 	cursor.close ()
@@ -747,7 +766,7 @@ def checkmp3file(SoundID, ColID, DirID):
 	if type(this_file[0]) != types.NoneType:
 		this_file = this_file[0]
 		#
-		if fileExists(server_dir + 'sounds/previewsounds/' + ColID + '/' + DirID + '/' + this_file):
+		if fileExists(server_dir + 'previewsounds/' + ColID + '/' + DirID + '/' + this_file):
 			check_val=check_val+1
 	#
 	cursor.close ()
@@ -831,12 +850,27 @@ def find_values(wave_pointer):
 	return wave_vars
 	
 	
+
+def write_log(SoundID, ColID, DirID, filename, error_msg):
+	"""
+	Save the result to a log file when there is an error.
+	"""
+	SoundID = str(SoundID)
+	ColID = str(ColID)
+	time_now = time.strftime("%Y-%m-%d %H:%M:%S")
+	f = open(logfile, 'a')
+	f.write(time_now + "," + SoundID + "," + ColID + "/" +  DirID + "/" + filename + "," + error_msg + "\n")
+	f.close()
+
+
 #########################################################################
 # EXECUTE THE SCRIPT							#
 #########################################################################
 
 #Get max sampling rate to draw
-max_freq_draw=getmax_freq()
+#max_freq_draw=getmax_freq()
+
+server_dir = server_dir + "sounds/"
 
 #Get spectrogram palette
 spectrogram_palette = getspectrogram_palette()
@@ -844,117 +878,177 @@ spectrogram_palette = getspectrogram_palette()
 #Get all soundfiles
 results=getallsounds()
 
-for row in results:
-	SoundID = row[0]
-	SoundID = str(int(SoundID))
-	ColID = row[1]
-	ColID = str(int(ColID))
-	DirID = row[2]
-	DirID = str(int(DirID))
-	filename = row[3]
-	SoundFormat = row[4]
+try:
+	for row in results:
+		SoundID = row[0]
+		SoundID = str(int(SoundID))
+		ColID = row[1]
+		ColID = str(int(ColID))
+		DirID = row[2]
+		DirID = str(int(DirID))
+		filename = row[3]
+		SoundFormat = row[4]
 
-	FullPath = server_dir + 'sounds/sounds/' + ColID + '/' + DirID + '/' + filename
+		item_flac = filename
+		c1=int(checkimages(SoundID))
+		c2=int(checkpngfiles(SoundID, ColID, DirID))
+		c3=int(checkmp3file(SoundID, ColID, DirID))
+		c4=c1 + c2 + c3
 
-	c1=int(checkimages(SoundID))
-	c2=int(checkpngfiles(SoundID, ColID, DirID))
-	c3=int(checkmp3file(SoundID, ColID, DirID))
-	c4=c1 + c2 + c3
+		filez = check_filesize(SoundID)
+		if filez == 0:
+			try:
+				this_file_size = int(os.path.getsize(server_dir + 'sounds/' + ColID + '/' + DirID + '/' + item_flac))
+				insert_filesize(SoundID, this_file_size)
+			except:
+				#write_log(SoundID, ColID, DirID, filename, "File could not be found")
+				continue
 
-	filez = check_filesize(SoundID)
-	if filez == 0:
-		try:
-			this_file_size = int(os.path.getsize(server_dir + 'sounds/sounds/' + ColID + '/' + DirID + '/' + item_flac))
-			insert_filesize(SoundID, this_file_size)
-		except:
-			print "\nFile not found\n"
-			sys.exit(0)
+		if fileExists(server_dir + 'sounds/' + ColID + '/' + DirID + '/' + item_flac)!=1:
+			print " Original flac file could not be found!"
+			print server_dir + 'sounds/' + ColID + '/' + DirID + '/' + item_flac
+			#write_log(SoundID, ColID, DirID, filename, "File could not be found")
+			continue
+		
+		if c4!=13:
+			with Ticker("\n Extracting file from flac " + ColID + "/" + DirID + "/" + item_flac + " (ID: " + SoundID + ")"):
+				item_wav = extractflac(server_dir + 'sounds/' + ColID + '/' + DirID + '/' + item_flac, item_flac)
 
-	if fileExists(server_dir + 'sounds/sounds/' + ColID + '/' + DirID + '/' + item_flac)!=1:
-		print "\nFile not found\n"
-		sys.exit(0)
+			#Check if stereo
+			no_channels = checkifstereo(item_wav)
+			status, sampling_rate = commands.getstatusoutput('soxi -r ' + item_wav)
+
+			nyquist = int(sampling_rate) / 2
+			#Get max sampling rate to draw
+			max_freq_draw=getmax_freq(nyquist)
+		
+
+			with Ticker("\n Generating images..."):
+				if no_channels == 2:
+					delmysql(SoundID)
+					draw_png_stereo(SoundID, item_flac, item_wav, sampling_rate, max_freq_draw, spectrogram_palette)
+					insertpng(SoundID, item_flac, spectrogram_palette, max_freq_draw)
+				if no_channels == 1:
+					delmysql(SoundID)
+					draw_png(SoundID, item_flac, item_wav, sampling_rate, max_freq_draw, spectrogram_palette)
+					insertpng(SoundID, item_flac, spectrogram_palette, max_freq_draw)
+
+			mp3newfile=0
+			if c3!=1:
+				with Ticker("\n Generating mp3 file..." + ColID + "/" + DirID + "/" + item_flac + " (ID: " + SoundID + ")"):
+					mp3filename = makemp3(SoundID, item_wav, item_wav)
+					insertmp3(SoundID, mp3filename)
+					mp3newfile=1
+										
+			cleanup(server_dir, ColID, DirID, item_flac, 1, mp3newfile)
 			
-	if c4!=13:
-		if SoundFormat != 'wav':
-			item_wav = extractflac(FullPath, SoundFormat)
 		else:
-			item_wav = FullPath
-
-		#Check if stereo
-		no_channels = checkifstereo(item_wav)
-		status, sampling_rate = commands.getstatusoutput('soxi -r ' + item_wav)
-
-		if no_channels == 2:
-			delmysql(SoundID)
-			draw_png_stereo(SoundID, item_flac, item_wav, sampling_rate, max_freq_draw, spectrogram_palette)
-			insertpng(SoundID, item_flac, spectrogram_palette, max_freq_draw)
-		if no_channels == 1:
-			delmysql(SoundID)
-			draw_png(SoundID, item_flac, item_wav, sampling_rate, max_freq_draw, spectrogram_palette)
-			insertpng(SoundID, item_flac, spectrogram_palette, max_freq_draw)
-
-		mp3newfile=0
-		if c3!=1:
-			mp3filename = makemp3(SoundID, item_wav, item_wav)
-			insertmp3(SoundID, mp3filename)
-			mp3newfile=1
-								
-		cleanup(server_dir, ColID, DirID, item_flac, 1, mp3newfile)
-	
-	else:
-		pngnewfile=0
-		mp3newfile=0
-	
-		if c1!=6:
-			if SoundFormat=="flac":
-				item_wav = extractflac(server_dir + 'sounds/' + ColID + '/' + DirID + '/' + item_flac, item_flac)
-			else:
-				item_wav = extractsox(server_dir + 'sounds/' + ColID + '/' + DirID + '/' + item_flac, item_flac, SoundFormat)
-			#Check if stereo
-			no_channels = checkifstereo(item_wav)
-
-			if no_channels == 2:
-				delmysql(SoundID)
-				draw_png_stereo(SoundID, item_flac, item_wav, sampling_rate, max_freq_draw, spectrogram_palette)
-				insertpng(SoundID, item_flac, spectrogram_palette, max_freq_draw)
-			if no_channels == 1:
-				delmysql(SoundID)
-				draw_png(SoundID, item_flac, item_wav, sampling_rate, max_freq_draw, spectrogram_palette)
-				insertpng(SoundID, item_flac, spectrogram_palette, max_freq_draw)
-			pngnewfile=1
-
-		if c2!=6:
-			if SoundFormat=="flac":
-				item_wav = extractflac(server_dir + 'sounds/' + ColID + '/' + DirID + '/' + item_flac, item_flac)
-			else:
-				item_wav = extractsox(server_dir + 'sounds/' + ColID + '/' + DirID + '/' + item_flac, item_flac, SoundFormat)
-			#Check if stereo
-			no_channels = checkifstereo(item_wav)
+			pngnewfile=0
+			mp3newfile=0
 			
-			if no_channels == 2:
-				delmysql(SoundID)
-				draw_png_stereo(SoundID, item_flac, item_wav, sampling_rate, max_freq_draw, spectrogram_palette)
-				insertpng(SoundID, item_flac, spectrogram_palette, max_freq_draw)
-			if no_channels == 1:
-				delmysql(SoundID)
-				draw_png(SoundID, item_flac, item_wav, sampling_rate, max_freq_draw, spectrogram_palette)
-				insertpng(SoundID, item_flac, spectrogram_palette, max_freq_draw)
-			pngnewfile=1
+			if c1!=6:
+				with Ticker("\n Extracting file from flac " + ColID + "/" + DirID + "/" + item_flac + " (ID: " + SoundID + ")"):
+					item_wav = extractflac(server_dir + 'sounds/' + ColID + '/' + DirID + '/' + item_flac, item_flac)
+					#Check if stereo
+					no_channels = checkifstereo(item_wav)
+				with Ticker("\n Generating images..."):
+					if no_channels == 2:
+						delmysql(SoundID)
+						draw_png_stereo(SoundID, item_flac, item_wav, sampling_rate, max_freq_draw, spectrogram_palette)
+						insertpng(SoundID, item_flac, spectrogram_palette, max_freq_draw)
+					if no_channels == 1:
+						delmysql(SoundID)
+						draw_png(SoundID, item_flac, item_wav, sampling_rate, max_freq_draw, spectrogram_palette)
+						insertpng(SoundID, item_flac, spectrogram_palette, max_freq_draw)
+					pngnewfile=1
 
-		if c3!=1:
-			if SoundFormat=="flac":
-				item_wav = extractflac(server_dir + 'sounds/' + ColID + '/' + DirID + '/' + item_flac, item_flac)
-			else:
-				item_wav = extractsox(server_dir + 'sounds/' + ColID + '/' + DirID + '/' + item_flac, item_flac, SoundFormat)
-			mp3filename = makemp3(SoundID, item_wav, item_flac)
-			insertmp3(SoundID, mp3filename)
-			mp3newfile=1
+			if c2!=6:
+				with Ticker("\n Extracting file from flac " + ColID + "/" + DirID + "/" + item_flac + " (ID: " + SoundID + ")"):
+					item_wav = extractflac(server_dir + 'sounds/' + ColID + '/' + DirID + '/' + item_flac, item_flac)
+					#Check if stereo
+					no_channels = checkifstereo(item_wav)
+				with Ticker("\n Generating images..."):
+					if no_channels == 2:
+						delmysql(SoundID)
+						draw_png_stereo(SoundID, item_flac, item_wav, sampling_rate, max_freq_draw, spectrogram_palette)
+						insertpng(SoundID, item_flac, spectrogram_palette, max_freq_draw)
+					if no_channels == 1:
+						delmysql(SoundID)
+						draw_png(SoundID, item_flac, item_wav, sampling_rate, max_freq_draw, spectrogram_palette)
+						insertpng(SoundID, item_flac, spectrogram_palette, max_freq_draw)
+					pngnewfile=1
 
-		cleanup(server_dir, ColID, DirID, item_flac, pngnewfile, mp3newfile)
+			if c3!=1:
+				with Ticker("\n Extracting file from flac "  + ColID + "/" + DirID + "/" + item_flac + " (ID: " + SoundID + ")"):
+					item_wav = extractflac(server_dir + 'sounds/' + ColID + '/' + DirID + '/' + item_flac, item_flac)
+				with Ticker("\n Generating mp3 file..." + ColID + "/" + DirID + "/" + item_flac + " (ID: " + SoundID + ")"):
+					mp3filename = makemp3(SoundID, item_wav, item_flac)
+					insertmp3(SoundID, mp3filename)
+					mp3newfile=1
 
-	c5 = int(checkmd5(SoundID))
-	if c5!=0:
-		filemd5 = getmd5(server_dir + 'sounds/' + ColID + '/' + DirID + '/' + item_flac)
-		insertmd5(SoundID, filemd5)
+			cleanup(server_dir, ColID, DirID, item_flac, pngnewfile, mp3newfile)
 
-sys.exit(0)
+		c5 = int(checkmd5(SoundID))
+		if c5!=0:
+			with Ticker("\n Storing MD5 hash of file " + ColID + "/" + DirID + "/" + item_flac + " ID: " + SoundID):
+				filemd5 = getmd5(server_dir + 'sounds/' + ColID + '/' + DirID + '/' + item_flac)
+				insertmd5(SoundID, filemd5)
+
+except (KeyboardInterrupt):
+	print "\n\n Interrupt command received...\n  cleaning up, please wait..."
+
+	#Clean up directory
+	commands.getstatusoutput('rm *.flac')
+	commands.getstatusoutput('rm *.mp3')
+	commands.getstatusoutput('rm *.png')
+	commands.getstatusoutput('rm *.wav')
+
+	when_stop=datetime.datetime.now().strftime("  Script keyboard-interrupted on %d/%b/%y %H:%M\n")
+	#write_log("0", "0", "0", "none", "Script canceled by user")
+
+	#If ProcessID exists, use it to update the database, otherwise use 0
+	print when_stop
+
+	commands.getstatusoutput('rm *.pyc')
+	sys.exit (0) #Exit normally
+
+except Exception as inst:
+	print "\n\n Error, cleaning up, please wait..."
+	print type(inst)
+	print inst.args
+	print inst 
+	#Clean up directory
+	commands.getstatusoutput('rm *.flac')
+	commands.getstatusoutput('rm *.mp3')
+	commands.getstatusoutput('rm *.png')
+	commands.getstatusoutput('rm *.wav')
+	
+	when_stop=datetime.datetime.now().strftime("  Script interrupted on %d/%b/%y %H:%M\n")
+	#write_log("0", "0", "0", "none", "Script interrupted")
+
+	print when_stop
+
+	commands.getstatusoutput('rm *.pyc')
+	sys.exit (1) #Exit with error
+
+except: #Don't know what happened
+	print "\n\n Unknown Error, cleaning up, please wait..."
+	#Clean up directory
+	commands.getstatusoutput('rm *.flac')
+	commands.getstatusoutput('rm *.mp3')
+	commands.getstatusoutput('rm *.png')
+	commands.getstatusoutput('rm *.wav')
+	
+	when_stop=datetime.datetime.now().strftime("  Script interrupted by unknown reason on %d/%b/%y %H:%M\n")
+	#write_log("0", "0", "0", "none", "Script interrupted")
+
+	print when_stop
+
+	commands.getstatusoutput('rm *.pyc')
+	sys.exit (1) #Exit with error
+
+	
+commands.getstatusoutput('rm *')
+
+print process_date
+sys.exit (0)

@@ -102,9 +102,66 @@ if (!isset($show_tags)){
 
 	echo "</div>";				
 	flush(); @ob_flush();
-	}
-
 	
+		
+	
+	#Check if there are images
+		$query_img = "SELECT COUNT(*) FROM SoundsImages WHERE SoundID='$SoundID'";
+		$sound_images=query_one($query_img, $connection);
+		$check_auxfiles = FALSE;
+		if ($sound_images!=6) {
+			$check_auxfiles = TRUE;
+			}
+			
+		#check if spectrogram exists
+		$query_img2 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform'", $connection);
+		if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img2")) {
+			$check_auxfiles = TRUE;
+			}
+
+		$query_img3 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram'", $connection);
+		if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img3")) {
+			$check_auxfiles = TRUE;
+			}
+
+		$query_img4 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform-small'", $connection);
+		if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img4")) {
+			$check_auxfiles = TRUE;
+			}
+
+		$query_img5 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-small'", $connection);
+		if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img5"))	{
+			$check_auxfiles = TRUE;
+			}
+
+		$query_img6 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform-large'", $connection);
+		if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img6"))	{
+			$check_auxfiles = TRUE;
+			}
+
+		$query_img7 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-large'", $connection);
+		if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img7"))	{
+			$check_auxfiles = TRUE;
+			}
+
+		
+
+	#MP3
+	$AudioPreviewFilename=query_one("SELECT AudioPreviewFilename FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
+	if (($AudioPreviewFilename=="") || (is_null($AudioPreviewFilename))) {
+		$check_auxfiles = TRUE;
+		}
+	if (!is_file("$absolute_dir/sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename")) {
+		$check_auxfiles = TRUE;
+		}
+	
+	if ($check_auxfiles) {
+		#check files in background
+		check_in_background($absolute_dir, $connection);
+		}
+
+}	
+
 if ($mult_delete==TRUE){
 	$self=$_SERVER['PHP_SELF'];
 	$q=$_SERVER['QUERY_STRING'];

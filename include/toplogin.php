@@ -37,6 +37,7 @@ else {
 			
 			include("include/check_system.php");
 			echo "</small>";
+			
 			}
 		else {
 			$e=filter_var($_GET["e"], FILTER_SANITIZE_NUMBER_INT);
