@@ -42,7 +42,7 @@ if ($use_googleanalytics){
 		</div>
 		<div class="span-24 last">
 			<?php
-				$no_sounds=query_one("SELECT COUNT(*) FROM Sounds WHERE SoundStatus!='9'", $connection);
+				#$no_sounds=query_one("SELECT COUNT(*) FROM Sounds WHERE SoundStatus!='9'", $connection);
 				echo "<h4>Generate preview sound and image files</h4>
 				<p>Use this link to generate the preview files for each sound file in the database. 
 				<p><div class=\"notice\">Please note that this task may take some
@@ -62,8 +62,8 @@ if ($use_googleanalytics){
 				$numberOfProcessors++;
 				echo "Number of processors on this server is $numberOfProcessors.";
 				*/
-				echo "<form action=\"admin_generate2.php\" method=\"POST\">
-					<input type=\"hidden\" name=\"code\" value=\"$no_sounds\">";
+				echo "<form action=\"admin_generate2.php\" method=\"POST\">";
+				#echo "<input type=\"hidden\" name=\"code\" value=\"$no_sounds\">";
 
 					/*
 					echo "Number of processes to run simultaneously: &nbsp;&nbsp;<select name=\"no_processes\" class=\"fg-button ui-state-default ui-corner-all\" >";

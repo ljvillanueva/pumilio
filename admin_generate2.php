@@ -22,15 +22,10 @@ require("include/apply_config.php");
 $force_admin = TRUE;
 require("include/check_admin.php");
 
-$code=filter_var($_POST["code"], FILTER_SANITIZE_STRING);
-
 $query = "SELECT * from Sounds WHERE SoundStatus!='9' ORDER BY RAND()";
 $result = mysqli_query($connection, $query)
 	or die (mysqli_error($connection));
 $no_sounds = mysqli_num_rows($result);
-
-if ($no_sounds!=$code)
-	die("There was an error or the databased was changed while you were trying to execute this command. Please go back and try again.");
 
 echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
