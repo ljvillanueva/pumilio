@@ -120,6 +120,8 @@ if ($use_googleanalytics) {
 				$codedseconds1=explode(":",$codedseconds);
 				}
 
+			require("include/sox_formats_list.php")
+
 			$kk=0;
 			for ($k=0;$k<$files_to_process_counter;$k++) {
 				$this_file=$files_to_process[$k];
@@ -148,17 +150,23 @@ if ($use_googleanalytics) {
 
 				$file_path = $dir . $this_file;
 
-				$query_to_insert="INSERT INTO FilesToAddMembers (FilesToAddID, FullPath, OriginalFilename, Date, Time, SiteID, ColID, DirID, SensorID)
-				VALUES ('$ToAddID', '$file_path', '$this_file', '$datecoded', '$timecoded', '$SiteID', '$ColID', '$DirID', '$SensorID')";
+				#Check that the extension is a valid sound file
+				#Quick check to avoid adding non-sound files
+				$ext = pathinfo($this_file, PATHINFO_EXTENSION);
+				
+				if (in_array(strtolower($ext), $sox_formats)){
+					$query_to_insert="INSERT INTO FilesToAddMembers (FilesToAddID, FullPath, OriginalFilename, Date, Time, SiteID, ColID, DirID, SensorID)
+					VALUES ('$ToAddID', '$file_path', '$this_file', '$datecoded', '$timecoded', '$SiteID', '$ColID', '$DirID', '$SensorID')";
 
-				$result = mysqli_query($connection, $query_to_insert)
-					or die (mysqli_error($connection));
-				$kk=$k+1;
-				}			
+					$result = mysqli_query($connection, $query_to_insert)
+						or die (mysqli_error($connection));
+					$kk=$k+1;				
+					}
+				}		
 
 			$CollectionName=query_one("SELECT CollectionName from Collections WHERE ColID='$ColID'", $connection);
 
-			echo "<br><div class=\"success\">$kk files were scheduled to be added to the collection $CollectionName.</div>
+			echo "<br><div class=\"success\">$kk sound files were scheduled to be added to the collection $CollectionName.</div>
 				<p><a href=\"add.php\">Add more files</a> or <a href=\"file_manager.php\">check file status</a>.";
 				
 			?>
