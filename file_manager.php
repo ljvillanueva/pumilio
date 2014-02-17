@@ -203,13 +203,14 @@ if ($use_googleanalytics) {
 					 <li>Files with errors: $no_files_error</li>
 					</ul>\n";
 				
-				if ($percent < 100){
+				
+				#don't show table with details unless it is requested or there is a problem
+				$this_show = FALSE;
+				
+				if ($no_files_error > 0){
 					$this_show = TRUE;
 					}
-				else{
-					$this_show = FALSE;
-					}
-				
+
 				if ($tab == $i){
 					$this_show = TRUE;
 					}
