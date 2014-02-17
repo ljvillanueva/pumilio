@@ -241,12 +241,64 @@ def checkfile(soundname):
 	con.close ()
 	return str(how_many)
 
+def getrunningprocs():
+	#Open MySQL
+	try:
+		con = MySQLdb.connect(host=db_hostname, user=db_username, passwd=db_password, db=db_database)
+	except MySQLdb.Error, e:
+		print "Error %d: %s" % (e.args[0], e.args[1])
+		sys.exit (1)
+	cursor = con.cursor()
+	query = "SELECT COUNT(*) FROM FilesToAddMembers WHERE ReturnCode='2'"
+	cursor.execute (query)
+	if cursor.rowcount == 1:
+		result = cursor.fetchone()
+		result = result[0]
+		if isinstance(result, (int, long, float, complex)) == False:
+			result = 0
+	else:
+		result = 0
+	cursor.close ()
+	con.close ()
+	return int(result)
+	
+def nocores():
+	#Open MySQL
+	try:
+		con = MySQLdb.connect(host=db_hostname, user=db_username, passwd=db_password, db=db_database)
+	except MySQLdb.Error, e:
+		print "Error %d: %s" % (e.args[0], e.args[1])
+		sys.exit (1)
+	cursor = con.cursor()
+	query = "SELECT Value from PumilioSettings WHERE Settings='cores_to_use'"
+	cursor.execute (query)
+	if cursor.rowcount == 1:
+		result = cursor.fetchone()
+		result = result[0]
+		if isinstance(result, (int, long, float, complex)) == False:
+			result = 1
+	else:
+		result = 1
+	cursor.close ()
+	con.close ()
+	return int(result)
+
+
 #########################################################################
 # EXECUTE THE SCRIPT							#
 #########################################################################
 
+#Check if more than the allowed processed are running
+nocores = nocores()
+runningprocs = getrunningprocs()
+if runningprocs >= nocores:
+	#Don't run over the allowed parallel processes
+	sys.exit (0)
+
+
 #Get all soundfiles
 results=getallsounds()
+
 
 try:
 	for row in results:
