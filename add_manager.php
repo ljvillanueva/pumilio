@@ -120,9 +120,9 @@ if ($use_googleanalytics) {
 				$codedseconds1=explode(":",$codedseconds);
 				}
 
-			require("include/sox_formats_list.php")
+			require("include/sox_formats_list.php");
 
-			$kk=0;
+			$kk = 0;
 			for ($k=0;$k<$files_to_process_counter;$k++) {
 				$this_file=$files_to_process[$k];
 				
@@ -160,9 +160,9 @@ if ($use_googleanalytics) {
 
 					$result = mysqli_query($connection, $query_to_insert)
 						or die (mysqli_error($connection));
-					$kk=$k+1;				
+					$kk = $kk+1;		
 					}
-				}		
+				}
 
 			$CollectionName=query_one("SELECT CollectionName from Collections WHERE ColID='$ColID'", $connection);
 

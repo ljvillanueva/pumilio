@@ -112,7 +112,7 @@ if ($local == 1){
 				}
 			else {
 
-			echo "There were <strong>$files_to_process_counter</strong> files found.<br>";
+			echo "There were <strong>$files_to_process_counter</strong> files found. Non-sound files will not be added to the database.<br>";
 			if ($sm){
 				echo "<form action=\"add_from_field.php\" method=\"POST\" id=\"AddForm\">
 				<input type=\"hidden\" name=\"step\" value=\"4\">";
