@@ -254,7 +254,7 @@ if ($use_googleanalytics) {
 								echo "</td></tr>\n";
 								}
 							elseif ($ReturnCode == 9){
-								echo "<td> <img src=\"images/error.png\"> Error: $ErrorCode | 
+								echo "<td> <img src=\"images/error.png\"> Error: $ErrorCode<br> 
 									<a href=\"file_manager.php?ToAddMemberID=$ToAddMemberID&tab=$i&action=1\" title=\"Reset\">reset</a> |
 									<a href=\"file_manager.php?ToAddMemberID=$ToAddMemberID&tab=$i&action=2\" title=\"Reset\">delete</a>
 									</td></tr>\n";
