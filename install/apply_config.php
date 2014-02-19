@@ -1,8 +1,24 @@
 <?php
 
-$player_format="mp3";
-$player_encoder="lame";
+$absolute_dir=dirname(__FILE__);
 
+$absolute_dir = preg_replace('/install$/', '', $absolute_dir);
+
+$app_dir = substr($absolute_dir, strlen($_SERVER['DOCUMENT_ROOT']));
+
+$app_url = "http://" . $_SERVER['SERVER_NAME'] . $app_dir;
+
+$app_url = rtrim(preg_replace('/install$/', '', $app_url), "/");
+
+#Maintenance mode
+# just add an empty file named maintenance to the root of the application
+if (is_file("$absolute_dir/maintenance")) {
+	header("Location: $app_url/error.php?e=maint");
+	die();
+	}
+	
+
+#Try to connect to the db
 $connection = @mysqli_connect($host, $user, $password, $database);
 
 #If could not connect, redirect
@@ -23,5 +39,6 @@ header( 'Content-Type: text/html; charset=utf-8' );
 $queryutf = "SET NAMES 'utf8' COLLATE 'utf8_unicode_ci'";
 $result = mysqli_query($connection, $queryutf)
 		or die ("Could not execute query. Please try again later.");
+
 			
 ?>

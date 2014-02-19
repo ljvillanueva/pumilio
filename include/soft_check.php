@@ -3,9 +3,20 @@
 <title>Pumilio - Software Check</title>
 
 <?php
+ require("../config.php");
+
+$absolute_dir=dirname(__FILE__);
+
+$absolute_dir = preg_replace('/include$/', '', $absolute_dir);
+
+$app_dir = substr($absolute_dir, strlen($_SERVER['DOCUMENT_ROOT']));
+
+$app_url = "http://" . $_SERVER['SERVER_NAME'] . $app_dir;
+
+$app_url = rtrim(preg_replace('/include$/', '', $app_url), "/");
+
  require("get_css_include.php");
  require("get_jqueryui_include.php");
- require("../config.php");
 ?>
 
 </head>

@@ -13,7 +13,9 @@ if (file_exists($config_file)) {
 
 require("apply_config.php");
 
-$e=filter_var($_GET["e"], FILTER_SANITIZE_NUMBER_INT);
+if(isset($_GET["e"])){
+	$e=filter_var($_GET["e"], FILTER_SANITIZE_NUMBER_INT);
+	}
 
 echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
