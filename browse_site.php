@@ -19,6 +19,27 @@ require("include/check_login.php");
 #Sanitize inputs
 $SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
 
+#Check if site has files or is valid
+	$valid_id = DB::column('SELECT COUNT(*) FROM `Sounds` WHERE SiteID = ' . $SiteID);
+
+	if ($valid_id == 0) {
+		echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+		<html>
+		<head>
+
+		<title>$app_custom_name - File Details</title>\n";
+
+		require("include/get_css.php");
+
+		echo "<body>
+			<div class=\"error\" style=\"margins: 10px;\"><img src=\"images/exclamation.png\"> The site requested does not exists or it has no recordings. Please go back and try your query again.</div>
+			</body>
+			</html>";
+		die();
+		}
+
+
+
 #Display type saved as a cookie
 if (isset($_GET["display_type"])){
 	$display_type = filter_var($_GET["display_type"], FILTER_SANITIZE_STRING);
