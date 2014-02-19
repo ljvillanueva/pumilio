@@ -495,5 +495,5 @@ else{
 	session_write_close();
 	flush(); @ob_flush();
 	#Delete temp files older than 3 days
-	delete_old('tmp/', 3);
+	#delete_old('tmp/', 3);
 ?>

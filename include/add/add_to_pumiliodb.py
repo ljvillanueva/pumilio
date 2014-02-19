@@ -245,11 +245,12 @@ def checkfile(soundname):
 # EXECUTE THE SCRIPT							#
 #########################################################################
 
-#Get all soundfiles
+#Get all soundfiles to add
 results=getallsounds()
 
 try:
 	for row in results:
+		#extract the variables for each row
 		ToAddMemberID = row[0]
 		ToAddMemberID = str(int(ToAddMemberID))
 		FullPath = row[1]
@@ -267,28 +268,37 @@ try:
 		SensorID = row[8]
 		SensorID = str(int(SensorID))
 
+		#check if filename already exists, don't add if it does
 		file_check = checkfile(OriginalFilename)
 		if file_check == 1:
 			updatefile(ToAddMemberID, str(9), "File already exists in archive")
 			continue
-
+		
+		#check if the file can be found
 		if fileExists(FullPath)==0:
 			updatefile(ToAddMemberID, str(9), "Could not find file")
 			continue
 
+		#update record, set as in progress
 		updatefile(ToAddMemberID, str(2))
 
+		#copy to tmp folder
 		status, output = commands.getstatusoutput('cp ' + FullPath + ' ' + server_dir + 'tmp/' + OriginalFilename)
 		FullPath = server_dir + 'tmp/' + OriginalFilename
-			
+		
+		#check valid file
 		p = subprocess.Popen(['python', 'soundcheck.py', FullPath],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 		output, errors = p.communicate()
 		FileFormat = output[:-1]
 		
 		if FileFormat != 'wav':
 			item_wav = extractflac(FullPath, FileFormat)
+			tmp_file1 = FullPath
+			tmp_file2 = item_wav
 		else:
 			item_wav = FullPath
+			tmp_file1 = FullPath
+			tmp_file2 = item_wav
 
 		if item_wav == '0' or item_wav == '1':
 			continue
@@ -298,7 +308,12 @@ try:
 		SoundID=tomysql(item_wav, OriginalFilename, FullPath, FileFormat, file_md5, ColID, SiteID, DirID, SensorID, Date, Time, ToAddMemberID)
 		cleanup(server_dir, ColID, DirID, FullPath, OriginalFilename, ToAddMemberID)
 
-		status, output = commands.getstatusoutput('rm ' + FullPath)
+		#remove tmp files
+		#status, output = commands.getstatusoutput('rm ' + FullPath)
+		if os.path.isfile(tmp_file1):
+		        os.remove(tmp_file1)
+		if os.path.isfile(tmp_file2):
+		        os.remove(tmp_file2)
 
 
 except: #Don't know what happened
