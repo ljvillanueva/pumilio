@@ -5,10 +5,10 @@ $q=$_SERVER['QUERY_STRING'];
 
 $q_logout = str_replace("&", "%", $q);
 
-echo "<p style=\"text-align: right;\">";
+echo "<p style=\"text-align: right;\"><small>";
 
 if ($no_login == TRUE) {
-	echo "&nbsp;";
+	echo "[<a href=\"index.php\">Home</a>]";
 	}
 else {
 	if ($login_wordpress == TRUE){
@@ -18,7 +18,8 @@ else {
 
 			$username = $current_user->user_login;
 		
-			echo "<small>Logged as <a href=\"edit_myinfo.php\" title=\"Edit my information or change password\">$username</a> 
+			echo "Logged as <a href=\"edit_myinfo.php\" title=\"Edit my information or change password\">$username</a> 
+				[<a href=\"index.php\">Home</a>] 
 				[<a href=\"search.php\">Search</a>] ";
 
 			#Check if user can enter admin area
@@ -36,13 +37,12 @@ else {
 			echo " [<a href=\"$logout_url\">Logout</a>]";
 			
 			include("include/check_system.php");
-			echo "</small>";
-			
 			}
 		else {
 			$e=filter_var($_GET["e"], FILTER_SANITIZE_NUMBER_INT);
 			$login_url = wp_login_url( "$self?$q" );
-			echo "<small>[<a href=\"$login_url\" title=\"Login\">Login</a>]
+			echo "[<a href=\"index.php\">Home</a>] 
+				[<a href=\"$login_url\" title=\"Login\">Login</a>]
 				[<a href=\"search.php\">Search</a>]</small>";
 			$notlogged = TRUE;
 			}
@@ -50,7 +50,8 @@ else {
 	else{
 		if (sessionAuthenticate($connection)) {
 			$username = $_COOKIE["username"];
-			echo "<small>Logged as <a href=\"edit_myinfo.php\" title=\"Edit my information or change password\">$username</a> 
+			echo "Logged as <a href=\"edit_myinfo.php\" title=\"Edit my information or change password\">$username</a> 
+				[<a href=\"index.php\">Home</a>] 
 				[<a href=\"search.php\">Search</a>] ";
 
 			#Check if user can enter admin area
@@ -68,10 +69,10 @@ else {
 			echo " [<a href=\"include/logout.php?where_to=$self&q=$q_logout\">Logout</a>]";
 			
 			include("include/check_system.php");
-			echo "</small>";
 			}
 		else {
-			echo "<small>[<a href=\"search.php\">Search</a>]<br>";
+			echo "[<a href=\"index.php\">Home</a>] 
+				[<a href=\"search.php\">Search</a>]<br>";
 			$e=filter_var($_GET["e"], FILTER_SANITIZE_NUMBER_INT);
 
 			if ($e==1) {
@@ -86,7 +87,7 @@ else {
 			if ($e==1) {
 				echo "</div>";
 				}
-			echo "</small>";
+			
 			$notlogged = TRUE;
 			}
 		}
@@ -99,5 +100,7 @@ else {
 		die();
 		}
 	}
+
+echo "</small>\n";
 
 ?>
