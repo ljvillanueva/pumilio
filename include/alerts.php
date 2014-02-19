@@ -55,6 +55,19 @@ require("get_jqueryui.php");
 			or upgrade the hard drive.</div>";
 		}
 
+	//Test if apache owns the files
+	#Does apache own the folders?
+	$fileowner = posix_getpwuid(fileowner("../index.php"));
+	$this_user = exec('whoami');
+	if ($fileowner['name'] != $this_user){
+		echo "<div class=\"error\"><strong>The permissions are not set up correctly</strong>. The apache user needs to own the files and folders of Pumilio.
+			You can change it using this command, changing PUMILIO_FOLDER for the path where Pumilio is installed:<br>
+			sudo chown -R $this_user:$this_user /var/www/PUMILIO_FOLDER</div>";
+
+		}
+		
+		
+
 	// Test if the required programs are installed.
 	// SoX
 	unset($out, $retval);
@@ -62,7 +75,7 @@ require("get_jqueryui.php");
 	$soxout=explode("v",$soxout[0]);
 	$soxout=$soxout[1];
 	if ($soxretval!=0) {
-		echo "<div class=\"error\"><strong>SoX is not installed</strong>. Please install by using this command:
+		echo "<div class=\"error\"><strong>SoX is not installed</strong>. Please install by using this command:<br>
 			sudo apt-get install sox libsox*</div>";
 		}
 
@@ -90,7 +103,7 @@ require("get_jqueryui.php");
 		exec('dir2ogg --version', $out, $retval);
 		if ($retval!=0) {
 			echo "<div class=\"error\"><strong>The ogg encoder is not installed</strong>. 
-				If ogg encoding is desired, please install by using this command: 
+				If ogg encoding is desired, please install by using this command: <br>
 				sudo apt-get install dir2ogg</div>";
 			}
 		}
@@ -100,7 +113,7 @@ require("get_jqueryui.php");
 		exec('lame --version', $out, $retval);
 		if ($retval!=0) {
 			echo "<div class=\"error\"><strong>The LAME MP3 encoder is not installed</strong>. 
-				If mp3 encoding is desired, please install by using this command: 
+				If mp3 encoding is desired, please install by using this command: <br>
 				sudo apt-get install lame liblame*</div>";
 			}
 		}
@@ -111,7 +124,7 @@ require("get_jqueryui.php");
 	exec('flac --version', $out, $retval);
 	if ($retval!=0) {
 		echo "<div class=\"error\"><strong>FLAC is not installed</strong>. 
-			If flac support is desired, please install by using this command: 
+			If flac support is desired, please install by using this command: <br>
 			sudo apt-get install flac</div>";
 		}
 
@@ -120,7 +133,7 @@ require("get_jqueryui.php");
 	exec('convert --version', $out, $retval);
 	if ($retval>1) {
 		echo "<div class=\"error\"><strong>Imagemagick is not installed</strong>. 
-			Please install by using this command: 
+			Please install by using this command: <br>
 			sudo apt-get install imagemagick</div>";
 		}
 

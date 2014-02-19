@@ -6,6 +6,13 @@ if ($pumilio_admin==TRUE) {
 		
 	$sys_errors = 0;
 
+	#Does apache own the folders?
+	$fileowner = posix_getpwuid(fileowner("index.php"));
+	$this_user = exec('whoami');
+	if ($fileowner['name'] != $this_user){
+		$sys_errors++;
+		}
+
 	#Disk free space check
 	$dir_to_check=$absolute_dir . "/tmp";
 	$df=disk_free_space($dir_to_check);
