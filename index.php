@@ -46,7 +46,7 @@ if ($map_only=="1"){
 	$(function() {
 		$(\"#accordion\").accordion({
 			autoHeight: false,
-			Collapsible: true,\n";
+			collapsible: true,\n";
 		if ($map_only=="1"){
 			echo "active: false\n";
 			}
@@ -494,6 +494,6 @@ else{
 <?php
 	session_write_close();
 	flush(); @ob_flush();
-	#Delete temp files older than 3 days
+	#Delete temp files older than 7 days
 	#delete_old('tmp/', 3);
 ?>

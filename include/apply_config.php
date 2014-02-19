@@ -40,31 +40,6 @@ $queryutf = "SET NAMES 'utf8' COLLATE 'utf8_unicode_ci'";
 $result = mysqli_query($connection, $queryutf)
 		or die ("Could not execute query. Please try again later.");
 		
-/*
-#Get variables from db - old way
-$app_custom_name=query_one("SELECT Value from PumilioSettings WHERE Settings='app_custom_name'", $connection);
-
-$app_custom_text=query_one("SELECT Value from PumilioSettings WHERE Settings='app_custom_text'", $connection);
-			 
-$use_googlemaps=query_one("SELECT Value from PumilioSettings WHERE Settings='use_googlemaps'", $connection);
-
-$googlemaps_ver=query_one("SELECT Value from PumilioSettings WHERE Settings='googlemaps_ver'", $connection);
-
-$hide_latlon_guests=query_one("SELECT Value from PumilioSettings WHERE Settings='hide_latlon_guests'", $connection);
-
-$allow_upload=query_one("SELECT Value from PumilioSettings WHERE Settings='allow_upload'", $connection);
-
-$guests_can_open=query_one("SELECT Value from PumilioSettings WHERE Settings='guests_can_open'", $connection);
-
-$guests_can_dl=query_one("SELECT Value from PumilioSettings WHERE Settings='guests_can_dl'", $connection);
-
-$spectrogram_palette=query_one("SELECT Value from PumilioSettings WHERE Settings='spectrogram_palette'", $connection);
-
-$default_qf=query_one("SELECT Value from PumilioSettings WHERE Settings='default_qf'", $connection);
-
-$AudioPreviewFormat=query_one("SELECT Value from PumilioSettings WHERE Settings='AudioPreviewFormat'", $connection);
-*/
-
 
 #Get variables from db - new way
 # using 
@@ -99,6 +74,7 @@ if (!isset($googlemaps_ver)){
 	$googlemaps_ver = "";
 	}
 
+
 if ($googlemaps_ver=="") {
 	if ($use_googlemaps == "3"){
 		$googlemaps_ver="3";
@@ -121,9 +97,13 @@ else{
 		}
 	}
 	
+
+if (!isset($special_noprocess)){
+	$special_noprocess = FALSE;
+	}
+
 	
 if ($googlemaps_ver=="3") {
-	#$googlemaps3_key=query_one("SELECT Value from PumilioSettings WHERE Settings='googlemaps3_key'", $connection);
 	$googlemaps3_key = DB::column('SELECT Value FROM `PumilioSettings` WHERE Settings = "googlemaps3_key"');
 	}
 

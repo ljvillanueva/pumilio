@@ -19,9 +19,17 @@ require("include/check_login.php");
 if (isset($_GET["ToAddMemberID"])){
 	$ToAddMemberID=filter_var($_GET["ToAddMemberID"], FILTER_SANITIZE_NUMBER_INT);
 	$tab=filter_var($_GET["tab"], FILTER_SANITIZE_NUMBER_INT);
-	query_one("UPDATE FilesToAddMembers SET ReturnCode='1' WHERE ToAddMemberID=$ToAddMemberID", $connection);
-	header("Location: $app_url/file_manager.php?tab=$tab");
-	die();
+	$action = filter_var($_GET["action"], FILTER_SANITIZE_NUMBER_INT);
+	if ($action == 1){
+		query_one("UPDATE FilesToAddMembers SET ReturnCode='1' WHERE ToAddMemberID=$ToAddMemberID", $connection);
+		header("Location: $app_url/file_manager.php?tab=$tab");
+		die();
+		}
+	elseif ($action == 2){
+		query_one("DELETE FROM FilesToAddMembers WHERE ToAddMemberID=$ToAddMemberID", $connection);
+		header("Location: $app_url/file_manager.php?tab=$tab");
+		die();
+		}
 	}
 
 if (isset($_GET["tab"])){
@@ -203,13 +211,14 @@ if ($use_googleanalytics) {
 					 <li>Files with errors: $no_files_error</li>
 					</ul>\n";
 				
-				if ($percent < 100){
+				
+				#don't show table with details unless it is requested or there is a problem
+				$this_show = FALSE;
+				
+				if ($no_files_error > 0){
 					$this_show = TRUE;
 					}
-				else{
-					$this_show = FALSE;
-					}
-				
+
 				if ($tab == $i){
 					$this_show = TRUE;
 					}
@@ -245,8 +254,10 @@ if ($use_googleanalytics) {
 								echo "</td></tr>\n";
 								}
 							elseif ($ReturnCode == 9){
-								echo "<td> <img src=\"images/error.png\"> Error: $ErrorCode 
-									(<a href=\"file_manager.php?ToAddMemberID=$ToAddMemberID&tab=$i\" title=\"Reset\">reset</a>)</td></tr>\n";
+								echo "<td> <img src=\"images/error.png\"> Error: $ErrorCode<br> 
+									<a href=\"file_manager.php?ToAddMemberID=$ToAddMemberID&tab=$i&action=1\" title=\"Reset\">reset</a> |
+									<a href=\"file_manager.php?ToAddMemberID=$ToAddMemberID&tab=$i&action=2\" title=\"Reset\">delete</a>
+									</td></tr>\n";
 								}
 							}
 						}

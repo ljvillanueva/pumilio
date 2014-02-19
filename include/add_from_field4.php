@@ -117,7 +117,7 @@ if ($codedminutes == "") {
 					$secondscoded = substr($afile, $codedseconds1[0]-1, $codedseconds1[1]-$codedseconds1[0]+1);
 					}
 
-		
+
 				echo "<p>The file <strong>$afile</strong> will be stored with this information:<br>
 				
 				&nbsp;&nbsp; Year: $yearcoded<br>

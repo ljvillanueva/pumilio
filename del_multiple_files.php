@@ -54,7 +54,14 @@ require("include/get_jqueryui.php");
 					$ColID = query_one("SELECT ColID FROM Sounds WHERE SoundID='$SoundIDs[$i]' LIMIT 1", $connection);
 					$DirID = query_one("SELECT DirID FROM Sounds WHERE SoundID='$SoundIDs[$i]' LIMIT 1", $connection);
 
-					echo "<li><img src=\"$app_url/sounds/images/$ColID/$DirID/$small_spectrogram\" width=\"300\" height=\"150\"><br>
+
+					$spec_path = "sounds/images/$ColID/$DirID/$small_spectrogram";
+					
+					if (!is_file("$absolute_dir/$spec_path")){
+						$spec_path = "images/notready-small.png";
+						}
+
+					echo "<li><img src=\"$app_url/$spec_path\" width=\"300\" height=\"150\"><br>
 					<input type=\"hidden\" name=SoundIDs[] value=\"$SoundIDs[$i]\">$SoundIDs[$i] $OriginalFilename";
 				
 					}

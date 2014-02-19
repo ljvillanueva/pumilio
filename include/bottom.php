@@ -27,7 +27,7 @@ if ($special_wrapper == FALSE && $special_iframe == FALSE){
 	echo "</small>";
 		
 	echo "<p class=\"right\">
-		<small>Powered by <a href=\"http://pumilio.sourceforge.net\" target=_blank>Pumilio</a> v. $website_version<br>
+		<small>Powered by <a href=\"http://ljvillanueva.github.io/pumilio\" target=_blank>Pumilio</a> v. $website_version<br>
 		<a href=\"#\" onClick=\"window.open('include/copyright.php', 'copyright', 'width=650,height=400,status=yes,resizable=yes,scrollbars=yes')\">&copy; 2010-2014 LJV</a>. Licensed under the GPLv3.</small>";
 	}
 

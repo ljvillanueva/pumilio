@@ -640,6 +640,52 @@ function add_in_background($absolute_dir, $connection) {
 	}
 
 
+function bgHowManyCheck() {
+	#Get how many background processed are running
+	exec("ps aux|grep check_auxfiles_pumiliodb | wc -l", $bg_processes);
+	return $bg_processes[0];
+	}
+
+
+function check_in_background($absolute_dir, $connection) {
+	if ($special_noprocess == FALSE){
+		require("config.php");
+		$bg_processes = bgHowManyCheck();
+
+		if($bg_processes < 3) {
+			$random_value=mt_rand();
+			$tmp_dir = 'tmp/' . $random_value;
+			mkdir($tmp_dir, 0777);
+
+			#make htaccess to protect files
+				$myFile = $tmp_dir . '/.htaccess';
+				$fh = fopen($myFile, 'w') or die("Can't write the configuration file $myFile. Please check that the webserver can write the tmp directory.");
+				fwrite($fh, "order allow,deny" . PHP_EOL);
+				fwrite($fh, "deny from all" . PHP_EOL);
+				fclose($fh);
+
+			#write config file
+				$myFile = $tmp_dir . '/configfile.php';
+				$fh = fopen($myFile, 'w') or die("Can't write the configuration file $myFile. Please check that the webserver can write the tmp directory.");
+				fwrite($fh, "<?php" . PHP_EOL);
+				fwrite($fh, "$host" . PHP_EOL);
+				fwrite($fh, "$database" . PHP_EOL);
+				fwrite($fh, "$user" . PHP_EOL);
+				fwrite($fh, "$password" . PHP_EOL);
+				fwrite($fh, "$absolute_dir/" . PHP_EOL);
+				fwrite($fh, "?>");
+				fclose($fh);
+			
+			copy('include/check_auxfiles/check_auxfiles_pumiliodb.py', $tmp_dir . '/check_auxfiles_pumiliodb.py');
+			copy('include/check_auxfiles/svt.py', $tmp_dir . '/svt.py');
+
+			exec('chmod -R 777 ' . $tmp_dir . ';cd ' . $tmp_dir . '; ./check_auxfiles_pumiliodb.py > /dev/null 2> /dev/null & echo $!', $out, $retval);
+
+			}
+		}
+	}
+
+
 
 #function running_pid($PID) {
 #	#Check if PID is running

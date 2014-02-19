@@ -1,6 +1,7 @@
 <?php
 ### All checks passed
-flush();
+flush(); @ob_flush();
+
 $success_counter=0;
 for ($k=0;$k<$no_sounds;$k++) {
 	$row = mysqli_fetch_array($result);

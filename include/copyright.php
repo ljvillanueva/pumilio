@@ -28,7 +28,7 @@
 <div style="padding: 10px;">
 
 <h4>Pumilio - A sound archive manager and visualization web application.
-    <br>Copyright (&copy;) 2010-2013 Luis J. Villanueva-Rivera (lvillanu@purdue.edu)</h4>
+    <br>Copyright (&copy;) 2010-2014 Luis J. Villanueva-Rivera (ljvillanueva@coquipr.com)</h4>
 
 <p><strong>Citation</strong>: Villanueva-Rivera, Luis J., and Bryan C. Pijanowski. 2012. Pumilio: A Web-Based Management System for Ecological Recordings. Bulletin of the Ecological Society of America 93: 71-81. doi: 10.1890/0012-9623-93.1.71</p>
 
@@ -51,7 +51,7 @@
 
 <hr noshade>
 
-<p>This application uses several other open source tools and programs like:
+<p>This application uses several other open source tools and programs, including:
 
 <ul>
 	<li> <a href="http://blueprintcss.org/" target="_blank">Blueprint CSS framework</a>
@@ -73,7 +73,7 @@
 	<li> <a href="http://www.famfamfam.com/lab/icons/silk/" target="_blank">Silk icons</a>
 </ul>
 
-<p>The website for this app is hosted at SourceForge: http://pumilio.sourceforge.net
+<p>The website for this app is hosted at GitHub: <a href="http://ljvillanueva.github.io/pumilio">http://ljvillanueva.github.io/pumilio</a>
 
 <p><a href="#" onClick="window.close();">Close window</a>
 

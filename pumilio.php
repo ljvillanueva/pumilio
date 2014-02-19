@@ -78,13 +78,13 @@ if ($soundfile_name=="") {
 	echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 	<html>
 	<head>
-	<title>$app_custom_name - Pumilio Viewer</title>
+	<title>$app_custom_name - Pumilio Viewer</title>";
+	
+	
+	require("include/get_css.php");
+	require("include/get_jqueryui.php");
 
-	<!-- Blueprint css -->
-	<link rel=\"stylesheet\" href=\"css/screen.css\" type=\"text/css\" media=\"screen, projection\">
-	<link rel=\"stylesheet\" href=\"css/print.css\" type=\"text/css\" media=\"print\">	
-	<!--[if IE]><link rel=\"stylesheet\" href=\"css/ie.css\" type=\"text/css\" media=\"screen, projection\"><![endif]-->
-
+	echo "
 	</head>
 	<body>
 

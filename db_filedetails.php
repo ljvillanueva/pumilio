@@ -39,11 +39,8 @@ else {
 	}
 
 
-#$valid_id=query_one("SELECT COUNT(*) FROM Sounds WHERE SoundID='$SoundID'", $connection);
 $valid_id = DB::column('SELECT COUNT(*) FROM `Sounds` WHERE SoundID = ' . $SoundID);
-#$SoundID_status = query_one("SELECT SoundStatus FROM Sounds WHERE SoundID='$SoundID'", $connection);
 $SoundID_status = DB::column('SELECT SoundStatus FROM `Sounds` WHERE SoundID = ' . $SoundID);
-#$SoundID_qf_check = query_one("SELECT QualityFlagID FROM Sounds WHERE SoundID='$SoundID'", $connection);
 $SoundID_qf_check = DB::column('SELECT QualityFlagID FROM `Sounds` WHERE SoundID = ' . $SoundID);
 
 if ($d=="w"){
@@ -93,8 +90,19 @@ $row = mysqli_fetch_array($result);
 extract($row);
 
 require("include/get_jqueryui.php");
-
 ?>
+
+<!--#Accordion-->
+<script type="text/javascript">
+$(function() {
+	$("#accordion").accordion({
+		autoHeight: false,
+		collapsible: true,
+		active: false
+		});
+	});
+</script>
+
 <!-- JQuery Confirmation -->
 <script type="text/javascript">
 	$(function() {
@@ -131,7 +139,7 @@ require("include/get_jqueryui.php");
 
 <?php
 $query_all_tags = "SELECT DISTINCT Tag FROM Tags";
-$result_all_tags=query_several($query_all_tags, $connection);
+$result_all_tags = query_several($query_all_tags, $connection);
 $nrows_all_tags = mysqli_num_rows($result_all_tags);
 
 if ($nrows_all_tags>0) {
@@ -174,14 +182,10 @@ if ($use_googlemaps=="3") {
 		}
 
 	if ($nrows_site>0) {
-		#$SiteID=query_one("SELECT Sites.SiteID FROM Sites,Sounds WHERE Sites.SiteID=Sounds.SiteID AND Sounds.SoundID='$SoundID' LIMIT 1", $connection);
 		$SiteID = DB::column('SELECT SiteID FROM `Sounds` WHERE SoundID = ' . $SoundID);
 		
-		#$SiteLat=query_one("SELECT SiteLat FROM Sites WHERE SiteID='$SiteID' LIMIT 1", $connection);
 		$SiteLat = DB::column('SELECT SiteLat FROM `Sites` WHERE SiteID = ' . $SiteID);
-		#$SiteLon=query_one("SELECT SiteLon FROM Sites WHERE SiteID='$SiteID' LIMIT 1", $connection);
 		$SiteLon = DB::column('SELECT SiteLon FROM `Sites` WHERE SiteID = ' . $SiteID);
-		#$SiteName=query_one("SELECT SiteName FROM Sites WHERE SiteID='$SiteID' LIMIT 1", $connection);
 		$SiteName = DB::column('SELECT SiteName FROM `Sites` WHERE SiteID = ' . $SiteID);
 
 		require("include/db_filedetails_map_head.php");
@@ -340,12 +344,7 @@ if ($use_googleanalytics) {
 	}
 ?>
 
-<script>
-	$(function() {
-		$( document ).tooltip();
-		});
-</script>
-    
+
 </head>
 <?php
 
@@ -553,8 +552,24 @@ else {
 			}
 		}
 
-	echo "<div class=\"span-10\">";							
-	
+
+
+	echo "<div class=\"span-14\">\n";
+
+	if ($guests_can_open || $pumilio_loggedin) {
+		if ($file_error == 1 || $special_noopen == TRUE || $special_noprocess == TRUE){
+			}
+		else {
+			echo "<form method=\"get\" action=\"file_obtain.php\">
+			<input type=\"hidden\" name=\"fileid\" value=\"$SoundID\">
+			<input type=\"hidden\" name=\"method\" value=\"3\">
+			<input type=\"submit\" value=\" Open file \" class=\"fg-button ui-state-default ui-corner-all\">
+			</form><br><br>";
+			}
+		
+		}
+			
+			
 	#Marks
 	if ($d!="w") {
 		$resultm=mysqli_query($connection, "SELECT marks_ID FROM SoundsMarks WHERE SoundID='$SoundID'")
@@ -586,78 +601,19 @@ else {
 				}
 			}
 
-		#Tags
-		#$use_tags=query_one("SELECT Value from PumilioSettings WHERE Settings='use_tags'", $connection);
-		if ($use_tags=="1" || $use_tags=="") {
-			if ($pumilio_loggedin) {
-				require("include/managetags_db.php");
-				echo "<p><strong>Add tags</strong>:<form method=\"get\" action=\"include/addtag.php\">
-					<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-					<input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\">
-					<INPUT TYPE=\"image\" src=\"images/tag_blue_add.png\" BORDER=\"0\" alt=\"Add new tag\">
-					<br><em>Separate tags with a space</em></form><br>";
-				}
-			else {
-				require("include/gettags.php");
-				}
-			}
+		
 
-		#File quality data
-		#$QualityFlag=query_one("SELECT QualityFlag from QualityFlags WHERE QualityFlagID='$QualityFlagID'", $connection);
-		$QualityFlag = DB::column('SELECT `QualityFlag` from `QualityFlags` WHERE `QualityFlagID` = ' . $QualityFlagID);
-		echo "<p><strong>Record quality data</strong>:
-			<ul>";
-		echo "<li>Quality flag: $QualityFlagID ($QualityFlag)</li>";
-		if ($DerivedSound == "1"){
-			echo "<li>Derived from: <a href=\"db_filedetails.php?SoundID=$DerivedFromSoundID\">$DerivedFromSoundID</li>";
-			}
-		echo "</ul>";
-
-		if ($pumilio_admin == TRUE) {
-			echo "<form method=\"GET\" action=\"editqf.php\" target=\"editqf\" onsubmit=\"window.open('', 'editqf', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
-			Edit the Quality Flag for this file:<br>
-			<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">";
-
-			$thisfile_QualityFlagID = $QualityFlagID;
-
-			$query_qf = "SELECT * from QualityFlags ORDER BY QualityFlagID";
-			$result_qf = mysqli_query($connection, $query_qf)
-				or die (mysqli_error($connection));
-			$nrows_qf = mysqli_num_rows($result_qf);
-
-			echo "<select name=\"newqf\" class=\"ui-state-default ui-corner-all formedge\">";
-			for ($f=0;$f<$nrows_qf;$f++) {
-				$row_qf = mysqli_fetch_array($result_qf);
-				extract($row_qf);
-				if ($QualityFlagID==$thisfile_QualityFlagID){
-					echo "<option value=\"$QualityFlagID\" SELECTED>$QualityFlag ($QualityFlagID)</option>\n";
-					}
-				else{
-					echo "<option value=\"$QualityFlagID\">$QualityFlag ($QualityFlagID)</option>\n";
-					}
-				}
-
-			echo "</select><br>
-			<input type=submit value=\" Change \" class=\"fg-button ui-state-default ui-corner-all\">
-			</form><br>";
-			}
+	echo "<!--JQuery accordion container-->
+		<div id=\"accordion\">
+		<h3><a href=\"#\">File data</a></h3>
+		<div>";
 
 		#File technical data
-		echo "<p><strong>File data</strong>:
-		<ul>
+		#echo "<p><strong>File data</strong>:";
+		echo "<ul>
 		<li>Original filename: $OriginalFilename";
 			if ($guests_can_dl || $pumilio_loggedin) {
 				echo "<br>&nbsp;&nbsp;&nbsp;Download: ";
-				/*
-				if ($special_nofiles == FALSE){
-					echo "<a href=\"dl.php?file=sounds/sounds/$ColID/$DirID/$OriginalFilename\" title=\"Please read the license field on the right for legal limitations on the use of these files.\">$SoundFormat</a>";
-					if ($SoundFormat != "wav" && $special_noprocess==FALSE){
-						echo " | <a href=\"dl.php?from_detail=1&SoundID=$SoundID\" title=\"Please read the license field on the right for legal limitations on the use of these files.\">wav</a>";
-						}
-					echo " | ";
-					}
-				*/
-				
 				
 				echo "<a href=\"dl.php?file=sounds/sounds/$ColID/$DirID/$OriginalFilename\" title=\"Please read the license field on the right for legal limitations on the use of these files.\">$SoundFormat</a>";
 				echo " | ";					
@@ -790,94 +746,188 @@ else {
 			echo "</ul>";
 			}
 			
-		echo "</div>\n";
+	echo "</div>\n";
 
-	echo "<div class=\"span-5\">\n";
-	
-	#$username = $_COOKIE["username"];
-	#Check if user can edit files (i.e. has admin privileges)
-	if ($pumilio_admin) {
-		echo "<p><strong>Administrative options</strong>:
-		<form method=\"get\" action=\"file_edit.php\">
-		<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-		<input type=\"submit\" value=\" Edit file information \" class=\"fg-button ui-state-default ui-corner-all\">
-		</form>";
 
-		#Delete file div
-		echo "<div id=\"dialog\" title=\"Delete the file?\">
-			<p><span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>The file will be permanently deleted and cannot be recovered. Are you sure?</p>
-		</div>";
-
-		echo "<p>
-		<form id=\"testconfirmJQ\" name=\"testconfirmJQ\" method=\"post\" action=\"del_file.php\">
-		<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-		<input type=\"submit\" value=\" Delete file from archive \" class=\"fg-button ui-state-default ui-corner-all\">
-		</form>";
-		}
-	if ($guests_can_open || $pumilio_loggedin) {
-		echo "<p>";
-		if ($file_error == 1 || $special_noopen == TRUE || $special_noprocess == TRUE){
+	if ($SiteID!="") {
+		echo "<h3><a href=\"#\">Site Data</a></h3>
+		<div>";
+		echo "Site: $SiteName";
+			#$site_pics=query_one("SELECT COUNT(*) FROM SitesPhotos WHERE SiteID='$SiteID'", $connection);
+			if ($site_pics>0) {
+				echo " <a href=\"#\" title=\"Show photographs of this site\" onclick=\"window.open('sitephotos.php?SiteID=$SiteID', 'pics', 'width=550,height=400,status=yes,resizable=yes,scrollbars=yes'); return false;\">
+					<img src=\"images/image.png\" alt=\"Show photographs of this site\"></a>";
+				}
+				
+		echo "<ul>";
+		
+		if ($pumilio_loggedin==FALSE && $hide_latlon_guests){
 			}
 		else {
-			echo "<form method=\"get\" action=\"file_obtain.php\">
-			<input type=\"hidden\" name=\"fileid\" value=\"$SoundID\">
-			<input type=\"hidden\" name=\"method\" value=\"3\">
-			<input type=\"submit\" value=\" Open file \" class=\"fg-button ui-state-default ui-corner-all\">
-			</form>";
+			echo "<li>Latitude: $SiteLat</li>
+				<li>Longitude: $SiteLon</li>";
 			}
 			
+		if ($SiteNotes != ""){
+			echo "<li>Notes: $SiteNotes</li>\n";
+			}
+		
+		if ($SiteElevation != ""){
+			echo "<li>Elevation: $SiteElevation</li>\n";
+			}
+		
+		if ($SiteURL != ""){
+			echo "<li>Site URL: $SiteURL</li>\n";
+			}
+		
+		echo "</div>\n";
 		}
 
-		echo "&nbsp;</div>";	
-		echo "<div class=\"span-9 last\">";
-		
-		#Add small GMap
-		if ($use_googlemaps=="1" || $use_googlemaps=="3") {
-			if ($SiteID!="" && $SiteLat!="" && $SiteLon!=""){
-				echo "\n<p>Map:<br>
-					<div id=\"map_canvas\" style=\"width: 320px; height: 220px\">Your browser does not have JavaScript enabled, which is required to proceed, or can not connect to GoogleMaps. Please contact your administrator.</div>\n";
-				if (!isset($kml_default)){
-					$kml_default = 0;
-					}
 
-				if ($kml_default == 1){
-					if ($hidekml==1){
-						echo "<a href=\"db_filedetails.php?SoundID=$SoundID&hidekml=0&d=$d&hidemarks=$hidemarks\">Show default KML layers</a>";
-						}
-					else{
-						echo "<a href=\"db_filedetails.php?SoundID=$SoundID&hidekml=1&d=$d&hidemarks=$hidemarks\">Hide default KML layers</a>";
-						}
-					}
-				echo "<br>";
-				}
+
+	#Tags
+	#$use_tags=query_one("SELECT Value from PumilioSettings WHERE Settings='use_tags'", $connection);
+	if ($use_tags=="1" || $use_tags=="") {
+		echo "<h3><a href=\"#\">File Tags</a></h3>
+			<div>";
+		if ($pumilio_loggedin) {
+			require("include/managetags_db.php");
+			echo "<p><strong>Add tags</strong>:<form method=\"get\" action=\"include/addtag.php\">
+				<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
+				<input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\">
+				<INPUT TYPE=\"image\" src=\"images/tag_blue_add.png\" BORDER=\"0\" alt=\"Add new tag\">
+				<br><em>Separate tags with a space</em></form><br>";
 			}
-
-		#License
-		#$files_license = query_one("SELECT Value from PumilioSettings WHERE Settings='files_license'", $connection);
-		$files_license = DB::column('SELECT `Value` from `PumilioSettings` WHERE `Settings`="files_license"');
-		#$files_license_detail = query_one("SELECT Value from PumilioSettings WHERE Settings='files_license_detail'", $connection);
-		$files_license_detail = DB::column('SELECT `Value` from `PumilioSettings` WHERE `Settings`="files_license_detail"');
-
-		if ($files_license != ""){
-			echo "<div class=\"notice\"><strong>License:</strong><br>\n";
-			if ($files_license == "Copyright"){
-				echo "&#169; Copyright: ";
-				}
-			else {
-				$files_license_img = str_replace(" ", "", $files_license);
-				$files_license_link = strtolower(str_replace("CC ", "", $files_license));
-				echo "<p>File available under a <a href=\"http://creativecommons.org/licenses/$files_license_link/3.0/\" target=_blank><img src=\"images/cc/$files_license_img.png\"></a> $files_license license: ";
-				}
+		else {
+			require("include/gettags.php");
+			}
+		echo "</div>";
+		}
 	
-			echo "\n<br>$files_license_detail</div>\n";
+	
+	echo "<h3><a href=\"#\">File Quality Data</a></h3>
+		<div>";
+	
+		#File quality data
+		#$QualityFlag=query_one("SELECT QualityFlag from QualityFlags WHERE QualityFlagID='$QualityFlagID'", $connection);
+		$QualityFlag = DB::column('SELECT `QualityFlag` from `QualityFlags` WHERE `QualityFlagID` = ' . $QualityFlagID);
+		echo "<p><strong>File quality data</strong>:
+			<ul>";
+		echo "<li>Quality flag: $QualityFlagID ($QualityFlag)</li>";
+		if ($DerivedSound == "1"){
+			echo "<li>Derived from: <a href=\"db_filedetails.php?SoundID=$DerivedFromSoundID\">$DerivedFromSoundID</li>";
+			}
+		echo "</ul>";
+
+		if ($pumilio_admin == TRUE) {
+			echo "<form method=\"GET\" action=\"editqf.php\" target=\"editqf\" onsubmit=\"window.open('', 'editqf', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
+			Edit the Quality Flag for this file:<br>
+			<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">";
+
+			$thisfile_QualityFlagID = $QualityFlagID;
+
+			$query_qf = "SELECT * from QualityFlags ORDER BY QualityFlagID";
+			$result_qf = mysqli_query($connection, $query_qf)
+				or die (mysqli_error($connection));
+			$nrows_qf = mysqli_num_rows($result_qf);
+
+			echo "<select name=\"newqf\" class=\"ui-state-default ui-corner-all formedge\">";
+			for ($f=0;$f<$nrows_qf;$f++) {
+				$row_qf = mysqli_fetch_array($result_qf);
+				extract($row_qf);
+				if ($QualityFlagID==$thisfile_QualityFlagID){
+					echo "<option value=\"$QualityFlagID\" SELECTED>$QualityFlag ($QualityFlagID)</option>\n";
+					}
+				else{
+					echo "<option value=\"$QualityFlagID\">$QualityFlag ($QualityFlagID)</option>\n";
+					}
+				}
+
+			echo "</select><br>
+			<input type=submit value=\" Change \" class=\"fg-button ui-state-default ui-corner-all\">
+			</form><br>";
+			}
+	
+	
+	echo "</div>";
+	
+	
+	if ($pumilio_admin) {
+		echo "
+		<h3><a href=\"#\">Administrative options</a></h3>
+			<div>
+			<p><strong>Administrative options</strong>:
+			<form method=\"get\" action=\"file_edit.php\">
+			<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
+			<input type=\"submit\" value=\" Edit file information \" class=\"fg-button ui-state-default ui-corner-all\">
+			</form>";
+
+			#Delete file div
+			echo "<div id=\"dialog\" title=\"Delete the file?\">
+				<p><span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>The file will be permanently deleted and cannot be recovered. Are you sure?</p>
+			</div>";
+
+			echo "<p>
+			<form id=\"testconfirmJQ\" name=\"testconfirmJQ\" method=\"post\" action=\"del_file.php\">
+			<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
+			<input type=\"submit\" value=\" Delete file from archive \" class=\"fg-button ui-state-default ui-corner-all\">
+			</form>
+		</div>\n";
+		}
+
+	echo "</div>
+	</div>
+	<div class=\"span-1\">&nbsp;</div>\n";
+	
+	echo "<div class=\"span-9 last\">";
+	
+	#Add small GMap
+	if ($use_googlemaps=="1" || $use_googlemaps=="3") {
+		if ($SiteID!="" && $SiteLat!="" && $SiteLon!=""){
+			echo "\n<p>Map:<br>
+				<div id=\"map_canvas\" style=\"width: 320px; height: 220px\">Your browser does not have JavaScript enabled, which is required to proceed, or can not connect to GoogleMaps. Please contact your administrator.</div>\n";
+			if (!isset($kml_default)){
+				$kml_default = 0;
+				}
+
+			if ($kml_default == 1){
+				if ($hidekml==1){
+					echo "<a href=\"db_filedetails.php?SoundID=$SoundID&hidekml=0&d=$d&hidemarks=$hidemarks\">Show default KML layers</a>";
+					}
+				else{
+					echo "<a href=\"db_filedetails.php?SoundID=$SoundID&hidekml=1&d=$d&hidemarks=$hidemarks\">Hide default KML layers</a>";
+					}
+				}
+			echo "<br>";
+			}
+		}
+
+	echo "</div>
+	<div class=\"span-24 last\">";
+	#License
+	$files_license = DB::column('SELECT `Value` from `PumilioSettings` WHERE `Settings`="files_license"');
+	$files_license_detail = DB::column('SELECT `Value` from `PumilioSettings` WHERE `Settings`="files_license_detail"');
+
+	if ($files_license != ""){
+		echo "<div class=\"notice\"><strong>License:</strong><br>\n";
+		if ($files_license == "Copyright"){
+			echo "&#169; Copyright: ";
+			}
+		else {
+			$files_license_img = str_replace(" ", "", $files_license);
+			$files_license_link = strtolower(str_replace("CC ", "", $files_license));
+			echo "<p>File available under a 
+				<a href=\"http://creativecommons.org/licenses/$files_license_link/3.0/\" target=_blank><img src=\"images/cc/$files_license_img.png\"></a>
+				$files_license license by: ";
 			}
 
+		echo "$files_license_detail</div>\n";
+		}
 
-		echo "&nbsp;</div>";	
-		flush();
+	flush();
+	?>
 
-		?>
-		
+	</div>
 	<div class="span-24 last">	
 		<script type="text/javascript">
 			function hidediv()

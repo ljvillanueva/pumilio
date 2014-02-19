@@ -1,4 +1,28 @@
 <?php
+session_start();
+
+require("functions.php");
+require("../config.php");
+require("apply_config_include.php");
+
+$force_admin = TRUE;
+require("check_admin.php");
+
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+<html>
+<head>
+
+<title>$app_custom_name - Administration Area</title>";
+
+#Get CSS
+	require("get_css_include.php");
+	require("get_jqueryui_include.php");
+?>
+
+</head>
+<body>
+
+<?php
 
 if (!isset($_GET["LogTypeQ"])){
 	$LogTypeQ = "";
@@ -16,8 +40,7 @@ if ($nrows == 0){
 	echo "<p>There is nothing in the log.";
 	}
 else {
-	echo "<form action=\"admin.php\" method=\"GET\">
-		<input name=\"t\" type=\"hidden\" value=\"8\">
+	echo "<form action=\"systemlog.php\" method=\"GET\">
 		<select name=\"LogTypeQ\" class=\"ui-state-default ui-corner-all\">";
 
 		for ($i=0;$i<$nrows;$i++) {
@@ -87,3 +110,10 @@ else {
 	echo "</table>";
 	}
 ?>
+
+<br><p><a href="#" onClick="window.close();">Close window</a>
+
+</div>
+
+</body>
+</html>
