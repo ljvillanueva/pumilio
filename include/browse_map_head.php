@@ -95,6 +95,8 @@ if ($googlemaps_ver == "3"){
 					$result_by_dates=query_several($query_by_dates, $connection);
 					$nrows_by_dates = mysqli_num_rows($result_by_dates);
 
+					$thislist = "";
+
 					for ($dd=0;$dd<$nrows_by_dates;$dd++) {
 						$row_by_dates = mysqli_fetch_array($result_by_dates);
 						extract($row_by_dates);
@@ -141,6 +143,8 @@ if ($googlemaps_ver == "3"){
 						AND Sounds.SoundStatus!='9' $qf_check ORDER BY Time ASC";
 					$result_by_dates=query_several($query_by_dates, $connection);
 					$nrows_by_dates = mysqli_num_rows($result_by_dates);
+
+					$thislist = "";
 
 					for ($dd=0;$dd<$nrows_by_dates;$dd++) {
 						$row_by_dates = mysqli_fetch_array($result_by_dates);
