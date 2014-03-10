@@ -74,7 +74,7 @@
 		<li> <a href="http://flac.sourceforge.net">FLAC</a> - Free Lossless Audio Codec (optional)
 	</ul>
 
-	Create a database and user in MySQL, you can use the <i>mysql</i> utility or <i>phpmyadmin</i>. Then, 
+	Create a database and user in MySQL, you can use the <i>mysql</i> client or <i>phpmyadmin</i>. Then, 
 	on your browser, go to the application URL, adding <b>install/</b>. For example, if the address is:
 		<pre style="margin-left:20px;">http://somehost.com/pumilio</pre>
 		
@@ -87,7 +87,12 @@
 
 	<h3>Installation under Ubuntu</h3>
 
-	<p>Install the server software (Apache, PHP5, MySQL). To install the required packages for audiolab and Pumilio in a current version of Ubuntu:
+	<p>Install the server software (Apache, PHP5, MySQL).</p>
+	
+		<pre style="margin-left:20px;">sudo apt-get install tasksel
+sudo tasksel install lamp-server</pre>
+	
+	<p>To install the required packages for audiolab and Pumilio in a current version of Ubuntu:</p>
 
 		<pre style="margin-left:20px;">sudo apt-get install python-dev python-setuptools python-numpy libsndfile1-dev libasound2-dev imagemagick sox libsox* python-imaging flac lame</pre>
 
