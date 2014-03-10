@@ -36,6 +36,12 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 require("include/get_css.php");
 require("include/get_jqueryui.php");
 
+#Execute custom code for head, if set
+if (is_file("$absolute_dir/customhead.php")) {
+		include("customhead.php");
+	}
+	
+
 ?>
 
 </head>

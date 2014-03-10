@@ -18,15 +18,27 @@ else {
 	#Search advanced
 	
 	echo "<hr noshade>
-		<p><strong>Advanced search</strong>:";
+		<p><strong>Search by file properties</strong>:";
 
 	echo "<form action=\"$advancedsearch_link\" method=\"GET\">
 		<table styleborder=\"1\" cellpadding=\"0\" cellspacing=\"0\" style=\"margin-left: 10px;\">
+		
+		<tr>
+		<td>
+			Filename: 
+		</td>
+		<td>&nbsp;</td>
+		<td colspan=\"2\">
+			<input type=\"text\" name=\"filename\" class=\"ui-state-default ui-corner-all\" size=60>
+		</td>
+		</tr>
+		
 		<tr>
 		<td>
 			Collection: 
 		</td>
-		<td style=\"text-align:right;\">
+		<td>&nbsp;</td>
+		<td>
 			<select name=\"Col_comparison\" class=\"ui-state-default ui-corner-all\">
 				<option value=\"1\" SELECTED> is </option>
 				<option value=\"2\"> is not </option>
@@ -54,10 +66,9 @@ else {
 
 		<tr>
 		<td>Time range:
-		</td><td style=\"text-align:right;\">&nbsp;
-
-		</td><td>
-
+		</td>
+		<td>&nbsp;</td>
+		<td colspan=\"2\">
 			<input type=\"text\" id=\"startTime\" name=\"startTime\" value=\"00:00\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\" readonly> to 
 			<input type=\"text\" id=\"endTime\" name=\"endTime\" value=\"23:59\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\" readonly> 
 			<div id=\"datemsg\"></div>
@@ -67,10 +78,10 @@ else {
 
 		<tr>
 		<td>
-		Date range: 
-		</td><td style=\"text-align:right;\">&nbsp;
-
-		</td><td>
+		Date range: </td>
+		<td>&nbsp;</td>
+		
+		<td colspan=\"2\">
 		
 			<input type=\"text\" id=\"startDate\" name=\"startDate\" value=\"$DateLow1\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\" readonly> to 
 			<input type=\"text\" id=\"endDate\" name=\"endDate\" value=\"$DateHigh1\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\" readonly>
@@ -79,8 +90,9 @@ else {
 		</tr>
 
 		<tr>
-		<td>Site: 
-		</td><td style=\"text-align:right;\">
+		<td>Site: </td>
+		<td>&nbsp;</td>
+		<td>
 		<select name=\"Site_comparison\" class=\"ui-state-default ui-corner-all\">
 			<option value=\"1\" SELECTED> is </option>
 			<option value=\"2\"> is not </option>
@@ -113,8 +125,9 @@ else {
 
 		<tr>
 
-		<td>Tags:
-		</td><td style=\"text-align:right;\">
+		<td>Tags:</td>
+		<td>&nbsp;</td>
+		<td>
 		<select name=\"Tag_comparison\" class=\"ui-state-default ui-corner-all\">
 			<option value=\"1\" SELECTED> include </option>
 		</select> &nbsp;
@@ -142,10 +155,9 @@ else {
 
 		<tr>
 
-		<td>Duration:
-		</td><td style=\"text-align:right;\">&nbsp;
-
-		</td><td>
+		<td>Duration:</td>
+		<td>&nbsp;</td>
+		<td colspan=\"2\">
 			<div style=\"margin: 10 10 10 10;\"><div id=\"durationslider\"></div></div>
 	
 			<input type=\"text\" id=\"startDuration\" name=\"startDuration\" value=\"$DurationLow\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\" readonly> to 
@@ -156,8 +168,9 @@ else {
 
 		<tr>
 		<td>
-		Number of channels: 
-		</td><td style=\"text-align:right;\">
+		Number of channels: </td>
+		<td>&nbsp;</td>
+		<td>
 		<select name=\"Channels_comparison\" class=\"ui-state-default ui-corner-all\">
 			<option value=\"1\" SELECTED> is </option>
 			<option value=\"2\"> is not </option>
@@ -173,8 +186,10 @@ else {
 
 		<tr>
 
-		<td>Sampling Rate: 
-		</td><td style=\"text-align:right;\">
+		<td>Sampling Rate: </td>
+		<td>&nbsp;</td>
+		
+		<td>
 		<select name=\"SamplingRate_comparison\" class=\"ui-state-default ui-corner-all\">
 			<option value=\"1\" SELECTED> is </option>
 			<option value=\"2\"> is not </option>
@@ -201,17 +216,20 @@ else {
 		</tr>
 
 		<tr>
-		<td colspan=\"3\">
-			Order by: &nbsp; <select name=\"Orderby\" class=\"ui-state-default ui-corner-all\">
+		<td>Order results by:</td>
+
+		<td>&nbsp;</td>
+		<td>
+			<select name=\"Orderby\" class=\"ui-state-default ui-corner-all\">
 				<option value=\"Sounds.SoundID\" SELECTED>original order</option>
-				<option value=\"Date\">Date</option>
-				<option value=\"Time\">Time</option>
-				<option value=\"SiteID\">Site</option>
-				<option value=\"Duration\">Duration</option>
-			</select> &nbsp; in &nbsp; 
+				<option value=\"Time\">date and time</option>
+				<option value=\"Duration\">duration</option>
+			</select>
+		</td>
+		<td>
 	 		<select name=\"Orderby_dir\" class=\"ui-state-default ui-corner-all\">
-				<option value=\"ASC\" SELECTED>ascending order</option>
-				<option value=\"DESC\">descending order</option>
+				<option value=\"ASC\" SELECTED>in ascending order</option>
+				<option value=\"DESC\">in descending order</option>
 			</select>
 		</td>
 		</tr>

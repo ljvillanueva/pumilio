@@ -36,6 +36,13 @@ echo "
 #Custom CSS
 echo "\n<link rel=\"stylesheet\" href=\"css/custom.css\" type=\"text/css\" media=\"screen, projection\">\n";
 
+
+#Execute custom code for head, if set
+if (is_file("$absolute_dir/customhead.php")) {
+		include("customhead.php");
+	}
+	
+	
 ?>
 
 </head>

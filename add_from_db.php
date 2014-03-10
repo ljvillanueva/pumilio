@@ -23,9 +23,8 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 
 require("include/get_css.php");
 require("include/get_jqueryui.php");
-?>
 
-<?php
+
 #Call particular scripts from include, post to same with variable 'step' to indicate which
 
 if (isset($_POST["step"])){

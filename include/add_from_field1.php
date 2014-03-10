@@ -55,7 +55,17 @@ else {
 $random_dir=mt_rand();
 mkdir("tmp/$random_dir", 0777);
 setcookie("random_upload_dir", $random_dir, time()+(3600*24*30), $app_dir);
+
+
+#Execute custom code for head, if set
+if (is_file("$absolute_dir/customhead.php")) {
+		include("customhead.php");
+	}
+	
+
 ?>
+
+
 
 </head>
 <body>

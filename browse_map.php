@@ -86,6 +86,13 @@ if ($kml_count>0){
 if ($use_googleanalytics) {
 	echo $googleanalytics_code;
 	}
+	
+#Execute custom code for head, if set
+if (is_file("$absolute_dir/customhead.php")) {
+		include("customhead.php");
+	}
+	
+
 ?>
 
 </head>

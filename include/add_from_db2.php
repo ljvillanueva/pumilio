@@ -17,6 +17,11 @@ if (substr($dir, -1)!="/")
 
 $files_format_length=strlen($files_format);
 
+#Execute custom code for head, if set
+if (is_file("$absolute_dir/customhead.php")) {
+		include("customhead.php");
+	}
+	
 ?>
 
 </head>

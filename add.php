@@ -31,7 +31,16 @@ require("include/get_jqueryui.php");
 if ($use_googleanalytics) {
 	echo $googleanalytics_code;
 	}
+
+
+#Execute custom code for head, if set
+if (is_file("$absolute_dir/customhead.php")) {
+		include("customhead.php");
+	}
+	
+	
 ?>
+
 
 </head>
 <body>
@@ -56,7 +65,7 @@ if ($use_googleanalytics) {
 				or die (mysqli_error($connection));
 			$nrows = mysqli_num_rows($result);
 			if ($nrows>0) {
-				echo "Add a file to the collection &nbsp;&nbsp;<select name=\"ColID\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">";
+				echo "Add a single file to the collection &nbsp;&nbsp;<select name=\"ColID\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">";
 
 				for ($i=0;$i<$nrows;$i++) {
 					$row = mysqli_fetch_array($result);
@@ -77,27 +86,29 @@ if ($use_googleanalytics) {
 				echo "<p>This archive has no Collections yet.";
 				}
 
-		echo "<p><a href=\"add_collection.php\">Add Collections</a>";
 
-		echo "<p><a href=\"add_from_field.php?sm=1\">Upload sound files from a Wildlife Acoustics SongMeter</a>";
-					
-		echo "<p><a href=\"add_from_field.php\">Upload sound files from the field</a>";
-		
-		echo "<p><a href=\"add_from_field.php?sm=1&local=1\">Add sound files from a Wildlife Acoustics SongMeter</a> (stored locally in server)";
-					
-		echo "<p><a href=\"add_from_field.php?local=1\">Add sound files from the field</a> (stored locally in server)";
+		echo "<hr noshade>
+			<p><strong> Add files from a Wildlife Acoustics SongMeter:</strong>";
+			echo "<p><a href=\"add_from_field.php?sm=1\">Upload sound files from a Wildlife Acoustics SongMeter</a>";
+			echo "<p><a href=\"add_from_field.php?sm=1&local=1\">Add sound files from a Wildlife Acoustics SongMeter</a> (stored locally in server)";
+				
+		echo "<hr noshade>
+			<p><strong> Add files from other sound recorders:</strong>";
+		echo "<p><a href=\"add_from_field.php\">Upload sound files from the field</a>
+			<p><a href=\"add_from_field.php?local=1\">Add sound files from the field</a> (stored locally in server)";
 		
 		echo "<p><a href=\"add_from_db.php\">Import files from a database/spreadsheet</a>";
 		
-		echo "<p><a href=\"#\" onclick=\"window.open('include/addsite.php', 'addsite', 'width=650,height=350,status=yes,resizable=yes,scrollbars=auto')\">Add sites</a>";
-
-		echo "<p><a href=\"admin.php?t=4\">Add sensors</a> (in the admin menu)";
-
+		echo "<hr noshade>
+			<p><a href=\"add_collection.php\">Add Collections</a>";
+			echo "<p><a href=\"#\" onclick=\"window.open('include/addsite.php', 'addsite', 'width=650,height=350,status=yes,resizable=yes,scrollbars=auto')\">Add Sites</a>";
+			echo "<p><a href=\"admin.php?t=4\">Add Sensors</a> (in the admin menu)";
+			
 		$result_fm = query_one("SELECT COUNT(*) FROM FilesToAddMembers", $connection);
 		if ($result_fm>0){
-			echo "<hr noshade><p><a href=\"file_manager.php\">Check uploaded file status</a>";
+			echo "<p><a href=\"file_manager.php\">Check uploaded file status</a>";
 			}
-		
+
 		?>
 
 	</div>

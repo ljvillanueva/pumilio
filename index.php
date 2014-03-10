@@ -282,6 +282,13 @@ if ($map_only=="1"){
 if ($use_googleanalytics) {
 	echo $googleanalytics_code;
 	}
+
+
+#Execute custom code for head, if set
+if (is_file("$absolute_dir/customhead.php")) {
+		include("customhead.php");
+	}
+	
 	
 echo "</head>\n";
 
@@ -492,8 +499,8 @@ else{
 </body>
 </html>
 <?php
-	session_write_close();
-	flush(); @ob_flush();
+	#session_write_close();
+	#flush(); @ob_flush();
 	#Delete temp files older than 7 days
 	#delete_old('tmp/', 3);
 ?>

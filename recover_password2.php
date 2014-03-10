@@ -22,6 +22,14 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <title>$app_custom_name - Recover Password</title>";
 
 require("include/get_css.php");
+
+
+#Execute custom code for head, if set
+if (is_file("$absolute_dir/customhead.php")) {
+		include("customhead.php");
+	}
+	
+	
 ?>
 
 </head>

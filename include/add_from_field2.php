@@ -19,6 +19,13 @@ else {
 	}
 
 $dir = "$absolute_dir/tmp/" . $_COOKIE["random_upload_dir"] . "/";
+
+
+#Execute custom code for head, if set
+if (is_file("$absolute_dir/customhead.php")) {
+		include("customhead.php");
+	}
+	
 ?>
 
 </head>

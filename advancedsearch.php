@@ -104,10 +104,27 @@ $Orderby_dir=filter_var($_GET["Orderby_dir"], FILTER_SANITIZE_STRING);
 
 if ($Orderby=="0")
 	$Orderby = "SoundID";
+
+if ($Orderby=="Time")
+	$Orderby = "Date, Time";
+
 if ($Orderby_dir=="0")
 	$Orderby_dir = "ASC";
 
 $order_byq = " $Orderby $Orderby_dir";
+
+
+
+if (isset($_GET["filename"])){
+	$filename = filter_var($_GET["filename"], FILTER_SANITIZE_STRING);
+	$filename_q = " AND Sounds.SoundName LIKE '%" . $filename. "%'";
+	}
+else{
+	$filename_q = " ";
+	$Filen = 0;
+	}
+
+
 
 
 $Tag_comparison=filter_var($_GET["Tag_comparison"], FILTER_SANITIZE_STRING);
@@ -221,8 +238,16 @@ for ($ajax=0;$ajax<10;$ajax++) {
 ?>
 
 <?php
-if ($use_googleanalytics)
-	{echo $googleanalytics_code;}
+if ($use_googleanalytics){
+	echo $googleanalytics_code;
+	}
+	
+#Execute custom code for head, if set
+if (is_file("$absolute_dir/customhead.php")) {
+		include("customhead.php");
+	}
+	
+
 ?>
 
 </head>
@@ -239,7 +264,7 @@ if ($use_googleanalytics)
 
 		<?php
 			#If no options where selected, dont waste time searching
-			if ($SiteID=="0" && $Duration=="0" && $Channels=="0" && $SamplingRate=="0" && $Date=="0" && $Time=="0" && $Tags=="0" && $Col=="0") {
+			if ($SiteID=="0" && $Duration=="0" && $Channels=="0" && $SamplingRate=="0" && $Date=="0" && $Time=="0" && $Tags=="0" && $Col=="0" && Filen=="0") {
 				echo "
 				<div class=\"span-24 last\">
 				<div class=\"notice\" style=\"margins: 10px;\">
@@ -260,16 +285,16 @@ if ($use_googleanalytics)
 
 			//How many sounds associated with that search
 			if ($Tags!="0" && $Col=="0") {
-				$q = "SELECT COUNT(*) FROM Sounds,Sites,Tags WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq";
+				$q = "SELECT COUNT(*) FROM Sounds,Sites,Tags WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $filename_q $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq";
 				}
 			elseif ($Col!="0" && $Tags=="0") {
-				$q = "SELECT COUNT(*) FROM Sounds,Sites,Collections WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Colq";
+				$q = "SELECT COUNT(*) FROM Sounds,Sites,Collections WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $filename_q $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Colq";
 				}
 			elseif ($Col!="0" && $Tags!="0") {
-				$q = "SELECT COUNT(*) FROM Sounds,Sites,Tags,Collections WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Colq, $Tagq";
+				$q = "SELECT COUNT(*) FROM Sounds,Sites,Tags,Collections WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $filename_q $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Colq, $Tagq";
 				}
 			else {
-				$q = "SELECT COUNT(*) FROM Sounds,Sites WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq";
+				$q = "SELECT COUNT(*) FROM Sounds,Sites WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $filename_q $Durationq $Channelsq $SamplingRateq $Dateq $Timeq";
 				}
 			#debug
 			#echo $q;
@@ -313,16 +338,16 @@ if ($use_googleanalytics)
 
 
 			if ($Tags!="0" && $Col=="0") {
-				$query = "SELECT *, DATE_FORMAT(Date, '%d-%b-%Y') AS Date_h FROM Sounds,Sites,Tags WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq ORDER BY $order_byq LIMIT $sql_limit";
+				$query = "SELECT *, DATE_FORMAT(Date, '%d-%b-%Y') AS Date_h FROM Sounds,Sites,Tags WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $filename_q $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq ORDER BY $order_byq LIMIT $sql_limit";
 			}
 			elseif ($Col!="0" && $Tags=="0") {
-				$query = "SELECT *, DATE_FORMAT(Date, '%d-%b-%Y') AS Date_h FROM Sounds,Sites,Collections WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Colq ORDER BY $order_byq LIMIT $sql_limit";
+				$query = "SELECT *, DATE_FORMAT(Date, '%d-%b-%Y') AS Date_h FROM Sounds,Sites,Collections WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $filename_q $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Colq ORDER BY $order_byq LIMIT $sql_limit";
 			}
 			elseif ($Col!="0" && $Tags!="0") {
-				$query = "SELECT *, DATE_FORMAT(Date, '%d-%b-%Y') AS Date_h FROM Sounds,Sites,Collections,Tags WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq $Colq ORDER BY $order_byq LIMIT $sql_limit";
+				$query = "SELECT *, DATE_FORMAT(Date, '%d-%b-%Y') AS Date_h FROM Sounds,Sites,Collections,Tags WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $filename_q $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq $Colq ORDER BY $order_byq LIMIT $sql_limit";
 			}
 			else {
-				$query = "SELECT *, DATE_FORMAT(Date, '%d-%b-%Y') AS Date_h FROM Sounds,Sites WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq ORDER BY $order_byq LIMIT $sql_limit";
+				$query = "SELECT *, DATE_FORMAT(Date, '%d-%b-%Y') AS Date_h FROM Sounds,Sites WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $filename_q $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq ORDER BY $order_byq LIMIT $sql_limit";
 			}
 
 			#debug
@@ -345,13 +370,17 @@ if ($use_googleanalytics)
 			?>
 			
 		</div>
-		<div class="span-1">
-			<?php
-			#count and prev
+		<div class="span-6">
+		<?php
+			echo "<div class=\"center\">";
+
+			#count and next
+			echo "Results<br>";
+
 			if ($startid>1) {
 				$go_to=$startid-$how_many_to_show;
 				echo "
-				<form action=\"advancedsearch.php\" method=\"GET\">
+				<form action=\"advancedsearch.php\" method=\"GET\" style=\"display:inline;\">
 				<input type=\"hidden\" value=\"$startDate\" name=\"startDate\">
 				<input type=\"hidden\" value=\"$endDate\" name=\"endDate\">
 				<input type=\"hidden\" value=\"$startTime\" name=\"startTime\">
@@ -371,19 +400,18 @@ if ($use_googleanalytics)
 				<input type=\"hidden\" value=\"$Tag_comparison\" name=\"Tag_comparison\">
 				<input type=\"hidden\" value=\"$Col\" name=\"Col\">
 				<input type=\"hidden\" value=\"$Col_comparison\" name=\"Col_comparison\">
+				<input type=\"hidden\" value=\"$filename\" name=\"filename\">
 
 				<input type=\"image\" src=\"images/arrowleft.png\" alt=\" Prev \" title=\" Prev \">
 				</form>";
 				}
 
-			echo "&nbsp;</div>
-			<div class=\"span-4\" style=\"text-align: center;\"><p>$startid - $endid_show of $no_sounds</div>
-			<div class=\"span-1\">";
+			echo " $startid to $endid_show ";
 
 			if ($endid_show<$no_sounds) {
 				$go_to=$startid+$how_many_to_show;
 				echo "
-				<form action=\"advancedsearch.php\" method=\"GET\">
+				<form action=\"advancedsearch.php\" method=\"GET\" style=\"display:inline;\">
 				<input type=\"hidden\" value=\"$startDate\" name=\"startDate\">
 				<input type=\"hidden\" value=\"$endDate\" name=\"endDate\">
 				<input type=\"hidden\" value=\"$startTime\" name=\"startTime\">
@@ -403,13 +431,18 @@ if ($use_googleanalytics)
 				<input type=\"hidden\" value=\"$Tag_comparison\" name=\"Tag_comparison\">
 				<input type=\"hidden\" value=\"$Col\" name=\"Col\">
 				<input type=\"hidden\" value=\"$Col_comparison\" name=\"Col_comparison\">
+				<input type=\"hidden\" value=\"$filename\" name=\"filename\">
 
 				<input type=\"image\" src=\"images/arrowright.png\" alt=\" Next \" title=\" Next \">
 				</form>";
 
 				}
-			?>
-		&nbsp;</div>
+
+			echo "<br>of $no_sounds</div>";
+		?>
+		
+		
+		</div>
 		<div class="span-6">
 			<?php
 			#Order by sound date
@@ -417,10 +450,10 @@ if ($use_googleanalytics)
 
 			?>
 		</div>
-		<div class="span-1">
+		<div class="span-2 last">
 			<?php
 			echo "
-				<form action=\"advancedsearch.php\" method=\"GET\">
+				<form action=\"advancedsearch.php\" method=\"GET\" style=\"display:inline;\">
 				<input type=\"hidden\" value=\"$startDate\" name=\"startDate\">
 				<input type=\"hidden\" value=\"$endDate\" name=\"endDate\">
 				<input type=\"hidden\" value=\"$startTime\" name=\"startTime\">
@@ -441,16 +474,14 @@ if ($use_googleanalytics)
 				<input type=\"hidden\" value=\"$Tag_comparison\" name=\"Tag_comparison\">
 				<input type=\"hidden\" value=\"$Col\" name=\"Col\">
 				<input type=\"hidden\" value=\"$Col_comparison\" name=\"Col_comparison\">
+				<input type=\"hidden\" value=\"$filename\" name=\"filename\">
 
 				<input type=\"image\" src=\"images/application_view_columns.png\" alt=\" Display as summary \" title=\" Display as summary \">
 				</form>";
 
-			?>
-		</div>
-		<div class="span-1 last">
-			<?php
+		
 			echo "
-				<form action=\"advancedsearch.php\" method=\"GET\">
+				<form action=\"advancedsearch.php\" method=\"GET\" style=\"display:inline;\">
 				<input type=\"hidden\" value=\"$startDate\" name=\"startDate\">
 				<input type=\"hidden\" value=\"$endDate\" name=\"endDate\">
 				<input type=\"hidden\" value=\"$startTime\" name=\"startTime\">
@@ -471,6 +502,7 @@ if ($use_googleanalytics)
 				<input type=\"hidden\" value=\"$Tag_comparison\" name=\"Tag_comparison\">
 				<input type=\"hidden\" value=\"$Col\" name=\"Col\">
 				<input type=\"hidden\" value=\"$Col_comparison\" name=\"Col_comparison\">
+				<input type=\"hidden\" value=\"$filename\" name=\"filename\">
 
 				<input type=\"image\" src=\"images/application_view_tile.png\" alt=\" Display as gallery \" title=\" Display as gallery \">
 				</form>";
@@ -501,19 +533,19 @@ if ($use_googleanalytics)
 			echo "<form action=\"db_filedetails.php\" method=\"GET\">Select a file from this search:<br>";
 			if ($Tags!="0" && $Col=="0") {
 				$query_q = "SELECT * FROM Sounds,Sites,Tags WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID 
-					$Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq ORDER BY $order_byq LIMIT $sql_limit";
+					$Siteq $filename_q $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq ORDER BY $order_byq LIMIT $sql_limit";
 				}
 			elseif ($Col!="0" && $Tags=="0") {
 				$query_q = "SELECT * FROM Sounds,Sites,Collections WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID 
-					$Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Colq ORDER BY $order_byq LIMIT $sql_limit";
+					$Siteq $filename_q $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Colq ORDER BY $order_byq LIMIT $sql_limit";
 				}
 			elseif ($Col!="0" && $Tags!="0") {
 				$query_q = "SELECT * FROM Sounds,Sites,Collections,Tags WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID 
-					$Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq $Colq ORDER BY $order_byq LIMIT $sql_limit";
+					$Siteq $filename_q $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq $Colq ORDER BY $order_byq LIMIT $sql_limit";
 				}
 			else {
 				$query_q = "SELECT * FROM Sounds,Sites WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID 
-					$Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq ORDER BY $order_byq LIMIT $sql_limit";
+					$Siteq $filename_q $Durationq $Channelsq $SamplingRateq $Dateq $Timeq ORDER BY $order_byq LIMIT $sql_limit";
 				}
 
 			$result_q = mysqli_query($connection, $query_q)
@@ -535,7 +567,7 @@ if ($use_googleanalytics)
 			</div>";
 		?>
 
-		<div class="span-1">
+		<div class="span-5">
 
 			<?php
 
@@ -557,69 +589,75 @@ if ($use_googleanalytics)
 			$Orderby_dir=filter_var($_GET["Orderby_dir"], FILTER_SANITIZE_STRING);
 			$Tag_comparison=filter_var($_GET["Tag_comparison"], FILTER_SANITIZE_STRING);
 			$Tags=filter_var($_GET["Tags"], FILTER_SANITIZE_STRING);
+			$filename=filter_var($_GET["filename"], FILTER_SANITIZE_STRING);
+ 
+			 echo "<div class=\"center\">";
 
-			#count and prev
-			if ($startid>1) {
-				$go_to=$startid-$how_many_to_show;
-				echo "
-				<form action=\"advancedsearch.php\" method=\"GET\">
-				<input type=\"hidden\" value=\"$startDate\" name=\"startDate\">
-				<input type=\"hidden\" value=\"$endDate\" name=\"endDate\">
-				<input type=\"hidden\" value=\"$startTime\" name=\"startTime\">
-				<input type=\"hidden\" value=\"$endTime\" name=\"endTime\">
-				<input type=\"hidden\" value=\"$Site_comparison\" name=\"Site_comparison\">
-				<input type=\"hidden\" value=\"$SiteID\" name=\"SiteID\">
-				<input type=\"hidden\" value=\"$startDuration\" name=\"startDuration\">
-				<input type=\"hidden\" value=\"$endDuration\" name=\"endDuration\">
-				<input type=\"hidden\" value=\"$Channels_comparison\" name=\"Channels_comparison\">
-				<input type=\"hidden\" value=\"$Channels\" name=\"Channels\">
-				<input type=\"hidden\" value=\"$SamplingRate_comparison\" name=\"SamplingRate_comparison\">
-				<input type=\"hidden\" value=\"$SamplingRate\" name=\"SamplingRate\">
-				<input type=\"hidden\" value=\"$Orderby\" name=\"Orderby\">
-				<input type=\"hidden\" value=\"$Orderby_dir\" name=\"Orderby_dir\">
-				<input type=\"hidden\" value=\"$go_to\" name=\"startid\">
-				<input type=\"hidden\" value=\"$Tags\" name=\"Tags\">
-				<input type=\"hidden\" value=\"$Tag_comparison\" name=\"Tag_comparison\">
-				<input type=\"hidden\" value=\"$Col\" name=\"Col\">
-				<input type=\"hidden\" value=\"$Col_comparison\" name=\"Col_comparison\">
+				#count and next
+				echo "Results<br>";
+	 
+				#count and prev
+				if ($startid>1) {
+					$go_to=$startid-$how_many_to_show;
+					echo "
+					<form action=\"advancedsearch.php\" method=\"GET\" style=\"display:inline;\">
+					<input type=\"hidden\" value=\"$startDate\" name=\"startDate\">
+					<input type=\"hidden\" value=\"$endDate\" name=\"endDate\">
+					<input type=\"hidden\" value=\"$startTime\" name=\"startTime\">
+					<input type=\"hidden\" value=\"$endTime\" name=\"endTime\">
+					<input type=\"hidden\" value=\"$Site_comparison\" name=\"Site_comparison\">
+					<input type=\"hidden\" value=\"$SiteID\" name=\"SiteID\">
+					<input type=\"hidden\" value=\"$startDuration\" name=\"startDuration\">
+					<input type=\"hidden\" value=\"$endDuration\" name=\"endDuration\">
+					<input type=\"hidden\" value=\"$Channels_comparison\" name=\"Channels_comparison\">
+					<input type=\"hidden\" value=\"$Channels\" name=\"Channels\">
+					<input type=\"hidden\" value=\"$SamplingRate_comparison\" name=\"SamplingRate_comparison\">
+					<input type=\"hidden\" value=\"$SamplingRate\" name=\"SamplingRate\">
+					<input type=\"hidden\" value=\"$Orderby\" name=\"Orderby\">
+					<input type=\"hidden\" value=\"$Orderby_dir\" name=\"Orderby_dir\">
+					<input type=\"hidden\" value=\"$go_to\" name=\"startid\">
+					<input type=\"hidden\" value=\"$Tags\" name=\"Tags\">
+					<input type=\"hidden\" value=\"$Tag_comparison\" name=\"Tag_comparison\">
+					<input type=\"hidden\" value=\"$Col\" name=\"Col\">
+					<input type=\"hidden\" value=\"$Col_comparison\" name=\"Col_comparison\">
+					<input type=\"hidden\" value=\"$filename\" name=\"filename\">
 
-				<input type=\"image\" src=\"images/arrowleft.png\" alt=\" Prev \" title=\" Prev \">
-				</form>";
-				}
+					<input type=\"image\" src=\"images/arrowleft.png\" alt=\" Prev \" title=\" Prev \">
+					</form>";
+					}
 
-			echo "&nbsp;</div>
-			<div class=\"span-3\"><p>$startid - $endid_show of $no_sounds</div>
-			<div class=\"span-1\">";
+				echo " $startid to $endid_show ";
 
-			if ($endid_show<$no_sounds) {
-				$go_to=$startid+$how_many_to_show;
-				echo "
-				<form action=\"advancedsearch.php\" method=\"GET\">
-				<input type=\"hidden\" value=\"$startDate\" name=\"startDate\">
-				<input type=\"hidden\" value=\"$endDate\" name=\"endDate\">
-				<input type=\"hidden\" value=\"$startTime\" name=\"startTime\">
-				<input type=\"hidden\" value=\"$endTime\" name=\"endTime\">
-				<input type=\"hidden\" value=\"$Site_comparison\" name=\"Site_comparison\">
-				<input type=\"hidden\" value=\"$SiteID\" name=\"SiteID\">
-				<input type=\"hidden\" value=\"$startDuration\" name=\"startDuration\">
-				<input type=\"hidden\" value=\"$endDuration\" name=\"endDuration\">
-				<input type=\"hidden\" value=\"$Channels_comparison\" name=\"Channels_comparison\">
-				<input type=\"hidden\" value=\"$Channels\" name=\"Channels\">
-				<input type=\"hidden\" value=\"$SamplingRate_comparison\" name=\"SamplingRate_comparison\">
-				<input type=\"hidden\" value=\"$SamplingRate\" name=\"SamplingRate\">
-				<input type=\"hidden\" value=\"$Orderby\" name=\"Orderby\">
-				<input type=\"hidden\" value=\"$Orderby_dir\" name=\"Orderby_dir\">
-				<input type=\"hidden\" value=\"$go_to\" name=\"startid\">
-				<input type=\"hidden\" value=\"$Tags\" name=\"Tags\">
-				<input type=\"hidden\" value=\"$Tag_comparison\" name=\"Tag_comparison\">
-				<input type=\"hidden\" value=\"$Col\" name=\"Col\">
-				<input type=\"hidden\" value=\"$Col_comparison\" name=\"Col_comparison\">
+				if ($endid_show<$no_sounds) {
+					$go_to=$startid+$how_many_to_show;
+					echo "
+					<form action=\"advancedsearch.php\" method=\"GET\" style=\"display:inline;\">
+					<input type=\"hidden\" value=\"$startDate\" name=\"startDate\">
+					<input type=\"hidden\" value=\"$endDate\" name=\"endDate\">
+					<input type=\"hidden\" value=\"$startTime\" name=\"startTime\">
+					<input type=\"hidden\" value=\"$endTime\" name=\"endTime\">
+					<input type=\"hidden\" value=\"$Site_comparison\" name=\"Site_comparison\">
+					<input type=\"hidden\" value=\"$SiteID\" name=\"SiteID\">
+					<input type=\"hidden\" value=\"$startDuration\" name=\"startDuration\">
+					<input type=\"hidden\" value=\"$endDuration\" name=\"endDuration\">
+					<input type=\"hidden\" value=\"$Channels_comparison\" name=\"Channels_comparison\">
+					<input type=\"hidden\" value=\"$Channels\" name=\"Channels\">
+					<input type=\"hidden\" value=\"$SamplingRate_comparison\" name=\"SamplingRate_comparison\">
+					<input type=\"hidden\" value=\"$SamplingRate\" name=\"SamplingRate\">
+					<input type=\"hidden\" value=\"$Orderby\" name=\"Orderby\">
+					<input type=\"hidden\" value=\"$Orderby_dir\" name=\"Orderby_dir\">
+					<input type=\"hidden\" value=\"$go_to\" name=\"startid\">
+					<input type=\"hidden\" value=\"$Tags\" name=\"Tags\">
+					<input type=\"hidden\" value=\"$Tag_comparison\" name=\"Tag_comparison\">
+					<input type=\"hidden\" value=\"$Col\" name=\"Col\">
+					<input type=\"hidden\" value=\"$Col_comparison\" name=\"Col_comparison\">
+					<input type=\"hidden\" value=\"$filename\" name=\"filename\">
 
-				<input type=\"image\" src=\"images/arrowright.png\" alt=\" Next \" title=\" Next \">
-				</form>";
-				}
+					<input type=\"image\" src=\"images/arrowright.png\" alt=\" Next \" title=\" Next \">
+					</form>";
+					}
 
-				echo "&nbsp;</div>
+				echo "&nbsp;</div></div>
 				<div class=\"span-3\">&nbsp;</div>
 				<div class=\"span-6 last\">";
 
@@ -646,7 +684,8 @@ if ($use_googleanalytics)
 					<input type=\"hidden\" value=\"$Tags\" name=\"Tags\">
 					<input type=\"hidden\" value=\"$Tag_comparison\" name=\"Tag_comparison\">
 					<input type=\"hidden\" value=\"$Col\" name=\"Col\">
-					<input type=\"hidden\" value=\"$Col_comparison\" name=\"Col_comparison\">";
+					<input type=\"hidden\" value=\"$Col_comparison\" name=\"Col_comparison\">
+					<input type=\"hidden\" value=\"$filename\" name=\"filename\">";
 
 				echo "<select name=\"startid\" class=\"ui-state-default ui-corner-all\">";
 
