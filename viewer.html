@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pumilio by ljvillanueva</title>
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 
+    <link href="bootstrap/css/jumbotron-narrow.css" rel="stylesheet">
+    -->
+
+    <!-- Custom styles for this template -->
+
+        
+    <!-- Bootstrap theme -->
+    <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    
+    
+<style type="text/css">
+	.popdiv {
+		display:none; 
+		position:absolute; 
+		border-style: solid; 
+		border-color: black; 
+		border-width: 1px; 
+		background-color: #E8E8E8;
+		padding: 10px;} 
+</style>
+
+	<script type="text/javascript" language="JavaScript">
+	<!-- Copyright 2006,2007 Bontrager Connection, LLC
+	// http://bontragerconnection.com/ and http://www.willmaster.com/
+	// Version: July 28, 2007
+	var cX = 0; var cY = 0; var rX = 0; var rY = 0;
+	function UpdateCursorPosition(e){ cX = e.pageX; cY = e.pageY;}
+	function UpdateCursorPositionDocAll(e){ cX = event.clientX; cY = event.clientY;}
+	if(document.all) { document.onmousemove = UpdateCursorPositionDocAll; }
+	else { document.onmousemove = UpdateCursorPosition; }
+	function AssignPosition(d) {
+	if(self.pageYOffset) {
+		rX = self.pageXOffset;
+		rY = self.pageYOffset;
+		}
+	else if(document.documentElement && document.documentElement.scrollTop) {
+		rX = document.documentElement.scrollLeft;
+		rY = document.documentElement.scrollTop;
+		}
+	else if(document.body) {
+		rX = document.body.scrollLeft;
+		rY = document.body.scrollTop;
+		}
+	if(document.all) {
+		cX += rX; 
+		cY += rY;
+		}
+	d.style.left = (cX+10) + "px";
+	d.style.top = (cY+10) + "px";
+	}
+	function HideContent(d) {
+	if(d.length < 1) { return; }
+	document.getElementById(d).style.display = "none";
+	}
+	function ShowContent(d) {
+	if(d.length < 1) { return; }
+	var dd = document.getElementById(d);
+	AssignPosition(dd);
+	dd.style.display = "block";
+	}
+	function ReverseContentDisplay(d) {
+	if(d.length < 1) { return; }
+	var dd = document.getElementById(d);
+	AssignPosition(dd);
+	if(dd.style.display == "none") { dd.style.display = "block"; }
+	else { dd.style.display = "none"; }
+	}
+	//-->
+	</script>
+    
+  </head>
+
+  <body role="document">
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="./">Pumilio</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="./">Home</a></li>
+            <li><a href="installation.html">Installation</a></li>
+            <li><a href="userguide.html">User Guide</a></li>
+            <li><a href="integration.html">Use with other software</a></li>
+            <li><a href="scripts.html">Auxiliary Scripts</a></li>
+            <li><a href="development.html">Development</a></li>
+            <li><a href="http://pumilio.coquipr.com/pumilio/">Demo</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+
+ <div class="container" role="main">
+
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron" style="padding-left:10px;padding-bottom:10px;">
+        <h2>Pumilio Viewer</h2>
+      </div>
+         
+	<h3>Click over the features to get more info:</h3>
+
+			<img src="images/viewer.png" width="977" height="700" border="0" usemap="#map" style="border-style:solid; border-width:2px; border-color:black;" />
+					
+					<map name="map">
+					<!-- #$-:Image map file created by GIMP Image Map plug-in -->
+					<!-- #$-:GIMP Image Map plug-in by Maurits Rijk -->
+					<!-- #$-:Please do not edit lines starting with "#$" -->
+					<!-- #$VERSION:2.3 -->
+					<!-- #$AUTHOR:Luis J. Villanueva -->
+					<area shape="rect" coords="9,78,235,102" alt="Tool selection menu" title="Tool selection menu" href="javascript:ShowContent('div1')" />
+					<area shape="rect" coords="326,76,440,99" alt="Current tool buttons and options" title="Current tool buttons and options" href="javascript:ShowContent('div2')" />
+					<area shape="rect" coords="333,13,724,39" alt="Filename of current file" title="Filename of current file" href="javascript:ShowContent('div3')" />
+					<area shape="rect" coords="646,77,769,101" alt="Channel displayed" title="Channel displayed" href="javascript:ShowContent('div4')" />
+					<area shape="rect" coords="865,74,973,98" alt="Display options" title="Display options" href="javascript:ShowContent('div5')" />
+					<area shape="rect" coords="135,120,149,529" alt="Current playback position" title="Current playback position" href="javascript:ShowContent('div6')" />
+					<area shape="rect" coords="6,535,112,574" title="Playback controls" href="javascript:ShowContent('div7')" />
+					<area shape="rect" coords="164,542,357,601" alt="Current playback time" title="Current playback time" href="javascript:ShowContent('div8')" />
+					<area shape="rect" coords="11,603,357,637" alt="Tags menu" title="Tags menu" href="javascript:ShowContent('div9')" />
+					<area shape="rect" coords="468,364,606,411" alt="Selected region" title="Selected region" href="javascript:ShowContent('div10')" />
+					<area shape="rect" coords="551,538,746,566" alt="Selected region info" title="Selected region info" href="javascript:ShowContent('div11')" />
+					<area shape="rect" coords="587,566,646,590" alt="Filter selection box" title="Filter selection box" href="javascript:ShowContent('div12')" />
+					<area shape="rect" coords="648,568,713,590" alt="Zoom in and filter button" title="Zoom in and filter button" href="javascript:ShowContent('div13')" />
+					<area shape="rect" coords="808,536,969,613" alt="Current area view" title="Current area view" href="javascript:ShowContent('div14')" />
+					<area shape="rect" coords="885,123,965,523" alt="Frequency markers" title="Frequency scale" href="javascript:ShowContent('div15')" />
+					<area shape="rect" coords="9,105,883,122" alt="Time markers" title="Time scale" href="javascript:ShowContent('div16')" />
+					</map>
+
+			<div id="div1" class="popdiv">
+				Menu to select one of the tools in the tools/ folder. 
+				<a onmouseover="HideContent('uniquename2'); return true;" href="javascript:HideContent('div1')">[x]</a>
+			</div>
+			
+			<div id="div2" class="popdiv">
+				Area where the buttons and options of the current tool appears. 
+				<a onmouseover="HideContent('uniquename2'); return true;" href="javascript:HideContent('div2')">[x]</a>
+			</div>
+			
+			<div id="div3" class="popdiv">
+				Filename of the file that is open. 
+				<a onmouseover="HideContent('uniquename2'); return true;" href="javascript:HideContent('div3')">[x]</a>
+			</div>
+			
+			<div id="div4" class="popdiv">
+				Channel displayed: <em>left</em> or <em>right</em> for stereo; <em>mono</em> for single channel files. 
+				<a onmouseover="HideContent('uniquename2'); return true;" href="javascript:HideContent('div4')">[x]</a>
+			</div>
+			
+			<div id="div5" class="popdiv">
+				Options for the current file display: <em>save spectrogram, 
+				convert the file, show file details, change visualization 
+				settings, close file</em>.  
+				<a onmouseover="HideContent('uniquename2'); return true;" href="javascript:HideContent('div5')">[x]</a>
+			</div>
+			
+			<div id="div6" class="popdiv">
+				Progress bar that shows the current playback position. 
+				<a onmouseover="HideContent('uniquename2'); return true;" href="javascript:HideContent('div6')">[x]</a>
+			</div>
+
+			<div id="div7" class="popdiv">
+				Playback controls: <em>pause, play, stop</em>. 
+				<a onmouseover="HideContent('uniquename2'); return true;" href="javascript:HideContent('div7')">[x]</a>
+			</div>
+			
+			<div id="div8" class="popdiv">
+				Playback time display.
+				<a onmouseover="HideContent('uniquename2'); return true;" href="javascript:HideContent('div8')">[x]</a>
+			</div>
+			
+			<div id="div9" class="popdiv">
+				Tag menu: add, remove and display tags for this file.
+				<a onmouseover="HideContent('uniquename2'); return true;" href="javascript:HideContent('div9')">[x]</a>
+			</div>
+			
+			<div id="div10" class="popdiv">
+				Area in spectrogram selected.
+				<a onmouseover="HideContent('uniquename2'); return true;" href="javascript:HideContent('div10')">[x]</a>
+			</div>
+			
+			<div id="div11" class="popdiv">
+				Bounds of the selected region, in time and frequency.
+				<a onmouseover="HideContent('uniquename2'); return true;" href="javascript:HideContent('div11')">[x]</a>
+			</div>
+			
+			<div id="div12" class="popdiv">
+				Filter sound checkbox. When zooming in, if this box is checked, a band-pass filter will be applied.
+				<a onmouseover="HideContent('uniquename2'); return true;" href="javascript:HideContent('div12')">[x]</a>
+			</div>
+			
+			<div id="div13" class="popdiv">
+				Click this button to zoom in and filter (if selected) to the current selection.
+				<a onmouseover="HideContent('uniquename2'); return true;" href="javascript:HideContent('div13')">[x]</a>
+			</div>
+			
+			<div id="div14" class="popdiv">
+				The area of the sound file currently displayed. 
+				<a onmouseover="HideContent('uniquename2'); return true;" href="javascript:HideContent('div14')">[x]</a>
+			</div>
+			
+			<div id="div15" class="popdiv">
+				Acoustic frequency scale (approximate).
+				<a onmouseover="HideContent('uniquename2'); return true;" href="javascript:HideContent('div15')">[x]</a>
+			</div>
+			
+			<div id="div16" class="popdiv">
+				Time scale (approximate).
+				<a onmouseover="HideContent('uniquename2'); return true;" href="javascript:HideContent('div16')">[x]</a>
+			</div>
+			  
+
+
+
+     <div id="footer">
+        <br><p class="text-muted">Pumilio is maintained by <a href="https://github.com/ljvillanueva">ljvillanueva</a></p>
+    </div> 
+
+    </div>
+  </body>
+</html>

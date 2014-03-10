@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pumilio by ljvillanueva</title>
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 
+    <link href="bootstrap/css/jumbotron-narrow.css" rel="stylesheet">
+    -->
+
+    <!-- Custom styles for this template -->
+
+        
+    <!-- Bootstrap theme -->
+    <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body role="document">
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="./">Pumilio</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="./">Home</a></li>
+            <li><a href="installation.html">Installation</a></li>
+            <li class="active"><a href="userguide.html">User Guide</a></li>
+            <li><a href="integration.html">Use with other software</a></li>
+            <li><a href="scripts.html">Auxiliary Scripts</a></li>
+            <li><a href="development.html">Development</a></li>
+            <li><a href="http://pumilio.coquipr.com/pumilio/">Demo</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+
+ <div class="container" role="main">
+
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron" style="padding-left:10px;padding-bottom:10px;">
+        <h2>User Guide</h2>
+      </div>
+
+        <div class="alert alert-warning"><p>This guide is being updated. New information will be posted during March 2014</p></div>
+                                
+	<p>Please consult the README and INSTALLATION files included in the archive. In addition, you can ask questions or report problems in the <a href="https://github.com/ljvillanueva/pumilio/issues">issues page on Github</a>.</p>
+
+
+	<h3>Concepts of the application</h3>
+		<p>Pumilio is built to manage sound files, therefore, the unit in which it works at is the sound file (wav, flac, mp3, etc.). 
+			Each sound file is assigned to a source, which could be a collection, a disc from which the files where extracted, a project, etc. 
+			<br>The sound files have some data associated with it, but the only data required are the source and the filename. Optional data
+			includes the site where the recording was made, the equipment used, date, and time. There is also a field to add notes 
+			on each particular file. 
+		<p>The application takes several steps when a file is imported. These steps prepare the file, populates the required fields in the database
+			and creates auxiliary files to allow working with this files from a web browser. The steps are:
+			<ol>
+				<li> The file is checked to see that it is a valid sound file. This check is done with the application SoX.
+				<li> Technical data of the file (duration, format, number of channels, bit rate, sampling rate) are extracted
+					using the utility soxi and stored in the database.
+				<li> Waveform and a spectrogram images are created using a Python script. 
+				<li> An mp3 version of the file is created using LAME. This allows to hear the file over the web.
+			</ol>
+		<p>The following figure illustrates a typical flow of the data in the application. The sounds are recorded and then stored as digital files,
+		preferably in an uncompressed format like wav. The sound files in wav format can be compressed using the lossless format FLAC, which
+		reduces the file size by about 50%. Then the files are imported to the application to populate the database and create the auxiliary files.
+		
+		<p><img src="images/dataflow.png" border="0" width="860" height="511">
+
+
+	<h3><a href="development.html">Development</a></h3>
+		<p>This section includes topics like:
+			<ul>
+				<li>General development concepts behind the system</li>
+				<li>Why some things were done the way they were</li>
+				<li>Some notes about the database structure</li>
+			</ul>
+	
+	<h3>Main menu (Application homepage)</h3>
+		<p><i>Note: Depending on the options selected by your administrator, some of the following may not appear.</i>
+		<p><b>Browse sound archive</b>
+			<p style="margin-left: 20px;">The archive is organized in sources. These sources may be points where the data was collected, projects, users, CD from which the sounds were extracted, etc. Is is the basic organizational unit of the archive.</p>
+			<p style="margin-left: 20px;">The next option available is to open GoogleMaps with the files that have geographical data.</p>
+			<p style="margin-left: 20px;">Administrators can <a href="#addfiles">add files</a> to the archive by pressing the "Add files to the archive" button.</p>
+			
+		<p><b>Side-to-side comparison</b>
+			<p style="margin-left: 20px;">This feature lets you see sounds from up to three sites side-to-side according to their
+				date and time. This is useful for comparing between sites and movement of large-scale sounds, like rain.</p>
+
+		<p><b>Tag Cloud</b>
+			<p style="margin-left: 20px;">The tag cloud allows the user to browse the archive for all the files tagged with a particular word or phrase. The size of the tag is indicative of the number of files that have that tag.</p>
+			
+		<p><b>Sample the archive</b>
+		
+			<ul style="margin-left: 20px;">
+			<li>This option allows the user to create a sample set of sounds from the archive or from particular sources. The sample set can be used to study the diversity of sounds or species in a particular source, obtain a training set for an AI, or any other action that would require a random sample. 
+			<li>Sample set from the whole archive
+				This option will create a sample set from all the sounds in the archive. Just enter the number of files you want in that sample set, a name for that set and some notes about this set (optional).
+			<li>Sample set from a particular source
+				This option limits the sample to a particular source.
+			<li>Sample all sources
+				This option creates a sample set for each source in the archive. In this case, a percentage determines the number of files in each sample. The system will round up to determine the number of files. For example, if a source has 254 files, a 10% sample set will have 26 files.
+			</ul>
+		<p><b>Upload a file</b>
+			<p style="margin-left: 20px;">Use this option when you want to open and visualize a file without importing it to the archive.
+			There are two options: upload a file and get a file avaliable somewhere in the web. Each option will provide a list of sound file formats that the system can handle.
+			<br><i>NOTE: The files uploaded using this option will not be stored permanently in the archive.</i></p>
+				
+	<a name="addfiles"></a><h3>Add files</h3>
+		<p>Users that are listed as administrators can add files to the archive using several ways. (To add files using other options, even from other computers, check the <a href="scripts.html">Auxiliary Scripts</a>)
+			<ul style="margin-left: 20px;">
+			<li>From this menu, you can add sources. At least one source is required.
+			<li>Add sound files from the field - this option lets you to upload the files to a temporary folder in the server, or a remote folder mounted in the server, that have the date and time coded in the filename.
+			<li>Add sound files from a Wildlife Acoustic SongMeter - this option lets you to upload the files to a temporary folder in the server, or a remote folder mounted in the server, that were recorded using a Wildlife Acoustics SM box.
+			<li>Add files from a database or spreadsheet - this option lets you to upload the files to a temporary folder in the server, or a remote folder mounted in the server, and provide the 
+						metadata as structured text file. The system will ask you which data you have for all files and then provide
+						a space to provide the data in csv style, using pipes (|) instead of commas.
+			</ul>
+			
+					
+	<h3>Users</h3>
+		<p>There are three categories of users: guests, regular users and administrators.
+			<ul style="margin-left: 20px;">
+			<li>Guests are users that have not logged in. Depending on the options set by the administrator they may have limited options in the system and will be limited in the ammount of metadata they can see.
+			<li>Regular Users are users that are logged in. This category of user can open files, view all the metadata and open the files in the Pumilio visualization window but will not be able to manage users. In addition, regular users can not add, edit or delete files from the archive.
+			<li>Administrators can add, view, edit, and delete users and all the files as well as their metadata.
+			</ul>
+					
+	<h3>Browsing the archive</h3>
+		<p>There are several ways to browse the archive: 
+			<ul>
+			<li>By source
+			<li>By site
+			<li>By tag
+			</ul>
+		<p>All those ways result in a page with similar options, so they are explained below together.
+		<p>On the top-right side two icons let you select how to browse the results, either a summary view or a gallery view. The summary view will show a player window next to some of the metadata of the sound file. A gallery view will only show the spectrogram, the name of the file and the date. From either view you can click on the sound file name to view the details.
+				
+	<h3>View file details</h3>
+		<p>The fide details page will display the medatada of the sound file, technical data, location data, as well as a player that shows the spectrogram and the waveform. Click on the filename
+		to open the file in the Pumilio viewer (see below).
+				
+	<h3><a href="viewer.html">Pumilio Viewer</a></h3>
+
+		<p>The system has a viewer that allows you to zoom in, filter, cut, select and mark regions, convert, and other manipulations to the sound file.
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="images/v.png"><img src="images/vt.png"></a>
+		<p>The viewer uses a Flash mp3 player controlled by JavaScript to play, pause and stop listening to the sound file.
+				Zooming in a sound is controlled by a JQuery plugin, just select a region of the sound file and click the "Zoom in"
+				button. To use a band-pass filter, select the "Filter" box to filter out the frequencies lower and higher than the
+				selected region using SoX. 
+		<p>If the sound is in stereo, you can change the channel displayed by selecting the pulldown menu. The default channel is
+		 		the left. 
+
+
+
+
+     <div id="footer">
+        <br><p class="text-muted">Pumilio is maintained by <a href="https://github.com/ljvillanueva">ljvillanueva</a></p>
+    </div> 
+
+    </div>
+  </body>
+</html>

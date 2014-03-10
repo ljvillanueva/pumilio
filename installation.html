@@ -1,36 +1,67 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pumilio by ljvillanueva</title>
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 
+    <link href="bootstrap/css/jumbotron-narrow.css" rel="stylesheet">
+    -->
+
+    <!-- Custom styles for this template -->
+
+        
+    <!-- Bootstrap theme -->
+    <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
   </head>
 
-  <body>
-    <div id="container">
-      <div class="inner">
+  <body role="document">
 
-        <header>
-          <h1><a href="http://ljvillanueva.github.io/pumilio/">Pumilio</a></h1>
-          <h2>Pumilio: A Web-Based Management System for Ecological Recordings</h2>
-        </header>
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="./">Pumilio</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="./">Home</a></li>
+            <li class="active"><a href="installation.html">Installation</a></li>
+            <li><a href="userguide.html">User Guide</a></li>
+            <li><a href="integration.html">Use with other software</a></li>
+            <li><a href="scripts.html">Auxiliary Scripts</a></li>
+            <li><a href="development.html">Development</a></li>
+            <li><a href="http://pumilio.coquipr.com/pumilio/">Demo</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
 
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/ljvillanueva/pumilio/archive/v2.7.1.tar.gz" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/ljvillanueva/pumilio" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
+ <div class="container" role="main">
 
-        <hr>
 
-        <section id="main_content">
-         
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron" style="padding-left:10px;padding-bottom:10px;">
+        <h2>Installation</h2>
+      </div>
+               
 	<p>To install, download the latest relase version to a webserver folder. Pumilio application requires:
 
 	<ul>
@@ -54,7 +85,7 @@
 	<p>This will check the necessary software and folder permissions. Add an administrative user. After this step you can
 	delete the folders <b>install</b> and <b>upgrade</b>.</p>
 
-	<h4><b>Installation under Ubuntu</b></h4>
+	<h3>Installation under Ubuntu</h3>
 
 	<p>Install the server software (Apache, PHP5, MySQL). To install the required packages for audiolab and Pumilio in a current version of Ubuntu:
 
@@ -73,7 +104,7 @@ sudo python setup.py install</pre>
 	in <i>/etc/php5/apache2/php.ini</i>. Set the desired value in the variables <em>upload_max_filesize</em> and 
 	<em>post_max_size</em>, then restart Apache. Please consult the 
 	<a href="http://us3.php.net/manual/en/features.file-upload.php">PHP manual</a> for more info. Look <a href="http://us3.php.net/manual/en/features.file-upload.common-pitfalls.php">
-	here for some pitfalls to avoid</a>.</p><br>			
+	here for some pitfalls to avoid</a>.</p>
 	
 	<h3>To upgrade</h3>
 	
@@ -92,19 +123,13 @@ sudo python setup.py install</pre>
 	<p>Check config.php.dist to see if new variables are not present in your config.php file. Some options have been moved
 	to the administration page in the application (remove these).
 	Then go to the application address <strong>/upgrade</strong> (if the address is <em>http://somehost.com/pumilio</em>, then go to <em>http://somehost.com/pumilio/upgrade</em>).
-	This will upgrade the database structure and make all necessary checks. <b>IF YOU MISS THIS STEP, THE SYSTEM MAY NOT WORK AS INTENDED</b>.
-	<br><br>
+	This will upgrade the database structure and make all necessary checks. <strong>IF YOU MISS THIS STEP, THE SYSTEM MAY NOT WORK AS INTENDED</strong>.
 
 
-        </section>
+     <div id="footer">
+        <br><p class="text-muted">Pumilio is maintained by <a href="https://github.com/ljvillanueva">ljvillanueva</a></p>
+    </div> 
 
-        <footer>
-          Pumilio is maintained by <a href="https://github.com/ljvillanueva">ljvillanueva</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
-
-        
-      </div>
     </div>
   </body>
 </html>
