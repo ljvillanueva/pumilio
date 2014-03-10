@@ -65,8 +65,8 @@ sudo python setup.py install</pre>
 	<h3>Allow uploads of bigger files</h3>
 	
 	<p>The file size limit for uploaded files is determined in the php.ini file, by default 2MB. In Ubuntu its located 
-	in <i>/etc/php5/apache2/php.ini</i>. Set the desired value in the variables <i>upload_max_filesize</i> and 
-	<i>post_max_size</i>, then restart Apache. Please consult the 
+	in <i>/etc/php5/apache2/php.ini</i>. Set the desired value in the variables <em>upload_max_filesize</em> and 
+	<em>post_max_size</em>, then restart Apache. Please consult the 
 	<a href="http://us3.php.net/manual/en/features.file-upload.php">PHP manual</a> for more info. Look <a href="http://us3.php.net/manual/en/features.file-upload.common-pitfalls.php">
 	here for some pitfalls to avoid</a>.</p><br>			
 	
@@ -86,7 +86,7 @@ sudo python setup.py install</pre>
 
 	<p>Check config.php.dist to see if new variables are not present in your config.php file. Some options have been moved
 	to the administration page in the application (remove these).
-	Then go to the application address <b>/upgrade</b> (if the address is <em>http://somehost.com/pumilio</em>, then go to <em>http://somehost.com/pumilio/upgrade</em>).
+	Then go to the application address <strong>/upgrade</strong> (if the address is <em>http://somehost.com/pumilio</em>, then go to <em>http://somehost.com/pumilio/upgrade</em>).
 	This will upgrade the database structure and make all necessary checks. <b>IF YOU MISS THIS STEP, THE SYSTEM MAY NOT WORK AS INTENDED</b>.
 	<br><br>
 
