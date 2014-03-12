@@ -173,26 +173,12 @@ echo "</select>\n";
 	#Temp dir
 	$temp_add_dir_f = "";
 	#$temp_add_dir=query_one("SELECT Value from PumilioSettings WHERE Settings='temp_add_dir'", $connection);
-	if ($temp_add_dir!=""){ 
-		if (!is_dir($temp_add_dir)){
-			$temp_add_dir_d="<em style=\"color:red;\">Invalid directory</em>";
-			
-			$this_query = array(
-				'Settings' => NULL
-				);
-			DB::update('PumilioSettings', $this_query, 'temp_add_dir', 'Settings');
-			
-			#query_one("DELETE from PumilioSettings WHERE Settings='temp_add_dir'", $connection);
-			}
-		elseif(!is_readable($temp_add_dir)){
-			$temp_add_dir_d="<em style=\"color:red;\">Could not read directory</em>";
-			
-			$this_query = array(
-				'Settings' => NULL
-				);
-			DB::update('PumilioSettings', $this_query, 'temp_add_dir', 'Settings');
-		
-			#query_one("DELETE from PumilioSettings WHERE Settings='temp_add_dir'", $connection);
+	if ($temp_add_dir!=""){
+		#check if dir exists and is readable
+		if (!is_dir($temp_add_dir) || !is_readable($temp_add_dir)){
+			$temp_add_dir_d="<em style=\"color:red;\">Directory does not exist or could not be accessed.</em>";
+
+			DB::query('DELETE FROM `PumilioSettings` WHERE `Settings` = "temp_add_dir"');
 			}
 		else {
 			$temp_add_dir_d="<em>$temp_add_dir</em>";
