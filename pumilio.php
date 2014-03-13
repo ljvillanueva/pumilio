@@ -185,6 +185,7 @@ $player_file_duration = $time_max-$time_min;
 
 $player_file=$fileName_exp[0] . '_' . $frequency_min . '-' . $frequency_max . '_' . $time_min . '-' . $time_max . '.mp3';
 
+$wav_todl = 'tmp/' . $random_cookie . '/' . $sound_zoom;
 		
 echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
@@ -311,13 +312,19 @@ $(document).ready(function() {
 }); 
 </script>
 
+<!-- Tooltips-->
+<script>
+	$(function() {
+		$( document ).tooltip();
+	});
+</script>
+  
+  
 <?php
 if ($use_googleanalytics) {
 	echo $googleanalytics_code;
 	}
 
-
-#require("pum_tooltips.php");
 
 #Execute custom code for head, if set
 if (is_file("$absolute_dir/customhead.php")) {
@@ -329,9 +336,6 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 </head>
 <body>
-
-<!-- Scripts for Javascript tooltip from http://www.walterzorn.com/tooltip/tooltip_e.htm -->
-	<script type="text/javascript" src="js/wz_tooltip/wz_tooltip.js"></script>
 
 	<!--Blueprint container-->
 	<div class="container">
@@ -394,13 +398,20 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 		
 		#echo "<div class=\"span-8\" id=\"toolcontainer\">";
-		echo "<div class=\"span-8\">";
-			require("include/add_mark.php");
+
+		require("include/pumilio_buttons.php");
+		?>
+		
+		<div class="span-24 last">
+			<hr noshade>
+		</div>
+		
+		<?php
+			echo "<div class=\"span-20\">";
+				require("include/add_mark.php");
 			?>
 		</div>
-		<div class="span-8">
-		</div>
-		<div class="span-4">
+		<div class="span-4 last">
 			<?php
 			if ($no_channels==2) {
 				echo "<form id=\"form\" action=\"pumilio.php\" method=\"get\">
@@ -418,29 +429,20 @@ if (is_file("$absolute_dir/customhead.php")) {
 				</form>";
 				}
 			else {
-				echo "Channel: <select name=\"ch\" id=\"selectchannel\" class=\"ui-state-default ui-corner-all\" DISABLED><option value=\"1\" SELECTED>MONO</option></select>";
+				echo "Channel: Mono file";
 				}
 			?>
 		</div>
-		<div class="span-4 last">
-			<?php
-			echo "<p class=\"right\">
-				<a href=\"dl.php?file=tmp/$random_cookie/$imgfile\" title=\"Download spectrogram\"><img src=\"images/action_save.gif\" alt=\"Download spectrogram\"></a>
-				<a href=\"convert.php?Token=$Token\" class=\"small\" title=\"Convert file\"><img src=\"images/drive_go.png\" alt=\"Convert file\"></a>
-				<a href=\"file_details.php?Token=$Token\" class=\"small\" title=\"File details\"><img src=\"images/information.png\" alt=\"File details\"></a>
-				<a href=\"settings.php?Token=$Token\" title=\"Visualization settings\"><img src=\"images/wrench.png\" alt=\"Visualization settings\"></a>
-				<a href=\"closefile.php?Token=$Token\" class=\"small\" title=\"Close file\"><img src=\"images/cross.png\" alt=\"Close file\"></a>";
-			?>
-		</div>
+
 
 			<?php
 			#Time scale
-			require('include/processor_timescale.php');
+			require('include/pumilio_timescale.php');
 			?>
 
 		<div class="span-22">
 			<?php
-			require('include/processor_view.php');
+			require('include/pumilio_view.php');
 
 			echo "\n<script type=\"text/javascript\">
 				function changeText(){
@@ -451,7 +453,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 			flush();
 
-			require('include/processor_mp3.php');
+			require('include/pumilio_mp3.php');
 			?>
 		</div>
 		<div class="span-2 last">
@@ -534,12 +536,12 @@ if (is_file("$absolute_dir/customhead.php")) {
 		</div>
 		<div class="span-8">
 			<?php
-			require("include/processor_tools.php");
+			require("include/pumilio_tools.php");
 			?>
 		</div>
 		<div class="span-4 last">
 			<?php
-			require("include/processor_viewport.php");
+			require("include/pumilio_viewport.php");
 			?>
 		</div>
 		<div class="span-24 last">

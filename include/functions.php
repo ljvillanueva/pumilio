@@ -92,28 +92,29 @@ function delete_old($dir,$days) {
 	}
 
 
-function player_file_mp3($file_in,$samplingrate,$file_out,$random_cookie) {
+function player_file_mp3($file_in, $samplingrate, $file_out, $random_cookie) {
 	$retval = 0;
 	if ($samplingrate!=44100) {
+		#Safe sampling rates for mp3 files
 		if ($samplingrate>44100) {
-			$to_SamplingRate=44100;
-			$nyquist_freq=$to_SamplingRate/2;
+			$to_SamplingRate = 44100;
+			$nyquist_freq = $to_SamplingRate/2;
 			}
 		elseif ($samplingrate<44100 && $samplingrate>22050) {
-			$to_SamplingRate=44100;
-			$nyquist_freq=$samplingrate/2;
+			$to_SamplingRate = 44100;
+			$nyquist_freq = $samplingrate/2;
 			}
 		elseif ($samplingrate<22050 && $samplingrate>11025) {
-			$to_SamplingRate=22050;
-			$nyquist_freq=$samplingrate/2;
+			$to_SamplingRate = 22050;
+			$nyquist_freq = $samplingrate/2;
 			}
 		elseif ($samplingrate<11025) {
-			$to_SamplingRate=11025;
-			$nyquist_freq=$samplingrate/2;
+			$to_SamplingRate = 11025;
+			$nyquist_freq = $samplingrate/2;
 			}
 		else {
-			$to_SamplingRate=$samplingrate;
-			$nyquist_freq=$samplingrate/2;
+			$to_SamplingRate = $samplingrate;
+			$nyquist_freq = $samplingrate/2;
 			}
 		
 		$random_cookie=$random_cookie;

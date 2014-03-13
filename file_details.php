@@ -72,27 +72,13 @@ if (is_file("$absolute_dir/customhead.php")) {
 			require("include/toplogin.php");
 		echo "</div>";
 
+		require("include/pumilio_buttons_partial.php");
+		
 		?>
 		<div class="span-24 last">
 			<hr noshade>
 		</div>
-		<div class="span-10">
-			<?php
-			echo "<h5 class=\"highlight2 ui-corner-all\">$soundfile_name</h5>";
-			?>
-		</div>
-		<div class="span-14 last">
-			<?php
-			echo "<p class=\"right\">
-				<a href=\"pumilio.php?Token=$Token\"><img src=\"images/drive_magnify.png\" title=\"View file\" ></a>
-				<a href=\"convert.php?Token=$Token\" class=\"small\"><img src=\"images/drive_go.png\" title=\"Convert file\" ></a>
-				<a href=\"file_details.php?Token=$Token\" class=\"small\"><img src=\"images/information.png\" title=\"File details\" ></a>
-				<a href=\"closefile.php?Token=$Token\" class=\"small\"><img src=\"images/cross.png\" title=\"Close file\" ></a>";
-			?>
-		</div>
-		<div class="span-24 last">
-			&nbsp;
-		</div>
+
 		<div class="span-12">
 			<?php
 			echo "<h3>File details:</h3>

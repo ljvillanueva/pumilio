@@ -96,7 +96,7 @@ require("include/get_jqueryui.php");
 <script type="text/javascript">
 $(function() {
 	$("#accordion").accordion({
-		autoHeight: false,
+		heightStyle: "content",
 		collapsible: true,
 		active: false
 		});
@@ -365,10 +365,6 @@ else {
 	
 ?>
 
-<!-- Scripts for Javascript tooltip from http://www.walterzorn.com/tooltip/tooltip_e.htm -->
-<!-- For marks data -->
- <script type="text/javascript" src="js/wz_tooltip/wz_tooltip.js"></script>
-
 <!--Blueprint container-->
 <div class="container">
 	<?php
@@ -571,7 +567,7 @@ else {
 			echo "<form method=\"get\" action=\"file_obtain.php\">
 			<input type=\"hidden\" name=\"fileid\" value=\"$SoundID\">
 			<input type=\"hidden\" name=\"method\" value=\"3\">
-			<input type=\"submit\" value=\" Open file \" class=\"fg-button ui-state-default ui-corner-all\">
+			<input type=\"submit\" value=\" Open file \" title=\"Open the file in the viewer\" class=\"fg-button ui-state-default ui-corner-all\">
 			</form><br><br>";
 			}
 		

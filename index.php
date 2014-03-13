@@ -45,7 +45,7 @@ if ($map_only=="1"){
 	<script type=\"text/javascript\">
 	$(function() {
 		$(\"#accordion\").accordion({
-			autoHeight: false,
+			heightStyle: \"content\",
 			collapsible: true,\n";
 		if ($map_only=="1"){
 			echo "active: false\n";

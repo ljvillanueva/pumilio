@@ -71,7 +71,7 @@ if ($nrowsm>0) {
 
 			if ($no_channels == 1) {
 				//Mark
-				echo "\n<div id=\"mark$w\" style=\"z-index:800; border-style: solid; border-color: red; border-width: thin; left: " . $time_i . "px; top: " . $freq_i . "px; position: absolute; height: " . $freq_w . "px; width: " . $time_w . "px;\" onmouseover=\"Tip(' $mark_tag_name: $mark_tag (ID:$marks_ID)', FONTCOLOR, '#fff',BGCOLOR, '#4aa0e0', FADEIN, '400', FADEOUT, '400', ABOVE, 'true', CENTERMOUSE, 'true')\" onmouseout=\"UnTip()\" > </div>\n";
+				echo "\n<div id=\"mark$w\" style=\"z-index:800; border-style: solid; border-color: red; border-width: thin; left: " . $time_i . "px; top: " . $freq_i . "px; position: absolute; height: " . $freq_w . "px; width: " . $time_w . "px;\" title=\"$mark_tag_name: $mark_tag (ID:$marks_ID)\"> </div>\n";
 				}
 			elseif ($no_channels == 2) {
 				//Mark
@@ -80,8 +80,8 @@ if ($nrowsm>0) {
 		
 				$freq_w = $freq_w / 2;
 		
-				echo "\n<div id=\"mark$w\" style=\"z-index:800; border-style: solid; border-color: red; border-width: thin; left: " . $time_i . "px; top: " . $freq_i . "px; position: absolute; height: " . $freq_w . "px; width: " . $time_w . "px;\" onmouseover=\"Tip(' $mark_tag_name: $mark_tag (ID:$marks_ID)', FONTCOLOR, '#fff',BGCOLOR, '#4aa0e0', FADEIN, '400', FADEOUT, '400', ABOVE, 'true', CENTERMOUSE, 'true')\" onmouseout=\"UnTip()\" > </div>\n";
-				echo "\n<div id=\"mark$w\" style=\"z-index:800; border-style: solid; border-color: red; border-width: thin; left: " . $time_i . "px; top: " . $freq_i2 . "px; position: absolute; height: " . $freq_w . "px; width: " . $time_w . "px;\" onmouseover=\"Tip(' $mark_tag_name: $mark_tag (ID:$marks_ID)', FONTCOLOR, '#fff',BGCOLOR, '#4aa0e0', FADEIN, '400', FADEOUT, '400', ABOVE, 'true', CENTERMOUSE, 'true')\" onmouseout=\"UnTip()\" > </div>\n";
+				echo "\n<div id=\"mark$w\" style=\"z-index:800; border-style: solid; border-color: red; border-width: thin; left: " . $time_i . "px; top: " . $freq_i . "px; position: absolute; height: " . $freq_w . "px; width: " . $time_w . "px;\" title=\"$mark_tag_name: $mark_tag (ID:$marks_ID)\"> </div>\n";
+				echo "\n<div id=\"mark$w\" style=\"z-index:800; border-style: solid; border-color: red; border-width: thin; left: " . $time_i . "px; top: " . $freq_i2 . "px; position: absolute; height: " . $freq_w . "px; width: " . $time_w . "px;\" title=\"$mark_tag_name: $mark_tag (ID:$marks_ID)\" > </div>\n";
 				}
 			}
 		}

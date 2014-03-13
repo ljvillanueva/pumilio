@@ -61,17 +61,14 @@ if (is_file("$absolute_dir/customhead.php")) {
 		</div>
 
 		<?php
+
+	
 		if ($soundfile_name!="") {
 			//If its not empty, then there is a file open
-			echo "<div class=\"span-10\">";
-			echo "<h5 class=\"highlight2\">$soundfile_name</h5>";
-			echo "</div>
-			<div class=\"span-14 last\">";
-			echo "<p class=\"right\">
-				<a href=\"pumilio.php?Token=$Token\"><img src=\"images/drive_magnify.png\" title=\"View file\" ></a>
-				<a href=\"convert.php?Token=$Token\" class=\"small\"><img src=\"images/drive_go.png\" title=\"Convert file\" ></a>
-				<a href=\"file_details.php?Token=$Token\" class=\"small\"><img src=\"images/information.png\" title=\"File details\" ></a>
-				<a href=\"closefile.php?Token=$Token\" class=\"small\"><img src=\"images/cross.png\" title=\"Close file\" ></a></div>";
+			require("include/pumilio_buttons_partial.php");
+			echo "<div class=\"span-24 last\">
+				<h5 class=\"highlight2 ui-corner-all\">$soundfile_name</h5>
+			</div>";
 			}
 		?>
 		<div class="span-24 last">
@@ -148,8 +145,8 @@ if (is_file("$absolute_dir/customhead.php")) {
 				<input type=\"hidden\" name=\"cookie_to_set\" value=\"palette\">
 				Color palette to use in spectrograms:
 				<select name=\"palette\" class=\"ui-state-default ui-corner-all\">
-					<option value=\"1\">black</option>
-					<option value=\"2\">white</option>
+					<option value=\"2\">white background</option>
+					<option value=\"1\">black background</option>
 				</select> 
 				<input type=\"hidden\" name=\"Token\" value=\"$Token\">
 				<input type=submit value=\"Update\" class=\"fg-button ui-state-default ui-corner-all\">";
@@ -157,9 +154,9 @@ if (is_file("$absolute_dir/customhead.php")) {
 			if (isset($_COOKIE["palette"])) {
 				$palette=$_COOKIE["palette"];
 				if ($palette==1)
-					echo " | (current: black)";
+					echo " | (current: black background)";
 				if ($palette==2)
-					echo " | (current: white)";
+					echo " | (current: white background)";
 				}
 
 			echo "

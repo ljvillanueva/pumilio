@@ -12,30 +12,26 @@ else {
 	echo "<title>Pumilio - Error</title>";
 	}
 
-echo "<!-- JQuery -->
-<link type=\"text/css\" href=\"js/jquery/cupertino/jquery-ui-1.7.3.custom.css\" rel=\"stylesheet\">";
-
+echo "\n<!-- JQuery -->
+	<link type=\"text/css\" href=\"css/jqueryui/jquery-ui-1.10.4.custom.min.css\" rel=\"stylesheet\">\n";
+	
 #Custom
-echo "<link type=\"text/css\" href=\"js/jquery/jquery.custom.css\" rel=\"stylesheet\">
+echo "\n<link type=\"text/css\" href=\"js/jquery/jquery.custom.css\" rel=\"stylesheet\">
 <link type=\"text/css\" href=\"js/jquery/jquery.css.custom.css\" rel=\"stylesheet\">
 
 <!-- Blueprint -->
 <link rel=\"stylesheet\" href=\"css/screen.css\" type=\"text/css\" media=\"screen, projection\">
 <link rel=\"stylesheet\" href=\"css/print.css\" type=\"text/css\" media=\"print\">	
 <!--[if IE]><link rel=\"stylesheet\" href=\"css/ie.css\" type=\"text/css\" media=\"screen, projection\"><![endif]-->
-<link rel=\"stylesheet\" type=\"text/css\" href=\"http://fonts.googleapis.com/css?family=Ubuntu\">
-";
+<link rel=\"stylesheet\" type=\"text/css\" href=\"http://fonts.googleapis.com/css?family=Ubuntu\">\n";
 
-echo "
-<!-- Scripts for JQuery -->
-	<script type=\"text/javascript\" src=\"js/jquery-1.7.2.min.js\"></script>
-	<script type=\"text/javascript\" src=\"js/jquery/jquery-ui-1.7.3.custom.min.js\"></script>
-	<script type=\"text/javascript\" src=\"js/jquery.fg-button.js\"></script>
-";
+echo "\n<!-- Scripts for JQuery -->
+	<script type=\"text/javascript\" src=\"js/jquery-1.10.2.js\"></script>
+	<script type=\"text/javascript\" src=\"js/jquery-ui-1.10.4.custom.min.js\"></script>
+	<script type=\"text/javascript\" src=\"js/jquery.fg-button.js\"></script>\n";
 
 #Custom CSS
 echo "\n<link rel=\"stylesheet\" href=\"css/custom.css\" type=\"text/css\" media=\"screen, projection\">\n";
-
 
 #Execute custom code for head, if set
 if (is_file("$absolute_dir/customhead.php")) {

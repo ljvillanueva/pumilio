@@ -7,14 +7,16 @@ $current_address=$_SERVER["REQUEST_URI"];
 
 $add_id=mt_rand(1,100000);
 
-	echo " <form style=\"float: inherit;\" method=\"POST\" action=\"include/add_mark1.php\" target=\"add$add_id\" onsubmit=\"window.open('', 'add$add_id', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">";
+
+	echo " <form style=\"float: inherit;\" method=\"POST\" action=\"include/add_mark1.php\" target=\"add$add_id\" onsubmit=\"window.open('', 'add$add_id', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\" id=\"addform\">";
 echo "<input type=\"hidden\" id=\"x_2\" name=\"t_min\" value=\"\" />
 	<input type=\"hidden\" id=\"x2_2\" name=\"t_max\" value=\"\" />
 	<input type=\"hidden\" id=\"y_2\" name=\"f_min\" value=\"\" />
 	<input type=\"hidden\" id=\"y2_2\" name=\"f_max\" value=\"\" />
 	<input type=\"hidden\" name=\"ch\" value=\"$ch\" />
 	<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\" />
-	<input src=\"images/database_add.png\" type=\"image\" onmouseover=\"Tip('Insert selection to database', FONTCOLOR, '#fff',BGCOLOR, '#4aa0e0', FADEIN, '400', FADEOUT, '400', ABOVE, 'true', CENTERMOUSE, 'true')\" onmouseout=\"UnTip()\">
+	<a href=\"#\" title=\"Save selected region to the database\" onclick=\"$('#addform').submit();\">Save selection to database</a>
+	<input src=\"images/database_add.png\" type=\"image\" title=\"Save selected region to the database\"> 
 	</form> &nbsp;";
 
 
@@ -46,15 +48,15 @@ else{
 	}
 
 if ($showmarks) {
-	echo "<a href=\"$link\" onmouseover=\"Tip(' Hide marked regions ', FONTCOLOR, '#fff',BGCOLOR, '#4aa0e0', FADEIN, '400', FADEOUT, '400', ABOVE, 'true', CENTERMOUSE, 'true')\" onmouseout=\"UnTip()\"><img src=\"images/database.png\"></a> &nbsp;";
+	echo "<a href=\"$link\" title=\"Hide marked regions\">Hide marked regions<img src=\"images/database.png\"></a> &nbsp;";
 	}
 else {
-	echo "<a href=\"$link_marks\" onmouseover=\"Tip(' Show marked regions ', FONTCOLOR, '#fff',BGCOLOR, '#4aa0e0', FADEIN, '400', FADEOUT, '400', ABOVE, 'true', CENTERMOUSE, 'true')\" onmouseout=\"UnTip()\"><img src=\"images/database_refresh.png\"></a> &nbsp;";
+	echo "<a href=\"$link_marks\" title=\"Show marked regions\">Show marked regions<img src=\"images/database_refresh.png\"></a> &nbsp;";
 	}
 
 #Window to manage marks
 if ($showmarks){
-	echo "[<a href=\"managemarks.php?Token=$Token\" target=\"managemarks$add_id\" onclick=\"window.open('managemarks.php?SoundID=$SoundID', 'managemarks$add_id', 'width=600,height=500,status=yes,resizable=yes,scrollbars=auto')\">Manage marks</a>]";
+	echo "[<a href=\"managemarks.php?Token=$Token\" target=\"managemarks$add_id\" onclick=\"window.open('managemarks.php?SoundID=$SoundID', 'managemarks$add_id', 'width=600,height=500,status=yes,resizable=yes,scrollbars=auto')\" title=\"Open window to manage the marked regions\">Manage marks</a>]";
 	}
 						
 echo "&nbsp;";
