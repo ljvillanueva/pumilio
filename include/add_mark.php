@@ -7,7 +7,7 @@ $current_address=$_SERVER["REQUEST_URI"];
 
 $add_id=mt_rand(1,100000);
 
-	echo " <form style=\"float: inherit;\" method=\"POST\" action=\"tools/add_to_db/add.php\" target=\"add$add_id\" onsubmit=\"window.open('', 'add$add_id', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">";
+	echo " <form style=\"float: inherit;\" method=\"POST\" action=\"include/add_mark1.php\" target=\"add$add_id\" onsubmit=\"window.open('', 'add$add_id', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">";
 echo "<input type=\"hidden\" id=\"x_2\" name=\"t_min\" value=\"\" />
 	<input type=\"hidden\" id=\"x2_2\" name=\"t_max\" value=\"\" />
 	<input type=\"hidden\" id=\"y_2\" name=\"f_min\" value=\"\" />
@@ -20,10 +20,11 @@ echo "<input type=\"hidden\" id=\"x_2\" name=\"t_min\" value=\"\" />
 
 $current_address1=explode("pumilio.php?", $current_address);
 $current_address2=explode("&", $current_address1[1]);
-$link="pumilio.php?tool=add_to_db.php";
+#$link="pumilio.php?tool=add_to_db.php";
+$link="pumilio.php?";
 
 for ($b=0;$b<count($current_address2);$b++){
-		if (($current_address2[$b]!="showmarks=1") && ($current_address2[$b]!="tool=add_to_db.php")){
+	if (($current_address2[$b]!="showmarks=1") && ($current_address2[$b]!="tool=add_to_db.php")){
 		$link=$link . "&" . $current_address2[$b];
 		}
 	}

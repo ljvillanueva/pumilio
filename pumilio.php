@@ -275,7 +275,8 @@ require("include/get_jqueryui.php");
 <!--jquery form-->
 <!-- http://jquery.malsup.com/form/ -->
 <script type="text/javascript" src="js/jquery.form.js"></script> 
- 
+
+<!-- 
 <script type="text/javascript">
      // prepare the form when the DOM is ready 
   $(document).ready(function() { 
@@ -295,6 +296,7 @@ require("include/get_jqueryui.php");
     }); 
 }); 
 </script>
+-->
 
 <script type="text/javascript">
 $(document).ready(function() { 
@@ -315,6 +317,7 @@ if ($use_googleanalytics) {
 	}
 
 
+#require("pum_tooltips.php");
 
 #Execute custom code for head, if set
 if (is_file("$absolute_dir/customhead.php")) {
@@ -352,12 +355,11 @@ if (is_file("$absolute_dir/customhead.php")) {
 		</div>		
 			<?php
 			flush();
-			?>
-		<div class="span-8">
 			
-			<?php
-			echo "<form id=\"myForm2\" action=\"include/gettool.php\" method=\"get\">";
-			echo "<select name=\"tool\" class=\"ui-state-default ui-corner-all\">";
+		#Deactivated this option for now
+		/*
+		echo "<div class=\"span-24 last\">";
+			
 
 			//Space to include custom icons from addons
  			$dir="tools/";
@@ -365,34 +367,37 @@ if (is_file("$absolute_dir/customhead.php")) {
  
 			$tool_counter=0;
 			$lasttool=0;
- 			for ($a=0;$a<count($tools);$a++) {
-				if (strpos(strtolower($tools[$a]), ".php")) {
-					$lines = file("tools/$tools[$a]");
-					echo "<option value=\"$tools[$a]\">$lines[2]</option>";
-					$tool_counter++;
-					$lasttool=$a;
-					}
- 				}
-			if ($tool_counter==1)
-				$tool=$tools[$lasttool];
- 			//End addons
+			$no_tools = count($tools);
+			
+			if ($no_tools > 1){
+				echo "<form id=\"myForm2\" action=\"include/gettool.php\" method=\"get\">";
+					echo "<select name=\"tool\" class=\"ui-state-default ui-corner-all\">";
+			
+		 			for ($a=0;$a<count($tools);$a++) {
+						if (strpos(strtolower($tools[$a]), ".php")) {
+							$lines = file("tools/$tools[$a]");
+							echo "<option value=\"$tools[$a]\">$lines[2]</option>";
+							$tool_counter++;
+							$lasttool=$a;
+							}
+		 				}
+					//End addons
 
-			echo "</select>
-			<input type=submit value=\" Select tool \" class=\"fg-button ui-state-default ui-corner-all\"></form>
-			";
+					echo "</select>
+				<input type=submit value=\" Select tool \" class=\"fg-button ui-state-default ui-corner-all\"></form>";
+				}
+			else{
+				$tool="add_to_db.php";
+				}
+			*/
 
+		echo "</div>\n";
+		#echo "<div class=\"span-8\" id=\"toolcontainer\">";
+		echo "<div class=\"span-8\">";
+			require("include/add_mark.php");
 			?>
-
 		</div>
-		<div class="span-8" id="toolcontainer">
-			<?php
-				if (isset($tool)) {
-					require("tools/$tool");
-					}
-				else {
-					echo "&nbsp;";
-					}
-			?>
+		<div class="span-8">
 		</div>
 		<div class="span-4">
 			<?php

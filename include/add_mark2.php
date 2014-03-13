@@ -1,8 +1,8 @@
 <?php
-require("../../include/functions.php");
-require("../../config.php");
-require("../../include/apply_config_tools.php");
-require("../../include/check_login.php");
+require("functions.php");
+require("../config.php");
+require("apply_config_include.php");
+require("check_login.php");
 
 echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
@@ -12,15 +12,15 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 
 ?>
 
-<link rel="stylesheet" href="../../css/screen.css" type="text/css" media="screen, projection">
-<link rel="stylesheet" href="../../css/print.css" type="text/css" media="print">	
-<!--[if IE]><link rel="stylesheet" href="../../css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+<link rel="stylesheet" href="../css/screen.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="../css/print.css" type="text/css" media="print">	
+<!--[if IE]><link rel="stylesheet" href="../css/ie.css" type="text/css" media="screen, projection"><![endif]-->
 
 <!-- Scripts for JQuery -->
-	<script src="../../js/jquery-1.3.2.min.js"></script>
-	<link type="text/css" href="../../js/jquery/start/jquery-ui-1.7.3.custom.css" rel="stylesheet" />	
-	<script type="text/javascript" src="../../js/jquery/jquery-ui-1.7.3.custom.min.js"></script>
-	<script src="../../js/jquery.fg-button.js"></script>
+	<script src="../js/jquery-1.3.2.min.js"></script>
+	<link type="text/css" href="../js/jquery/start/jquery-ui-1.7.3.custom.css" rel="stylesheet" />	
+	<script type="text/javascript" src="../js/jquery/jquery-ui-1.7.3.custom.min.js"></script>
+	<script src="../js/jquery.fg-button.js"></script>
 
 </head>
 <body>
