@@ -389,9 +389,10 @@ if (is_file("$absolute_dir/customhead.php")) {
 			else{
 				$tool="add_to_db.php";
 				}
+			echo "</div>\n";
 			*/
 
-		echo "</div>\n";
+		
 		#echo "<div class=\"span-8\" id=\"toolcontainer\">";
 		echo "<div class=\"span-8\">";
 			require("include/add_mark.php");

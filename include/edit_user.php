@@ -108,14 +108,14 @@ elseif ($ac=="editpassword") {
 
 	#$cookie_to_test1=filter_var($_GET["cookie_to_test1"], FILTER_SANITIZE_NUMBER_INT);
 	#$cookie_to_test2=filter_var($_GET["cookie_to_test2"], FILTER_SANITIZE_STRING);
-
+	/*
 	$query = "DELETE FROM Cookies WHERE user_id = '$cookie_to_test1' AND cookie = '$cookie_to_test2'";
 	$result = mysqli_query($connection, $query)
 	       or die (mysqli_error($connection));
 
 	setcookie("usercookie", "1", time()-3600, "/");
 	setcookie("username", "1", time()-3600, "/");
-
+	*/
 
 	// Relocate back to where you came from
 	header("Location: ../edit_myinfo.php?d=3");

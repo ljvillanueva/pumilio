@@ -58,13 +58,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 		$config_file = 'config.php';
 
-		if (file_exists($config_file)) {
-			require("config.php");
-			echo "<a href=\"$app_dir\"><img src=\"$app_logo\"></a>";
-			}
-		else {
-			echo "<img src=\"images/logo2.png\">";
-			}
+		echo "<a href=\"index.php\"><img src=\"images/logo2.png\"></a>";
 
 		if ($e=="db") {
 			echo "<p><div class=\"error\"> <img src=\"images/exclamation.png\"> The system could not connect to the database. Please verify the settings and try again.</div>";

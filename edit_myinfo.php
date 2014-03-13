@@ -105,12 +105,12 @@ require("include/get_jqueryui.php");
 <?php
 if ($t==2) {
 	echo "$(function() {
-		$(\"#tabs0\").tabs({ selected: 2 });
+		$(\"#tabs0\").tabs({ selected: 1 });
 		});";
 	}
 elseif ($t==1) {
 	echo "$(function() {
-		$(\"#tabs0\").tabs({ selected: 1 });
+		$(\"#tabs0\").tabs({ selected: 0 });
 		});";
 	}
 else {
@@ -172,7 +172,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 					echo "<p><div class=\"success\">Changes were applied successfully</div>";
 					}
 				if ($d==3) {
-					echo "<p><div class=\"success\">Changes were applied successfully. Please log in to apply the changes.</div>";
+					echo "<p><div class=\"success\">Your password was changed.</div>";
 					echo "<br>
 					</div>
 					<div class=\"span-24 last\">";
@@ -198,102 +198,10 @@ if (is_file("$absolute_dir/customhead.php")) {
 			?>
 				<div id="tabs0">
 					<ul>
-						<li><a href="#tabs-1">Theme for application</a></li>
 						<li><a href="#tabs-2">Edit my email address</a></li>
 						<li><a href="#tabs-3">Change my password</a></li>
 					</ul>
-				<div id="tabs-1">
 
-				<?php
-				echo "<h3>User settings</h3>";
-			
-				$blacktie_s = "";
-				$blitzer_s = "";
-				$cupertino_s = "";
-				$excitebike_s = "";
-				$hotsneaks_s = "";
-				$humanity_s = "";
-				$lightness_s = "";
-				$overcast_s = "";
-				$peppergrinder_s = "";
-				$smoothness_s = "";
-				$southstreet_s = "";
-				$start_s = "";
-				$sunny_s = "";
-
-				echo "<form action=\"set_cookies.php\" method=\"post\">
-					<input type=\"hidden\" name=\"cookie_to_set\" value=\"jquerycss\">
-					Select a theme for the application:
-					<select name=\"css\" class=\"ui-state-default ui-corner-all\">\n";
-
-				if (!isset($jquerycss)){
-					$jquerycss = "cupertino";
-					}
-					
-				if ($jquerycss=="cupertino") {
-					$cupertino_s = "SELECTED";
-					}
-				elseif ($jquerycss=="blitzer") {
-					$blitzer_s = "SELECTED";
-					}
-				elseif ($jquerycss=="start") {
-					$start_s = "SELECTED";
-					}
-				elseif ($jquerycss=="humanity") {
-					$humanity_s = "SELECTED";
-					}
-				elseif ($jquerycss=="lightness") {
-					$lightness_s = "SELECTED";
-					}
-				elseif ($jquerycss=="overcast") {
-					$overcast_s = "SELECTED";
-					}
-				elseif ($jquerycss=="peppergrinder") {
-					$peppergrinder_s = "SELECTED";
-					}
-				elseif ($jquerycss=="smoothness") {
-					$smoothness_s = "SELECTED";
-					}
-				elseif ($jquerycss=="sunny") {
-					$sunny_s = "SELECTED";
-					}
-				elseif ($jquerycss=="hotsneaks") {
-					$hotsneaks_s = "SELECTED";
-					}
-				elseif ($jquerycss=="excitebike") {
-					$excitebike_s = "SELECTED";
-					}
-				elseif ($jquerycss=="southstreet") {
-					$southstreet_s = "SELECTED";
-					}
-				elseif ($jquerycss=="blacktie") {
-					$blacktie_s = "SELECTED";
-					}
-
-				echo "	<option value=\"blacktie\" $blacktie_s>Black Tie</option>
-					<option value=\"blitzer\" $blitzer_s>Blitzer</option>
-					<option value=\"cupertino\" $cupertino_s>Cupertino (default)</option>
-					<option value=\"excitebike\" $excitebike_s>Excite Bike</option>
-					<option value=\"hotsneaks\" $hotsneaks_s>Hot Sneaks</option>
-					<option value=\"humanity\" $humanity_s>Humanity</option>
-					<option value=\"lightness\" $lightness_s>Lightness</option>
-					<option value=\"overcast\" $overcast_s>Overcast</option>
-					<option value=\"peppergrinder\" $peppergrinder_s>Pepper-Grinder</option>
-					<option value=\"smoothness\" $smoothness_s>Smoothness</option>
-					<option value=\"southstreet\" $southstreet_s>South Street</option>
-					<option value=\"start\" $start_s>Start</option>
-					<option value=\"sunny\" $sunny_s>Sunny</option>\n";
-
-
-			echo "</select> 
-				<br><br>
-				<input type=submit value=\" Change theme \" class=\"fg-button ui-state-default ui-corner-all\"></form>";
-
-			echo "<br><br>";
-
-			?>
-
-				</div>
 				<div id="tabs-2">
 					<h3>Edit your email address</h3>
 					<form action="include/edit_user.php" method="POST" id="EditUserForm">
