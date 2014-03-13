@@ -1,7 +1,6 @@
 <script src="js/jquery.validate.js"></script>
 
 <!-- Form validation from http://bassistance.de/jquery-plugins/jquery-plugin-validation/ -->
-
 	<script type="text/javascript">
 	$().ready(function() {
 		// validate signup form on keyup and submit
@@ -73,7 +72,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 				}
 			else{
 				$localdir = $temp_add_dir;
-				echo "<p>Server local directory: <input name=\"localdir\" type=\"text\" maxlength=\"160\" size=\"50\" value=\"$localdir\" class=\"fg-button ui-state-default ui-corner-all\">";
+				echo "<p>Server local directory: <input name=\"dir\" type=\"text\" maxlength=\"160\" size=\"50\" value=\"$localdir\" class=\"fg-button ui-state-default ui-corner-all\">";
 				$valid_form = 1;
 				}
 				
@@ -96,7 +95,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 			$nrows = mysqli_num_rows($result);
 
 			if ($nrows>0) {
-				echo "Add files to this source: 
+				echo "Add files to this Collection: 
 				<select name=\"ColID\" class=\"ui-state-default ui-corner-all\">
 					<option></option>";
 				for ($i=0;$i<$nrows;$i++) {
@@ -106,15 +105,51 @@ if (is_file("$absolute_dir/customhead.php")) {
 					}
 				echo "</select> <a href=\"add_source.php\">Add Collections</a><br>";
 				
-				if ($valid_form == 0){
-					echo "<input type=submit value=\" Check \" DISABLED class=\"fg-button ui-state-default ui-corner-all\">";
-					}
-				elseif ($valid_form == 1){
-					echo "<input type=submit value=\" Check \" class=\"fg-button ui-state-default ui-corner-all\">";
-					}
 				}
 			else {
 				echo "<p><strong>There are no collections in the archive. Please create at least one to continue.</strong>";
+				}
+				
+			#Site
+			echo "Site: ";
+				$query_s = "SELECT SiteID AS this_SiteID, SiteName AS this_SiteName, SiteLat AS this_SiteLat, SiteLon AS this_SiteLon FROM Sites ORDER BY this_SiteName";
+				$result_s = mysqli_query($connection, $query_s)
+					or die (mysqli_error($connection));
+				$nrows_s = mysqli_num_rows($result_s);
+				echo "<select name=\"SiteID\" class=\"ui-state-default ui-corner-all\">
+					<option></option>\n";
+
+				for ($j=0;$j<$nrows_s;$j++) {
+					$row_s = mysqli_fetch_array($result_s);
+					extract($row_s);
+					echo "<option value=\"$this_SiteID\">$this_SiteName ($this_SiteLat/$this_SiteLon)</option>\n";
+					}
+				echo "</select>";
+			
+				echo " <a href=\"#\" onclick=\"window.open('include/addsite.php', 'addsite', 'width=650,height=350,status=yes,resizable=yes,scrollbars=auto')\">Add sites</a><br>
+			
+				Sensor: ";
+				$query_s = "SELECT * FROM Sensors ORDER BY SensorID";
+				$result_s = mysqli_query($connection, $query_s)
+					or die (mysqli_error($connection));
+				$nrows_s = mysqli_num_rows($result_s);
+				echo "<select name=\"SensorID\" class=\"ui-state-default ui-corner-all\">
+					<option></option>\n";
+
+				for ($j=0;$j<$nrows_s;$j++) {
+					$row_s = mysqli_fetch_array($result_s);
+					extract($row_s);
+					echo "<option value=\"$SensorID\">$Recorder $Microphone - $Notes</option>\n";
+					}
+				echo "</select>";
+			
+				echo " <a href=\"admin.php?t=4\">Add sensors</a><br>";
+
+			if ($valid_form == 0){
+				echo "<input type=submit value=\" Check \" DISABLED class=\"fg-button ui-state-default ui-corner-all\">";
+				}
+			elseif ($valid_form == 1){
+				echo "<input type=submit value=\" Check \" class=\"fg-button ui-state-default ui-corner-all\">";
 				}
 
 			echo "</form>";

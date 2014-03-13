@@ -29,7 +29,23 @@ for ($k=0;$k<$commadata_count;$k++) {
 
 	#Insert to MySQL
 	$DirID = rand(1,100);
-	$query_to_insert="INSERT INTO Sounds ($fields, ColID, DirID) VALUES ($this_row_imploded, '$ColID', '$DirID');";
+	
+	
+	if ($SiteID==""){
+		$SiteID = "NULL";
+		}
+	else{
+		$SiteID = "'$SiteID'";
+		}
+
+	if ($SensorID==""){
+		$SensorID = "NULL";
+		}
+	else{
+		$SensorID = "'$SensorID'";
+		}
+	
+	$query_to_insert="INSERT INTO Sounds ($fields, ColID, DirID, SiteID, SensorID) VALUES ($this_row_imploded, '$ColID', '$DirID', $SiteID, $SensorID);";
 	$result = mysqli_query($connection, $query_to_insert)
 			or die (mysqli_error($connection));
 

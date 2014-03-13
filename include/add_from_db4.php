@@ -9,12 +9,14 @@ $OtherSoundID=filter_var($_POST["OtherSoundID"], FILTER_SANITIZE_NUMBER_INT);
 $SoundName=filter_var($_POST["SoundName"], FILTER_SANITIZE_NUMBER_INT);
 $Date=filter_var($_POST["Date"], FILTER_SANITIZE_NUMBER_INT);
 $Time=filter_var($_POST["Time"], FILTER_SANITIZE_NUMBER_INT);
-$Location=filter_var($_POST["Location"], FILTER_SANITIZE_NUMBER_INT);
+$SiteID=filter_var($_POST["SiteID"], FILTER_SANITIZE_NUMBER_INT);
 $Latitude=filter_var($_POST["Latitude"], FILTER_SANITIZE_NUMBER_INT);
 $Longitude=filter_var($_POST["Longitude"], FILTER_SANITIZE_NUMBER_INT);
 $Notes=filter_var($_POST["Notes"], FILTER_SANITIZE_NUMBER_INT);
 $files_to_process=filter_var($_POST["files_to_process"], FILTER_SANITIZE_STRING);
 $files_to_process_counter=filter_var($_POST["files_to_process_counter"], FILTER_SANITIZE_NUMBER_INT);
+$SiteID=filter_var($_POST["SiteID"], FILTER_SANITIZE_NUMBER_INT);
+$SensorID=filter_var($_POST["SensorID"], FILTER_SANITIZE_NUMBER_INT);
 
 if ($dir=="")
 	{die();}
@@ -39,9 +41,6 @@ if ($Date)
 	$fields_to_use_counter+=1;}
 if ($Time)
 	{$fields_to_use=$fields_to_use . "Time,";
-	$fields_to_use_counter+=1;}
-if ($Location)
-	{$fields_to_use=$fields_to_use . "Location,";
 	$fields_to_use_counter+=1;}
 if ($Latitude)
 	{$fields_to_use=$fields_to_use . "Latitude,";
@@ -128,6 +127,8 @@ if (is_file("$absolute_dir/customhead.php")) {
 				<input type=\"hidden\" name=\"dir\" value=\"$dir\">
 				<input type=\"hidden\" name=\"files_format\" value=\"$files_format\">
 				<input type=\"hidden\" name=\"ColID\" value=\"$ColID\">
+				<input type=\"hidden\" name=\"SiteID\" value=\"$SiteID\">
+				<input type=\"hidden\" name=\"SensorID\" value=\"$SensorID\">
 				<input type=\"hidden\" name=\"fields_to_use_counter\" value=\"$fields_to_use_counter\">
 				<input type=\"hidden\" name=\"files_to_process_counter\" value=\"$files_to_process_counter\">
 				<input type=\"hidden\" name=\"files_to_process\" value=\"$files_to_process\">

@@ -3,6 +3,8 @@
 $dir=filter_var($_POST["dir"], FILTER_SANITIZE_URL);
 $files_format=strtolower(filter_var($_POST["files_format"], FILTER_SANITIZE_STRING));
 $ColID=filter_var($_POST["ColID"], FILTER_SANITIZE_NUMBER_INT);
+$SiteID=filter_var($_POST["SiteID"], FILTER_SANITIZE_NUMBER_INT);
+$SensorID=filter_var($_POST["SensorID"], FILTER_SANITIZE_NUMBER_INT);
 
 if ($dir==""){
 	die();
@@ -68,6 +70,8 @@ if (is_file("$absolute_dir/customhead.php")) {
 				<p>If the list above seems right, continue to the next step:<br>
 				<input type=\"hidden\" name=\"dir\" value=\"$dir\">
 				<input type=\"hidden\" name=\"ColID\" value=\"$ColID\">
+				<input type=\"hidden\" name=\"SiteID\" value=\"$SiteID\">
+				<input type=\"hidden\" name=\"SensorID\" value=\"$SensorID\">
 				<input type=\"hidden\" name=\"files_format\" value=\"$files_format\">
 				<input type=\"hidden\" name=\"files_to_process_counter\" value=\"$files_to_process_counter\">
 				<input type=\"hidden\" name=\"files_to_process\" value=\"$files_to_process\">

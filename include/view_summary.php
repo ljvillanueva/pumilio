@@ -45,7 +45,6 @@ if ($mobile==TRUE) {
 
 		echo "<strong><a href=\"$db_filedetails_link&SoundID=$SoundID\">$SoundName</a></strong>\n";
 		$ColID = DB::column('SELECT ColID FROM `Sounds` WHERE SoundID = ' . $SoundID);
-		$SiteID = DB::column('SELECT SiteID FROM `Sounds` WHERE SoundID = ' . $SoundID);
 		$DirID = DB::column('SELECT DirID FROM `Sounds` WHERE SoundID = ' . $SoundID);
 
 		$iplayer = $i + 1;
@@ -125,12 +124,26 @@ if ($mobile==TRUE) {
 
 		#Check if there are images of the site
 		#$site_pics=query_one("SELECT COUNT(*) FROM SitesPhotos WHERE SiteID='$SiteID'", $connection);
-		$site_pics = DB::column('SELECT COUNT(*) FROM `SitesPhotos` WHERE SiteID = ' . $SiteID);
-		
-		if ($site_pics>0) {
-			echo " <a href=\"#\" title=\"Show photographs of this site\" onclick=\"window.open('sitephotos.php?SiteID=$SiteID', 'pics', 'width=550,height=400,status=yes,resizable=yes,scrollbars=yes'); return false;\">
-				<img src=\"images/image.png\" alt=\"Show photographs of this site\"></a>";
+		$SiteID = DB::column('SELECT SiteID FROM `Sounds` WHERE SoundID = ' . $SoundID);
+
+		if ($SiteID > 0){
+			#Get site data
+			$query_site = "SELECT * from Sites WHERE SiteID='$SiteID' LIMIT 1";
+			$result_site = mysqli_query($connection, $query_site)
+				or die (mysqli_error($connection));
+			$nrows_site = mysqli_num_rows($result_site);
+
+			if ($nrows_site > 0) {
+				$row_site = mysqli_fetch_array($result_site);
+				extract($row_site);
+				}
+			#Check if there are images of the site
+			$site_pics = DB::column('SELECT COUNT(*) FROM `SitesPhotos` WHERE SiteID = ' . $SiteID);
+			if ($site_pics>0) {
+				echo " <a href=\"#\" title=\"Show photographs of this site\" onclick=\"window.open('sitephotos.php?SiteID=$SiteID', 'pics', 'width=550,height=400,status=yes,resizable=yes,scrollbars=yes'); return false;\"><img src=\"images/image.png\" alt=\"Show photographs of this site\"></a>";
+				}
 			}
+		
 
 		if (isset($Date_h) && $Date_h!="") {
 			echo "Date: $Date_h | Time: $Time";
@@ -181,7 +194,7 @@ if ($mobile==TRUE) {
 
 		#Quality flags
 		#$QualityFlag=query_one("SELECT QualityFlag from QualityFlags WHERE QualityFlagID='$QualityFlagID'", $connection);
-		$QualityFlag = DB::column('SELECT QualityFlag FROM `QualityFlags` WHERE QualityFlagID = ' . $SiteID);
+		$QualityFlag = DB::column('SELECT QualityFlag FROM `QualityFlags` WHERE QualityFlagID = ' . $QualityFlagID);
 		echo "<p>File Quality flag: <em title=\"$QualityFlag\">$QualityFlagID</em>";
 		if ($DerivedSound == "1"){
 			echo "<li>Derived from: <a href=\"db_filedetails.php?SoundID=$DerivedFromSoundID\">$DerivedFromSoundID</li>";
@@ -311,7 +324,14 @@ else {
 		$row = mysqli_fetch_array($result);
 		extract($row);
 
-		#Get site data
+		echo "<div class=\"span-8 summary-left\">";
+
+		echo "<strong><a href=\"$db_filedetails_link&SoundID=$SoundID\">$SoundName</a></strong>";
+		$ColID = DB::column('SELECT ColID FROM `Sounds` WHERE SoundID = ' . $SoundID);
+		$SiteID = DB::column('SELECT SiteID FROM `Sounds` WHERE SoundID = ' . $SoundID);
+
+		if ($SiteID > 0){
+			#Get site data
 			$query_site = "SELECT * from Sites WHERE SiteID='$SiteID' LIMIT 1";
 			$result_site = mysqli_query($connection, $query_site)
 				or die (mysqli_error($connection));
@@ -321,18 +341,13 @@ else {
 				$row_site = mysqli_fetch_array($result_site);
 				extract($row_site);
 				}
-
-		echo "<div class=\"span-8 summary-left\">";
-
-		echo "<strong><a href=\"$db_filedetails_link&SoundID=$SoundID\">$SoundName</a></strong>";
-		$ColID = DB::column('SELECT ColID FROM `Sounds` WHERE SoundID = ' . $SoundID);
-		$SiteID = DB::column('SELECT SiteID FROM `Sounds` WHERE SoundID = ' . $SoundID);
-
-		#Check if there are images of the site
-		$site_pics = DB::column('SELECT COUNT(*) FROM `SitesPhotos` WHERE SiteID = ' . $SiteID);
-		if ($site_pics>0) {
-			echo " <a href=\"#\" title=\"Show photographs of this site\" onclick=\"window.open('sitephotos.php?SiteID=$SiteID', 'pics', 'width=550,height=400,status=yes,resizable=yes,scrollbars=yes'); return false;\"><img src=\"images/image.png\" alt=\"Show photographs of this site\"></a>";
+			#Check if there are images of the site
+			$site_pics = DB::column('SELECT COUNT(*) FROM `SitesPhotos` WHERE SiteID = ' . $SiteID);
+			if ($site_pics>0) {
+				echo " <a href=\"#\" title=\"Show photographs of this site\" onclick=\"window.open('sitephotos.php?SiteID=$SiteID', 'pics', 'width=550,height=400,status=yes,resizable=yes,scrollbars=yes'); return false;\"><img src=\"images/image.png\" alt=\"Show photographs of this site\"></a>";
+				}
 			}
+		
 
 		if (isset($Date) && $Date!="")
 			echo "<br>Date: $Date_h | Time: $Time";

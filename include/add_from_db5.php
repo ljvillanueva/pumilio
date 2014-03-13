@@ -13,6 +13,8 @@ $fields=filter_var($_POST["fields"], FILTER_SANITIZE_STRING);
 $fields_to_use_counter=filter_var($_POST["fields_to_use_counter"], FILTER_SANITIZE_NUMBER_INT);
 $files_to_process=filter_var($_POST["files_to_process"], FILTER_SANITIZE_STRING);
 $files_to_process_counter=filter_var($_POST["files_to_process_counter"], FILTER_SANITIZE_NUMBER_INT);
+$SiteID=filter_var($_POST["SiteID"], FILTER_SANITIZE_NUMBER_INT);
+$SensorID=filter_var($_POST["SensorID"], FILTER_SANITIZE_NUMBER_INT);
 
 $commadata=$_POST["commadata"];
 
