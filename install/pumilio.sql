@@ -522,5 +522,7 @@ UPDATE Sounds SET `OtherSoundID` = NULL WHERE `OtherSoundID` = '0';
 
 ALTER TABLE `SoundsImages`  ADD `ImageFFT` INT NOT NULL DEFAULT '2048' AFTER `SpecMaxFreq`;
 
+INSERT INTO `PumilioSettings` (`Settings`, `Value`) VALUES ('use_tags', '1');
+
 REPLACE INTO `PumilioSettings` (`Settings`, `Value`) VALUES ('db_version', '26');
 
