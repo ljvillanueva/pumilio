@@ -222,25 +222,27 @@ if ($mobile==TRUE) {
 				}
 
 			#add sound to a sample set
-			$query_sample = "SELECT SampleID, SampleName from Samples ORDER BY SampleName";
-			$result_sample = mysqli_query($connection, $query_sample)
-				or die (mysqli_error($connection));
-			$nrows_sample = mysqli_num_rows($result_sample);
+			if ($pumilio_loggedin == TRUE){
+				$query_sample = "SELECT SampleID, SampleName from Samples ORDER BY SampleName";
+				$result_sample = mysqli_query($connection, $query_sample)
+					or die (mysqli_error($connection));
+				$nrows_sample = mysqli_num_rows($result_sample);
 
-			if ($nrows_sample!=0) {
-				echo "<p><form method=\"GET\" action=\"add_to_sample.php\" target=\"add\" onsubmit=\"window.open('', 'add', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
-				Add this sound to a sample set:<br>
-				<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">";
-				echo "<select name=\"SampleID\" class=\"ui-state-default ui-corner-all\">";
+				if ($nrows_sample!=0) {
+					echo "<p><form method=\"GET\" action=\"add_to_sample.php\" target=\"add\" onsubmit=\"window.open('', 'add', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
+					Add this sound to a sample set:<br>
+					<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">";
+					echo "<select name=\"SampleID\" class=\"ui-state-default ui-corner-all\">";
 
-				for ($sa=0;$sa<$nrows_sample;$sa++) {
-					$row_sample = mysqli_fetch_array($result_sample);
-					extract($row_sample);
-					echo "<option value=\"$SampleID\">$SampleName</option>\n";
+					for ($sa=0;$sa<$nrows_sample;$sa++) {
+						$row_sample = mysqli_fetch_array($result_sample);
+						extract($row_sample);
+						echo "<option value=\"$SampleID\">$SampleName</option>\n";
+						}
+
+					echo "</select>
+					<input type=submit value=\" Add \" class=\"fg-button ui-state-default ui-corner-all\"></form>";
 					}
-
-				echo "</select>
-				<input type=submit value=\" Add \" class=\"fg-button ui-state-default ui-corner-all\"></form>";
 				}
 
 
@@ -462,6 +464,7 @@ else {
 				}
 
 			#add sound to a sample set
+			if ($pumilio_loggedin == TRUE){
 			$query_sample = "SELECT SampleID, SampleName from Samples ORDER BY SampleName";
 			$result_sample = mysqli_query($connection, $query_sample)
 				or die (mysqli_error($connection));
@@ -482,6 +485,7 @@ else {
 				echo "</select>
 				<input type=submit value=\" Add \" class=\"fg-button ui-state-default ui-corner-all\"></form>";
 				}
+			}
 
 		#Check if there are images
 		flush();

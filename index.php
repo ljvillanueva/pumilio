@@ -202,59 +202,34 @@ if ($map_only=="1"){
 
 	</script>
 	";
-
+/*
+#Broken in recent versions of JQuery
 	#Time 
 	#From https://github.com/perifer/timePicker
 	echo "
-		<style type=\"text/css\" media=\"all\">@import \"js/timePicker.css\";</style>
-		<script type=\"text/javascript\" src=\"js/jquery.timePicker.js\"></script>
+	
+	<script type=\"text/javascript\" src=\"$app_url/js/jquery.timepicker.min.js\"></script>
+	
 		<script type=\"text/javascript\">
 		jQuery(function() {
-		// An example how the two helper functions can be used to achieve 
-		// advanced functionality.
-		// - Linking: When changing the first input the second input is updated and the
-		//   duration is kept.
-		// - Validation: If the second input has a time earlier than the firs input,
-		//   an error class is added.
 
-		// Use default settings
-		$(\"#startTime, #endTime\").timePicker({
-			startTime: \"00:00\",
-			endTime: \"23:59\",
-			show24Hours: true,
-			step: 1
-			});
-		    
-		// Store time used by duration.
-		var oldTime = $.timePicker(\"#startTime\").getTime();
-
-		// Keep the duration between the two inputs.
-		$(\"#startTime\").change(function() {
-		  if ($(\"#endTime\").val()) { // Only update when second input has a value.
-		    // Calculate duration.
-		    var duration = ($.timePicker(\"#endTime\").getTime() - oldTime);
-		    var time = $.timePicker(\"#startTime\").getTime();
-		    // Calculate and update the time in the second input.
-		    $.timePicker(\"#endTime\").setTime(new Date(new Date(time.getTime() + duration)));
-		    oldTime = time;
-		  }
-		});
 		// Validate.
 		$(\"#endTime\").change(function() {
 		  if($.timePicker(\"#startTime\").getTime() > $.timePicker(this).getTime()) {
 		    $(this).addClass(\"error\");
-		    $( \"#datemsg\" ).addClass(\"error\");
-		    $( \"#datemsg\" ).html(\"The end time can not be after start time.\");
+		    $( \"#timemsg\" ).addClass(\"error\");
+		    $( \"#timemsg\" ).html(\"The end time can not be after start time.\");
 		  }
 		  else {
 		    $(this).removeClass(\"error\");
-		    $( \"#datemsg\" ).removeClass(\"error\");
-	    	    $( \"#datemsg\" ).html(\"\");
+		    $( \"#timemsg\" ).removeClass(\"error\");
+	    	    $( \"#timemsg\" ).html(\"\");
 		  }
 		});
 		});
 		</script>
 		";
+*/
 	
 	#Duration slider
 	#Get min and max

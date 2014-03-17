@@ -196,7 +196,7 @@ if ($googlemaps_ver == "3"){
 					position: siteLatLng,
 					map: map,
 					title: sites[0],
-					html: '<div style=\"width:220px\"><div class=\"highlight4 ui-corner-all\"><a href=\"' + sites[5] + '\" style=\"color: white;\">' + sites[0] + '</a></div>' + sites[4] + '</div>'
+					html: '<div style=\"width:320px\"><div class=\"highlight4 ui-corner-all\"><a href=\"' + sites[5] + '\" style=\"color: white;\">' + sites[0] + '</a></div>' + sites[4] + '</div>'
 				 });
 				    var contentString = \"Some content\";
 

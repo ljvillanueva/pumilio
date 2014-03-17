@@ -454,7 +454,7 @@ echo "</select>\n";
 
 
 	echo "
-	<p><input type=submit value=\" Update system behavior \" class=\"fg-button ui-state-default ui-corner-all\">
+	<p><input type=submit value=\" Update spectrogram settings \" class=\"fg-button ui-state-default ui-corner-all\">
 	</form>";
 
 

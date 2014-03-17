@@ -94,6 +94,7 @@ $endDate = date('Y-m-d', strtotime($endDate));
 
 	$Dateq = "AND Sounds.Date >= '$startDate' AND Sounds.Date <= '$endDate' ";
 
+
 $startTime=filter_var($_GET["startTime"], FILTER_SANITIZE_STRING);
 $endTime=filter_var($_GET["endTime"], FILTER_SANITIZE_STRING);
 

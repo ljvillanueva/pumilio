@@ -62,21 +62,25 @@ else {
 				}
 		echo "</select>
 		</td>
-		</tr>
+		</tr>";
 
+
+	echo "
 		<tr>
 		<td>Time range:
 		</td>
 		<td>&nbsp;</td>
 		<td colspan=\"2\">
-			<input type=\"text\" id=\"startTime\" name=\"startTime\" value=\"00:00\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\" readonly> to 
-			<input type=\"text\" id=\"endTime\" name=\"endTime\" value=\"23:59\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\" readonly> 
-			<div id=\"datemsg\"></div>
+			<input type=\"text\" name=\"startTime\" value=\"00:00\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\"> to 
+			<input type=\"text\" name=\"endTime\" value=\"23:59\" size=\"10\" class=\"fg-button ui-state-default ui-corner-all\"> (in format HH:MM)
 
 			</td>
 		</tr>
+";
 
-		<tr>
+
+
+echo "		<tr>
 		<td>
 		Date range: </td>
 		<td>&nbsp;</td>

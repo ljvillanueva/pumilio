@@ -71,9 +71,10 @@ require("include/get_jqueryui.php");
 
 	#Time 
 	#From https://github.com/perifer/timePicker
+/*
 	echo "
-		<style type=\"text/css\" media=\"all\">@import \"js/timePicker.css\";</style>
-		<script type=\"text/javascript\" src=\"js/jquery.timePicker.js\"></script>
+		<style type=\"text/css\" media=\"all\">@import \"css/jquery.timepicker.css\";</style>
+		<script type=\"text/javascript\" src=\"js/jquery.timepicker.min.js\"></script>
 		<script>
 		jQuery(function() {
 		// An example how the two helper functions can be used to achieve 
@@ -121,7 +122,7 @@ require("include/get_jqueryui.php");
 		});
 		</script>
 		";
-	
+*/	
 	#Duration slider
 	#Get min and max
 	$DurationLow=floor(query_one("SELECT DISTINCT Duration FROM Sounds WHERE Duration IS NOT NULL AND SoundStatus!='9' $qf_check ORDER BY Duration LIMIT 1", $connection));
