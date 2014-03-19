@@ -167,6 +167,9 @@ if (!isset($special_wrapper)){
 	}
 
 if ($useR == TRUE){
+	if (!isset($Rscript)){
+		$Rscript = "Rscript --vanilla ";
+		}
 	if (!isset($R_ADI_db_value)){
 		$R_ADI_db_value = "-50";
 		}
