@@ -45,6 +45,10 @@ Feel free to contribute code, ideas, suggestions, bugs, etc.
 
 Read the INSTALLATION file to install and the UPGRADE file to upgrade.
 
+Versions with a ".dev" suffix are not official and are in the middle of 
+ development. Use these versions with caution as some features may be 
+ broken.
+
 To prevent access to the original sound files from the web (for example, someone trying to 
  download your whole dataset), rename the file "htaccess" to ".htaccess" (starting with a period)
  and place it in the main folder of the application.

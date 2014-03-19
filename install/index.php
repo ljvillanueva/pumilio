@@ -28,12 +28,12 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 	<link rel="stylesheet" href="../css/print.css" type="text/css" media="print">	
 	<!--[if IE]><link rel="stylesheet" href="../css/ie.css" type="text/css" media="screen, projection"><![endif]-->
 
+
 <!-- Scripts for JQuery -->
-	<script src="../js/jquery-1.3.2.min.js"></script>
-	<script src="../js/jquery.fg-button.js"></script>
-	<link type="text/css" href="../js/jquery/start/jquery-ui-1.7.2.custom.css" rel="stylesheet" />	
-	<script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
-	<script type="text/javascript" src="../js/jquery/jquery-ui-1.7.2.custom.min.js"></script>
+	<script type="text/javascript" src="../js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="../js/jquery.fg-button.js"></script>
+	<script type="text/javascript" src="../js/jquery-ui-1.10.4.custom.min.js"></script>
+	<link type="text/css" href="../css/jqueryui/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
 	<script src="../js/jquery.validate.js"></script>
 
 <!-- Form validation from http://bassistance.de/jquery-plugins/jquery-plugin-validation/ -->

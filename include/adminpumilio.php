@@ -67,6 +67,16 @@ if ($use_googlemaps=="3") {
 		$map_only_d="Full menu";
 		}
 
+
+
+#Google Analytics:
+	echo "<p>Google Analytics Tracking ID: ";
+
+	echo "<input type=\"text\" name=\"googleanalytics_ID\" size=\"50\" maxlength=\"250\" value=\"$googleanalytics_ID\" class=\"fg-button ui-state-default ui-corner-all formedge\">\n";
+
+
+
+
 echo "<br>Main menu: $map_only_d";
 	
 echo "<select name=\"map_only\" class=\"ui-state-default ui-corner-all formedge\">";

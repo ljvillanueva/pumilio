@@ -217,6 +217,27 @@ if ($login_wordpress == TRUE){
 		}
 	}
 
+
+
+#Google Analytics
+$use_googleanalytics = FALSE;
+if (isset($googleanalytics_ID)){
+	$use_googleanalytics = TRUE;
+
+	$googleanalytics_code = "\n\n<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', '$googleanalytics_ID', '$app_host');
+		ga('send', 'pageview');
+
+	</script>\n\n";
+	}
+
+
+
 #Check sox version
 $sox_version=query_one("SELECT Value from PumilioSettings WHERE Settings='sox_version'", $connection);
 # using only forward of version 14.3.2 (w: 5000 h: )

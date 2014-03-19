@@ -1,7 +1,4 @@
 <?php
-#===============================
-# MAIN SETTINGS                #
-#===============================
 
 #Database settings
 $host="localhost";
@@ -9,91 +6,5 @@ $user="";
 $password="";
 $database = "";
 
-
-#Custom logo and name
-# If you want to display a logo, just enter its relative address here
-$app_logo="images/logo2.png";
-
-
-#Administrator email
-# Who will be the admin, useful for login problems and others
-$app_admin_email="";
-#Is the server configured to send email?
-# The default is FALSE
-$app_allow_email=FALSE; #FALSE or TRUE
-
-
-
-#===============================
-# OPTIONAL SETTINGS            #
-#===============================
-
-#Name for the tag for the marking tool
-# This can be something like species, the name of the song or 
-# syllable, a unique code for the type of sound, etc.
-# This variable must be set for the tool to be active.
-$mark_tag_name = "Species";
-
-
-#Use R?
-# When true, the system can extract more data from the files by running 
-# custom code that can be used for quality control. It also lets the R 
-# plugin know where to find R. 
-$useR = FALSE; #TRUE or FALSE
-	#If true, you can set the custom path for the R installation you want to
-	#  use and other Rscript arguments. Can be left as it is to use the 
-	#  default. Most users won't need to change this line.
-	$Rscript = "Rscript --vanilla ";
-	#ADI settings
-		$R_ADI_db_value = "-50"; #dBFS
-
-		##The spectrogram should be drawn from 0 to this
-		## frequency, in Hertz. Default is 10000 Hz.
-		$R_ADI_max_freq = "10000"; #in Hz
-
-		##How wide is each frequency band
-		$R_ADI_freq_step = "1000"; #in Hz
-
-
-#Use Wordpress for users?
-# When true, the system will use the Wordpress user management
-# to determine who is logged in and what they can do.
-# You must also provide the relative or full path to the file 
-# wordpress_folder/wp-blog-header.php
-$login_wordpress = FALSE; #TRUE or FALSE
-$wordpress_require = '/wp-blog-header.php';
-
-
-#Set as a no login website?
-# When true, there is no option to log in. Useful for public websites that will rarely
-# need someone logged in. May set to true whenever someone needs to log in.
-$no_login=FALSE; #TRUE or FALSE
-
-
-#Force login?
-# When true, no guests are allowed.
-$force_login=FALSE; #TRUE or FALSE
-
-
-#Google Analytics code
-$use_googleanalytics=FALSE; #TRUE or FALSE
-/*
-If you have a code from Google Analytics, copy it to the variable below.
- IMPORTANT! Put a backslash before each quote, otherwise the website will be BROKEN!
- For example, 
- <script type="text/javascript">
- has to be written as:
- <script type=\"text/javascript\">
-*/
-$googleanalytics_code="<script type=\"text/javascript\">
-
-
-	</script>";
-	
-
-#More special variables for rare cases
-$special_wrapper=FALSE;
-$special_noopen=FALSE;
-$special_noprocess=FALSE;
-$special_nofiles=FALSE;
+#For additional settings that can be added here, please consult the website: http://ljvillanueva.github.io/pumilio
 ?>

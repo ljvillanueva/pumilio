@@ -6,9 +6,11 @@ $absolute_dir = preg_replace('/include$/', '', $absolute_dir);
 
 $app_dir = substr($absolute_dir, strlen($_SERVER['DOCUMENT_ROOT']));
 
-$app_url = "http://" . $_SERVER['SERVER_NAME'] . $app_dir;
+$app_url = "http://" . $_SERVER['HTTP_HOST'] . $app_dir;
 
 $app_url = rtrim(preg_replace('/include$/', '', $app_url), "/");
+
+$app_host = $_SERVER['HTTP_HOST'];
 
 #Maintenance mode
 # just add an empty file named maintenance to the root of the application
@@ -199,6 +201,26 @@ if ($login_wordpress == TRUE){
 			}
 		}
 	}
+
+
+
+#Google Analytics
+$use_googleanalytics = FALSE;
+if (isset($googleanalytics_ID)){
+	$use_googleanalytics = TRUE;
+
+	$googleanalytics_code = "\n\n<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', '$googleanalytics_ID', '$app_host');
+		ga('send', 'pageview');
+
+	</script>\n\n";
+	}
+
 
 #Check sox version
 #$sox_version=query_one("SELECT Value from PumilioSettings WHERE Settings='sox_version'", $connection);

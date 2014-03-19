@@ -136,6 +136,13 @@ else {
 	$frequency_range=$frequency_max-$frequency_min;
 	}
 
+if ($frequency_min > $frequency_max){
+	$frequency_min1 = $frequency_max;
+	$frequency_max1 = $frequency_min;
+	$frequency_min = $frequency_max1;
+	$frequency_max = $frequency_min1;
+	}
+
 #Check if time is set in GET
 if ($t_min!="") {
 	$time_min=$t_min;
@@ -144,6 +151,13 @@ if ($t_min!="") {
 else {
 	$time_min=0;
 	$time_max=$soundfile_duration;
+	}
+
+if ($time_min > $time_max){
+	$time_min1 = $time_max;
+	$time_max1 = $time_min;
+	$time_min = $time_max1;
+	$time_max = $time_min1;
 	}
 
 $total_time=$time_max-$time_min;
@@ -299,6 +313,43 @@ require("include/get_jqueryui.php");
 </script>
 -->
 
+<?php
+$query_all_tags = "SELECT DISTINCT Tag FROM Tags";
+$result_all_tags=query_several($query_all_tags, $connection);
+$nrows_all_tags = mysqli_num_rows($result_all_tags);
+
+if ($nrows_all_tags>0) {
+	/*
+	#Deprecated
+	echo "
+	<!-- JQuery Autocomplete http://docs.jquery.com/Plugins/Autocomplete -->
+	<script type=\"text/javascript\" src=\"$app_url/js/jquery/jquery.autocomplete.pack.js\"></script>";
+	*/
+	
+	echo "<script type=\"text/javascript\">
+	$(function() {
+		var mytags = [ ";
+		for ($a=0; $a<($nrows_all_tags - 1); $a++) {
+			$row_all_tags = mysqli_fetch_array($result_all_tags);
+			extract($row_all_tags);
+			echo "\"$Tag\", ";
+			}
+		for ($a=$nrows_all_tags - 1; $a<$nrows_all_tags; $a++) {
+			$row_all_tags = mysqli_fetch_array($result_all_tags);
+			extract($row_all_tags);
+			echo "\"$Tag\"";
+			}
+
+		echo "];
+			$( \"#newtag\" ).autocomplete({
+			      source: mytags
+		    });
+		  });
+	</script>
+	";
+	}
+?>
+	
 <script type="text/javascript">
 $(document).ready(function() { 
     var options = { 

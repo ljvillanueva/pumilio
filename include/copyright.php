@@ -4,23 +4,25 @@
 
 
 <!-- JQuery -->
-<link type="text/css" href="../js/jquery/cupertino/jquery-ui-1.7.3.custom.css" rel="stylesheet">
-
+<link type="text/css" href="../css/jqueryui/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
+	
 <link type="text/css" href="../js/jquery/jquery.custom.css" rel="stylesheet">
 <link type="text/css" href="../js/jquery/jquery.css.custom.css" rel="stylesheet">
 
 <!-- Blueprint -->
 <link rel="stylesheet" href="../css/screen.css" type="text/css" media="screen, projection">
 <link rel="stylesheet" href="../css/print.css" type="text/css" media="print">	
-<!--[if IE]><link rel="stylesheet" href="../css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+<!--[if IE]><link rel="stylesheet" href="css/ie.css" type="text/css" media="screen, projection"><![endif]-->
 <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu">
 
 <!-- Scripts for JQuery -->
-	<script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
-	<script type="text/javascript" src="../js/jquery/jquery-ui-1.7.3.custom.min.js"></script>
+	<script type="text/javascript" src="../js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="../js/jquery-ui-1.10.4.custom.min.js"></script>
 	<script type="text/javascript" src="../js/jquery.fg-button.js"></script>
 
 <link rel="stylesheet" href="../css/custom.css" type="text/css" media="screen, projection">
+
+
 
 </head>
 <body>

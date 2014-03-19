@@ -33,6 +33,10 @@ require("check_admin.php");
 		query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('googlemaps3_key', '$value') 
 				ON DUPLICATE KEY UPDATE Value='$value'", $connection);
 				
+		$value = filter_var($_POST["googleanalytics_ID"], FILTER_SANITIZE_STRING);
+		query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('googleanalytics_ID', '$value') 
+				ON DUPLICATE KEY UPDATE Value='$value'", $connection);
+				
 		$value = filter_var($_POST["files_license"], FILTER_SANITIZE_STRING);
 		query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('files_license', '$value') 
 				ON DUPLICATE KEY UPDATE Value='$value'", $connection);

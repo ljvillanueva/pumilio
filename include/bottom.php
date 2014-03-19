@@ -5,7 +5,8 @@ if ($special_wrapper == FALSE && $special_iframe == FALSE){
 	require("include/version.php");
 
 	echo "<p style=\"float: left;\">
-		<small>$app_custom_name<br>";
+		<small>$app_custom_name - 
+		<a href=\"#\" onClick=\"window.open('include/contact.php', 'admins', 'width=650,height=400,status=yes,resizable=yes,scrollbars=yes')\">Contact</a><br>";
 		
 	#License
 	$files_license = query_one("SELECT Value from PumilioSettings WHERE Settings='files_license'", $connection);

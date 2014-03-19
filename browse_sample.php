@@ -145,25 +145,36 @@ $query_all_tags = "SELECT DISTINCT Tag FROM Tags";
 $result_all_tags=query_several($query_all_tags, $connection);
 $nrows_all_tags = mysqli_num_rows($result_all_tags);
 
-if ($nrows_all_tags>0){
+if ($nrows_all_tags>0) {
+	/*
+	#Deprecated
 	echo "
 	<!-- JQuery Autocomplete http://docs.jquery.com/Plugins/Autocomplete -->
-	<script type=\"text/javascript\" src=\"js/jquery/jquery.autocomplete.pack.js\"></script>
-	<script type=\"text/javascript\">
-	  $(document).ready(function(){
-	var mytags = \" ";
-	for ($a=0;$a<$nrows_all_tags;$a++) {
-		$row_all_tags = mysqli_fetch_array($result_all_tags);
-		extract($row_all_tags);
-		echo "$Tag ";
-		}
-	echo "\".split(\" \");
-	$(\"#newtag\").autocomplete(mytags);
-	  });
+	<script type=\"text/javascript\" src=\"$app_url/js/jquery/jquery.autocomplete.pack.js\"></script>";
+	*/
+	
+	echo "<script type=\"text/javascript\">
+	$(function() {
+		var mytags = [ ";
+		for ($a=0; $a<($nrows_all_tags - 1); $a++) {
+			$row_all_tags = mysqli_fetch_array($result_all_tags);
+			extract($row_all_tags);
+			echo "\"$Tag\", ";
+			}
+		for ($a=$nrows_all_tags - 1; $a<$nrows_all_tags; $a++) {
+			$row_all_tags = mysqli_fetch_array($result_all_tags);
+			extract($row_all_tags);
+			echo "\"$Tag\"";
+			}
+
+		echo "];
+			$( \"#newtag\" ).autocomplete({
+			      source: mytags
+		    });
+		  });
 	</script>
-	<link rel=\"stylesheet\" href=\"js/jquery/jquery.autocomplete.css\" type=\"text/css\">
 	";
- }
+	}
 ?>
 
   
