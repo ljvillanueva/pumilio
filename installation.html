@@ -44,7 +44,7 @@
             <li><a href="./">Home</a></li>
             <li class="active"><a href="installation.html">Installation</a></li>
             <li><a href="userguide.html">User Guide</a></li>
-            <li><a href="integration.html">Use with other software</a></li>
+            <li><a href="adminguide.html">Administrator Guide</a></li>
             <li><a href="scripts.html">Auxiliary Scripts</a></li>
             <li><a href="development.html">Development</a></li>
             <li><a href="http://pumilio.coquipr.com/pumilio/">Demo</a></li>
@@ -85,18 +85,18 @@
 	<p>This will check the necessary software and folder permissions. Add an administrative user. After this step you can
 	delete the folders <b>install</b> and <b>upgrade</b>.</p>
 
-	<h3>Installation under Ubuntu</h3>
+	<h3>Installation steps for Ubuntu</h3>
 
-	<p>Install the server software (Apache, PHP5, MySQL):</p>
+	<p>To install the necessary software from the command line, follow these steps. First, install the LAMP stack (Apache, PHP5, MySQL):</p>
 	
 		<pre style="margin-left:20px;">sudo apt-get install tasksel
 sudo tasksel install lamp-server</pre>
 	
-	<p>To install the required packages for audiolab and Pumilio in a current version of Ubuntu:</p>
+	<p>Install the required packages for audiolab and Pumilio:</p>
 
 		<pre style="margin-left:20px;">sudo apt-get install python-dev python-setuptools python-numpy libsndfile1-dev libasound2-dev imagemagick sox libsox* python-imaging flac lame</pre>
 
-	<p>Then download audiolab <a href="http://pypi.python.org/pypi/scikits.audiolab/0.8">version 0.8</a> and install it. From the command line: 
+	<p>Then download audiolab <a href="http://pypi.python.org/pypi/scikits.audiolab/0.8">version 0.8</a> and install it: 
 
 		<pre style="margin-left:20px;">wget https://pypi.python.org/packages/source/s/scikits.audiolab/scikits.audiolab-0.8.tar.gz
 tar -xvzf scikits.audiolab-0.8.tar.gz 
@@ -123,14 +123,12 @@ sudo python setup.py install</pre>
 				<li>tmp</li>
 				<li>sitephotos</li>
 				<li>data_sources (if you added something)</li>
-				<li>plugins (if you added something)</li>
 				<li>tools (if you added something)</li>
 			</ul>
 
-	<p>Check config.php.dist to see if new variables are not present in your config.php file. Some options have been moved
-	to the administration page in the application (remove these).
+	<p>Check the config.php file. It should only contain the MySQL credentials and optional variables listed in the <a href="adminguide.html">Administrator Guide</a>.
 	Then go to the application address <strong>/upgrade</strong> (if the address is <em>http://somehost.com/pumilio</em>, then go to <em>http://somehost.com/pumilio/upgrade</em>).
-	This will upgrade the database structure and make all necessary checks. <strong>IF YOU MISS THIS STEP, THE SYSTEM MAY NOT WORK AS INTENDED</strong>.
+	This will upgrade the database structure and make all necessary checks. <strong>If you miss this step, the system may not work as intended</strong>.
 
 
      <div id="footer">

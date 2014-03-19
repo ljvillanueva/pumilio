@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pumilio by ljvillanueva</title>
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 
+    <link href="bootstrap/css/jumbotron-narrow.css" rel="stylesheet">
+    -->
+
+    <!-- Custom styles for this template -->
+
+        
+    <!-- Bootstrap theme -->
+    <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body role="document">
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="./">Pumilio</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="./">Home</a></li>
+            <li><a href="installation.html">Installation</a></li>
+            <li><a href="userguide.html">User Guide</a></li>
+            <li class="active"><a href="adminguide.html">Administrator Guide</a></li>
+            <li><a href="scripts.html">Auxiliary Scripts</a></li>
+            <li><a href="development.html">Development</a></li>
+            <li><a href="http://pumilio.coquipr.com/pumilio/">Demo</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    
+
+ <div class="container" role="main">
+
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron" style="padding-left:10px;padding-bottom:10px;">
+        <h2>Administrator Guide</h2>
+      </div>
+
+        <div class="alert alert-warning"><p>This guide is being updated. New information will be posted during March 2014</p></div>
+                                
+	<p>Please consult the README and INSTALLATION files included in the archive. In addition, you can ask questions or report problems in the <a href="https://github.com/ljvillanueva/pumilio/issues">issues page on Github</a>.</p>
+
+
+	<h3>Additional options for the config.php file</h3>
+		<p>The config.php file requires, at the least, the credentials for the MySQL database. The rest of these settings are optional:
+		
+	<div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Custom logo</h3>
+            </div>
+            <div class="panel-body">
+		If you want to display a particular logo, set $app_logo to its relative or absolute address<br><br>
+		<pre>$app_logo="images/logo2.png";</pre>
+            </div>
+          </div>
+
+
+	<div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Custom logo link</h3>
+            </div>
+            <div class="panel-body">
+		If you want to send the user to a particular page when clicking the logo,
+		set $homelink to the relative or absolute address<br><br> <pre>$homelink = "http://www.example.com/somedir/";</pre>
+            </div>
+          </div>
+
+
+
+	<div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Name for the tag for the marking tool</h3>
+            </div>
+            <div class="panel-body">
+		The viewer allows to select an area and save it in the database. 
+		By default, this includes a field for the species that made the sound. 
+		This can be changed to something like the name of the song or 
+		syllable, a unique code for the type of sound, etc.<br><br> <pre>$mark_tag_name = "Species";</pre>
+            </div>
+          </div>
+
+
+
+	<div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Use R</h3>
+            </div>
+            <div class="panel-body">
+		When true, the system can extract more data from the files by running 
+		custom code that can be used for quality control. It also lets the R 
+		plugin know where to find R. <br><br> <pre>$useR = FALSE; #TRUE or FALSE</pre>
+		
+		If true, you can set the custom path for the R installation you want to
+		use and other Rscript arguments. Can be left as it is to use the 
+		default:<br><br> <pre>$Rscript = "Rscript --vanilla ";</pre>
+
+		For ADI calculation, set these variables:<br><br><pre>#ADI settings
+$R_ADI_db_value = "-50"; #dBFS
+
+##The spectrogram should be drawn from 0 to this
+## frequency, in Hertz. Default is 10000 Hz.
+$R_ADI_max_freq = "10000"; #in Hz
+
+##How wide is each frequency band
+$R_ADI_freq_step = "1000"; #in Hz</pre>
+
+            </div>
+          </div>
+
+
+
+
+	<div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Use Wordpress for users</h3>
+            </div>
+            <div class="panel-body">
+		When true, the system will use the Wordpress user management
+		to determine who is logged in and what they can do.
+		You must also provide the relative path to the file 
+		wp-blog-header.php in the Wordpress directory<br><br><pre>$login_wordpress = FALSE; #TRUE or FALSE
+$wordpress_require = '/wp-blog-header.php';</pre>
+            </div>
+          </div>
+
+
+
+
+	<div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Set as a no login website?</h3>
+            </div>
+            <div class="panel-body">
+		When true, there is no option to log in. Useful for public websites that will rarely
+		need someone logged in. May set to true whenever someone needs to log in.
+		<br><br><pre>$no_login=FALSE; #TRUE or FALSE</pre>
+            </div>
+          </div>
+          
+          
+	<div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Force login?</h3>
+            </div>
+            <div class="panel-body">
+		When true, no guests are allowed.
+		<br><br><pre>$force_login=FALSE; #TRUE or FALSE</pre>
+            </div>
+          </div>
+          
+
+
+	<div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Disable viewer</h3>
+            </div>
+            <div class="panel-body">
+		When true, the files can not be opened using the viewer.
+		<br><br><pre>$special_noopen=FALSE;</pre>
+            </div>
+          </div>
+          
+
+
+
+
+	<div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Disable background processes</h3>
+            </div>
+            <div class="panel-body">
+		When true, the system will not try to perform background processes (adding files, generating spectrograms, converting mp3 files). 
+		Useful when hosting the system in a host that do not allow to install programs after generating these files in a server that 
+		does allow it.
+		<br><br><pre>$special_noprocess=FALSE;</pre>
+            </div>
+          </div>
+
+
+
+         
+<!--
+#More special variables for rare cases
+$special_wrapper=FALSE;
+$special_nofiles=FALSE;
+-->
+
+
+
+
+
+
+		
+	<h3>Integration with other software</h3>
+	
+	<p>The application is intended to be used as a stand-alone installation or as part of an already-existing sounds database. 
+
+	<p>The script <i>file_obtain.php</i> will manage a sound file from another sound database, archive or even from anywhere in the web!
+
+	<p><b>Obtaining files from the web</b>
+
+	<p>To obtain a sound file from the web you need to install GNU Wget (if its not already installed). Using any language, just provide <i>file_obtain.php</i> with 3 variables using GET:
+
+	<ul>
+	<li>file: full file path and file name 
+	<li>method=2
+	<li>fileid: a numeric id that identifies the file
+	</ul>
+
+	<p>Its important to note: don't include the <i>http://</i> part in the file path. The script will use wget to obtain the file. Then another script will check that the file is a valid sound file or delete it from the server if it can not determine that it is valid.
+
+	<p>Example using a Cuckoo sound sample from birdsongs.it:
+
+	<pre>http://www.localserver.com/pumilio/file_obtain.php?file=www.birdsongs.it/songs/cuculus_canorus/call1.wav&method=2&fileid=101</pre>
+
+	<p><b>Obtaining files from the same server</b>
+
+	<p>Using any language, just provide file_obtain.php with 3 variables using GET:
+
+	<ul>
+	<li>file: full file path (internal) and file name 
+	<li>method=1
+	<li>fileid: a numeric id that identifies the file
+	</ul>
+
+	<p>Its important to note: the path name must be the internal path, for example <i>/var/www/...</i>. The script will copy the file. Then another script will check that the file is a valid sound file or delete it from the server if it can not determine that it is valid.
+
+	<p>Example:
+
+	 <pre>http://www.localserver.com/pumilio/file_obtain.php?file=/var/www/anotherapp/sounds/sound1.wav&method=1&fileid=101</pre>
+
+
+
+     <div id="footer">
+        <br><p class="text-muted">Pumilio is maintained by <a href="https://github.com/ljvillanueva">ljvillanueva</a></p>
+    </div> 
+
+    </div>
+  </body>
+</html>
