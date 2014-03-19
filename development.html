@@ -64,14 +64,14 @@
 
 <h3>How this came to be</h3>
 	<p>Pumilio was created out of necessity. Our lab was collecting a lot of sound data and there was no
-	system that could help us manage that amount of data. In addition, we used at least two operating systems in the lab (Windows and Linux) 
+	application that could help us manage that amount of data. In addition, we used at least two operating systems in the lab (Windows and Linux) 
 	and some collaborators were using Macs. On top of that, some used Chrome as their browser, while some used Firefox and the Mac users were using Safari.
 	<p>We started just putting files in folders in a network share. After a few hundred files there is no way of keeping track. Plus, 
-	we were wasting time each time we had to open a file in Audacity or Raven to see its spectrogram. So, we wanted to develop a web-based system, 
+	we were wasting time each time we had to open a file in Audacity or Raven to see its spectrogram. So, we wanted to develop a web-based application, 
 	cross-browser and cross-OS compatible, that would allow us to manage and browse the sound archive.
 	
 <h3>First steps</h3>
-	<p>One of the first instances of this system was a simple database that would display rows of spectrograms with a Flash mp3 player
+	<p>One of the first instances of this application was a simple database that would display rows of spectrograms with a Flash mp3 player
 	on the bottom of each. Similar to the "gallery" view of the current version of Pumilio. The problem was generating all those spectrograms.
 	Using R was easy, but took too long to write the png files. The function specgram() in Python crashed with our files (15 minutes). After 
 	a while, I stumbled upon a Python script written by the people of Freesound.org. This was a very fast script and I took it and 
@@ -84,16 +84,16 @@
 	<p>Pumilio is now managed using git in a Github repo. If you want to contribute, just check the code in the project's website.
 	Any and all ideas are welcomed. Let me know if you want to be added to the developer list. 
 	<p><strong>Do not use the dev code for a production system. The code may be buggy, unstable or completely useless. Use the git repo only for 
-	development.</strong>
+	development. Any version with a ".dev" suffix is not stable and should be used with caution.</strong>
 
 	<ul>
 		<li><a href="https://github.com/ljvillanueva/pumilio">Browse the Github repository</a></li>
 	</ul>
 
-	The system tries to use the full power of open source libraries and applications to avoid re-inventing the wheel and to be able to use it across different systems.
-	Blueprint enables a consistent CSS, JQuery takes care of most of the JavaScript and 
-	some of the styling. By using the JPlayer HTML5 audio player, we 
-	allowed the use of the system in any modern browser, even in the iPad and Android tablets.
+	The application tries to use the full power of open source libraries and applications to avoid re-inventing the wheel and to be able to use it across different systems.
+	Blueprint enables a consistent layout and look, JQuery takes care of most of the interactivity, and JqueryUI provides some 
+	features and styling. By using the JPlayer HTML5 audio player, we 
+	allowed the use of the application in any modern browser, even in the iPad and Android tablets.
 	
 
 <h3>What is needed in the code?</h3>
@@ -116,7 +116,7 @@
 	
           <div class="panel panel-primary">
             <div class="panel-heading">
-              <h3 class="panel-title">CheckAuxfiles - Table of files to be checked by the system</h3>
+              <h3 class="panel-title">CheckAuxfiles - Table of files to be checked by the application</h3>
             </div>
             <div class="panel-body">
               <ul>
@@ -435,7 +435,7 @@
 
           <div class="panel panel-primary">
             <div class="panel-heading">
-              <h3 class="panel-title">Users - the users table, holds the data of each user in the system</h3>
+              <h3 class="panel-title">Users - the users table, holds the data of each user in the application</h3>
             </div>
             <div class="panel-body">
             <ul>

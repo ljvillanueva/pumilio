@@ -70,7 +70,7 @@
 	<h3>Additional options for the config.php file</h3>
 		<p>The config.php file requires, at the least, the credentials for the MySQL database.<br>
 		
-<pre>#Database settings
+<pre style="margin-left:20px;">#Database settings
 $host = "localhost";
 $user = "";
 $password = "";
@@ -84,7 +84,7 @@ $database = "";</pre>
             </div>
             <div class="panel-body">
 		If you want to display a particular logo, set $app_logo to its relative or absolute address<br><br>
-		<pre>$app_logo="images/logo2.png";</pre>
+		<pre style="margin-left:20px;">$app_logo="images/logo2.png";</pre>
             </div>
           </div>
 
@@ -95,7 +95,7 @@ $database = "";</pre>
             </div>
             <div class="panel-body">
 		If you want to send the user to a particular page when clicking the logo,
-		set $homelink to the relative or absolute address<br><br> <pre>$homelink = "http://www.example.com/somedir/";</pre>
+		set $homelink to the relative or absolute address<br><br> <pre style="margin-left:20px;">$homelink = "http://www.example.com/somedir/";</pre>
             </div>
           </div>
 
@@ -109,7 +109,7 @@ $database = "";</pre>
 		The viewer allows to select an area and save it in the database. 
 		By default, this includes a field for the species that made the sound. 
 		This can be changed to something like the name of the song or 
-		syllable, a unique code for the type of sound, etc.<br><br> <pre>$mark_tag_name = "Species";</pre>
+		syllable, a unique code for the type of sound, etc.<br><br> <pre style="margin-left:20px;">$mark_tag_name = "Species";</pre>
             </div>
           </div>
 
@@ -120,15 +120,15 @@ $database = "";</pre>
               <h3 class="panel-title">Use R</h3>
             </div>
             <div class="panel-body">
-		When true, the system can extract more data from the files by running 
+		When true, the application can extract more data from the files by running 
 		custom code that can be used for quality control. It also lets the R 
-		plugin know where to find R. <br><br> <pre>$useR = FALSE; #TRUE or FALSE</pre>
+		plugin know where to find R. <br><br> <pre style="margin-left:20px;">$useR = FALSE; #TRUE or FALSE</pre>
 		
 		If true, you can set the custom path for the R installation you want to
 		use and other Rscript arguments. Can be left as it is to use the 
-		default:<br><br> <pre>$Rscript = "Rscript --vanilla ";</pre>
+		default:<br><br> <pre style="margin-left:20px;">$Rscript = "Rscript --vanilla ";</pre>
 
-		For ADI calculation, set these variables:<br><br><pre>#ADI settings
+		For ADI calculation, set these variables:<br><br><pre style="margin-left:20px;">#ADI settings
 $R_ADI_db_value = "-50"; #dBFS
 
 ##The spectrogram should be drawn from 0 to this
@@ -149,10 +149,10 @@ $R_ADI_freq_step = "1000"; #in Hz</pre>
               <h3 class="panel-title">Use Wordpress for users</h3>
             </div>
             <div class="panel-body">
-		When true, the system will use the Wordpress user management
+		When true, the application will use the Wordpress user management
 		to determine who is logged in and what they can do.
 		You must also provide the relative path to the file 
-		wp-blog-header.php in the Wordpress directory<br><br><pre>$login_wordpress = FALSE; #TRUE or FALSE
+		wp-blog-header.php in the Wordpress directory<br><br><pre style="margin-left:20px;">$login_wordpress = FALSE; #TRUE or FALSE
 $wordpress_require = '/wp-blog-header.php';</pre>
             </div>
           </div>
@@ -167,7 +167,7 @@ $wordpress_require = '/wp-blog-header.php';</pre>
             <div class="panel-body">
 		When true, there is no option to log in. Useful for public websites that will rarely
 		need someone logged in. May set to true whenever someone needs to log in.
-		<br><br><pre>$no_login=FALSE; #TRUE or FALSE</pre>
+		<br><br><pre style="margin-left:20px;">$no_login=FALSE; #TRUE or FALSE</pre>
             </div>
           </div>
           
@@ -178,7 +178,7 @@ $wordpress_require = '/wp-blog-header.php';</pre>
             </div>
             <div class="panel-body">
 		When true, no guests are allowed.
-		<br><br><pre>$force_login=FALSE; #TRUE or FALSE</pre>
+		<br><br><pre style="margin-left:20px;">$force_login=FALSE; #TRUE or FALSE</pre>
             </div>
           </div>
           
@@ -190,7 +190,7 @@ $wordpress_require = '/wp-blog-header.php';</pre>
             </div>
             <div class="panel-body">
 		When true, the files can not be opened using the viewer.
-		<br><br><pre>$special_noopen=FALSE;</pre>
+		<br><br><pre style="margin-left:20px;">$special_noopen=FALSE;</pre>
             </div>
           </div>
           
@@ -203,10 +203,10 @@ $wordpress_require = '/wp-blog-header.php';</pre>
               <h3 class="panel-title">Disable background processes</h3>
             </div>
             <div class="panel-body">
-		When true, the system will not try to perform background processes (adding files, generating spectrograms, converting mp3 files). 
-		Useful when hosting the system in a host that do not allow to install programs after generating these files in a server that 
+		When true, the application will not try to perform background processes (adding files, generating spectrograms, converting mp3 files). 
+		Useful when hosting the application in a host that do not allow to install programs after generating these files in a server that 
 		does allow it.
-		<br><br><pre>$special_noprocess=FALSE;</pre>
+		<br><br><pre style="margin-left:20px;">$special_noprocess=FALSE;</pre>
             </div>
           </div>
 
@@ -245,7 +245,7 @@ $special_nofiles=FALSE;
 
 	<p>Example using a Cuckoo sound sample from birdsongs.it:
 
-	<pre>http://www.localserver.com/pumilio/file_obtain.php?file=www.birdsongs.it/songs/cuculus_canorus/call1.wav&method=2&fileid=101</pre>
+	<pre style="margin-left:20px;">http://www.localserver.com/pumilio/file_obtain.php?file=www.birdsongs.it/songs/cuculus_canorus/call1.wav&method=2&fileid=101</pre>
 
 	<p><b>Obtaining files from the same server</b>
 
@@ -261,7 +261,7 @@ $special_nofiles=FALSE;
 
 	<p>Example:
 
-	 <pre>http://www.localserver.com/pumilio/file_obtain.php?file=/var/www/anotherapp/sounds/sound1.wav&method=1&fileid=101</pre>
+	 <pre style="margin-left:20px;">http://www.localserver.com/pumilio/file_obtain.php?file=/var/www/anotherapp/sounds/sound1.wav&method=1&fileid=101</pre>
 
 
 

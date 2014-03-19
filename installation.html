@@ -62,19 +62,31 @@
         <h2>Installation</h2>
       </div>
                
-	<p>To install, download the latest relase version to a webserver folder. Pumilio application requires:
+	<p>To install, download the latest relase version to a webserver folder. The Pumilio application requires:
 
 	<ul>
-		<li> Linux
+		<li> Linux (a current version of <a href="http://www.ubuntu.com" target="_blank">Ubuntu</a> is recommended)
 		<li> PHP 5.2 or newer
-		<li> The <a href="http://lame.sourceforge.net">LAME</a> mp3 encoder.
-		<li> The svt.py script requires Python 2.4, <a href="http://numpy.scipy.org/">numpy</a>, <a href="http://www.pythonware.com/products/pil/">Python Imaging Library</a>, and <a href="http://www.ar.media.kyoto-u.ac.jp/members/david/softwares/audiolab/index.html">audiolab 0.08</a>.
+		<li> The <a href="http://lame.sourceforge.net">LAME</a> mp3 encoder
+		<li> The svt.py script requires Python 2.4 or newer, <a href="http://numpy.scipy.org/">numpy</a>, <a href="http://www.pythonware.com/products/pil/">Python Imaging Library</a>, and <a href="http://www.ar.media.kyoto-u.ac.jp/members/david/softwares/audiolab/index.html">audiolab 0.08</a>
+			<ul>
+				<li>The application has not been tested with Python 3</li>
+			</ul>
 		<li> <a href="http://sox.sourceforge.net">SoX</a> version 14.3.0 or higher
 		<li> <a href="http://www.imagemagick.org">Imagemagick</a>
 		<li> <a href="http://flac.sourceforge.net">FLAC</a> - Free Lossless Audio Codec (optional)
 	</ul>
 
-	Create a database and user in MySQL, you can use the <i>mysql</i> client or <i>phpmyadmin</i>. Then, 
+	Create a database and user in MySQL, you can use the <i>mysql</i> client or <i>phpmyadmin</i>. 
+	Then, rename the file <em>config.php.dist</em> to <em>config.php</em> and add the MySQL server and credentials:
+<pre style="margin-left:20px;">#Database settings
+$host = "localhost";
+$user = "";
+$password = "";
+$database = "";</pre>
+	
+	
+	<p>Then, 
 	on your browser, go to the application URL, adding <b>install/</b>. For example, if the address is:
 		<pre style="margin-left:20px;">http://somehost.com/pumilio</pre>
 		
@@ -128,7 +140,7 @@ sudo python setup.py install</pre>
 
 	<p>Check the config.php file. It should only contain the MySQL credentials and optional variables listed in the <a href="adminguide.html">Administrator Guide</a>.
 	Then go to the application address <strong>/upgrade</strong> (if the address is <em>http://somehost.com/pumilio</em>, then go to <em>http://somehost.com/pumilio/upgrade</em>).
-	This will upgrade the database structure and make all necessary checks. <strong>If you miss this step, the system may not work as intended</strong>.
+	This will upgrade the database structure and make all necessary checks. <strong>If you miss this step, the application may not work as intended</strong>.
 
 
      <div id="footer">
