@@ -43,6 +43,10 @@ if ($Col!="0"){
 		$Col_comparisonq = "!=";}
 	$Colq = "AND Collections.ColID $Col_comparisonq '$Col' ";
 	}
+else{
+	$Colq = "";
+	}
+
 
 $Site_comparison=filter_var($_GET["Site_comparison"], FILTER_SANITIZE_STRING);
 $SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
@@ -54,6 +58,10 @@ if ($SiteID!="0"){
 		$Site_comparisonq = "!=";}
 	$Siteq = "AND Sites.SiteID $Site_comparisonq '$SiteID' ";
 	}
+else{
+	$Siteq = "";
+	}
+
 
 $startDuration=filter_var($_GET["startDuration"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 $endDuration=filter_var($_GET["endDuration"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
@@ -73,6 +81,10 @@ if ($Channels!="0"){
 		$Channels_comparisonq = ">";}
 	$Channelsq = "AND Sounds.Channels $Channels_comparisonq '$Channels' ";
 	}
+else{
+	$Channelsq = "";
+	}
+
 
 $SamplingRate_comparison=filter_var($_GET["SamplingRate_comparison"], FILTER_SANITIZE_STRING);
 $SamplingRate=filter_var($_GET["SamplingRate"], FILTER_SANITIZE_NUMBER_INT);
@@ -85,9 +97,15 @@ if ($SamplingRate!="0"){
 		$SamplingRate_comparisonq = "!=";}
 	$SamplingRateq = "AND Sounds.SamplingRate $SamplingRate_comparisonq '$SamplingRate' ";
 	}
+else{
+	$SamplingRateq = "";
+	}
+
 
 $startDate=filter_var($_GET["startDate"], FILTER_SANITIZE_STRING);
 $endDate=filter_var($_GET["endDate"], FILTER_SANITIZE_STRING);
+
+date_default_timezone_set('GMT');
 
 $startDate = date('Y-m-d', strtotime($startDate));
 $endDate = date('Y-m-d', strtotime($endDate));
@@ -138,12 +156,16 @@ if ($Tags!="0"){
 		$Tagq = "AND Sounds.SoundID=Tags.SoundID AND Tags.Tag!='$Tags'";
 		}
 	}
+else{
+	$Tagq = "";
+	}
 
 
 #Sanitize browsing vars
-$startid=filter_var($_GET["startid"], FILTER_SANITIZE_NUMBER_INT);
-
-if ($startid==""){
+if (isset($_GET["startid"])){
+	$startid=filter_var($_GET["startid"], FILTER_SANITIZE_NUMBER_INT);
+	}
+else{
 	$startid=1;
 	}
 
@@ -184,27 +206,39 @@ $(function(){
 ?>
 
 <?php
-	$query_all_tags = "SELECT DISTINCT Tag AS this_tag FROM Tags";
-	$result_all_tags=query_several($query_all_tags, $connection);
-	$nrows_all_tags = mysqli_num_rows($result_all_tags);
+$query_all_tags = "SELECT DISTINCT Tag FROM Tags";
+$result_all_tags = query_several($query_all_tags, $connection);
+$nrows_all_tags = mysqli_num_rows($result_all_tags);
 
-	if ($nrows_all_tags>0) {
-		echo "<!-- JQuery Autocomplete http://docs.jquery.com/Plugins/Autocomplete -->
-			<script type=\"text/javascript\" src=\"js/jquery/jquery.autocomplete.pack.js\"></script>
-			<script>
-			$(document).ready(function(){";
+if ($nrows_all_tags>0) {
+	/*
+	#Deprecated
+	echo "
+	<!-- JQuery Autocomplete http://docs.jquery.com/Plugins/Autocomplete -->
+	<script type=\"text/javascript\" src=\"$app_url/js/jquery/jquery.autocomplete.pack.js\"></script>";
+	*/
+	
+	echo "<script type=\"text/javascript\">
+	$(function() {
+		var mytags = [ ";
+		for ($a=0; $a<($nrows_all_tags - 1); $a++) {
+			$row_all_tags = mysqli_fetch_array($result_all_tags);
+			extract($row_all_tags);
+			echo "\"$Tag\", ";
+			}
+		for ($a=$nrows_all_tags - 1; $a<$nrows_all_tags; $a++) {
+			$row_all_tags = mysqli_fetch_array($result_all_tags);
+			extract($row_all_tags);
+			echo "\"$Tag\"";
+			}
 
-			echo "var mytags = \" ";
-			for ($a=0;$a<$nrows_all_tags;$a++) {
-				$row_all_tags = mysqli_fetch_array($result_all_tags);
-				extract($row_all_tags);
-				echo "$this_tag ";
-				}
-			echo "\".split(\" \");
-			$(\"#newtag\").autocomplete(mytags);
-			  });
-		</script>
-		 <link rel=\"stylesheet\" href=\"js/jquery/jquery.autocomplete.css\" type=\"text/css\" />";
+		echo "];
+			$( \"#newtag\" ).autocomplete({
+			      source: mytags
+		    });
+		  });
+	</script>
+	";
 	}
 ?>
 
@@ -216,9 +250,8 @@ $(function(){
 
 <?php
 
-for ($ajax=0;$ajax<10;$ajax++) {
+for ($ajax = 0; $ajax < 10; $ajax++) {
 	echo "
-	
 	<script type=\"text/javascript\">
 	$(document).ready(function() { 
 	    var options = { 
@@ -233,12 +266,9 @@ for ($ajax=0;$ajax<10;$ajax++) {
 	    $('#addtags$ajax').ajaxForm(options); 
 	}); 
 	</script>
-	
 	";
 	}
-?>
 
-<?php
 if ($use_googleanalytics){
 	echo $googleanalytics_code;
 	}
@@ -248,7 +278,6 @@ if (is_file("$absolute_dir/customhead.php")) {
 		include("customhead.php");
 	}
 	
-
 ?>
 
 </head>
@@ -265,7 +294,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 		<?php
 			#If no options where selected, dont waste time searching
-			if ($SiteID=="0" && $Duration=="0" && $Channels=="0" && $SamplingRate=="0" && $Date=="0" && $Time=="0" && $Tags=="0" && $Col=="0" && Filen=="0") {
+			if ($SiteID == "0" && $Duration == "0" && $Channels == "0" && $SamplingRate == "0" && $Date == "0" && $Time == "0" && $Tags == "0" && $Col == "0" && Filen == "0") {
 				echo "
 				<div class=\"span-24 last\">
 				<div class=\"notice\" style=\"margins: 10px;\">
@@ -285,13 +314,13 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 
 			//How many sounds associated with that search
-			if ($Tags!="0" && $Col=="0") {
+			if ($Tags != "0" && $Col == "0") {
 				$q = "SELECT COUNT(*) FROM Sounds,Sites,Tags WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $filename_q $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq";
 				}
-			elseif ($Col!="0" && $Tags=="0") {
+			elseif ($Col != "0" && $Tags == "0") {
 				$q = "SELECT COUNT(*) FROM Sounds,Sites,Collections WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $filename_q $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Colq";
 				}
-			elseif ($Col!="0" && $Tags!="0") {
+			elseif ($Col != "0" && $Tags != "0") {
 				$q = "SELECT COUNT(*) FROM Sounds,Sites,Tags,Collections WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $Siteq $filename_q $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Colq, $Tagq";
 				}
 			else {
@@ -299,9 +328,9 @@ if (is_file("$absolute_dir/customhead.php")) {
 				}
 			#debug
 			#echo $q;
-			$no_sounds=query_one($q, $connection);
+			$no_sounds = query_one($q, $connection);
 
-			if ($no_sounds==0) {
+			if ($no_sounds == 0) {
 				echo "
 				<div class=\"span-24 last\">
 				<div class=\"notice\" style=\"margins: 10px;\">
@@ -314,37 +343,37 @@ if (is_file("$absolute_dir/customhead.php")) {
 		
 				echo "</div>
 					</div>
-				</body></html>";
+				</body>
+				</html>";
 				die();
 				}
 
-			if ($startid<1)
-				$startid=1;
+			if ($startid < 1)
+				$startid = 1;
 				
-			$startid_q=$startid-1;
+			$startid_q = $startid - 1;
 
-			if ($display_type=="summary"){
-				$how_many_to_show=10;
+			if ($display_type == "summary"){
+				$how_many_to_show = 10;
 				}
-			elseif ($display_type=="gallery"){
-				$how_many_to_show=18;
+			elseif ($display_type == "gallery"){
+				$how_many_to_show = 18;
 				}
 			$endid = $how_many_to_show;
-			$endid_show=$startid_q+$endid;
+			$endid_show = $startid_q + $endid;
 
-			if ($startid_q+$how_many_to_show >= $no_sounds)
+			if ($startid_q + $how_many_to_show >= $no_sounds)
 				$endid_show = $no_sounds; 
 
 			$sql_limit = "$startid_q, $endid";
 
-
-			if ($Tags!="0" && $Col=="0") {
+			if ($Tags != "0" && $Col == "0") {
 				$query = "SELECT *, DATE_FORMAT(Date, '%d-%b-%Y') AS Date_h FROM Sounds,Sites,Tags WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $filename_q $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq ORDER BY $order_byq LIMIT $sql_limit";
 			}
-			elseif ($Col!="0" && $Tags=="0") {
+			elseif ($Col != "0" && $Tags == "0") {
 				$query = "SELECT *, DATE_FORMAT(Date, '%d-%b-%Y') AS Date_h FROM Sounds,Sites,Collections WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $filename_q $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Colq ORDER BY $order_byq LIMIT $sql_limit";
 			}
-			elseif ($Col!="0" && $Tags!="0") {
+			elseif ($Col != "0" && $Tags != "0") {
 				$query = "SELECT *, DATE_FORMAT(Date, '%d-%b-%Y') AS Date_h FROM Sounds,Sites,Collections,Tags WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID $filename_q $Siteq $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq $Colq ORDER BY $order_byq LIMIT $sql_limit";
 			}
 			else {
@@ -357,16 +386,10 @@ if (is_file("$absolute_dir/customhead.php")) {
 			$nrows = mysqli_num_rows($result);
 		?>
 
-		<div class="span-24 last" id="loadingdiv">
-			<h5 class="highlight2 ui-corner-all">Please wait... loading... <img src="images/ajax-loader.gif" border="0" /></h5>
-		</div>		
-		<?php
-		flush();
-		?>
 		<div class="span-10">
 			<?php
 
-				echo "<p class=\"highlight3 ui-corner-all\" style=\"text-align: left;\"><strong>Advanced search results</strong>";
+				echo "<p class=\"highlight3 ui-corner-all\" style=\"text-align: left;\"><strong>Search results</strong>";
 				echo "<br>$no_sounds sounds</p>";
 			?>
 			
@@ -378,8 +401,8 @@ if (is_file("$absolute_dir/customhead.php")) {
 			#count and next
 			echo "Results<br>";
 
-			if ($startid>1) {
-				$go_to=$startid-$how_many_to_show;
+			if ($startid > 1) {
+				$go_to = $startid - $how_many_to_show;
 				echo "
 				<form action=\"advancedsearch.php\" method=\"GET\" style=\"display:inline;\">
 				<input type=\"hidden\" value=\"$startDate\" name=\"startDate\">
@@ -409,8 +432,8 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 			echo " $startid to $endid_show ";
 
-			if ($endid_show<$no_sounds) {
-				$go_to=$startid+$how_many_to_show;
+			if ($endid_show < $no_sounds) {
+				$go_to = $startid + $how_many_to_show;
 				echo "
 				<form action=\"advancedsearch.php\" method=\"GET\" style=\"display:inline;\">
 				<input type=\"hidden\" value=\"$startDate\" name=\"startDate\">
@@ -517,10 +540,10 @@ if (is_file("$absolute_dir/customhead.php")) {
 				</div>";
 
 
-			if ($display_type=="summary") {
+			if ($display_type == "summary") {
 					require("include/view_summary.php");
 				}
-			elseif ($display_type=="gallery") {
+			elseif ($display_type == "gallery") {
 					require("include/view_gallery.php");
 				}
 			
@@ -532,15 +555,15 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 			#Quick form to select a file based on its name
 			echo "<form action=\"db_filedetails.php\" method=\"GET\">Select a file from this search:<br>";
-			if ($Tags!="0" && $Col=="0") {
+			if ($Tags != "0" && $Col == "0") {
 				$query_q = "SELECT * FROM Sounds,Sites,Tags WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID 
 					$Siteq $filename_q $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq ORDER BY $order_byq LIMIT $sql_limit";
 				}
-			elseif ($Col!="0" && $Tags=="0") {
+			elseif ($Col != "0" && $Tags == "0") {
 				$query_q = "SELECT * FROM Sounds,Sites,Collections WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID 
 					$Siteq $filename_q $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Colq ORDER BY $order_byq LIMIT $sql_limit";
 				}
-			elseif ($Col!="0" && $Tags!="0") {
+			elseif ($Col != "0" && $Tags != "0") {
 				$query_q = "SELECT * FROM Sounds,Sites,Collections,Tags WHERE Sounds.SoundStatus!='9' AND Sounds.SiteID=Sites.SiteID 
 					$Siteq $filename_q $Durationq $Channelsq $SamplingRateq $Dateq $Timeq $Tagq $Colq ORDER BY $order_byq LIMIT $sql_limit";
 				}
@@ -555,7 +578,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 			echo "<select name=\"SoundID\" class=\"ui-state-default ui-corner-all\">";
 
-			for ($q=0;$q<$nrows_q;$q++) {
+			for ($q = 0; $q < $nrows_q; $q++) {
 				$row_q = mysqli_fetch_array($result_q);
 				extract($row_q);
 
@@ -572,25 +595,25 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 			<?php
 
-			$Col_comparison=filter_var($_GET["Col_comparison"], FILTER_SANITIZE_NUMBER_INT);
-			$Col=filter_var($_GET["Col"], FILTER_SANITIZE_NUMBER_INT);
-			$Site_comparison=filter_var($_GET["Site_comparison"], FILTER_SANITIZE_STRING);
-			$SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
-			$startDuration=filter_var($_GET["startDuration"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-			$endDuration=filter_var($_GET["endDuration"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-			$Channels_comparison=filter_var($_GET["Channels_comparison"], FILTER_SANITIZE_STRING);
-			$Channels=filter_var($_GET["Channels"], FILTER_SANITIZE_NUMBER_INT);
-			$SamplingRate_comparison=filter_var($_GET["SamplingRate_comparison"], FILTER_SANITIZE_STRING);
-			$SamplingRate=filter_var($_GET["SamplingRate"], FILTER_SANITIZE_NUMBER_INT);
-			$startDate=filter_var($_GET["startDate"], FILTER_SANITIZE_STRING);
-			$endDate=filter_var($_GET["endDate"], FILTER_SANITIZE_STRING);
-			$startTime=filter_var($_GET["startTime"], FILTER_SANITIZE_STRING);
-			$endTime=filter_var($_GET["endTime"], FILTER_SANITIZE_STRING);
-			$Orderby=filter_var($_GET["Orderby"], FILTER_SANITIZE_STRING);
-			$Orderby_dir=filter_var($_GET["Orderby_dir"], FILTER_SANITIZE_STRING);
-			$Tag_comparison=filter_var($_GET["Tag_comparison"], FILTER_SANITIZE_STRING);
-			$Tags=filter_var($_GET["Tags"], FILTER_SANITIZE_STRING);
-			$filename=filter_var($_GET["filename"], FILTER_SANITIZE_STRING);
+			$Col_comparison = filter_var($_GET["Col_comparison"], FILTER_SANITIZE_NUMBER_INT);
+			$Col = filter_var($_GET["Col"], FILTER_SANITIZE_NUMBER_INT);
+			$Site_comparison = filter_var($_GET["Site_comparison"], FILTER_SANITIZE_STRING);
+			$SiteID = filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
+			$startDuration = filter_var($_GET["startDuration"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+			$endDuration = filter_var($_GET["endDuration"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+			$Channels_comparison = filter_var($_GET["Channels_comparison"], FILTER_SANITIZE_STRING);
+			$Channels = filter_var($_GET["Channels"], FILTER_SANITIZE_NUMBER_INT);
+			$SamplingRate_comparison = filter_var($_GET["SamplingRate_comparison"], FILTER_SANITIZE_STRING);
+			$SamplingRate = filter_var($_GET["SamplingRate"], FILTER_SANITIZE_NUMBER_INT);
+			$startDate = filter_var($_GET["startDate"], FILTER_SANITIZE_STRING);
+			$endDate = filter_var($_GET["endDate"], FILTER_SANITIZE_STRING);
+			$startTime = filter_var($_GET["startTime"], FILTER_SANITIZE_STRING);
+			$endTime = filter_var($_GET["endTime"], FILTER_SANITIZE_STRING);
+			$Orderby = filter_var($_GET["Orderby"], FILTER_SANITIZE_STRING);
+			$Orderby_dir = filter_var($_GET["Orderby_dir"], FILTER_SANITIZE_STRING);
+			$Tag_comparison = filter_var($_GET["Tag_comparison"], FILTER_SANITIZE_STRING);
+			$Tags = filter_var($_GET["Tags"], FILTER_SANITIZE_STRING);
+			$filename = filter_var($_GET["filename"], FILTER_SANITIZE_STRING);
  
 			 echo "<div class=\"center\">";
 
@@ -598,8 +621,8 @@ if (is_file("$absolute_dir/customhead.php")) {
 				echo "Results<br>";
 	 
 				#count and prev
-				if ($startid>1) {
-					$go_to=$startid-$how_many_to_show;
+				if ($startid > 1) {
+					$go_to = $startid - $how_many_to_show;
 					echo "
 					<form action=\"advancedsearch.php\" method=\"GET\" style=\"display:inline;\">
 					<input type=\"hidden\" value=\"$startDate\" name=\"startDate\">
@@ -629,8 +652,8 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 				echo " $startid to $endid_show ";
 
-				if ($endid_show<$no_sounds) {
-					$go_to=$startid+$how_many_to_show;
+				if ($endid_show < $no_sounds) {
+					$go_to = $startid + $how_many_to_show;
 					echo "
 					<form action=\"advancedsearch.php\" method=\"GET\" style=\"display:inline;\">
 					<input type=\"hidden\" value=\"$startDate\" name=\"startDate\">
@@ -662,10 +685,10 @@ if (is_file("$absolute_dir/customhead.php")) {
 				<div class=\"span-3\">&nbsp;</div>
 				<div class=\"span-6 last\">";
 
-				if (($no_sounds%$how_many_to_show)==0)
-					$no_pages=floor($no_sounds/$how_many_to_show)-1;
+				if (($no_sounds%$how_many_to_show) == 0)
+					$no_pages = floor($no_sounds / $how_many_to_show) - 1;
 				else
-					$no_pages=floor($no_sounds/$how_many_to_show);
+					$no_pages = floor($no_sounds / $how_many_to_show);
 
 				echo "<form action=\"advancedsearch.php\" method=\"GET\">Jump to page:<br> 
 					<input type=\"hidden\" value=\"$startDate\" name=\"startDate\">
@@ -690,10 +713,10 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 				echo "<select name=\"startid\" class=\"ui-state-default ui-corner-all\">";
 
-				for ($p=0;$p<($no_pages+1);$p++) {
-					$this_p=$p+1;
-					$s_id=($p*$how_many_to_show)+1;
-					if ($s_id==$startid) {
+				for ($p = 0; $p < ($no_pages + 1); $p++) {
+					$this_p = $p + 1;
+					$s_id = ($p * $how_many_to_show) + 1;
+					if ($s_id == $startid) {
 						echo "<option value=\"$s_id\" SELECTED>$this_p</option>\n";
 						}
 					else {
@@ -710,19 +733,6 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 		<div class="span-24 last">
 			&nbsp;
-			<script type="text/javascript">
-			function hidediv()
-			      {
-				loadingdiv.style.visibility= "hidden";
-				loadingdiv.style.height= "0";
-			      };
-		
-			hidediv();
-			</script>
-			<style type="text/css">
-			#loadingdiv {visibility:hidden;
-					height:0;}
-			</style>
 		</div>
 		<div class="span-24 last">
 			<?php

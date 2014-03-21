@@ -259,7 +259,6 @@ require("include/get_jqueryui.php");
 
 	</script>
 	
-	
 
 <script src="js/jquery.validate.js"></script>
 
@@ -395,6 +394,12 @@ $(function() {
 </script>
 
 
+<!-- Tooltips-->
+<script>
+	$(function() {
+		$( document ).tooltip();
+	});
+</script>
 
 
 <?php
@@ -684,10 +689,6 @@ if (is_file("$absolute_dir/customhead.php")) {
 		<div class="span-24 last">
 			<?php
 			require("include/bottom.php");
-			flush(); @ob_flush();
-			#Delete old temp files
-			delete_old('tmp/', 3);
-			
 			?>
 
 		</div>
@@ -695,3 +696,10 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 </body>
 </html>
+<?php
+#Close session to release script from php session
+	session_write_close();
+	flush(); @ob_flush();
+	#Delete old temp files
+	delete_old('tmp/', 3);
+?>

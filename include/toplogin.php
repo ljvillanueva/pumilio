@@ -1,7 +1,7 @@
 <?php
 
-$self=$_SERVER['PHP_SELF'];
-$q=$_SERVER['QUERY_STRING'];
+$self = $_SERVER['PHP_SELF'];
+$q = $_SERVER['QUERY_STRING'];
 
 $q_logout = str_replace("&", "%", $q);
 
@@ -73,9 +73,9 @@ else {
 		else {
 			echo "[<a href=\"index.php\">Home</a>] 
 				[<a href=\"search.php\">Search</a>]<br>";
-			$e=filter_var($_GET["e"], FILTER_SANITIZE_NUMBER_INT);
+			$e = filter_var($_GET["e"], FILTER_SANITIZE_NUMBER_INT);
 
-			if ($e==1) {
+			if ($e == 1) {
 				echo "<div class=\"error\"><small>Invalid username or password, try again or <a href=\"recover_password.php\">recover password</a></small>";
 				}
 
@@ -84,14 +84,14 @@ else {
 				<input name=\"password\" type=\"password\" size=8 class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
 				<input name=\"where_to\" type=\"hidden\" value=\"$self?$q\">
 				<input type=\"submit\" value=\"Log in\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\"></form>";
-			if ($e==1) {
+			if ($e == 1) {
 				echo "</div>";
 				}
 			
 			$notlogged = TRUE;
 			}
 		}
-	if ($force_login==TRUE && $notlogged==TRUE){
+	if ($force_login == TRUE && $notlogged == TRUE){
 		echo "<br><br><p><strong>You must be logged in to see this site.</strong></p>
 			</div>
 			</div>

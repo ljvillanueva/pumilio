@@ -67,15 +67,15 @@ if (is_file("$absolute_dir/customhead.php")) {
 			if ($nrows>0) {
 				echo "Add a single file to the collection &nbsp;&nbsp;<select name=\"ColID\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">";
 
-				for ($i=0;$i<$nrows;$i++) {
+				for ($i = 0; $i < $nrows; $i++) {
 					$row = mysqli_fetch_array($result);
 					extract($row);
 					//How many sounds associated with that source
-					$result1 = mysqli_query($connection, "SELECT COUNT(*) as no_sounds FROM Sounds WHERE ColID='$ColID'");
+					$result1 = mysqli_query($connection, "SELECT COUNT(*) as no_sounds FROM Sounds WHERE ColID='$ColID' AND SoundStatus!='9'");
 					$row1 = mysqli_fetch_array($result1);
 					extract($row1);
 
-					echo "<option value=\"$ColID\">$CollectionName - $no_sounds sounds</option>\n";
+					echo "<option value=\"$ColID\">$CollectionName - $no_sounds soundfiles</option>\n";
 					unset($nrows1);
 					}
 
@@ -105,7 +105,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 			echo "<p><a href=\"admin.php?t=4\">Add Sensors</a> (in the admin menu)";
 			
 		$result_fm = query_one("SELECT COUNT(*) FROM FilesToAddMembers", $connection);
-		if ($result_fm>0){
+		if ($result_fm > 0){
 			echo "<p><a href=\"file_manager.php\">Check uploaded file status</a>";
 			}
 

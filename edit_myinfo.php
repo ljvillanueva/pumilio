@@ -17,15 +17,15 @@ require("include/apply_config.php");
 $force_loggedin = TRUE;
 require("include/check_login.php");
 
-if ($_GET["d"]){
+if (isset($_GET["d"])){
 	$d=filter_var($_GET["d"], FILTER_SANITIZE_NUMBER_INT);
 	}
 else{
 	$d=0;
 	}
 	
-if ($_GET["t"]){
-$t=filter_var($_GET["t"], FILTER_SANITIZE_NUMBER_INT);
+if (isset($_GET["t"])){
+	$t=filter_var($_GET["t"], FILTER_SANITIZE_NUMBER_INT);
 	}
 else{
 	$t=0;
@@ -168,10 +168,10 @@ if (is_file("$absolute_dir/customhead.php")) {
 				die();
 				}
 			else{
-				if ($d==1) {
+				if ($d == 1) {
 					echo "<p><div class=\"success\">Changes were applied successfully</div>";
 					}
-				if ($d==3) {
+				if ($d == 3) {
 					echo "<p><div class=\"success\">Your password was changed.</div>";
 					echo "<br>
 					</div>
@@ -217,11 +217,11 @@ if (is_file("$absolute_dir/customhead.php")) {
 				<div id="tabs-3">
 					<h3>Change your password</h3>
 					<?php
-					if ($d==4) {
+					if ($d == 4) {
 						echo "<p><div class=\"error\">The new passwords do not match, please try again.</div>";
 						}
 
-					if ($d==2) {
+					if ($d == 2) {
 						echo "<p><div class=\"error\">The current password does not match, please try again.</div>";
 						}
 					?>

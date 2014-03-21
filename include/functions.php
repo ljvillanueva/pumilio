@@ -83,32 +83,31 @@ function formatSize($size){
 	}
 
 
-function delete_old($dir,$days) {
+function delete_old($dir, $days) {
 	if (substr($dir, -1, 1) != "/"){
 		$dir = $dir . "/";
 		}
-	exec('find '. $dir . '* -atime +' . $days . ' -exec rm {} \; > /dev/null 2> /dev/null &', $line, $retvar);
-	return $retvar;
+	exec('find '. $dir . '* -atime +' . $days . ' -exec rm {} \; > /dev/null &', $line, $retval);
 	}
 
 
 function player_file_mp3($file_in, $samplingrate, $file_out, $random_cookie) {
 	$retval = 0;
-	if ($samplingrate!=44100) {
+	if ($samplingrate != 44100) {
 		#Safe sampling rates for mp3 files
-		if ($samplingrate>44100) {
+		if ($samplingrate > 44100) {
 			$to_SamplingRate = 44100;
 			$nyquist_freq = $to_SamplingRate/2;
 			}
-		elseif ($samplingrate<44100 && $samplingrate>22050) {
+		elseif ($samplingrate < 44100 && $samplingrate > 22050) {
 			$to_SamplingRate = 44100;
 			$nyquist_freq = $samplingrate/2;
 			}
-		elseif ($samplingrate<22050 && $samplingrate>11025) {
+		elseif ($samplingrate < 22050 && $samplingrate > 11025) {
 			$to_SamplingRate = 22050;
 			$nyquist_freq = $samplingrate/2;
 			}
-		elseif ($samplingrate<11025) {
+		elseif ($samplingrate < 11025) {
 			$to_SamplingRate = 11025;
 			$nyquist_freq = $samplingrate/2;
 			}
@@ -117,14 +116,14 @@ function player_file_mp3($file_in, $samplingrate, $file_out, $random_cookie) {
 			$nyquist_freq = $samplingrate/2;
 			}
 		
-		$random_cookie=$random_cookie;
-		if ($random_cookie==""){
-			die("<p class=\"error\">var random_cookie is empty</div>");
+		$random_cookie = $random_cookie;
+		if ($random_cookie == ""){
+			exit("<p class=\"error\">var random_cookie is empty</div>");
 			}
 		
 		exec('sox tmp/' . $random_cookie . '/' . $file_in . ' -r ' . $to_SamplingRate . ' tmp/' . $random_cookie . '/1.' . $file_in, $lastline, $retval1);
-		if ($retval1!=0) {
-			die("<p class=\"error\">There was a problem with SoX... Please contact your administrator.</div>");
+		if ($retval1 != 0) {
+			exit("<p class=\"error\">There was a problem with SoX... Please contact your administrator.</div>");
 			}
 		
 		exec('lame --noreplaygain -f -b 128 tmp/' . $random_cookie . '/1.' . $file_in . ' tmp/' . $random_cookie . '/' . $file_out, $lastline3, $retval);	
@@ -133,67 +132,67 @@ function player_file_mp3($file_in, $samplingrate, $file_out, $random_cookie) {
 		exec('lame --noreplaygain -f -b 128 tmp/' . $random_cookie . '/' . $file_in . ' tmp/' . $random_cookie . '/' . $file_out, $lastline3, $retval);
 		}
 
-	return $retvar;
+	return $retval;
 	}
 
 
-function dbfile_mp3($filename,$file_format,$ColID,$DirID,$SamplingRate) {
+function dbfile_mp3($filename, $file_format, $ColID, $DirID, $SamplingRate) {
 	#Function to make an mp3 file from a file in the database
-	$mp3_name="";
+	$mp3_name = "";
 
 	#New: sampling rate can be any of accepted Flash values: 11025,22050,44100
 
 	#Check if file is an mp3 already
-	if ($file_format=="mp3" && ($SamplingRate==44100 || $SamplingRate==22050 || $SamplingRate==11025)) {
+	if ($file_format == "mp3" && ($SamplingRate == 44100 || $SamplingRate == 22050 || $SamplingRate == 11025)) {
 		#OK to use file
-		$mp3_name=$filename;
+		$mp3_name = $filename;
 		}
 	else {
-		$random_value=mt_rand();
+		$random_value = mt_rand();
 		mkdir("tmp/$random_value", 0777);
 
-		if ($SamplingRate>44100) {
+		if ($SamplingRate > 44100) {
+			$to_SamplingRate = 44100;
+			}
+		elseif ($SamplingRate < 44100 && $SamplingRate > 22050) {
 			$to_SamplingRate=44100;
 			}
-		elseif ($SamplingRate<44100 && $SamplingRate>22050) {
-			$to_SamplingRate=44100;
+		elseif ($SamplingRate < 22050 && $SamplingRate > 11025) {
+			$to_SamplingRate = 22050;
 			}
-		elseif ($SamplingRate<22050 && $SamplingRate>11025) {
-			$to_SamplingRate=22050;
-			}
-		elseif ($SamplingRate<11025) {
-			$to_SamplingRate=11025;
+		elseif ($SamplingRate < 11025) {
+			$to_SamplingRate = 11025;
 			}
 		else {
-			$to_SamplingRate=$SamplingRate;
+			$to_SamplingRate = $SamplingRate;
 			}
 
 		#If a flac, extract
-		if ($file_format=="flac") {
+		if ($file_format == "flac") {
 			exec('flac -fd sounds/sounds/' . $ColID . '/' . $DirID . '/' . $filename . ' -o tmp/' . $random_value . '/temp1.wav', $lastline, $retval);
-			if ($retval!=0) {
-				die("<p class=\"error\">There was a problem with the FLAC decoder...</div>");
+			if ($retval != 0) {
+				exit("<p class=\"error\">There was a problem with the FLAC decoder...</div>");
 				}
 
 			if ($SamplingRate!=44100 || $SamplingRate!=22050 || $SamplingRate!=11025) {
 				exec('sox tmp/' . $random_value . '/temp1.wav tmp/' . $random_value . '/temp2.wav rate ' . $to_SamplingRate, $lastline, $retval);
 				if ($retval!=0) {
-					die("<p class=\"error\">There was a problem with SoX...</div>");
+					exit("<p class=\"error\">There was a problem with SoX...</div>");
 					}
 					
 				unlink("tmp/$random_value/temp1.wav");
-				rename("tmp/$random_value/temp2.wav","tmp/$random_value/temp1.wav");
+				rename("tmp/$random_value/temp2.wav", "tmp/$random_value/temp1.wav");
 				}
 			}
 		else {
 			exec('sox sounds/sounds/' . $ColID . '/' . $DirID . '/' . $filename . ' tmp/' . $random_value . '/temp1.wav rate ' . $to_SamplingRate, $lastline, $retval);
 			if ($retval!=0) {
-				die("<p class=\"error\">There was a problem with SoX...</div>");
+				exit("<p class=\"error\">There was a problem with SoX...</div>");
 				}
 			}
 
-		$fileName_exp=explode(".", $filename);
-		$mp3_name=$fileName_exp[0] . ".autopreview.mp3";
+		$fileName_exp = explode(".", $filename);
+		$mp3_name = $fileName_exp[0] . ".autopreview.mp3";
 		
 		exec('lame --noreplaygain -f -b 128 tmp/' . $random_value . '/temp1.wav sounds/previewsounds/' . $ColID . '/' . $DirID . '/' . $mp3_name, $lastline3, $final_retval);
 		#delete the temp folder
@@ -207,7 +206,7 @@ function dbfile_mp3($filename,$file_format,$ColID,$DirID,$SamplingRate) {
 function pumilio_user($check_role, $connection) {
 	if ($check_role == "user"){
 		if ($login_wordpress == TRUE){
-			if (is_user_logged_in()==TRUE){
+			if (is_user_logged_in() == TRUE){
 				return TRUE;
 				}
 			else{
@@ -225,7 +224,7 @@ function pumilio_user($check_role, $connection) {
 		}
 	elseif ($check_role == "admin"){
 		if ($login_wordpress == TRUE){
-			if (is_user_logged_in()==TRUE){
+			if (is_user_logged_in() == TRUE){
 				return TRUE;
 				}
 			else{
@@ -247,62 +246,62 @@ function pumilio_user($check_role, $connection) {
 
 function dbfile_ogg($filename, $file_format, $ColID, $DirID, $SamplingRate) {
 	#Function to make an ogg file from a file in the database
-	$ogg_name="";
+	$ogg_name = "";
 
 	#Check if file is an ogg already
-	if ($file_format=="ogg" && ($SamplingRate==44100 || $SamplingRate==22050 || $SamplingRate==11025)) {
+	if ($file_format == "ogg" && ($SamplingRate == 44100 || $SamplingRate == 22050 || $SamplingRate == 11025)) {
 		#OK to use file
-		$ogg_name=$filename;
+		$ogg_name = $filename;
 		}
 	else {
-		$random_value=mt_rand();
+		$random_value = mt_rand();
 		mkdir("tmp/$random_value", 0777);
 
-		if ($SamplingRate>44100) {
-			$to_SamplingRate=44100;
+		if ($SamplingRate > 44100) {
+			$to_SamplingRate = 44100;
 			}
-		elseif ($SamplingRate<44100 && $SamplingRate>22050) {
-			$to_SamplingRate=44100;
+		elseif ($SamplingRate < 44100 && $SamplingRate > 22050) {
+			$to_SamplingRate = 44100;
 			}
-		elseif ($SamplingRate<22050 && $SamplingRate>11025) {
-			$to_SamplingRate=22050;
+		elseif ($SamplingRate < 22050 && $SamplingRate > 11025) {
+			$to_SamplingRate = 22050;
 			}
-		elseif ($SamplingRate<11025) {
-			$to_SamplingRate=11025;
+		elseif ($SamplingRate < 11025) {
+			$to_SamplingRate = 11025;
 			}
 		else {
-			$to_SamplingRate=$SamplingRate;
+			$to_SamplingRate = $SamplingRate;
 			}
 
 		#If a flac, extract
-		if ($file_format=="flac") {
+		if ($file_format == "flac") {
 			exec('flac -fd sounds/sounds/' . $ColID . '/' . $DirID . '/' . $filename . ' -o tmp/' . $random_value . '/temp1.wav', $lastline, $retval);
-			if ($retval!=0) {
+			if ($retval != 0) {
 				save_log($connection, $SoundID, "70", "FLAC had a problem with sounds/sounds/$ColID/$DirID/$filename.\n" . $lastline);
-				die("<p class=\"error\">There was a problem with the FLAC decoder...</div>");
+				exit("<p class=\"error\">There was a problem with the FLAC decoder...</div>");
 				}
 
-			if ($SamplingRate!=44100 || $SamplingRate!=22050 || $SamplingRate!=11025) {
+			if ($SamplingRate != 44100 || $SamplingRate != 22050 || $SamplingRate != 11025) {
 				exec('sox tmp/' . $random_value . '/temp1.wav tmp/' . $random_value . '/temp2.wav rate ' . $to_SamplingRate, $lastline, $retval);
-				if ($retval!=0) {
+				if ($retval != 0) {
 					save_log($connection, $SoundID, "80", "SoX had a problem with sounds/sounds/$ColID/$DirID/$filename." . $lastline);
-					die("<p class=\"error\">There was a problem with SoX...</div>");
+					exit("<p class=\"error\">There was a problem with SoX...</div>");
 					}
 					
 				unlink("tmp/$random_value/temp1.wav");
-				rename("tmp/$random_value/temp2.wav","tmp/$random_value/temp1.wav");
+				rename("tmp/$random_value/temp2.wav", "tmp/$random_value/temp1.wav");
 				}
 			}
 		else {
 			exec('sox sounds/sounds/' . $ColID . '/' . $DirID . '/' . $filename . ' tmp/' . $random_value . '/temp1.wav rate ' . $to_SamplingRate, $lastline, $retval);
-			if ($retval!=0) {
+			if ($retval != 0) {
 				save_log($connection, $SoundID, "80", "SoX had a problem with sounds/sounds/$ColID/$DirID/$filename." . $lastline);
-				die("<p class=\"error\">There was a problem with SoX...</div>");
+				exit("<p class=\"error\">There was a problem with SoX...</div>");
 				}
 			}
 
-		$fileName_exp=explode(".", $filename);
-		$ogg_name=$fileName_exp[0] . ".autopreview.ogg";
+		$fileName_exp = explode(".", $filename);
+		$ogg_name = $fileName_exp[0] . ".autopreview.ogg";
 		
 		exec('dir2ogg tmp/' . $random_value . '/temp1.wav sounds/previewsounds/' . $ColID . '/' . $DirID . '/' . $ogg_name, $lastline3, $final_retval);
 		#delete the temp folder
@@ -369,7 +368,7 @@ function sessionAuthenticate($connection) {
 
 
 function WordpressSessionAuthenticate($wordpress_require) {
-	if (is_user_logged_in()==TRUE){
+	if (is_user_logged_in() == TRUE){
 		return true;
 		}
 	else{
@@ -381,11 +380,11 @@ function WordpressSessionAuthenticate($wordpress_require) {
 function is_user_admin2($username, $connection) {
 	#Check if user can edit files (i.e. has admin privileges)
 	if (sessionAuthenticate($connection)) {
-		if ($username!="") {
+		if ($username != "") {
 			$resultname = mysqli_query($connection, "SELECT UserRole FROM Users WHERE UserName='$username' LIMIT 1");
 			$rowname = mysqli_fetch_array($resultname);
 			extract($rowname);
-			if ($UserRole=="admin"){
+			if ($UserRole == "admin"){
 				return true;
 				}
 			else {
@@ -414,23 +413,23 @@ function check_cookies() {
 	}
 
 
-function get_closest_weather($connection,$Lat,$Lon,$Date,$Time) {
-	$weather_data_id=0;
-	$query="SELECT WeatherSiteID, ((ACOS((SIN( '$Lat' /57.2958) * SIN( WeatherSiteLat /57.2958)) + (COS( '$Lat' /57.2958) * COS( WeatherSiteLat /57.2958) * COS( WeatherSiteLon /57.2958 - '$Lon' /57.2958)))) * 6378.7) AS Distance FROM WeatherSites ORDER BY Distance";
+function get_closest_weather($connection, $Lat, $Lon, $Date, $Time) {
+	$weather_data_id = 0;
+	$query = "SELECT WeatherSiteID, ((ACOS((SIN( '$Lat' /57.2958) * SIN( WeatherSiteLat /57.2958)) + (COS( '$Lat' /57.2958) * COS( WeatherSiteLat /57.2958) * COS( WeatherSiteLon /57.2958 - '$Lon' /57.2958)))) * 6378.7) AS Distance FROM WeatherSites ORDER BY Distance";
 	$result = mysqli_query($connection, $query)
 		or die (mysqli_error($connection));
 	$nrows = mysqli_num_rows($result);
-	for ($i=0;$i<$nrows;$i++) {
+	for ($i = 0; $i < $nrows; $i++) {
 		$row = mysqli_fetch_array($result);
 		extract($row);
 		
 		#Is close enough? 20km
-		$datetime=$Date . " " . $Time;
-		$query_dq="SELECT WeatherDataID, ABS(UNIX_TIMESTAMP('$datetime') - UNIX_TIMESTAMP(TIMESTAMP(WeatherDate, WeatherTime))) AS TimeDifference  FROM WeatherData ORDER BY TimeDifference LIMIT 1";
+		$datetime = $Date . " " . $Time;
+		$query_dq = "SELECT WeatherDataID, ABS(UNIX_TIMESTAMP('$datetime') - UNIX_TIMESTAMP(TIMESTAMP(WeatherDate, WeatherTime))) AS TimeDifference  FROM WeatherData ORDER BY TimeDifference LIMIT 1";
 		$result_dq = mysqli_query($connection, $query_dq)
 			or die (mysqli_error($connection));
 		$nrows_dq = mysqli_num_rows($result_dq);
-		if ($nrows_dq>0) {
+		if ($nrows_dq > 0) {
 			$row_dq = mysqli_fetch_array($result_dq);
 			extract($row_dq);
 			break;
@@ -443,7 +442,7 @@ function get_closest_weather($connection,$Lat,$Lon,$Date,$Time) {
 		$Distance = 0;
 		}
 
-	$to_return=$WeatherDataID . "," . $TimeDifference . "," . $Distance;
+	$to_return = $WeatherDataID . "," . $TimeDifference . "," . $Distance;
 	return $to_return;
 	}
 
@@ -480,7 +479,7 @@ function convertExifToTimestamp($exifString, $dateFormat) {
 // Original PHP code by Chirp Internet: www.chirp.com.au 
 // Please acknowledge use of this code by including this header. 
 
-function truncate2($string, $limit, $break=" ", $pad="...") { 
+function truncate2($string, $limit, $break = " ", $pad = "...") { 
 	// return with no change if string is shorter than $limit  
 	if(strlen($string) <= $limit) return $string; 
 	
@@ -495,13 +494,13 @@ function truncate2($string, $limit, $break=" ", $pad="...") {
 #From http://www.weberdev.com/get_example-3307.html
 #Usage :
  # echo timeDiff("2002-04-16 10:00:00","2002-03-16 18:56:32");
-function timeDiff($firstTime,$lastTime) {
+function timeDiff($firstTime, $lastTime) {
 	// convert to unix timestamps
-	$firstTime=strtotime($firstTime);
-	$lastTime=strtotime($lastTime);
+	$firstTime = strtotime($firstTime);
+	$lastTime = strtotime($lastTime);
 
 	// perform subtraction to get the difference (in seconds) between times
-	$timeDiff=$lastTime-$firstTime;
+	$timeDiff = $lastTime-$firstTime;
 
 	// return the difference
 	return $timeDiff;
@@ -595,7 +594,7 @@ function bgProcess_howlong($PID) {
 
 function add_in_background($absolute_dir, $connection) {
 	if ($special_noprocess == FALSE){
-		$cores_to_use=query_one("SELECT Value from PumilioSettings WHERE Settings='cores_to_use'", $connection);
+		$cores_to_use = query_one("SELECT Value from PumilioSettings WHERE Settings='cores_to_use'", $connection);
 		if ($cores_to_use == "" || $cores_to_use == "0"){
 			$cores_to_use = 1;
 			}
@@ -604,7 +603,7 @@ function add_in_background($absolute_dir, $connection) {
 		$bg_processes = query_one("SELECT COUNT(*) from FilesToAddMembers WHERE ReturnCode='2'", $connection);
 
 		if($bg_processes < $cores_to_use) {
-			$random_value=mt_rand();
+			$random_value = mt_rand();
 			$tmp_dir = 'tmp/' . $random_value;
 			mkdir($tmp_dir, 0777);
 
@@ -654,7 +653,7 @@ function check_in_background($absolute_dir, $connection) {
 		$bg_processes = bgHowManyCheck();
 
 		if($bg_processes < 3) {
-			$random_value=mt_rand();
+			$random_value = mt_rand();
 			$tmp_dir = 'tmp/' . $random_value;
 			mkdir($tmp_dir, 0777);
 
@@ -703,14 +702,14 @@ function check_in_background($absolute_dir, $connection) {
 
 function stats_in_background($absolute_dir, $connection) {
 	if ($special_noprocess == FALSE){
-		$cores_to_use=query_one("SELECT Value from PumilioSettings WHERE Settings='cores_to_use'", $connection);
+		$cores_to_use = query_one("SELECT Value from PumilioSettings WHERE Settings='cores_to_use'", $connection);
 		if ($cores_to_use == "" || $cores_to_use == "0"){
 			$cores_to_use = 1;
 			}
 		require("config.php");
 		$bg_processes = bgHowMany();
 		if($bg_processes < $cores_to_use) {
-			$random_value=mt_rand();
+			$random_value = mt_rand();
 			$tmp_dir = 'tmp/' . $random_value;
 			mkdir($tmp_dir, 0777);
 		
@@ -764,7 +763,7 @@ function bgHowManyStats_PID() {
 	
 
 #From http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions	
-function endsWith($haystack,$needle,$case=true){
+function endsWith($haystack, $needle, $case = true){
 	$expectedPosition = strlen($haystack) - strlen($needle);
 
 	if($case)
@@ -806,7 +805,7 @@ function WordpressAuthenticateUser() {
 	else {
 		require_once('../wp-blog-header.php');
 
-		if (is_user_logged_in()==TRUE){
+		if (is_user_logged_in() == TRUE){
 			return true;
 			}
 		else{

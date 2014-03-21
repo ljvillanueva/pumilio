@@ -228,7 +228,7 @@ if ($db_version==3) {
 	sleep(5);
 
 	#Delete images for v2.0
-	$del_img = query_one("DELETE FROM SoundsImages", $connection);
+	$del_img = query_one("DELETE * FROM SoundsImages", $connection);
 	$query_del = "SELECT DISTINCT ColID from Sounds";
 	$result_del = mysqli_query($connection, $query_del)
 		or die (mysqli_error($connection));
@@ -519,7 +519,7 @@ elseif ($db_version==4) {
 	sleep(5);
 
 	#Delete images for v2.0
-	$del_img = query_one("DELETE FROM SoundsImages", $connection);
+	$del_img = query_one("DELETE * FROM SoundsImages", $connection);
 	$query_del = "SELECT DISTINCT ColID from Sounds";
 	$result_del = mysqli_query($connection, $query_del)
 		or die (mysqli_error($connection));
@@ -804,7 +804,7 @@ elseif ($db_version==5) {
 	sleep(5);
 	
 	#Delete images for v2.0
-	$del_img = query_one("DELETE FROM SoundsImages", $connection);
+	$del_img = query_one("DELETE * FROM SoundsImages", $connection);
 	$query_del = "SELECT DISTINCT ColID from Sounds";
 	$result_del = mysqli_query($connection, $query_del)
 		or die (mysqli_error($connection));
@@ -1084,7 +1084,7 @@ elseif ($db_version==6) {
 	sleep(5);
 	
 	#Delete images for v2.0
-	$del_img = query_one("DELETE FROM SoundsImages", $connection);
+	$del_img = query_one("DELETE * FROM SoundsImages", $connection);
 	$query_del = "SELECT DISTINCT ColID from Sounds";
 	$result_del = mysqli_query($connection, $query_del)
 		or die (mysqli_error($connection));
@@ -1357,7 +1357,7 @@ elseif ($db_version==7) {
 	sleep(5);
 	
 	#Delete images for v2.0
-	$del_img = query_one("DELETE FROM SoundsImages", $connection);
+	$del_img = query_one("DELETE * FROM SoundsImages", $connection);
 	$query_del = "SELECT DISTINCT ColID from Sounds";
 	$result_del = mysqli_query($connection, $query_del)
 		or die (mysqli_error($connection));
@@ -1624,7 +1624,7 @@ elseif ($db_version==8) {
 	sleep(5);
 	
 	#Delete images for v2.0
-	$del_img = query_one("DELETE FROM SoundsImages", $connection);
+	$del_img = query_one("DELETE * FROM SoundsImages", $connection);
 	$query_del = "SELECT DISTINCT ColID from Sounds";
 	$result_del = mysqli_query($connection, $query_del)
 		or die (mysqli_error($connection));
@@ -1884,7 +1884,7 @@ elseif ($db_version==9) {
 	sleep(5);
 	
 	#Delete images for v2.0
-	$del_img = query_one("DELETE FROM SoundsImages", $connection);
+	$del_img = query_one("DELETE * FROM SoundsImages", $connection);
 	$query_del = "SELECT DISTINCT ColID from Sounds";
 	$result_del = mysqli_query($connection, $query_del)
 		or die (mysqli_error($connection));
@@ -2118,7 +2118,7 @@ elseif ($db_version==10) {
 
 
 	#Delete images for v2.0
-	$del_img = query_one("DELETE FROM SoundsImages", $connection);
+	$del_img = query_one("DELETE * FROM SoundsImages", $connection);
 	$query_del = "SELECT DISTINCT ColID from Sounds";
 	$result_del = mysqli_query($connection, $query_del)
 		or die (mysqli_error($connection));
@@ -2327,7 +2327,7 @@ elseif ($db_version==11) {
 	sleep(5);
 	
 	#Delete images for v2.0
-	$del_img = query_one("DELETE FROM SoundsImages", $connection);
+	$del_img = query_one("DELETE * FROM SoundsImages", $connection);
 	$query_del = "SELECT DISTINCT ColID from Sounds";
 	$result_del = mysqli_query($connection, $query_del)
 		or die (mysqli_error($connection));
@@ -2530,7 +2530,7 @@ elseif ($db_version==12) {
 	sleep(5);
 
 	#Delete images for v2.0
-	$del_img = query_one("DELETE FROM SoundsImages", $connection);
+	$del_img = query_one("DELETE * FROM SoundsImages", $connection);
 	$query_del = "SELECT DISTINCT ColID from Sounds";
 	$result_del = mysqli_query($connection, $query_del)
 		or die (mysqli_error($connection));
@@ -2728,7 +2728,7 @@ elseif ($db_version==13) {
 	sleep(5);
 	
 	#Delete images for v2.0
-	$del_img = query_one("DELETE FROM SoundsImages", $connection);
+	$del_img = query_one("DELETE * FROM SoundsImages", $connection);
 	$query_del = "SELECT DISTINCT ColID from Sounds";
 	$result_del = mysqli_query($connection, $query_del)
 		or die (mysqli_error($connection));

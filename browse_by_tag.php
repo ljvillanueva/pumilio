@@ -152,9 +152,8 @@ if ($nrows_all_tags>0) {
 
 <?php
 
-for ($ajax=0;$ajax<10;$ajax++) {
+for ($ajax = 0; $ajax < 10; $ajax++) {
 	echo "
-	
 	<script type=\"text/javascript\">
 	$(document).ready(function() { 
 	    var options = { 
@@ -177,6 +176,7 @@ for ($ajax=0;$ajax<10;$ajax++) {
 if ($use_googleanalytics) {
 	echo $googleanalytics_code;
 	}
+?>
 
 <!-- Hide success messages -->
 <script type="text/javascript">
@@ -190,12 +190,11 @@ $(function() {
 });
 </script>
 
+<?php
 #Execute custom code for head, if set
 if (is_file("$absolute_dir/customhead.php")) {
 		include("customhead.php");
 	}
-	
-
 ?>
 
 </head>
@@ -209,12 +208,6 @@ if (is_file("$absolute_dir/customhead.php")) {
 		<div class="span-24 last">
 			<hr noshade>
 		</div>
-		<div class="span-24 last" id="loadingdiv">
-			<h5 class="highlight2 ui-corner-all">Please wait... loading... <img src="images/ajax-loader.gif" border="0"></h5>
-		</div>		
-		<?php
-		flush();
-		?>
 		<div class="span-11">
 			<?php
 
@@ -427,22 +420,8 @@ if (is_file("$absolute_dir/customhead.php")) {
 					</div>";
 
 			?>
-
 		<div class="span-24 last">
 			&nbsp;
-			<script type="text/javascript">
-			function hidediv()
-			      {
-				loadingdiv.style.visibility= "hidden";
-				loadingdiv.style.height= "0";
-			      };
-		
-			hidediv();
-			</script>
-			<style type="text/css">
-			#loadingdiv {visibility:hidden;
-					height:0;}
-			</style>
 		</div>
 		<div class="span-24 last">
 			<?php

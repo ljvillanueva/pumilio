@@ -1,7 +1,7 @@
 <?php
 
 if ($login_wordpress == TRUE){
-	if (is_user_logged_in()==TRUE){
+	if (is_user_logged_in() == TRUE){
 		if (is_super_admin()) {
 			$pumilio_admin = TRUE;
 			$pumilio_loggedin = TRUE;

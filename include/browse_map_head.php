@@ -58,7 +58,7 @@ if ($googlemaps_ver == "3"){
 						WHERE SiteID=$SiteID AND Sounds.SoundStatus!='9' $qf_check 
 						ORDER BY Date DESC LIMIT 1", $connection);
 
-					echo "['$SiteName', $SiteLat, $SiteLon, $SiteID, '$no_sounds_f at this site<br>Sounds available from $first_date to $last_date. $approx_size', 'browse_site.php?SiteID=$SiteID']";
+					echo "['$SiteName', $SiteLat, $SiteLon, $SiteID, '$no_sounds_f at this site<br>Sounds available from $first_date to $last_date. ', 'browse_site.php?SiteID=$SiteID']";
 					array_push($sites_bounds, "var p$i = new google.maps.LatLng($SiteLat, $SiteLon);\nmyBounds.extend(p$i);\n");
 					
 					$no_res++;

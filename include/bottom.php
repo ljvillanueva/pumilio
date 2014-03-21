@@ -2,8 +2,6 @@
 if ($special_wrapper == FALSE && $special_iframe == FALSE){
 	echo "<hr noshade>";
 
-	require("include/version.php");
-
 	echo "<p style=\"float: left;\">
 		<small>$app_custom_name - 
 		<a href=\"#\" onClick=\"window.open('include/contact.php', 'admins', 'width=650,height=400,status=yes,resizable=yes,scrollbars=yes')\">Contact</a><br>";
@@ -26,13 +24,16 @@ if ($special_wrapper == FALSE && $special_iframe == FALSE){
 			}
 		}
 	echo "</small>";
-		
+	
+	require("include/version.php");
+
 	echo "<p class=\"right\">
 		<small>Powered by <a href=\"http://ljvillanueva.github.io/pumilio\" target=_blank>Pumilio</a> v. $website_version<br>
 		<a href=\"#\" onClick=\"window.open('include/copyright.php', 'copyright', 'width=650,height=400,status=yes,resizable=yes,scrollbars=yes')\">&copy; 2010-2014 LJV</a>. Licensed under the GPLv3.</small>";
 	}
 
-if (isset($_GET["debug"])){
+require("include/check_login.php");
+if (isset($_GET["debug"]) && $pumilio_loggedin == TRUE){
 	$debug = filter_var($_GET["debug"], FILTER_SANITIZE_NUMBER_INT);
 	if ($debug == "1"){
 		echo "<br>";

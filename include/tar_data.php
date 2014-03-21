@@ -34,12 +34,12 @@ else{
 
 
 if ($run){
-	$ColID=filter_var($_GET["ColID"], FILTER_SANITIZE_NUMBER_INT);
-	$SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
-	$method=filter_var($_GET["method"], FILTER_SANITIZE_STRING);
-	$archivefrom=filter_var($_GET["archivefrom"], FILTER_SANITIZE_STRING);
+	$ColID = filter_var($_GET["ColID"], FILTER_SANITIZE_NUMBER_INT);
+	$SiteID = filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
+	$method = filter_var($_GET["method"], FILTER_SANITIZE_STRING);
+	$archivefrom = filter_var($_GET["archivefrom"], FILTER_SANITIZE_STRING);
 
-	$archive_name=date("YMd_His");
+	$archive_name = date("YMd_His");
 
 	session_write_close();
 	flush(); @ob_flush();
@@ -52,10 +52,10 @@ if ($run){
 	<h3>Download file</h3>
 	<p>\n";
 
-	if ($archivefrom=="ColID") {
+	if ($archivefrom == "ColID") {
 		#Set a random dir
-		$random_dir=mt_rand();
-		$random_dir2=mt_rand();
+		$random_dir = mt_rand();
+		$random_dir2 = mt_rand();
 		mkdir("$absolute_dir/tmp/$random_dir", 0777);
 		mkdir("$absolute_dir/tmp/$random_dir/$random_dir2", 0777);
 		$target_path = "$absolute_dir/tmp/$random_dir/";
@@ -71,7 +71,7 @@ if ($run){
 			WHERE ColID='$ColID' AND SoundStatus!='9'")
 		or die (mysqli_error($connection));
 		$nrows_f = mysqli_num_rows($result_f);
-		for ($f=0;$f<$nrows_f;$f++) {
+		for ($f = 0; $f < $nrows_f; $f++) {
 			$row_f = mysqli_fetch_array($result_f);
 			extract($row_f);
 			if (!copy("../../../sounds/sounds/$ColID/$DirID/$OriginalFilename", $OriginalFilename)) {
@@ -121,28 +121,28 @@ if ($run){
 		fwrite($readmefile, " from Collection: $CollectionName (ColID: $ColID)");
 		fclose($readmefile);
 
-		if ($method=="zip") {
+		if ($method == "zip") {
 			exec("zip -0 " . $target_path . $archive_name . ".zip *", $out, $retval);
-			if ($retval==0) {
-				$file_size=formatsize(filesize($target_path . $archive_name . ".zip"));
+			if ($retval == 0) {
+				$file_size = formatsize(filesize($target_path . $archive_name . ".zip"));
 				echo "<div class=\"success\"><img src=\"../images/accept.png\"> The archive was created successfully.
 					<a href=\"../tmp/" . $random_dir . "/" . $archive_name . ".zip\">Download the file</a> ($file_size).</div>";
 				}
 			}
-		elseif ($method=="tar") {
+		elseif ($method == "tar") {
 			exec("tar -cvf " . $target_path . $archive_name . ".tar *", $out, $retval);
-			if ($retval==0) {
-				$file_size=formatsize(filesize($target_path . $archive_name . ".tar"));
+			if ($retval == 0) {
+				$file_size = formatsize(filesize($target_path . $archive_name . ".tar"));
 				echo "<div class=\"success\"><img src=\"../images/accept.png\"> The archive was created successfully.
 					<a href=\"../tmp/" . $random_dir . "/" . $archive_name . ".tar\">Download the file</a> ($file_size).</div>";
 				}
 			}
 		}
-	elseif ($archivefrom=="SiteID") {
+	elseif ($archivefrom == "SiteID") {
 	
 		#Set a random dir
-		$random_dir=mt_rand();
-		$random_dir2=mt_rand();
+		$random_dir = mt_rand();
+		$random_dir2 = mt_rand();
 		mkdir("$absolute_dir/tmp/$random_dir", 0777);
 		mkdir("$absolute_dir/tmp/$random_dir/$random_dir2", 0777);
 		$target_path = "$absolute_dir/tmp/$random_dir/";
@@ -158,7 +158,7 @@ if ($run){
 				WHERE SiteID='$SiteID' AND SoundStatus!='9'")
 			or die (mysqli_error($connection));
 		$nrows_f = mysqli_num_rows($result_f);
-		for ($f=0;$f<$nrows_f;$f++) {
+		for ($f = 0; $f < $nrows_f; $f++) {
 			$row_f = mysqli_fetch_array($result_f);
 			extract($row_f);
 		
@@ -211,18 +211,18 @@ if ($run){
 		fwrite($readmefile, " from Site: $SiteName (SiteID: $SiteID)");
 		fclose($readmefile);
 		
-		if ($method=="zip") {
+		if ($method == "zip") {
 			exec("zip -0 " . $target_path . $archive_name . ".zip *", $out, $retval);
-			if ($retval==0) {
-				$file_size=formatsize(filesize($target_path . $archive_name . ".zip"));
+			if ($retval == 0) {
+				$file_size = formatsize(filesize($target_path . $archive_name . ".zip"));
 				echo "<div class=\"success\"><img src=\"../images/accept.png\"> The archive was created successfully.
 					<a href=\"../tmp/" . $random_dir . "/" . $archive_name . ".zip\">Download the file</a> ($file_size).</div>";
 				}
 			}
-		elseif ($method=="tar") {
+		elseif ($method == "tar") {
 			exec("tar -cvf " . $target_path . $archive_name . ".tar *", $out, $retval);
-			if ($retval==0) {
-				$file_size=formatsize(filesize($target_path . $archive_name . ".tar"));
+			if ($retval == 0) {
+				$file_size = formatsize(filesize($target_path . $archive_name . ".tar"));
 				echo "<div class=\"success\"><img src=\"../images/accept.png\"> The archive was created successfully.
 					<a href=\"../tmp/" . $random_dir . "/" . $archive_name . ".tar\">Download the file</a> ($file_size).</div>";
 				}

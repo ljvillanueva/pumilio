@@ -46,31 +46,30 @@ else{
 
 
 #Sanitize
-$ch=filter_var($_GET["ch"], FILTER_SANITIZE_NUMBER_INT);
-if ($ch=="") {
+if (isset($_GET["ch"])){
+	$ch=filter_var($_GET["ch"], FILTER_SANITIZE_NUMBER_INT);
+	}
+else{
 	$ch="1";
 	}
 
-if (isset($_GET["t_min"])) {
-	$t_min=filter_var($_GET["t_min"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-	}
-if (isset($_GET["t_max"])) {
-	$t_max=filter_var($_GET["t_max"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-	}
-if (isset($_GET["f_min"])) {
-	$f_min=filter_var($_GET["f_min"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-	}
-if (isset($_GET["f_max"])) {
-	$f_max=filter_var($_GET["f_max"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-	}
+
 if (isset($_GET["filter"])) {
 	$filter=filter_var($_GET["filter"], FILTER_SANITIZE_STRING);
 	}
-if (isset($_GET["tool"])) {
-	$tool=filter_var($_GET["tool"], FILTER_SANITIZE_STRING);
+else{
+	$filter = "no";
 	}
+
+#if (isset($_GET["tool"])) {
+#	$tool=filter_var($_GET["tool"], FILTER_SANITIZE_STRING);
+#	}
+
 if (isset($_GET["showmarks"])) {
 	$showmarks=filter_var($_GET["showmarks"], FILTER_SANITIZE_STRING);
+	}
+else{
+	$showmarks = FALSE;
 	}
 
 #Check if cookies are empty
@@ -115,7 +114,9 @@ $spectrogram_width=$window_width - ($spectrogram_left+$spectrogram_right);
 $spectrogram_height=400;
 
 #Check if frequency range is set in cookies
-if ($f_min!="") {
+if (isset($_GET["f_min"])) {
+	$f_min=filter_var($_GET["f_min"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+	$f_max=filter_var($_GET["f_max"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 	$frequency_min=$f_min;
 	$frequency_max=$f_max;
 	$frequency_range=$frequency_max-$frequency_min;
@@ -125,12 +126,13 @@ elseif (isset($_COOKIE["frequency_min"])) {
 	$frequency_max=$_COOKIE["frequency_max"];
 	$frequency_range=$frequency_max-$frequency_min;
 	}
-elseif ($frequency_max<$frequency_min) {
+else {
 	$frequency_min=10;
 	$frequency_max=10000;
 	$frequency_range=$frequency_max-$frequency_min;
 	}
-else {
+
+if ($frequency_max<$frequency_min) {
 	$frequency_min=10;
 	$frequency_max=10000;
 	$frequency_range=$frequency_max-$frequency_min;
@@ -143,8 +145,10 @@ if ($frequency_min > $frequency_max){
 	$frequency_max = $frequency_min1;
 	}
 
-#Check if time is set in GET
-if ($t_min!="") {
+
+if (isset($_GET["t_min"])) {
+	$t_min=filter_var($_GET["t_min"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+	$t_max=filter_var($_GET["t_max"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 	$time_min=$t_min;
 	$time_max=$t_max;
 	}

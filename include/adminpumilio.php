@@ -52,7 +52,8 @@ echo "</select>\n";
 #googlemaps_key
 if ($use_googlemaps=="3") {
 	echo "<p>
-	<a href=\"https://developers.google.com/maps/documentation/javascript/tutorial\" target=_blank>Request a key for Google Maps JavaScript API v3</a> (free and required for each server) <a href=\"#\" onclick=\"window.open('help.php?topic=GoogleMaps3', 'help', 'width=650,height=550,status=yes,resizable=yes,scrollbars=auto')\"><img src=\"images/help.png\" title=\"Help\" alt=\"Help\"></a><br>
+	<a href=\"https://developers.google.com/maps/documentation/javascript/tutorial\" target=_blank>Request a key for Google Maps JavaScript API v3</a> (free and required for each server) 
+		<a href=\"#\" onclick=\"window.open('help.php?topic=GoogleMaps3', 'help', 'width=650,height=550,status=yes,resizable=yes,scrollbars=auto')\"><img src=\"images/help.png\" title=\"Click for instructions\"></a><br>
 	GoogleMaps v3 key: $googlemaps3_key";
 		
 	echo "<input type=\"text\" name=\"googlemaps3_key\" size=\"50\" maxlength=\"250\" value=\"$googlemaps3_key\" class=\"fg-button ui-state-default ui-corner-all formedge\">\n";
@@ -200,8 +201,12 @@ echo "</select>\n";
 		}
 
 	echo "<br>Local directory for adding multiple files: $temp_add_dir_d";
-	
-	echo "<input type=\"text\" name=\"temp_add_dir\" value=\"$temp_add_dir_f\" class=\"fg-button ui-state-default ui-corner-all formedge\">";
+
+	$apacheuser = exec('whoami');
+	echo "<input type=\"text\" name=\"temp_add_dir\" value=\"$temp_add_dir_f\" class=\"fg-button ui-state-default ui-corner-all formedge\">
+			<img src=\"images/help.png\" title=\"Users can add files to the archive that are stored in the
+				server or a network location mounted in the server. Add the full system path 
+				in this field. The path needs to exist and be readable by the Apache user ($apacheuser).\">";
 
 
 /*
@@ -234,7 +239,7 @@ echo "</select>\n";
 
 	#Cores to use
 	#$cores_to_use=query_one("SELECT Value from PumilioSettings WHERE Settings='cores_to_use'", $connection);
-	if ($cores_to_use==""){ 
+	if ($cores_to_use == ""){ 
 		$cores_to_use_d = "Not set (use 1)";
 		}
 	else {
@@ -245,8 +250,8 @@ echo "</select>\n";
 	$machine_cores = nocores();
 	
 	echo "<select name=\"cores_to_use\" class=\"ui-state-default ui-corner-all formedge\">";
-		for ($c=0; $c<$machine_cores; $c++) {
-			$cc=$c+1;
+		for ($c = 0; $c < $machine_cores; $c++) {
+			$cc = $c + 1;
 			if ($cc == $cores_to_use){
 				echo "<option SELECTED value=\"$cc\">$cc</option>\n";
 				}
@@ -255,7 +260,9 @@ echo "</select>\n";
 				}
 			}
 
-	echo " </select>";
+	echo " </select> 
+		<img src=\"images/help.png\" title=\"Set to maximum to speed up the background processes at the cost of server performance for other
+			tasks. Set to a lower number to leave some cores for other processes.\">";
 	
 	
 	echo "<p><input type=submit value=\" Update system settings \" class=\"fg-button ui-state-default ui-corner-all\">
@@ -271,7 +278,7 @@ echo "</select>\n";
 	<br><p><strong>Image settings:</strong>
 	<div style=\"margin-left: 10px;\">";
 
-	if ($imgset==1) {
+	if ($imgset == 1) {
 		echo "<div class=\"success\" id=\"imgset\">The database was updated. To force the system to recreate the images:<br>
 		<form method=\"GET\" action=\"include/delauxfiles.php\" target=\"delauxfiles\" onsubmit=\"window.open('', 'delauxfiles', 'width=450,height=700,status=yes,resizable=yes,scrollbars=auto')\">
 			<input type=\"hidden\" name=\"op\" value=\"7\">
@@ -284,20 +291,20 @@ echo "</select>\n";
 	#Max freq to draw in spectrograms
 	#$max_spec_freq=query_one("SELECT Value from PumilioSettings WHERE Settings='max_spec_freq'", $connection);
 
-	if ($max_spec_freq=="max") {
-		$max_spec_freq_d="Maximum for each file";
+	if ($max_spec_freq == "max") {
+		$max_spec_freq_d = "Maximum for each file";
 		}
-	elseif ($max_spec_freq=="") {
-		$max_spec_freq_d="22050 Hz";
+	elseif ($max_spec_freq == "") {
+		$max_spec_freq_d = "22050 Hz";
 		}
 	else {
-		$max_spec_freq_d=$max_spec_freq . " Hz";
+		$max_spec_freq_d = $max_spec_freq . " Hz";
 		}
 
 	echo "Maximum acoustic frequency for the spectrograms: $max_spec_freq_d";
 	
 	echo "<select name=\"max_spec_freq\" class=\"ui-state-default ui-corner-all formedge\">";
-		if ($max_spec_freq=="max") {
+		if ($max_spec_freq == "max") {
 			echo "<option SELECTED value=\"max\">Maximum for each file</option>
 				<option value=\"24000\">24000 Hz</option>
 				<option value=\"22050\">22050 Hz</option>
@@ -309,7 +316,7 @@ echo "</select>\n";
 				<option value=\"4000\">4000 Hz</option>
 				<option value=\"3000\">3000 Hz</option>";
 				}
-		elseif ($max_spec_freq=="") {
+		elseif ($max_spec_freq == "") {
 			echo "<option value=\"max\">Maximum for each file</option>
 				<option value=\"24000\">24000 Hz</option>
 				<option value=\"22050\">22050 Hz</option>
@@ -332,24 +339,25 @@ echo "</select>\n";
 			$m8 = "";
 			$m9 = "";
 		
-			if ($max_spec_freq==24000)
-				$m1="SELECTED";
-			elseif ($max_spec_freq==22050)
-				$m2="SELECTED";
-			elseif ($max_spec_freq==16000)
-				$m3="SELECTED";
-			elseif ($max_spec_freq==11025)
-				$m4="SELECTED";
-			elseif ($max_spec_freq==10000)
-				$m5="SELECTED";
-			elseif ($max_spec_freq==8000)
-				$m6="SELECTED";
-			elseif ($max_spec_freq==6000)
-				$m7="SELECTED";
-			elseif ($max_spec_freq==4000)
-				$m8="SELECTED";
-			elseif ($max_spec_freq==3000)
-				$m9="SELECTED";
+			if ($max_spec_freq == 24000)
+				$m1 = "SELECTED";
+			elseif ($max_spec_freq == 22050)
+				$m2 = "SELECTED";
+			elseif ($max_spec_freq == 16000)
+				$m3 = "SELECTED";
+			elseif ($max_spec_freq == 11025)
+				$m4 = "SELECTED";
+			elseif ($max_spec_freq == 10000)
+				$m5 = "SELECTED";
+			elseif ($max_spec_freq == 8000)
+				$m6 = "SELECTED";
+			elseif ($max_spec_freq == 6000)
+				$m7 = "SELECTED";
+			elseif ($max_spec_freq == 4000)
+				$m8 = "SELECTED";
+			elseif ($max_spec_freq == 3000)
+				$m9 = "SELECTED";
+				
 				
 			echo "<option SELECTED value=\"max\">Maximum for each file</option>
 				<option $m1 value=\"24000\">24000 Hz</option>
@@ -369,18 +377,25 @@ echo "</select>\n";
 	echo "<br>FFT window size: $fft";
 	
 	echo "<select name=\"fft\" class=\"ui-state-default ui-corner-all formedge\">";
-			
-		if ($fft==4096)
+		
+		$fft1="";
+		$fft2="";
+		$fft3="";
+		$fft4="";
+		$fft5="";
+		$fft6="";
+
+		if ($fft == 4096)
 			$fft1="SELECTED";
-		elseif ($fft==2048)
+		elseif ($fft == 2048)
 			$fft2="SELECTED";
-		elseif ($fft==1024)
+		elseif ($fft == 1024)
 			$fft3="SELECTED";
-		elseif ($fft==512)
+		elseif ($fft == 512)
 			$fft4="SELECTED";
-		elseif ($fft==256)
+		elseif ($fft == 256)
 			$fft5="SELECTED";
-		elseif ($fft==128)
+		elseif ($fft == 128)
 			$fft6="SELECTED";
 			
 		echo "<option $fft1>4096</option>
@@ -442,15 +457,15 @@ echo "</select>\n";
 		echo "</select>";
 		}
 	else{
-		if ($spectrogram_palette=="1"){
+		if ($spectrogram_palette == "1"){
 			echo "dark background";
 			}
-		elseif ($spectrogram_palette=="2"){
+		elseif ($spectrogram_palette == "2"){
 			echo "white background";
 			}
 	
 		echo "<select name=\"spectrogram_palette\" class=\"ui-state-default ui-corner-all formedge\">";
-		if ($spectrogram_palette==2 || $spectrogram_palette=="") {
+		if ($spectrogram_palette == 2 || $spectrogram_palette == "") {
 			echo "<option value=\"1\">dark background</option>
 			<option SELECTED value=\"2\">white background</option>";
 			}
@@ -480,21 +495,21 @@ echo "</select>\n";
 	<form action=\"include/editpumiliosettings.php\" method=\"POST\">
 	<input type=\"hidden\" name=\"settings\" value=\"bottom\">";	
 		
-	if ($tt==2) {
+	if ($tt == 2) {
 		echo "<div class=\"success\" id=\"tt2\">The database was updated.</div>";
 		}
 	
 	#allow chorus
 	#$use_chorus=query_one("SELECT Value from PumilioSettings WHERE Settings='use_chorus'", $connection);
 
-	if ($use_chorus=="1"){
-		$use_chorus_d="Yes";
+	if ($use_chorus == "1"){
+		$use_chorus_d = "Yes";
 		}
-	elseif ($use_chorus=="0"){
-		$use_chorus_d="No";
+	elseif ($use_chorus == "0"){
+		$use_chorus_d = "No";
 		}
 	else {
-		$use_chorus_d="Not set";
+		$use_chorus_d = "Not set";
 		}
 
 	echo "Allow this website to be indexed in the <a href=\"http://pumilio.sourceforge.net/chorus.php\" target=_blank>Pumilio Chorus</a>: $use_chorus_d";
@@ -541,7 +556,7 @@ echo "</select>\n";
 
 	#audio preview format
 	#$audiopreview_format=query_one("SELECT Value from PumilioSettings WHERE Settings='audiopreview_format'", $connection);
-	if ($audiopreview_format==""){
+	if (!isset($audiopreview_format)){
 		$audiopreview_format = "mp3";
 		}
 
@@ -749,7 +764,7 @@ echo "</select>\n";
 	echo "<select name=\"default_qf\" class=\"ui-state-default ui-corner-all formedge\">";
 
 	$query_level = "SELECT * FROM QualityFlags ORDER BY QualityFlagID";
-	$result_level=query_several($query_level, $connection);
+	$result_level = query_several($query_level, $connection);
 	$nrows_level = mysqli_num_rows($result_level);
 
 	for ($i=0; $i<$nrows_level; $i++){
@@ -768,14 +783,14 @@ echo "</select>\n";
 	#allow access using XML
 	#$use_xml=query_one("SELECT Value from PumilioSettings WHERE Settings='use_xml'", $connection);
 
-	if ($use_xml=="1"){
-		$use_xml_d="Yes";
+	if ($use_xml == "1"){
+		$use_xml_d = "Yes";
 		}
-	elseif ($use_xml=="0"){
-		$use_xml_d="No";
+	elseif ($use_xml == "0"){
+		$use_xml_d = "No";
 		}
 	else {
-		$use_xml_d="Not set";
+		$use_xml_d = "Not set";
 		}
 
 	echo "<br>Allow access using XML: $use_xml_d";

@@ -1,7 +1,7 @@
 <?php
 
 if ($login_wordpress == TRUE){
-	if (is_user_logged_in()==FALSE){
+	if (is_user_logged_in() == FALSE){
 		$pumilio_loggedin = FALSE;
 		}
 	else{

@@ -115,7 +115,7 @@ if ($allow_flac2wav) {
 	  
 	#From http://www.php.net/manual/en/function.finfo-file.php
 	$finfo = finfo_open(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
-	$ctype=finfo_file($finfo, $filename);
+	$ctype = finfo_file($finfo, $filename);
 	finfo_close($finfo);
 
 

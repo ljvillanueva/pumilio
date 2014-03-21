@@ -474,8 +474,9 @@ else{
 </body>
 </html>
 <?php
-	#session_write_close();
-	#flush(); @ob_flush();
-	#Delete temp files older than 7 days
-	#delete_old('tmp/', 3);
+#Close session to release script from php session
+	session_write_close();
+	flush(); @ob_flush();
+	#Delete old temp files
+	delete_old('tmp/', 3);
 ?>

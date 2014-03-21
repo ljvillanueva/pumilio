@@ -1,8 +1,8 @@
 <?php
 echo "<p>Search sounds in the archive using several options:<br><hr noshade>";
 
-$no_sounds_s=query_one("SELECT COUNT(*) as no_sounds FROM Sounds WHERE SoundStatus!='9' $qf_check", $connection);
-if ($no_sounds_s==0){
+$no_sounds_s = query_one("SELECT COUNT(*) as no_sounds FROM Sounds WHERE SoundStatus!='9' $qf_check", $connection);
+if ($no_sounds_s == 0){
 	echo "<p>This archive does not have any sounds.";
 	}
 else {
@@ -50,11 +50,11 @@ else {
 				
 			#Get all dates
 			$query_dates = "SELECT ColID, CollectionName FROM Collections ORDER BY CollectionName";
-			$result_dates=query_several($query_dates, $connection);
+			$result_dates = query_several($query_dates, $connection);
 			$nrows_dates = mysqli_num_rows($result_dates);
 
-			if ($nrows_dates>0) {
-				for ($d=0;$d<$nrows_dates;$d++)	{
+			if ($nrows_dates > 0) {
+				for ($d = 0; $d < $nrows_dates; $d++)	{
 					$row_dates = mysqli_fetch_array($result_dates);
 					extract($row_dates);
 					echo "\n<option value=\"$ColID\">$CollectionName</option>";
@@ -77,7 +77,6 @@ else {
 			</td>
 		</tr>
 ";
-
 
 
 echo "		<tr>
@@ -108,15 +107,15 @@ echo "		<tr>
 				
 			#Get all dates
 			$query_sites = "SELECT SiteID, SiteName FROM Sites ORDER BY SiteName";
-			$result_sites=query_several($query_sites, $connection);
+			$result_sites = query_several($query_sites, $connection);
 			$nrows_sites = mysqli_num_rows($result_sites);
 
-			if ($nrows_sites>0) {
-				for ($s=0;$s<$nrows_sites;$s++) {
+			if ($nrows_sites > 0) {
+				for ($s = 0; $s < $nrows_sites; $s++) {
 					$row_sites = mysqli_fetch_array($result_sites);
 					extract($row_sites);
 
-					$check_site=query_one("SELECT COUNT(*) FROM Sounds WHERE SiteID='$SiteID'", $connection);
+					$check_site = query_one("SELECT COUNT(*) FROM Sounds WHERE SiteID='$SiteID'", $connection);
 
 					if ($check_site > 0){
 						echo "\n<option value=\"$SiteID\">$SiteName</option>";
@@ -142,11 +141,11 @@ echo "		<tr>
 			
 			#Get all dates
 			$query_tags = "SELECT Tag FROM Tags GROUP BY Tag ORDER BY Tag";
-			$result_tags=query_several($query_tags, $connection);
+			$result_tags = query_several($query_tags, $connection);
 			$nrows_tags = mysqli_num_rows($result_tags);
 
-			if ($nrows_tags>0) {
-				for ($t=0;$t<$nrows_tags;$t++) {
+			if ($nrows_tags > 0) {
+				for ($t = 0; $t < $nrows_tags; $t++) {
 					$row_tags = mysqli_fetch_array($result_tags);
 					extract($row_tags);
 
@@ -205,11 +204,11 @@ echo "		<tr>
 			
 			#Get all dates
 			$query_SamplingRate = "SELECT DISTINCT SamplingRate FROM Sounds WHERE SamplingRate IS NOT NULL ORDER BY SamplingRate";
-			$result_SamplingRate=query_several($query_SamplingRate, $connection);
+			$result_SamplingRate = query_several($query_SamplingRate, $connection);
 			$nrows_SamplingRate = mysqli_num_rows($result_SamplingRate);
 
-			if ($nrows_SamplingRate>0) {
-				for ($d=0;$d<$nrows_SamplingRate;$d++) {
+			if ($nrows_SamplingRate > 0) {
+				for ($d = 0; $d < $nrows_SamplingRate; $d++) {
 					$row_SamplingRate = mysqli_fetch_array($result_SamplingRate);
 					extract($row_SamplingRate);
 					echo "\n<option value=\"$SamplingRate\">$SamplingRate</option>";
@@ -239,7 +238,7 @@ echo "		<tr>
 		</tr>
 		</table>
 
-		<input type=submit value=\" Advanced Search \" class=\"fg-button ui-state-default ui-corner-all\" style=\"margin-left: 16px;\">
+		<input type=submit value=\" Search \" class=\"fg-button ui-state-default ui-corner-all\" style=\"margin-left: 16px;\">
 		</form>
 		</p>";
 	}

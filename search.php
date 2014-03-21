@@ -40,10 +40,10 @@ require("include/get_jqueryui.php");
 	<!-- Form validation from http://bassistance.de/jquery-plugins/jquery-plugin-validation/ -->
 	<script src=\"$app_url/js/jquery.validate.js\"></script>";
 
-	$DateLow=query_one("SELECT DATE_FORMAT(Date,'%Y, %c-1, %e') FROM Sounds WHERE SoundStatus!='9' $qf_check ORDER BY Date LIMIT 1", $connection);
-	$DateHigh=query_one("SELECT DATE_FORMAT(Date,'%Y, %c-1, %e') FROM Sounds WHERE SoundStatus!='9' $qf_check ORDER BY Date DESC LIMIT 1", $connection);
-	$DateLow1=query_one("SELECT DATE_FORMAT(Date,'%d-%b-%Y') FROM Sounds WHERE SoundStatus!='9' $qf_check ORDER BY Date LIMIT 1", $connection);
-	$DateHigh1=query_one("SELECT DATE_FORMAT(Date,'%d-%b-%Y') FROM Sounds WHERE SoundStatus!='9' $qf_check ORDER BY Date DESC LIMIT 1", $connection);
+	$DateLow = query_one("SELECT DATE_FORMAT(Date,'%Y, %c-1, %e') FROM Sounds WHERE SoundStatus!='9' $qf_check ORDER BY Date LIMIT 1", $connection);
+	$DateHigh = query_one("SELECT DATE_FORMAT(Date,'%Y, %c-1, %e') FROM Sounds WHERE SoundStatus!='9' $qf_check ORDER BY Date DESC LIMIT 1", $connection);
+	$DateLow1 = query_one("SELECT DATE_FORMAT(Date,'%d-%b-%Y') FROM Sounds WHERE SoundStatus!='9' $qf_check ORDER BY Date LIMIT 1", $connection);
+	$DateHigh1 = query_one("SELECT DATE_FORMAT(Date,'%d-%b-%Y') FROM Sounds WHERE SoundStatus!='9' $qf_check ORDER BY Date DESC LIMIT 1", $connection);
 	#from http://jsbin.com/orora3/75/
 	echo "	
 	<script type=\"text/javascript\">
@@ -125,8 +125,8 @@ require("include/get_jqueryui.php");
 */	
 	#Duration slider
 	#Get min and max
-	$DurationLow=floor(query_one("SELECT DISTINCT Duration FROM Sounds WHERE Duration IS NOT NULL AND SoundStatus!='9' $qf_check ORDER BY Duration LIMIT 1", $connection));
-	$DurationHigh=ceil(query_one("SELECT DISTINCT Duration FROM Sounds WHERE Duration IS NOT NULL AND SoundStatus!='9' $qf_check ORDER BY Duration DESC LIMIT 1", $connection));
+	$DurationLow = floor(query_one("SELECT DISTINCT Duration FROM Sounds WHERE Duration IS NOT NULL AND SoundStatus!='9' $qf_check ORDER BY Duration LIMIT 1", $connection));
+	$DurationHigh = ceil(query_one("SELECT DISTINCT Duration FROM Sounds WHERE Duration IS NOT NULL AND SoundStatus!='9' $qf_check ORDER BY Duration DESC LIMIT 1", $connection));
 
 	echo "<script>
 		$(function() {
@@ -145,7 +145,7 @@ require("include/get_jqueryui.php");
 			});
 		</script>";
 
-if ($special_wrapper==TRUE){
+if ($special_wrapper == TRUE){
 	$browse_map_link = "$wrapper";
 	$db_browse_link = "$wrapper";
 	$db_filedetails_link = "$wrapper";
@@ -155,7 +155,7 @@ else {
 	$browse_map_link = "browse_map.php";
 	$db_browse_link = "db_browse.php";
 	$db_filedetails_link = "db_filedetails.php";
-	$advancedsearch_link = "advancedsearch.php";
+	$advancedsearch_link = "results.php";
 	}
 		
 if ($use_googleanalytics) {
@@ -200,9 +200,3 @@ echo "<body>";
 
 </body>
 </html>
-<?php
-	session_write_close();
-	flush(); @ob_flush();
-	#Delete temp files older than 3 days
-	delete_old('tmp/', 3);
-?>

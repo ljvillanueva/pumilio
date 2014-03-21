@@ -28,14 +28,12 @@ if ($use_googleanalytics) {
 	echo $googleanalytics_code;
 	}
 
-
 #Execute custom code for head, if set
 if (is_file("$absolute_dir/customhead.php")) {
 		include("customhead.php");
 	}
-	
-	
 ?>
+
 	
 </head>
 <body>
@@ -65,22 +63,22 @@ if (is_file("$absolute_dir/customhead.php")) {
 				or die (mysqli_error($connection));
 			$nrows_sample = mysqli_num_rows($result_sample);
 
-			if ($nrows_sample>0) {
-				for ($sa=0;$sa<$nrows_sample;$sa++) {
+			if ($nrows_sample > 0) {
+				for ($sa = 0; $sa < $nrows_sample; $sa++) {
 					$row_sample = mysqli_fetch_array($result_sample);
 					extract($row_sample);
 					$no_sounds_sample=query_one("SELECT COUNT(*) FROM SampleMembers WHERE SampleID='$SampleID'", $connection);
-					if ($no_sounds_sample>0){
+					if ($no_sounds_sample > 0){
 						$query_sample_check = "SELECT SoundID from SampleMembers WHERE SampleID='$SampleID'";
 						$result_sample_check = mysqli_query($connection, $query_sample_check)
 							or die (mysqli_error($connection));
 						$nrows_sample_check = mysqli_num_rows($result_sample_check);
-						if ($nrows_sample_check>0){
-							for ($ch=0;$ch<$nrows_sample_check;$ch++) {
+						if ($nrows_sample_check > 0){
+							for ($ch = 0; $ch < $nrows_sample_check; $ch++) {
 								$row_check = mysqli_fetch_array($result_sample_check);
 								extract($row_check);
 								$check_this_sound=query_one("SELECT COUNT(*) FROM Sounds WHERE SoundID='$SoundID'", $connection);
-								if ($check_this_sound==0){
+								if ($check_this_sound == 0){
 									query_one("DELETE FROM SampleMembers WHERE SampleID='$SampleID' AND SoundID='$SoundID'", $connection);
 									}
 								}
@@ -96,15 +94,15 @@ if (is_file("$absolute_dir/customhead.php")) {
 				or die (mysqli_error($connection));
 			$nrows_sample = mysqli_num_rows($result_sample);
 
-			if ($nrows_sample>0) {
+			if ($nrows_sample > 0) {
 				echo "<br><form action=\"browse_sample.php\" method=\"GET\"><strong>Browse the sample sets in the archive:</strong><br>";
 				echo "<select name=\"SampleID\" class=\"ui-state-default ui-corner-all\">";
-				for ($sa=0;$sa<$nrows_sample;$sa++) {
+				for ($sa = 0; $sa < $nrows_sample; $sa++) {
 					$row_sample = mysqli_fetch_array($result_sample);
 					extract($row_sample);
 						//How many sounds associated with that source
-						$no_sounds_sample=query_one("SELECT COUNT(*) as no_sounds FROM SampleMembers WHERE SampleID='$SampleID'", $connection);
-					if ($no_sounds_sample>0){
+						$no_sounds_sample = query_one("SELECT COUNT(*) as no_sounds FROM SampleMembers WHERE SampleID='$SampleID'", $connection);
+					if ($no_sounds_sample > 0){
 						echo "<option value=\"$SampleID\">$SampleName - $no_sounds_sample sound files</option>\n";
 						}
 					else{
@@ -120,15 +118,15 @@ if (is_file("$absolute_dir/customhead.php")) {
 				}
 
 			#Sample from whole archive
-			$no_sounds=query_one("SELECT COUNT(*) as no_sounds FROM Sounds WHERE Sounds.SoundStatus!='9'", $connection);
-			if ($no_sounds>0) {
+			$no_sounds = query_one("SELECT COUNT(*) as no_sounds FROM Sounds WHERE Sounds.SoundStatus!='9'", $connection);
+			if ($no_sounds > 0) {
 				echo "<p>
 				<strong>Sample set from the whole archive:</strong>
 				<form action=\"add_sample.php\" method=\"POST\" id=\"AddSample1\">
 			
 					<input type=\"hidden\" name=\"type\" value=\"1\">
 					<br>Size of the sample:
-					<input type=\"text\" name=\"samplesize\" maxlength=\"10\" size=\"6\" class=\"fg-button ui-state-default ui-corner-all\"> max: $total_no_sounds
+					<input type=\"text\" name=\"samplesize\" maxlength=\"10\" size=\"6\" class=\"fg-button ui-state-default ui-corner-all\"> max: $no_sounds
 					<br>Name this sample set:
 					<input type=\"text\" name=\"samplename\" maxlength=\"80\" size=\"30\" class=\"fg-button ui-state-default ui-corner-all\">
 					<br>Notes about this set:
@@ -150,12 +148,12 @@ if (is_file("$absolute_dir/customhead.php")) {
 				$nrows_setsample = mysqli_num_rows($result_setsample);
 				#from http://codepunk.hardwar.org.uk/ajs23.htm
 				echo "<select name=\"ColID\" id=\"ColID\" class=\"ui-state-default ui-corner-all\" onchange=\"this.form['samplename'].value=this.form['ColID'].options[this.form['ColID'].options.selectedIndex].text;\">";
-				for ($ss=0;$ss<$nrows_setsample;$ss++) {
+				for ($ss = 0; $ss < $nrows_setsample; $ss++) {
 					$row_setsample = mysqli_fetch_array($result_setsample);
 					extract($row_setsample);
 					//How many sounds associated with that source
-					$no_sounds_setsample=query_one("SELECT COUNT(*) as no_sounds FROM Sounds WHERE ColID='$ColID'  AND Sounds.SoundStatus!='9'", $connection);
-					if ($no_sounds_setsample>0){
+					$no_sounds_setsample = query_one("SELECT COUNT(*) as no_sounds FROM Sounds WHERE ColID='$ColID'  AND Sounds.SoundStatus!='9'", $connection);
+					if ($no_sounds_setsample > 0){
 						echo "<option value=\"$ColID\" text=\"$CollectionName\">$CollectionName - $no_sounds_setsample sound files</option>\n";
 						}
 					}
@@ -184,7 +182,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 				<select name=\"sample_percent\" id=\"sample_percent\" class=\"ui-state-default ui-corner-all\">
 					<option></option>";
 			
-				for ($p=5;$p<96;$p=$p+5) {
+				for ($p = 5; $p < 96; $p = $p + 5) {
 					echo "<option value=\"$p\">$p %</option>\n";
 					}
 		
@@ -205,7 +203,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 				<select name=\"sample_percent\" id=\"sample_percent\" class=\"ui-state-default ui-corner-all\">
 					<option></option>";
 			
-				for ($p=5;$p<96;$p=$p+5) {
+				for ($p = 5; $p < 96; $p = $p + 5) {
 					echo "<option value=\"$p\">$p %</option>\n";
 					}
 		
@@ -258,7 +256,6 @@ if (is_file("$absolute_dir/customhead.php")) {
 		<div class="span-24 last">
 			<?php
 			require("include/bottom.php");
-			
 			?>
 		</div>
 	</div>

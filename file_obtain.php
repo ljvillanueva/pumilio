@@ -26,7 +26,7 @@ require("include/apply_config.php");
 require("include/check_login.php");
 
 #Generate a random number and store in cookies
-	$random_cookie=mt_rand();
+	$random_cookie = mt_rand();
 	setcookie("random_cookie", $random_cookie, 0);
 
 #Create the directory using that random number
@@ -34,13 +34,19 @@ require("include/check_login.php");
 	$target_path = "tmp/$random_cookie/";
 
 #Sanitize GET variables
-	$obtain_soundfile=filter_var($_GET["file"], FILTER_SANITIZE_SPECIAL_CHARS);
+$obtain_method = filter_var($_GET["method"], FILTER_SANITIZE_NUMBER_INT);
 
-	#Remove the http://
-	$obtain_soundfile = str_ireplace("http://", "", $obtain_soundfile);
+	if(isset($_GET["file"])){
+		$obtain_soundfile = filter_var($_GET["file"], FILTER_SANITIZE_SPECIAL_CHARS);
+		#Remove the http://
+		$obtain_soundfile = str_ireplace("http://", "", $obtain_soundfile);
+		}
+	else{
+		$obtain_soundfile = "";
+		}
 
-	$obtain_fileid=filter_var($_GET["fileid"], FILTER_SANITIZE_NUMBER_INT);
-	$obtain_method=filter_var($_GET["method"], FILTER_SANITIZE_NUMBER_INT);
+$obtain_fileid = filter_var($_GET["fileid"], FILTER_SANITIZE_NUMBER_INT);
+
 
 #Check if internal transfer
 if ($obtain_method==3) {

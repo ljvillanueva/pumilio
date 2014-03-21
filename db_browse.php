@@ -17,18 +17,35 @@ require("include/check_admin.php");
 
 #Sanitize inputs
 $ColID=filter_var($_GET["ColID"], FILTER_SANITIZE_NUMBER_INT);
+
 if (isset($_GET["startid"])){
-	$startid=filter_var($_GET["startid"], FILTER_SANITIZE_NUMBER_INT);
+	$startid = filter_var($_GET["startid"], FILTER_SANITIZE_NUMBER_INT);
 	}
+else{
+	$startid = 1;
+	}
+
 if (isset($_GET["order_by"])){
-	$order_by=filter_var($_GET["order_by"], FILTER_SANITIZE_STRING);
+	$order_by = filter_var($_GET["order_by"], FILTER_SANITIZE_STRING);
 	}
+else{
+	$order_by = "Date";
+	}
+
 if (isset($_GET["order_dir"])){
-	$order_dir=filter_var($_GET["order_dir"], FILTER_SANITIZE_STRING);
+	$order_dir = filter_var($_GET["order_dir"], FILTER_SANITIZE_STRING);
 	}
+else{
+	$order_dir = "ASC";
+	}
+
 if (isset($_GET["show_tags"])){
-	$show_tags=filter_var($_GET["show_tags"], FILTER_SANITIZE_STRING);
+	$show_tags = filter_var($_GET["show_tags"], FILTER_SANITIZE_STRING);
 	}
+else{
+	$show_tags = "0";
+	}
+
 
 #Display type saved as a cookie
 if (isset($_GET["display_type"])){
@@ -45,9 +62,9 @@ else{
 		}
 	}
 
-$valid_id=query_one("SELECT COUNT(*) FROM Collections WHERE ColID=$ColID", $connection);
+$valid_id = query_one("SELECT COUNT(*) FROM Collections WHERE ColID=$ColID", $connection);
 
-if ($valid_id==0) {
+if ($valid_id == 0) {
 	echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 		<html>
 		<head>";
@@ -63,20 +80,8 @@ if ($valid_id==0) {
 	die();
 	}
 
-if ($startid==""){
-	$startid=1;
-	}
-if ($order_by==""){
-	$order_by = "Date";
-	}
-if ($order_dir==""){
-	$order_dir = "ASC";
-	}
-if ($show_tags==""){
-	$show_tags = "0";
-	}
 
-if ($order_by=="Date"){
+if ($order_by == "Date"){
 	$order_byq = "Date $order_dir, Time";
 	}
 else{
@@ -84,7 +89,7 @@ else{
 	}
 
 #Special iframe
-if ($special_wrapper==TRUE){
+if ($special_wrapper == TRUE){
 	$db_browse_link = "$wrapper?page=db_browse";
 	}
 else {
@@ -110,10 +115,10 @@ require("include/get_jqueryui.php");
 require("include/nocache.php");
 
 $query_all_tags = "SELECT DISTINCT Tag FROM Tags";
-$result_all_tags=query_several($query_all_tags, $connection);
+$result_all_tags = query_several($query_all_tags, $connection);
 $nrows_all_tags = mysqli_num_rows($result_all_tags);
 
-if ($nrows_all_tags>0) {
+if ($nrows_all_tags > 0) {
 	/*
 	#Deprecated
 	echo "
@@ -124,12 +129,12 @@ if ($nrows_all_tags>0) {
 	echo "<script type=\"text/javascript\">
 	$(function() {
 		var mytags = [ ";
-		for ($a=0; $a<($nrows_all_tags - 1); $a++) {
+		for ($a = 0; $a < ($nrows_all_tags - 1); $a++) {
 			$row_all_tags = mysqli_fetch_array($result_all_tags);
 			extract($row_all_tags);
 			echo "\"$Tag\", ";
 			}
-		for ($a=$nrows_all_tags - 1; $a<$nrows_all_tags; $a++) {
+		for ($a = ($nrows_all_tags - 1); $a < $nrows_all_tags; $a++) {
 			$row_all_tags = mysqli_fetch_array($result_all_tags);
 			extract($row_all_tags);
 			echo "\"$Tag\"";
@@ -152,7 +157,7 @@ if ($nrows_all_tags>0) {
 <?php
 	echo "<script type=\"text/javascript\" src=\"$app_url/js/jquery.form.js\"></script>\n";
 
-	for ($ajax=0;$ajax<10;$ajax++) {
+	for ($ajax = 0; $ajax < 10; $ajax++) {
 		echo "
 	
 		<script type=\"text/javascript\">
@@ -232,14 +237,6 @@ if (is_file("$absolute_dir/customhead.php")) {
 		<div class="span-24 last">
 			<hr noshade>
 		</div>
-		<div class="span-24 last" id="loadingdiv">
-			<?php
-			echo "<h5 class=\"highlight2 ui-corner-all\">Please wait... loading... <img src=\"$app_url/images/ajax-loader.gif\" border=\"0\"></h5>";
-			?>
-		</div>		
-			<?php
-				flush();
-			?>
 		<div class="span-11">
 			<?php
 
@@ -251,25 +248,25 @@ if (is_file("$absolute_dir/customhead.php")) {
 			extract($row);
 			//How many sounds associated with that source
 			$no_sounds=query_one("SELECT COUNT(*) as no_sounds FROM Sounds WHERE ColID='$ColID' 
-				AND Sounds.SoundStatus!='9' $qf_check", $connection);
+				AND Sounds.SoundStatus != '9' $qf_check", $connection);
 
-			if ($startid<1) {
-				$startid=1;
+			if ($startid < 1) {
+				$startid = 1;
 				}
 				
-			$startid_q=$startid-1;
+			$startid_q = $startid-1;
 			
-			if ($display_type=="summary"){
-				$how_many_to_show=10;
+			if ($display_type == "summary"){
+				$how_many_to_show = 10;
 				}
-			elseif ($display_type=="gallery"){
-				$how_many_to_show=18;
+			elseif ($display_type == "gallery"){
+				$how_many_to_show = 18;
 				}
 				
 			$endid = $how_many_to_show;
-			$endid_show=$startid_q+$endid;
+			$endid_show = $startid_q + $endid;
 
-			if ($startid_q+$how_many_to_show >= $no_sounds){
+			if ($startid_q + $how_many_to_show >= $no_sounds){
 				$endid_show = $no_sounds;
 				}
 
@@ -283,7 +280,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 				<a href=\"edit_collection.php?ColID=$ColID\" title=\"Edit this collection\" style=\"color: white;\">[edit]</a><br>
 				$no_sounds sounds";
 				
-				if ($Notes!="") {
+				if ($Notes != "") {
 					echo "<br>Notes: $Notes";
 					}
 				
@@ -296,8 +293,10 @@ if (is_file("$absolute_dir/customhead.php")) {
 			else {
 				echo "<p class=\"highlight3 ui-corner-all\" style=\"text-align: left;\"><strong>Collection: $CollectionName<br>$no_sounds sounds</strong>";
 					
-				if (isset($Notes) && $Notes!="") {
-					echo "<br>Notes: $Notes";
+				if (isset($Notes)) {
+					if($Notes!=""){
+						echo "<br>Notes: $Notes";
+						}
 					}
 				
 				echo "</p>";
@@ -308,7 +307,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 		<div class="span-4">
 			<?php
 				echo "<div class=\"center\">";
-				if ($special_wrapper==TRUE){
+				if ($special_wrapper == TRUE){
 					$browse_site_link = "$wrapper?page=browse_site";
 					$db_filedetails_link = "$wrapper?page=db_filedetails";
 					}
@@ -320,15 +319,15 @@ if (is_file("$absolute_dir/customhead.php")) {
 				#count and next
 				echo "Results<br>";
 
-				if ($startid>1) {
-					$go_to=$startid-$how_many_to_show;
+				if ($startid > 1) {
+					$go_to = $startid - $how_many_to_show;
 					echo "<a href=\"$browse_site_link&amp;ColID=$ColID&amp;startid=$go_to&amp;order_by=$order_by&amp;order_dir=$order_dir\"><img src=\"$app_url/images/arrowleft.png\"></a>";
 					}
 
 				echo " $startid to $endid_show ";
 
-				if ($endid_show<$no_sounds) {
-					$go_to=$startid+$how_many_to_show;
+				if ($endid_show < $no_sounds) {
+					$go_to = $startid + $how_many_to_show;
 					echo "<a href=\"$browse_site_link&amp;ColID=$ColID&amp;startid=$go_to&amp;order_by=$order_by&amp;order_dir=$order_dir\"><img src=\"$app_url/images/arrowright.png\"></a>";
 					}
 
@@ -360,7 +359,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 				
 			#Confirm delete
 			if (isset($_GET["md"])){
-				$md=filter_var($_GET["md"], FILTER_SANITIZE_NUMBER_INT);
+				$md = filter_var($_GET["md"], FILTER_SANITIZE_NUMBER_INT);
 				if ($md == 1){
 					echo "<div <div class=\"success\" id=\"md\">One file was deleted.</div>";
 					}
@@ -372,15 +371,15 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 			$query = "SELECT *, DATE_FORMAT(Date, '%d-%b-%Y') AS Date_h FROM Sounds WHERE ColID='$ColID' 
 					AND Sounds.SoundStatus!='9' $qf_check ORDER BY $order_byq $order_dir LIMIT $sql_limit";
-			$result=query_several($query, $connection);
+			$result = query_several($query, $connection);
 			$nrows = mysqli_num_rows($result);
-			$check_result=query_several($query, $connection);
+			$check_result = query_several($query, $connection);
 
-			if ($nrows>0) {
-				if ($display_type=="summary") {
+			if ($nrows > 0) {
+				if ($display_type == "summary") {
 					require("include/view_summary.php");
 					}
-				elseif ($display_type=="gallery") {
+				elseif ($display_type == "gallery") {
 					require("include/view_gallery.php");
 					}
 				}
@@ -391,7 +390,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 			<div class=\"span-10\">";
 
 			#Quick form to select a file based on its name
-			if ($special_wrapper==TRUE){
+			if ($special_wrapper == TRUE){
 				echo "<form action=\"$wrapper\" method=\"GET\">
 				<input type=\"hidden\" name=\"page\" value=\"db_filedetails\">";
 				}
@@ -407,7 +406,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 			echo "<select name=\"SoundID\" class=\"ui-state-default ui-corner-all\" >";
 
-				for ($q=0;$q<$nrows_q;$q++) {
+				for ($q = 0; $q < $nrows_q; $q++) {
 					$row_q = mysqli_fetch_array($result_q);
 					extract($row_q);
 
@@ -421,7 +420,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 			<div class="span-6">
 				<?php
 					echo "<div class=\"center\">";
-					if ($special_wrapper==TRUE){
+					if ($special_wrapper == TRUE){
 						$browse_site_link = "$wrapper?page=browse_site";
 						$db_filedetails_link = "$wrapper?page=db_filedetails";
 						}
@@ -433,15 +432,15 @@ if (is_file("$absolute_dir/customhead.php")) {
 					#count and next
 					echo "Results<br>";
 
-					if ($startid>1) {
-						$go_to=$startid-$how_many_to_show;
+					if ($startid > 1) {
+						$go_to = $startid - $how_many_to_show;
 						echo "<a href=\"$browse_site_link&amp;ColID=$ColID&amp;startid=$go_to&amp;order_by=$order_by&amp;order_dir=$order_dir\"><img src=\"$app_url/images/arrowleft.png\"></a>";
 						}
 
 					echo " $startid to $endid_show ";
 
-					if ($endid_show<$no_sounds) {
-						$go_to=$startid+$how_many_to_show;
+					if ($endid_show < $no_sounds) {
+						$go_to = $startid + $how_many_to_show;
 						echo "<a href=\"$browse_site_link&amp;ColID=$ColID&amp;startid=$go_to&amp;order_by=$order_by&amp;order_dir=$order_dir\"><img src=\"$app_url/images/arrowright.png\"></a>";
 						}
 
@@ -452,11 +451,11 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 			echo "<div class=\"span-4 last\">";
 
-				if (($no_sounds%$how_many_to_show)==0) {
-					$no_pages=floor($no_sounds/$how_many_to_show)-1;
+				if (($no_sounds%$how_many_to_show) == 0) {
+					$no_pages = floor($no_sounds/$how_many_to_show)-1;
 					}
 				else {
-					$no_pages=floor($no_sounds/$how_many_to_show);
+					$no_pages = floor($no_sounds/$how_many_to_show);
 					}
 
 				if ($special_wrapper==TRUE){
@@ -474,10 +473,10 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 				echo "<select name=\"startid\" class=\"ui-state-default ui-corner-all\" >";
 
-				for ($p=0;$p<($no_pages+1);$p++) {
-					$this_p=$p+1;
-					$s_id=($p*$how_many_to_show)+1;
-					if ($s_id==$startid){
+				for ($p = 0; $p < ($no_pages + 1); $p++) {
+					$this_p = $p + 1;
+					$s_id = ($p * $how_many_to_show) + 1;
+					if ($s_id == $startid){
 						echo "<option value=\"$s_id\" SELECTED>$this_p</option>\n";
 						}
 					else {
@@ -491,24 +490,8 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 			</div>";
 			?>
-
 		<div class="span-24 last">
 			&nbsp;
-	
-			<script type="text/javascript">
-			function hidediv()
-			      {
-				loadingdiv.style.visibility= "hidden";
-				loadingdiv.style.height= "0";
-			      };
-		
-			hidediv();
-			</script>
-			<style type="text/css">
-			#loadingdiv {visibility:hidden;
-					height:0;}
-			</style>
-			
 		</div>
 		<div class="span-24 last">
 			<?php

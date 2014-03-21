@@ -68,8 +68,8 @@ $settings = DB::pairs('SELECT `Settings`, `Value` FROM `PumilioSettings`');
 extract($settings, EXTR_OVERWRITE);
 
 #Test settings variables
-if ($app_custom_name==""){
-	$app_custom_name="Pumilio";
+if ($app_custom_name == ""){
+	$app_custom_name = "Pumilio";
 	}
 	
 if (!isset($googlemaps_ver)){
@@ -77,24 +77,24 @@ if (!isset($googlemaps_ver)){
 	}
 
 
-if ($googlemaps_ver=="") {
+if ($googlemaps_ver == "") {
 	if ($use_googlemaps == "3"){
-		$googlemaps_ver="3";
+		$googlemaps_ver = "3";
 		}
 	}
 
-if ($app_custom_text=="") {
-	$app_custom_text="Pumilio is a free and open source sound archive manager for the visualization and manipulation of sound files.";
+if ($app_custom_text == "") {
+	$app_custom_text = "Pumilio is a free and open source sound archive manager for the visualization and manipulation of sound files.";
 	}
 
 
-if (isset($fft)==FALSE) {
-	$fft=2048;
+if (isset($fft) == FALSE) {
+	$fft = 2048;
 	query_one("REPLACE INTO PumilioSettings (Settings, Value) VALUES ('fft', '$fft')", $connection);
 	}
 else{
-	if ($fft=="") {
-		$fft=2048;
+	if ($fft == "") {
+		$fft = 2048;
 		query_one("REPLACE INTO PumilioSettings (Settings, Value) VALUES ('fft', '$fft')", $connection);
 		}
 	}
@@ -105,7 +105,7 @@ if (!isset($special_noprocess)){
 	}
 
 	
-if ($googlemaps_ver=="3") {
+if ($googlemaps_ver == "3") {
 	$googlemaps3_key = DB::column('SELECT Value FROM `PumilioSettings` WHERE Settings = "googlemaps3_key"');
 	}
 
@@ -113,18 +113,18 @@ if (!isset($AudioPreviewFormat)){
 	$AudioPreviewFormat = "";
 	}
 
-if ($AudioPreviewFormat=="ogg"){
-	$player_encoder="dir2ogg";
+if ($AudioPreviewFormat == "ogg"){
+	$player_encoder = "dir2ogg";
 	}
-elseif ($AudioPreviewFormat=="mp3"){
+elseif ($AudioPreviewFormat == "mp3"){
 	#LAME encoder
-	$player_encoder="lame";
+	$player_encoder = "lame";
 	}
-elseif ($AudioPreviewFormat==""){
+elseif ($AudioPreviewFormat == ""){
 	#$AudioPreviewFormat="ogg";
 	#$player_encoder="dir2ogg";
-	$AudioPreviewFormat="mp3";
-	$player_encoder="lame";
+	$AudioPreviewFormat = "mp3";
+	$player_encoder = "lame";
 	}
 
 $player_format = $AudioPreviewFormat;
@@ -233,13 +233,13 @@ $sox_version = DB::column('SELECT Value FROM `PumilioSettings` WHERE Settings = 
 # using only forward of version 14.3.2 (w: 5000 h: )
 if ($sox_version == ""){
 	exec('sox --version', $soxout, $soxretval);
-	$sox_version=explode("v",$soxout[0]);
+	$sox_version = explode("v",$soxout[0]);
 	$sox_version = $sox_version[1];
-	$soxver=explode(".",$sox_version);
+	$soxver = explode(".",$sox_version);
 	query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('sox_version', '$sox_version')", $connection);
 	}
 
-	$soxver=explode(".",$sox_version);
+	$soxver = explode(".",$sox_version);
 	if ($soxver[0] > 14){
 		$sox_images = TRUE;
 		}
