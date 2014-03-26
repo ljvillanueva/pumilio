@@ -79,10 +79,31 @@
         <h2>Administrator Guide</h2>
       </div>
 
-        <div class="alert alert-warning"><p>This guide is being updated. New information will be posted during March 2014</p></div>
-                                
-	<p>Please consult the README and INSTALLATION files included in the archive. In addition, you can ask questions or report problems in the <a href="https://github.com/ljvillanueva/pumilio/issues">issues page on Github</a>.</p>
+    <p>Check the <a href="installation.html">installation instructions</a> for a quick overview of the process. Please consult the README and INSTALLATION files included in the archive. In addition, you can ask questions or report problems in the <a href="https://github.com/ljvillanueva/pumilio/issues">issues page on Github</a>.</p>
 
+
+    <p>The application takes several steps when a file is imported. These steps prepare the file, populates the required fields in the database
+      and creates auxiliary files to allow working with this files from a web browser. The steps are:
+      <ol>
+        <li> The file is checked to see that it is a valid soundfile. This check is done with the application SoX.
+        <li> Technical data of the file (duration, format, number of channels, bit rate, sampling rate) are extracted
+          using the utility soxi and stored in the database.
+        <li> Waveform and a spectrogram images are created using a Python script. 
+        <li> An mp3 version of the file is created using LAME. This allows to hear the file over the web.
+      </ol>
+    <p>The following figure illustrates a typical flow of the data in the application. The sounds are recorded and then stored as digital files,
+    preferably in an uncompressed format like wav. The soundfiles in wav format can be compressed using the lossless format FLAC, which
+    reduces the file size by about 50%. Then the files are imported to the application to populate the database and create the auxiliary files.
+    
+    <p><img src="images/dataflow.png" border="0" width="860" height="511">
+
+  <h3><a href="development.html">Development</a></h3>
+    <p>This section includes topics like:
+      <ul>
+        <li>General development concepts behind the application</li>
+        <li>Why some things were done the way they were</li>
+        <li>Some notes about the database structure</li>
+      </ul>
 
 	<h3>Additional options for the config.php file</h3>
 		<p>The config.php file requires, at the least, the credentials for the MySQL database.<br>
