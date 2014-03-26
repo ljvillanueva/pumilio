@@ -23,6 +23,11 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+      
+      <script src="bootstrap/js/jquery-1.10.2.js"></script>
+      <script src="bootstrap/js/bootstrap.min.js"></script>
+      <script src="bootstrap/js/docs.min.js"></script>
+
   </head>
 
   <body role="document">
@@ -43,7 +48,17 @@
           <ul class="nav navbar-nav">
             <li><a href="./">Home</a></li>
             <li><a href="screenshots.html">Screenshots</a></li>
-            <li><a href="videos.html">Videos</a></li>
+
+            <li class="dropdown">
+              <a href="videos.html" class="dropdown-toggle" data-toggle="dropdown">Videos<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="video1.html">Introduction to Pumilio and overview</a></li>
+                <li><a href="video2.html">Adding files to the archive</a></li>
+                <li><a href="video3.html">Searching the archive</a></li>
+                <li><a href="video4.html">Administration of the application</a></li>
+              </ul>
+            </li>
+
             <li><a href="installation.html">Installation</a></li>
             <li><a href="userguide.html">User Guide</a></li>
             <li><a href="adminguide.html">Administrator Guide</a></li>
