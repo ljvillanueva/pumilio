@@ -22,9 +22,13 @@ $Recorder=filter_var($_POST["Recorder"], FILTER_SANITIZE_STRING);
 $Microphone=filter_var($_POST["Microphone"], FILTER_SANITIZE_STRING);
 $Notes=filter_var($_POST["Notes"], FILTER_SANITIZE_STRING);
 
-	$query = ("UPDATE Sensors SET Recorder='$Recorder', Microphone='$Microphone', Notes='$Notes' WHERE SensorID='$SensorID'");
-	$result = mysqli_query($connection, $query)
-		or die (mysqli_error($connection));
+
+	$settings = array(
+		'Recorder' => $Recorder,
+		'Microphone' => $Microphone,
+		'Notes' => $Notes
+	);
+	DB::update('Sensors', $settings, $SensorID, 'SensorID');
 
 header("Location: ../sensor_edit.php?u=1&SensorID=$SensorID");
 die();

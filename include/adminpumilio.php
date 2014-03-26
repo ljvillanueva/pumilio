@@ -73,7 +73,8 @@ if ($use_googlemaps=="3") {
 #Google Analytics:
 	echo "<p>Google Analytics Tracking ID: ";
 
-	echo "<input type=\"text\" name=\"googleanalytics_ID\" size=\"50\" maxlength=\"250\" value=\"$googleanalytics_ID\" class=\"fg-button ui-state-default ui-corner-all formedge\">\n";
+	echo "<input type=\"text\" name=\"googleanalytics_ID\" size=\"20\" maxlength=\"20\" value=\"$googleanalytics_ID\" class=\"fg-button ui-state-default ui-corner-all formedge\">
+			<a href=\"#\" onclick=\"window.open('help.php?topic=GoogleAnalytics', 'help', 'width=650,height=550,status=yes,resizable=yes,scrollbars=auto')\"><img src=\"images/help.png\" title=\"Click for instructions\"></a>\n";
 
 
 

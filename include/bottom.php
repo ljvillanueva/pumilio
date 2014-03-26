@@ -4,7 +4,7 @@ if ($special_wrapper == FALSE && $special_iframe == FALSE){
 
 	echo "<p style=\"float: left;\">
 		<small>$app_custom_name - 
-		<a href=\"#\" onClick=\"window.open('include/contact.php', 'admins', 'width=650,height=400,status=yes,resizable=yes,scrollbars=yes')\">Contact</a><br>";
+		<a href=\"#\" onClick=\"window.open('include/contact.php', 'admins', 'width=650,height=400,status=yes,resizable=yes,scrollbars=yes')\" title=\"Contact information\">Contact</a><br>";
 		
 	#License
 	$files_license = query_one("SELECT Value from PumilioSettings WHERE Settings='files_license'", $connection);
@@ -28,8 +28,8 @@ if ($special_wrapper == FALSE && $special_iframe == FALSE){
 	require("include/version.php");
 
 	echo "<p class=\"right\">
-		<small>Powered by <a href=\"http://ljvillanueva.github.io/pumilio\" target=_blank>Pumilio</a> v. $website_version<br>
-		<a href=\"#\" onClick=\"window.open('include/copyright.php', 'copyright', 'width=650,height=400,status=yes,resizable=yes,scrollbars=yes')\">&copy; 2010-2014 LJV</a>. Licensed under the GPLv3.</small>";
+		<small>Powered by <a href=\"http://ljvillanueva.github.io/pumilio\" target=_blank title=\"Website of the Pumilio application\">Pumilio</a> v. $website_version<br>
+		<a href=\"#\" onClick=\"window.open('include/copyright.php', 'copyright', 'width=650,height=400,status=yes,resizable=yes,scrollbars=yes')\" title=\"Copyright information of the application\">&copy; 2010-2014 LJV</a>. Licensed under the GPLv3.</small>";
 	}
 
 require("include/check_login.php");

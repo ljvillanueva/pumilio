@@ -11,21 +11,19 @@ require("check_admin.php");
 #Sanitize
 $defaultqf=filter_var($_POST["defaultqf"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
-$check=query_one("SELECT COUNT(*) from PumilioSettings WHERE Settings='default_qf'", $connection);
-
-if ($check==0) {
-	$query = ("INSERT INTO PumilioSettings (Settings, Value) 
-		VALUES ('default_qf','$defaultqf')");
-	$result = mysqli_query($connection, $query)
-		or die (mysqli_error($connection));
-	}
-else {
-	$query = ("UPDATE PumilioSettings SET Value='$defaultqf' WHERE Settings='default_qf'");
-	$result = mysqli_query($connection, $query)
-		or die (mysqli_error($connection));
-	}
+	$check = DB::column('SELECT COUNT(*) FROM `PumilioSettings` WHERE Settings = "default_qf"');
+	$settings = array(
+		'Settings' => 'default_qf',
+		'Value' => $defaultqf
+	);
+	if ($check == 0){
+		DB::insert('PumilioSettings', $settings);
+		}
+	else{
+		DB::update('PumilioSettings', $settings, 'default_qf', 'Settings');
+		}
 
 // Relocate back to the first page of the application
-	header("Location: ../admin.php?t=9&u=4");
+	header("Location: ../admin.php?t=6&u=4");
 	die();
 ?>

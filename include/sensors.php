@@ -10,16 +10,14 @@ echo "<strong>Add sensors to the database</strong>
 
 #Sensors in the db:
 echo "<hr noshade>";
-$query = "SELECT * from Sensors ORDER BY SensorID";
-$result = mysqli_query($connection, $query)
-	or die (mysqli_error($connection));
-$nrows = mysqli_num_rows($result);
 
-if ($nrows == 0){
+$rows = DB::fetch('SELECT * FROM `Sensors` ORDER BY `SensorID`', array(TRUE));
+
+if (count($rows) == 0){
 	echo "<p>There are no sensors in the system.";
 	}
 else {
-	echo "<p>The system has the following sensors:
+	echo "<p>The system has the following ". count($rows) ." sensors:
 		<table>";
 
 	echo "<tr>
@@ -34,35 +32,24 @@ else {
 			<td>Edit</td>
 		</tr>\n";
 
-	for ($i=0;$i<$nrows;$i++) {
-		$row = mysqli_fetch_array($result);
-		extract($row);
-		if ($SensorID==1){
+
+ 	foreach($rows as $row){
+#	for ($i = 0; $i < $nrows; $i++) {
+		#$row = mysqli_fetch_array($result);
+		#extract($row);
+		
 			echo "<tr>
-				<td>$SensorID</td>
+				<td>" . $row->SensorID . "</td>
 				<td>&nbsp;</td>
-				<td>$Recorder</td>
+				<td>" . $row->Recorder . "</td>
 				<td>&nbsp;</td>
-				<td>$Microphone</td>
+				<td>" . $row->Microphone . "</td>
 				<td>&nbsp;</td>
-				<td>$Notes</td>
+				<td>" . $row->Notes . "</td>
 				<td>&nbsp;</td>
-				<td>&nbsp;</td>
+				<td><a href=\"sensor_edit.php?SensorID=" . $row->SensorID . "\"><img src=\"images/pencil.png\"></td>
 			</tr>\n";
-			}
-		else{
-			echo "<tr>
-				<td>$SensorID</td>
-				<td>&nbsp;</td>
-				<td>$Recorder</td>
-				<td>&nbsp;</td>
-				<td>$Microphone</td>
-				<td>&nbsp;</td>
-				<td>$Notes</td>
-				<td>&nbsp;</td>
-				<td><a href=\"sensor_edit.php?SensorID=$SensorID\"><img src=\"images/pencil.png\"></td>
-			</tr>\n";
-			}
+		
 		}
 	echo "</table>";
 	}

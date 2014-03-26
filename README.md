@@ -31,6 +31,7 @@ This application uses several other open source tools and programs like:
 * JCrop image cropping plugin (http://deepliquid.com/content/Jcrop.html)
 * DByte (http://github.com/Xeoncross/DByte)
 * Plupload (http://www.plupload.com)
+* Mobile Detect (http://mobiledetect.net)
 * Google Maps (http://maps.google.com)
 * Google Web Fonts (http://www.google.com/webfonts)
 * Ajax wait icons by Andrew B. Davidson (http://www.andrewdavidson.com/articles/spinning-wait-icons/)

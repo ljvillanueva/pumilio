@@ -19,14 +19,14 @@ else {
 			$username = $current_user->user_login;
 		
 			echo "Logged as <a href=\"edit_myinfo.php\" title=\"Edit my information or change password\">$username</a> 
-				[<a href=\"index.php\">Home</a>] 
-				[<a href=\"search.php\">Search</a>] ";
+				[<a href=\"index.php\" title=\"Home of the application\">Home</a>] 
+				[<a href=\"search.php\" title=\"Search soundfiles\">Search</a>] ";
 
 			#Check if user can enter admin area
 			if (is_super_admin()) {
 				$this_page = basename($_SERVER['PHP_SELF']);
 				if ($this_page != "admin.php"){
-					echo " [<a href=\"admin.php\">Admin</a>]";
+					echo " [<a href=\"admin.php\" title=\"Administration menu\">Admin</a>]";
 					}
 				else {
 					echo " [Admin]";
@@ -41,9 +41,9 @@ else {
 		else {
 			$e=filter_var($_GET["e"], FILTER_SANITIZE_NUMBER_INT);
 			$login_url = wp_login_url( "$self?$q" );
-			echo "[<a href=\"index.php\">Home</a>] 
-				[<a href=\"$login_url\" title=\"Login\">Login</a>]
-				[<a href=\"search.php\">Search</a>]</small>";
+			echo "[<a href=\"index.php\" title=\"Home of the application\">Home</a>] 
+				[<a href=\"$login_url\" title=\"Login as a user\">Login</a>]
+				[<a href=\"search.php\" title=\"Search soundfiles\">Search</a>]</small>";
 			$notlogged = TRUE;
 			}
 		}
@@ -51,15 +51,15 @@ else {
 		if (sessionAuthenticate($connection)) {
 			$username = $_COOKIE["username"];
 			echo "Logged as <a href=\"edit_myinfo.php\" title=\"Edit my information or change password\">$username</a> 
-				[<a href=\"index.php\">Home</a>] 
-				[<a href=\"search.php\">Search</a>] ";
+				[<a href=\"index.php\" title=\"Home of the application\">Home</a>] 
+				[<a href=\"search.php\" title=\"Search soundfiles\">Search</a>] ";
 
 			#Check if user can enter admin area
 			$username = $_COOKIE["username"];
 			if (is_user_admin2($username, $connection)) {
 				$this_page = basename($_SERVER['PHP_SELF']);
 				if ($this_page != "admin.php"){
-					echo " [<a href=\"admin.php\">Admin</a>]";
+					echo " [<a href=\"admin.php\" title=\"Administration menu\">Admin</a>]";
 					}
 				else {
 					echo " [Admin]";
@@ -71,8 +71,8 @@ else {
 			include("include/check_system.php");
 			}
 		else {
-			echo "[<a href=\"index.php\">Home</a>] 
-				[<a href=\"search.php\">Search</a>]<br>";
+			echo "[<a href=\"index.php\" title=\"Home of the application\">Home</a>] 
+				[<a href=\"search.php\" title=\"Search soundfiles\">Search</a>]<br>";
 			$e = filter_var($_GET["e"], FILTER_SANITIZE_NUMBER_INT);
 
 			if ($e == 1) {

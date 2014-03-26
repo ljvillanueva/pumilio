@@ -19,13 +19,12 @@ require("check_admin.php");
 #Sanitize
 $SensorID=filter_var($_GET["SensorID"], FILTER_SANITIZE_NUMBER_INT);
 
-	$query = ("DELETE FROM Sensors WHERE SensorID='$SensorID'");
-	$result = mysqli_query($connection, $query)
-		or die (mysqli_error($connection));
+	DB::query('DELETE FROM `Sensors` WHERE `SensorID` = ?', array($SensorID));
 
-	$query = ("UPDATE Sounds SET SensorID = NULL WHERE SensorID='$SensorID'");
-	$result = mysqli_query($connection, $query)
-		or die (mysqli_error($connection));
+	$settings = array(
+		'SensorID' => 'NULL'
+	);
+	DB::update('Sounds', $settings, $SensorID, 'SensorID');
 
 header("Location: admin.php?t=4");
 die();

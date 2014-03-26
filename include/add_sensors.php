@@ -31,11 +31,12 @@ if ($_POST["Notes"]!=""){
 	$Notes=filter_var($_POST["Notes"], FILTER_SANITIZE_STRING);
 	}
 
-	$query = ("INSERT INTO Sensors 
-		(Recorder,Microphone,Notes) 
-		VALUES ('$Recorder', '$Microphone', '$Notes')");
-	$result = mysqli_query($connection, $query)
-		or die (mysqli_error($connection));
+	$sensor = array(
+		'Recorder' => $Recorder,
+		'Microphone' => $Microphone,
+		'Notes' => $Notes
+	);
+		DB::insert('Sensors', $sensor);
 
 header("Location: ../admin.php?t=4");
 die();

@@ -43,7 +43,7 @@ if ($mobile==TRUE) {
 			}
 
 
-		echo "<strong><a href=\"$db_filedetails_link&SoundID=$SoundID\">$SoundName</a></strong>\n";
+		echo "<strong><a href=\"$db_filedetails_link&SoundID=$SoundID\" title=\"Click for the details of this file and more options\">$SoundName</a></strong>\n";
 		$ColID = DB::column('SELECT ColID FROM `Sounds` WHERE SoundID = ' . $SoundID);
 		$DirID = DB::column('SELECT DirID FROM `Sounds` WHERE SoundID = ' . $SoundID);
 
@@ -328,7 +328,7 @@ else {
 
 		echo "<div class=\"span-8 summary-left\">";
 
-		echo "<strong><a href=\"$db_filedetails_link&SoundID=$SoundID\">$SoundName</a></strong>";
+		echo "<strong><a href=\"$db_filedetails_link&SoundID=$SoundID\" title=\"Click for file details and more options\">$SoundName</a></strong>";
 		$ColID = DB::column('SELECT ColID FROM `Sounds` WHERE SoundID = ' . $SoundID);
 		$SiteID = DB::column('SELECT SiteID FROM `Sounds` WHERE SoundID = ' . $SoundID);
 

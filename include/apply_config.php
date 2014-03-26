@@ -174,10 +174,6 @@ if (!isset($login_wordpress)){
 	$login_wordpress = FALSE;
 	}
 
-if (!isset($special_noprocess)){
-	$special_noprocess = FALSE;
-	}
-
 if (!isset($special_nofiles)){
 	$special_nofiles = FALSE;
 	}
@@ -227,41 +223,43 @@ if (isset($googleanalytics_ID)){
 
 
 #Check sox version
-#$sox_version=query_one("SELECT Value from PumilioSettings WHERE Settings='sox_version'", $connection);
-$sox_version = DB::column('SELECT Value FROM `PumilioSettings` WHERE Settings = "sox_version"');
+if (!$special_noprocess){
+	#$sox_version=query_one("SELECT Value from PumilioSettings WHERE Settings='sox_version'", $connection);
+	$sox_version = DB::column('SELECT Value FROM `PumilioSettings` WHERE Settings = "sox_version"');
 
-# using only forward of version 14.3.2 (w: 5000 h: )
-if ($sox_version == ""){
-	exec('sox --version', $soxout, $soxretval);
-	$sox_version = explode("v",$soxout[0]);
-	$sox_version = $sox_version[1];
-	$soxver = explode(".",$sox_version);
-	query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('sox_version', '$sox_version')", $connection);
-	}
-
-	$soxver = explode(".",$sox_version);
-	if ($soxver[0] > 14){
-		$sox_images = TRUE;
+	# using only forward of version 14.3.2 (w: 5000 h: )
+	if ($sox_version == ""){
+		exec('sox --version', $soxout, $soxretval);
+		$sox_version = explode("v",$soxout[0]);
+		$sox_version = $sox_version[1];
+		$soxver = explode(".",$sox_version);
+		query_one("INSERT INTO PumilioSettings (Settings, Value) VALUES ('sox_version', '$sox_version')", $connection);
 		}
-	elseif ($soxver[0] = 14){
-		if ($soxver[1] > 3){
+
+		$soxver = explode(".",$sox_version);
+		if ($soxver[0] > 14){
 			$sox_images = TRUE;
 			}
-		elseif ($soxver[1] < 3){
-			$sox_images = FALSE;
-			}
-		else{
-			if ($soxver[2] >= 2){
+		elseif ($soxver[0] = 14){
+			if ($soxver[1] > 3){
 				$sox_images = TRUE;
 				}
-			else{
+			elseif ($soxver[1] < 3){
 				$sox_images = FALSE;
 				}
+			else{
+				if ($soxver[2] >= 2){
+					$sox_images = TRUE;
+					}
+				else{
+					$sox_images = FALSE;
+					}
+				}
 			}
-		}
-	else{
-		$sox_images = FALSE;
-		}
+		else{
+			$sox_images = FALSE;
+			}
+	}
 
 ################
 #Turn SoX option off while finishing rest of code

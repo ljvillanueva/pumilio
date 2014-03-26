@@ -86,6 +86,6 @@ echo "<p><form action=\"include/editqfdefault.php\" method=\"POST\" id=\"EditQFD
 	echo "</select><br>
 	<input type=submit value=\" Change \" class=\"fg-button ui-state-default ui-corner-all\">
 	<br>
-	</form></div>";
+	</form>";
 	
 ?>

@@ -48,19 +48,13 @@ require("apply_config_include.php");
 <h4>Contact the administrators of this site:</h4>
 
 	<?php
-	
-		$query = "SELECT * from Users WHERE UserRole='admin' AND UserActive='1' ORDER BY UserName";
-		$result = mysqli_query($connection, $query)
-			or die (mysqli_error($connection));
-		$nrows = mysqli_num_rows($result);
+		
+		$rows = DB::fetch("SELECT * FROM `Users` WHERE `UserRole`='admin' AND `UserActive`='1' ORDER BY `UserName`", array(TRUE));
 
 		echo "<ul>\n";
 
-		for ($i = 0; $i < $nrows; $i++) {
-			$row = mysqli_fetch_array($result);
-			extract($row);
-
-			echo "<li>$UserFullname: <a href=\"mailto:$UserEmail\">$UserEmail</a></li>\n";
+		foreach($rows as $row){
+			echo "<li>" . $row->UserFullname . ": <a href=\"mailto:" . $row->UserEmail . "\">" . $row->UserEmail . "</a></li>\n";
 			}
 
 		echo "</ul>\n";

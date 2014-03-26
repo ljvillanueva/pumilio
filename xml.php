@@ -32,7 +32,6 @@ require("include/apply_config_xml.php");
 	
 	
 #Check if allowed
-#$use_xml=query_one("SELECT Value from PumilioSettings WHERE Settings='use_xml'", $connection);
 if ($use_xml==""){
 	$use_xml="0";
 	}

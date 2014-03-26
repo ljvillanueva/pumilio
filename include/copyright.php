@@ -56,23 +56,24 @@
 <p>This application uses several other open source tools and programs, including:
 
 <ul>
-	<li> <a href="http://blueprintcss.org/" target="_blank">Blueprint CSS framework</a>
-	<li> <a href="http://sox.sourceforge.net/" target="_blank">SoX</a>
-	<li> <a href="http://www.freesound.org/blog/?p=10" target="_blank">wav2png script by Freesound</a>
-	<li> <a href="http://www.longtailvideo.com/players/jw-flv-player/" target="_blank">JW Player</a>
-	<li> <a href="http://www.jplayer.org" target="_blank">JPlayer</a>
-	<li> <a href="http://www.flotcharts.org" target="_blank">Flot</a>
-	<li> <a href="http://www.ar.media.kyoto-u.ac.jp/members/david/softwares/audiolab/sphinx/index.html" target="_blank">Audiolab Python module</a>
-	<li> <a href="http://www.jquery.com" target="_blank">JQuery Javascript library</a>
-	<li> <a href="http://jqueryui.com" target="_blank">JQuery UI</a>
-	<li> <a href="http://deepliquid.com/content/Jcrop.html" target="_blank">JCrop image cropping plugin</a>
-	<li> <a href="http://github.com/Xeoncross/DByte">DByte database layer</a>
-	<li> <a href="http://www.plupload.com" target="_blank">Plupload</a>
-	<li> <a href="http://maps.google.com" target="_blank">Google Maps</a>
-	<li> <a href="http://www.google.com/webfonts" target="_blank">Google Web Fonts</a>
-	<li> <a href="http://www.andrewdavidson.com/articles/spinning-wait-icons/" target="_blank">Ajax wait icons by Andrew B. Davidson</a>
-	<li> <a href="http://everaldo.com/crystal/?action=downloads" target="_blank">Crystal Project icons</a>
-	<li> <a href="http://www.famfamfam.com/lab/icons/silk/" target="_blank">Silk icons</a>
+	<li> <a href="http://blueprintcss.org/" target="_blank">Blueprint CSS framework</a></li>
+	<li> <a href="http://sox.sourceforge.net/" target="_blank">SoX</a></li>
+	<li> <a href="http://www.freesound.org/blog/?p=10" target="_blank">wav2png script by Freesound</a></li>
+	<li> <a href="http://www.longtailvideo.com/players/jw-flv-player/" target="_blank">JW Player</a></li>
+	<li> <a href="http://www.jplayer.org" target="_blank">JPlayer</a></li>
+	<li> <a href="http://www.flotcharts.org" target="_blank">Flot</a></li>
+	<li> <a href="http://www.ar.media.kyoto-u.ac.jp/members/david/softwares/audiolab/sphinx/index.html" target="_blank">Audiolab Python module</a></li>
+	<li> <a href="http://www.jquery.com" target="_blank">JQuery Javascript library</a></li>
+	<li> <a href="http://jqueryui.com" target="_blank">JQuery UI</a></li>
+	<li> <a href="http://deepliquid.com/content/Jcrop.html" target="_blank">JCrop image cropping plugin</a></li>
+	<li> <a href="http://github.com/Xeoncross/DByte">DByte database layer</a></li>
+	<li> <a href="http://www.plupload.com" target="_blank">Plupload</a></li>
+	<li> <a href="http://mobiledetect.net" target="_blank">Mobile Detect</a></li>
+	<li> <a href="http://maps.google.com" target="_blank">Google Maps</a></li>
+	<li> <a href="http://www.google.com/webfonts" target="_blank">Google Web Fonts</a></li>
+	<li> <a href="http://www.andrewdavidson.com/articles/spinning-wait-icons/" target="_blank">Ajax wait icons by Andrew B. Davidson</a></li>
+	<li> <a href="http://everaldo.com/crystal/?action=downloads" target="_blank">Crystal Project icons</a></li>
+	<li> <a href="http://www.famfamfam.com/lab/icons/silk/" target="_blank">Silk icons</a></li>
 </ul>
 
 <p>The website for this app is hosted at GitHub: <a href="http://ljvillanueva.github.io/pumilio">http://ljvillanueva.github.io/pumilio</a>

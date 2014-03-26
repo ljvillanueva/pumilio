@@ -344,7 +344,9 @@ else{
 				
 					if ($pumilio_loggedin == TRUE) {
 						if ($pumilio_admin == TRUE || $allow_upload){
-							echo "<p><strong><a href=\"add.php\">Add files to the archive</a></strong><br>
+							echo "<form action=\"add.php\" method=\"GET\">
+									<input type=submit value=\" Add files to the archive \" class=\"fg-button ui-state-default ui-corner-all\">
+								</form>
 							<hr noshade>";
 							}
 						}

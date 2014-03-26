@@ -61,7 +61,7 @@ for ($i=0;$i<$nrows;$i++) {
 		$small_spectrogram_path = "images/notready-small.png";
 		}
 
-	echo "<a href=\"$db_filedetails_link&SoundID=$SoundID\">
+	echo "<a href=\"$db_filedetails_link&SoundID=$SoundID\" title=\"Click for file details and more options\">
 		<img src=\"$small_spectrogram_path\" width=\"300\" height=\"150\"><br>
 		$SoundName</a>";
 

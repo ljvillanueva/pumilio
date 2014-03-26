@@ -75,6 +75,17 @@ elseif ($topic == "R"){
 	$help_text = "Pumilio can use several R packages to extract data and indices from sound files. 
 		If you select this option, R needs to be installed.";
 	}
+elseif ($topic == "GoogleAnalytics"){
+	$help_title = "Using Google Analytics";
+	$help_text = "<p>Pumilio can add the necessary code for tracking the visitors to the website using the Google Analytics system.
+		You will need to create an account on http://www.google.com/analytics/
+
+		<p>Once you have an account, then you can add a website to track as a \"Property\". This property will have under \"Property Settings\"
+			a Tracking ID code, which looks like this: UA-000000-01.
+		<p>For more details check this <a href=\"https://support.google.com/analytics/answer/1008080?hl=en\" target=_blank>help page (https://support.google.com/analytics/answer/1008080?hl=en)</a>.
+			";
+	}
+
 
 echo "<h3>$help_title</h3>";
 

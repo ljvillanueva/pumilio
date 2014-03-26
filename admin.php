@@ -298,44 +298,39 @@ require("include/get_jqueryui.php");
 
 <?php
 						
-if ($t==9) {
+if ($t==7) {
 	echo "$(function() {
-		$(\"#tabs0\").tabs({ selected: 7 });
-		});";
-	}
-elseif ($t==7) {
-	echo "$(function() {
-		$(\"#tabs0\").tabs({ selected: 6 });
+		$(\"#tabs0\").tabs({ active: 6 });
 		});";
 	}
 elseif ($t==6) {
 	echo "$(function() {
-		$(\"#tabs0\").tabs({ selected: 5 });
+		$(\"#tabs0\").tabs({ active: 5 });
 		});";
 	}
 elseif ($t==5) {
 	echo "$(function() {
-		$(\"#tabs0\").tabs({ selected: 4 });
+		$(\"#tabs0\").tabs({ active: 4 });
 		});";
 	}
 elseif ($t==4) {
 	echo "$(function() {
-		$(\"#tabs0\").tabs({ selected: 3 });
+		$(\"#tabs0\").tabs({ active: 3 });
 		});";
 	}
 elseif ($t==3) {
 	echo "$(function() {
-		$(\"#tabs0\").tabs({ selected: 2 });
+		$(\"#tabs0\").tabs({ active: 2 });
 		});";
 	}
 elseif ($t==2) {
 	echo "$(function() {
-		$(\"#tabs0\").tabs({ selected: 1 });
+		$(\"#tabs0\").tabs({ active: 1 });
 		});";
 	}
 elseif ($t==1) {
 	echo "$(function() {
-		$(\"#tabs0\").tabs({ selected: 0 });
+		$(\"#tabs0\").tabs({ active: 0 });
 		});";
 	}
 else
@@ -472,9 +467,9 @@ if (is_file("$absolute_dir/customhead.php")) {
 					<li><a href="#tabs-3">Users</a></li>
 					<li><a href="#tabs-4">Sensors</a></li>
 					<li><a href="#tabs-5">Export sound files</a></li>
-					<li><a href="#tabs-6">Weather data</a></li>
+					<!-- <li><a href="#tabs-6">Weather data</a></li> -->
+					<li><a href="#tabs-6">Quality Control</a></li>
 					<li><a href="#tabs-7">Maintenance</a></li>
-					<li><a href="#tabs-8">Quality Control</a></li>
 				</ul>
 			<div id="tabs-1">
 				<h4>Settings</h4>
@@ -634,13 +629,23 @@ if (is_file("$absolute_dir/customhead.php")) {
 				
 			</div>
 			
+			<!--
 			<div id="tabs-6">
 				<h4>Weather data</h4>
 				<?php
-					require("include/weather_sites.php");
+				#		require("include/weather_sites.php");
 				?>
 			</div>
+			-->
+
+			<div id="tabs-6">
+				<h4>Quality control</h4>
+					<?php
+						require("include/qf.php");
+					?>
+			</div>
 			
+
 			<div id="tabs-7">
 				<h4>Maintenance</h4>
 				<?php
@@ -675,15 +680,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 					echo "</ul>";
 				?>
 			</div>
-			
-			
-			<div id="tabs-8">
-				<h4>Quality control</h4>
-					<?php
-						require("include/qf.php");
-					?>
-			</div>
-			
+
 		<br>
 		</div>
 		<div class="span-24 last">
