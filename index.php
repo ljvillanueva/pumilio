@@ -307,7 +307,7 @@ else{
 				$browse_map_link = "browse_map.php";
 				$db_browse_link = "db_browse.php";
 				$db_filedetails_link = "db_filedetails.php";
-				$advancedsearch_link = "advancedsearch.php";
+				$advancedsearch_link = "results.php";
 				}
 
 			if ($no_sounds > 0) {
