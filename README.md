@@ -39,12 +39,16 @@ This application uses several other open source tools and programs like:
 * Silk icons (http://www.famfamfam.com/lab/icons/silk/)
 
 The name "pumilio" refers to the tropical frog known as the Strawberry Poison-dart
- Frog (Oophaga pumilio), a bold little critter that sings during the day without
+ Frog (*Oophaga pumilio*), a bold little critter that sings during the day without
  fear of being predated upon.
 
 Feel free to contribute code, ideas, suggestions, bugs, etc.
 
 Read the INSTALLATION file to install and the UPGRADE file to upgrade.
+
+Check the website for an installatio overview, guides, and videos: 
+
+ http://ljvillanueva.github.io/pumilio
 
 Versions with a ".dev" suffix are not official and are in the middle of 
  development. Use these versions with caution as some features may be 
