@@ -4,6 +4,7 @@ ignore_user_abort(true);
 set_time_limit(0);
 
 #Calculate time to complete
+date_default_timezone_set('GMT');
 $Time0=strtotime("now");
 
 $dir=filter_var($_POST["dir"], FILTER_SANITIZE_URL);
@@ -81,18 +82,26 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 				#Check that the files are ok
 				$this_file=filter_var($this_row1[0], FILTER_SANITIZE_STRING);
-				exec('include/soundcheck.py ' . $dir . '/' . $this_file, $lastline, $retval);
-				if ($retval!=0) {
-					echo "<div class=\"error\">The file " . $this_file . " could not be read or it is not an audio file. 
-						Please go back and try again.</div>";
+
+				#check if readable
+				if (!is_readable($dir . '/' . $this_file)){
+					echo "<div class=\"error\">The file " . $this_file . " could not be read by the webserver user. Please change the permissions and try again.</div>";
 					$file_errors+=1;
+					}
+				else{
+					exec('include/soundcheck.py ' . $dir . '/' . $this_file, $lastline, $retval);
+					if ($retval!=0) {
+						echo "<div class=\"error\">The file " . $this_file . " does not seem to be an audio file.
+							Please go back and try again.</div>";
+						$file_errors+=1;
+						}
 					}
 				}
 
-				if ($file_errors>0) {
-					echo "<br><br><div class=\"error\">There were $file_errors errors, fix them before importing can be done.</div>";
-					die();
-					}
+			if ($file_errors>0) {
+				echo "<br><br><div class=\"error\">There were $file_errors errors, fix them before importing can be done.</div>";
+				die();
+				}
 
 
 			#ALL CHECKS OK

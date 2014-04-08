@@ -1,4 +1,21 @@
 <?php
+
+	
+if ($SiteID==""){
+	$SiteID = "NULL";
+	}
+else{
+	$SiteID = "$SiteID";
+	}
+
+if ($SensorID==""){
+	$SensorID = "NULL";
+	}
+else{
+	$SensorID = "$SensorID";
+	}
+
+
 ### All checks passed
 $success_counter=0;
 for ($k=0;$k<$commadata_count;$k++) {
@@ -31,21 +48,7 @@ for ($k=0;$k<$commadata_count;$k++) {
 	$DirID = rand(1,100);
 	
 	
-	if ($SiteID==""){
-		$SiteID = "NULL";
-		}
-	else{
-		$SiteID = "'$SiteID'";
-		}
-
-	if ($SensorID==""){
-		$SensorID = "NULL";
-		}
-	else{
-		$SensorID = "'$SensorID'";
-		}
-	
-	$query_to_insert="INSERT INTO Sounds ($fields, ColID, DirID, SiteID, SensorID) VALUES ($this_row_imploded, '$ColID', '$DirID', $SiteID, $SensorID);";
+	$query_to_insert="INSERT INTO Sounds ($fields, ColID, DirID, SiteID, SensorID) VALUES ($this_row_imploded, '$ColID', '$DirID', '$SiteID', '$SensorID');";
 	$result = mysqli_query($connection, $query_to_insert)
 			or die (mysqli_error($connection));
 
