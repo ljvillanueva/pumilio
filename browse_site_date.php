@@ -147,10 +147,8 @@ if ($nrows_all_tags>0) {
 			      source: mytags
 		    });
 		  });
-	</script>
-	";
-	}";
- }
+		</script>\n";
+ 	}
 ?>
   
   
