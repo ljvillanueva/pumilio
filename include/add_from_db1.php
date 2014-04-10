@@ -44,9 +44,6 @@ if (is_file("$absolute_dir/customhead.php")) {
 </head>
 <body>
 
-	<!-- Scripts for Javascript tooltip from http://www.walterzorn.com/tooltip/tooltip_e.htm -->
-	<script type="text/javascript" src="include/wz_tooltip/wz_tooltip.js"></script>
-
 	<!--Blueprint container-->
 	<div class="container">
 		<?php
