@@ -147,10 +147,8 @@ if ($nrows_all_tags>0) {
 			      source: mytags
 		    });
 		  });
-	</script>
-	";
-	}";
- }
+		</script>\n";
+ 	}
 ?>
   
   
@@ -201,7 +199,7 @@ $(function() {
 
 <?php
 
->#Execute custom code for head, if set
+#Execute custom code for head, if set
 if (is_file("$absolute_dir/customhead.php")) {
 		include("customhead.php");
 	}
