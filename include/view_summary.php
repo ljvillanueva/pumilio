@@ -300,8 +300,9 @@ if ($mobile==TRUE) {
 
 			if ($check_auxfiles==TRUE) {
 				#check files in background
-				
-				check_in_background($absolute_dir, $connection);
+				if ($special_noprocess == FALSE){
+					check_in_background($absolute_dir, $connection);
+					}
 				}
 
 
@@ -622,8 +623,9 @@ else {
 
 			if ($check_auxfiles==TRUE) {
 				#check files in background
-				
-				check_in_background($absolute_dir, $connection);
+				if ($special_noprocess == FALSE){
+					check_in_background($absolute_dir, $connection);
+					}
 				}
 
 		flush(); @ob_flush();

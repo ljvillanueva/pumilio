@@ -593,49 +593,48 @@ function bgProcess_howlong($PID) {
 
 
 function add_in_background($absolute_dir, $connection) {
-	if ($special_noprocess == FALSE){
-		$cores_to_use = query_one("SELECT Value from PumilioSettings WHERE Settings='cores_to_use'", $connection);
-		if ($cores_to_use == "" || $cores_to_use == "0"){
-			$cores_to_use = 1;
-			}
-		require("config.php");
-		#$bg_processes = bgHowMany();
-		$bg_processes = query_one("SELECT COUNT(*) from FilesToAddMembers WHERE ReturnCode='2'", $connection);
 
-		if($bg_processes < $cores_to_use) {
-			$random_value = mt_rand();
-			$tmp_dir = 'tmp/' . $random_value;
-			mkdir($tmp_dir, 0777);
+	$cores_to_use = query_one("SELECT Value from PumilioSettings WHERE Settings='cores_to_use'", $connection);
+	if ($cores_to_use == "" || $cores_to_use == "0"){
+		$cores_to_use = 1;
+		}
+	require("config.php");
+	#$bg_processes = bgHowMany();
+	$bg_processes = query_one("SELECT COUNT(*) from FilesToAddMembers WHERE ReturnCode='2'", $connection);
 
-			#make htaccess to protect files
-				$myFile = $tmp_dir . '/.htaccess';
-				$fh = fopen($myFile, 'w') or die("Can't write the configuration file $myFile. Please check that the webserver can write the tmp directory.");
-				fwrite($fh, "order allow,deny" . PHP_EOL);
-				fwrite($fh, "deny from all" . PHP_EOL);
-				fclose($fh);
+	if($bg_processes < $cores_to_use) {
+		$random_value = mt_rand();
+		$tmp_dir = 'tmp/' . $random_value;
+		mkdir($tmp_dir, 0777);
 
-			#write config file
-				$myFile = $tmp_dir . '/configfile.php';
-				$fh = fopen($myFile, 'w') or die("Can't write the configuration file $myFile. Please check that the webserver can write the tmp directory.");
-				fwrite($fh, "<?php" . PHP_EOL);
-				fwrite($fh, "$host" . PHP_EOL);
-				fwrite($fh, "$database" . PHP_EOL);
-				fwrite($fh, "$user" . PHP_EOL);
-				fwrite($fh, "$password" . PHP_EOL);
-				fwrite($fh, "$absolute_dir/" . PHP_EOL);
-				fwrite($fh, "?>");
-				fclose($fh);
-			
-			copy('include/add/add_to_pumiliodb.py', $tmp_dir . '/add_to_pumiliodb.py');
-			copy('include/add/soundcheck.py', $tmp_dir . '/soundcheck.py');
-			#exec('chmod +x ' . $tmp_dir . '/*', $out, $retval);
-			exec('cd ' . $tmp_dir . '; python add_to_pumiliodb.py > /dev/null 2> /dev/null & echo $!', $out, $retval);
-			#$thisPID = $out[0];
-			#$username = $_COOKIE["username"];
-			#query_one("INSERT INTO BackgroundProcs (PID, username) VALUES ('$thisPID', '$username')", $connection);
-			
-			#CREATE TABLE IF NOT EXISTS `BackgroundProcs` (`PID` int(11) NOT NULL, `username` varchar(40) NOT NULL, `starttime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, KEY `PID` (`PID`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;			
-			}
+		#make htaccess to protect files
+			$myFile = $tmp_dir . '/.htaccess';
+			$fh = fopen($myFile, 'w') or die("Can't write the configuration file $myFile. Please check that the webserver can write the tmp directory.");
+			fwrite($fh, "order allow,deny" . PHP_EOL);
+			fwrite($fh, "deny from all" . PHP_EOL);
+			fclose($fh);
+
+		#write config file
+			$myFile = $tmp_dir . '/configfile.php';
+			$fh = fopen($myFile, 'w') or die("Can't write the configuration file $myFile. Please check that the webserver can write the tmp directory.");
+			fwrite($fh, "<?php" . PHP_EOL);
+			fwrite($fh, "$host" . PHP_EOL);
+			fwrite($fh, "$database" . PHP_EOL);
+			fwrite($fh, "$user" . PHP_EOL);
+			fwrite($fh, "$password" . PHP_EOL);
+			fwrite($fh, "$absolute_dir/" . PHP_EOL);
+			fwrite($fh, "?>");
+			fclose($fh);
+		
+		copy('include/add/add_to_pumiliodb.py', $tmp_dir . '/add_to_pumiliodb.py');
+		copy('include/add/soundcheck.py', $tmp_dir . '/soundcheck.py');
+		#exec('chmod +x ' . $tmp_dir . '/*', $out, $retval);
+		exec('cd ' . $tmp_dir . '; python add_to_pumiliodb.py > /dev/null 2> /dev/null & echo $!', $out, $retval);
+		#$thisPID = $out[0];
+		#$username = $_COOKIE["username"];
+		#query_one("INSERT INTO BackgroundProcs (PID, username) VALUES ('$thisPID', '$username')", $connection);
+		
+		#CREATE TABLE IF NOT EXISTS `BackgroundProcs` (`PID` int(11) NOT NULL, `username` varchar(40) NOT NULL, `starttime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, KEY `PID` (`PID`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;			
 		}
 	}
 
@@ -648,40 +647,38 @@ function bgHowManyCheck() {
 
 
 function check_in_background($absolute_dir, $connection) {
-	if ($special_noprocess == FALSE){
-		require("config.php");
-		$bg_processes = bgHowManyCheck();
+	require("config.php");
+	$bg_processes = bgHowManyCheck();
 
-		if($bg_processes < 3) {
-			$random_value = mt_rand();
-			$tmp_dir = 'tmp/' . $random_value;
-			mkdir($tmp_dir, 0777);
+	if($bg_processes < 3) {
+		$random_value = mt_rand();
+		$tmp_dir = 'tmp/' . $random_value;
+		mkdir($tmp_dir, 0777);
 
-			#make htaccess to protect files
-				$myFile = $tmp_dir . '/.htaccess';
-				$fh = fopen($myFile, 'w') or die("Can't write the configuration file $myFile. Please check that the webserver can write the tmp directory.");
-				fwrite($fh, "order allow,deny" . PHP_EOL);
-				fwrite($fh, "deny from all" . PHP_EOL);
-				fclose($fh);
+		#make htaccess to protect files
+			$myFile = $tmp_dir . '/.htaccess';
+			$fh = fopen($myFile, 'w') or die("Can't write the configuration file $myFile. Please check that the webserver can write the tmp directory.");
+			fwrite($fh, "order allow,deny" . PHP_EOL);
+			fwrite($fh, "deny from all" . PHP_EOL);
+			fclose($fh);
 
-			#write config file
-				$myFile = $tmp_dir . '/configfile.php';
-				$fh = fopen($myFile, 'w') or die("Can't write the configuration file $myFile. Please check that the webserver can write the tmp directory.");
-				fwrite($fh, "<?php" . PHP_EOL);
-				fwrite($fh, "$host" . PHP_EOL);
-				fwrite($fh, "$database" . PHP_EOL);
-				fwrite($fh, "$user" . PHP_EOL);
-				fwrite($fh, "$password" . PHP_EOL);
-				fwrite($fh, "$absolute_dir/" . PHP_EOL);
-				fwrite($fh, "?>");
-				fclose($fh);
-			
-			copy('include/check_auxfiles/check_auxfiles_pumiliodb.py', $tmp_dir . '/check_auxfiles_pumiliodb.py');
-			copy('include/check_auxfiles/svt.py', $tmp_dir . '/svt.py');
+		#write config file
+			$myFile = $tmp_dir . '/configfile.php';
+			$fh = fopen($myFile, 'w') or die("Can't write the configuration file $myFile. Please check that the webserver can write the tmp directory.");
+			fwrite($fh, "<?php" . PHP_EOL);
+			fwrite($fh, "$host" . PHP_EOL);
+			fwrite($fh, "$database" . PHP_EOL);
+			fwrite($fh, "$user" . PHP_EOL);
+			fwrite($fh, "$password" . PHP_EOL);
+			fwrite($fh, "$absolute_dir/" . PHP_EOL);
+			fwrite($fh, "?>");
+			fclose($fh);
+		
+		copy('include/check_auxfiles/check_auxfiles_pumiliodb.py', $tmp_dir . '/check_auxfiles_pumiliodb.py');
+		copy('include/check_auxfiles/svt.py', $tmp_dir . '/svt.py');
 
-			exec('chmod -R 777 ' . $tmp_dir . ';cd ' . $tmp_dir . '; ./check_auxfiles_pumiliodb.py > /dev/null 2> /dev/null & echo $!', $out, $retval);
+		exec('chmod -R 777 ' . $tmp_dir . ';cd ' . $tmp_dir . '; ./check_auxfiles_pumiliodb.py > /dev/null 2> /dev/null & echo $!', $out, $retval);
 
-			}
 		}
 	}
 
@@ -701,48 +698,47 @@ function check_in_background($absolute_dir, $connection) {
 
 
 function stats_in_background($absolute_dir, $connection) {
-	if ($special_noprocess == FALSE){
-		$cores_to_use = query_one("SELECT Value from PumilioSettings WHERE Settings='cores_to_use'", $connection);
-		if ($cores_to_use == "" || $cores_to_use == "0"){
-			$cores_to_use = 1;
-			}
-		require("config.php");
-		$bg_processes = bgHowMany();
-		if($bg_processes < $cores_to_use) {
-			$random_value = mt_rand();
-			$tmp_dir = 'tmp/' . $random_value;
-			mkdir($tmp_dir, 0777);
-		
-			#make htaccess to protect files
-				$myFile = $tmp_dir . '/.htaccess';
-				$fh = fopen($myFile, 'w') or die("Can't write the configuration file $myFile. Please check that the webserver can write the tmp directory.");
-				fwrite($fh, "order allow,deny" . PHP_EOL);
-				fwrite($fh, "deny from all" . PHP_EOL);
-				fclose($fh);
 
-			#write config file
-				$myFile = $tmp_dir . '/configfile.php';
-				$fh = fopen($myFile, 'w') or die("Can't write the configuration file $myFile. Please check that the webserver can write the tmp directory.");
-				fwrite($fh, "<?php" . PHP_EOL);
-				fwrite($fh, "$host" . PHP_EOL);
-				fwrite($fh, "$database" . PHP_EOL);
-				fwrite($fh, "$user" . PHP_EOL);
-				fwrite($fh, "$password" . PHP_EOL);
-				fwrite($fh, "$absolute_dir/" . PHP_EOL);
-				fwrite($fh, "$random_value" . PHP_EOL);
-				fwrite($fh, "$R_ADI_db_value" . PHP_EOL);
-				fwrite($fh, "$R_ADI_max_freq" . PHP_EOL);
-				fwrite($fh, "$R_ADI_freq_step" . PHP_EOL);
-				fwrite($fh, "$R_H_segment_length" . PHP_EOL);
-				fwrite($fh, "?>");
-				fclose($fh);
-			
-			copy('include/R/stats_pumiliodb.py', $tmp_dir . '/stats_pumiliodb.py');
-			copy('include/R/getstats.R', $tmp_dir . '/getstats.R');
-			exec('chmod +x ' . $tmp_dir . '/*', $out, $retval);
-			exec('chmod -R 777 ' . $tmp_dir . '', $out, $retval);
-			exec('cd ' . $tmp_dir . '; ./stats_pumiliodb.py > /dev/null 2> /dev/null & echo $!', $out, $retval);
-			}
+	$cores_to_use = query_one("SELECT Value from PumilioSettings WHERE Settings='cores_to_use'", $connection);
+	if ($cores_to_use == "" || $cores_to_use == "0"){
+		$cores_to_use = 1;
+		}
+	require("config.php");
+	$bg_processes = bgHowMany();
+	if($bg_processes < $cores_to_use) {
+		$random_value = mt_rand();
+		$tmp_dir = 'tmp/' . $random_value;
+		mkdir($tmp_dir, 0777);
+	
+		#make htaccess to protect files
+			$myFile = $tmp_dir . '/.htaccess';
+			$fh = fopen($myFile, 'w') or die("Can't write the configuration file $myFile. Please check that the webserver can write the tmp directory.");
+			fwrite($fh, "order allow,deny" . PHP_EOL);
+			fwrite($fh, "deny from all" . PHP_EOL);
+			fclose($fh);
+
+		#write config file
+			$myFile = $tmp_dir . '/configfile.php';
+			$fh = fopen($myFile, 'w') or die("Can't write the configuration file $myFile. Please check that the webserver can write the tmp directory.");
+			fwrite($fh, "<?php" . PHP_EOL);
+			fwrite($fh, "$host" . PHP_EOL);
+			fwrite($fh, "$database" . PHP_EOL);
+			fwrite($fh, "$user" . PHP_EOL);
+			fwrite($fh, "$password" . PHP_EOL);
+			fwrite($fh, "$absolute_dir/" . PHP_EOL);
+			fwrite($fh, "$random_value" . PHP_EOL);
+			fwrite($fh, "$R_ADI_db_value" . PHP_EOL);
+			fwrite($fh, "$R_ADI_max_freq" . PHP_EOL);
+			fwrite($fh, "$R_ADI_freq_step" . PHP_EOL);
+			fwrite($fh, "$R_H_segment_length" . PHP_EOL);
+			fwrite($fh, "?>");
+			fclose($fh);
+		
+		copy('include/R/stats_pumiliodb.py', $tmp_dir . '/stats_pumiliodb.py');
+		copy('include/R/getstats.R', $tmp_dir . '/getstats.R');
+		exec('chmod +x ' . $tmp_dir . '/*', $out, $retval);
+		exec('chmod -R 777 ' . $tmp_dir . '', $out, $retval);
+		exec('cd ' . $tmp_dir . '; ./stats_pumiliodb.py > /dev/null 2> /dev/null & echo $!', $out, $retval);
 		}
 	}
 

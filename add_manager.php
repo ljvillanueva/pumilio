@@ -192,7 +192,9 @@ if (is_file("$absolute_dir/customhead.php")) {
 <?php
 session_write_close();
 flush(); @ob_flush();
-add_in_background($absolute_dir, $connection);
+if ($special_noprocess == FALSE){
+	add_in_background($absolute_dir, $connection);
+	}
 ?>
 
 </body>

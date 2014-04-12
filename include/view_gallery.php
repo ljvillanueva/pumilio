@@ -157,7 +157,9 @@ if (!isset($show_tags)){
 	
 	if ($check_auxfiles) {
 		#check files in background
-		check_in_background($absolute_dir, $connection);
+		if ($special_noprocess == FALSE){
+			check_in_background($absolute_dir, $connection);
+			}
 		}
 
 }	

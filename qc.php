@@ -306,7 +306,9 @@ if (is_file("$absolute_dir/customhead.php")) {
 session_write_close();
 flush(); @ob_flush();
 if ($useR==TRUE){
-	stats_in_background($absolute_dir, $connection);
+	if ($special_noprocess == FALSE){
+		stats_in_background($absolute_dir, $connection);
+		}
 	}
 ?>
 
