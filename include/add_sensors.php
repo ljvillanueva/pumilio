@@ -31,6 +31,10 @@ if ($_POST["Notes"]!=""){
 	$Notes=filter_var($_POST["Notes"], FILTER_SANITIZE_STRING);
 	}
 
+if ($Notes == ""){
+	$Notes = "NULL";
+	}
+
 	$sensor = array(
 		'Recorder' => $Recorder,
 		'Microphone' => $Microphone,
