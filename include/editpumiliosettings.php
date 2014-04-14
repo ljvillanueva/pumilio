@@ -56,6 +56,20 @@ if ($settings == "top"){
 		}
 
 
+	$value = filter_var($_POST["use_googlemaps"], FILTER_SANITIZE_STRING);
+	$check = DB::column('SELECT COUNT(*) FROM `PumilioSettings` WHERE Settings = "use_googlemaps"');
+	$settings = array(
+		'Settings' => 'use_googlemaps',
+		'Value' => $value
+	);
+	if ($check == 0){
+		DB::insert('PumilioSettings', $settings);
+		}
+	else{
+		DB::update('PumilioSettings', $settings, 'use_googlemaps', 'Settings');
+		}
+
+		
 	$value = filter_var($_POST["googlemaps3_key"], FILTER_SANITIZE_STRING);
 	$check = DB::column('SELECT COUNT(*) FROM `PumilioSettings` WHERE Settings = "googlemaps3_key"');
 	$settings = array(
