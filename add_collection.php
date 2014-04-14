@@ -86,7 +86,7 @@ if ($run){
 			<p><a href=\"add_from_field.php?sm=1\">Upload sound files from a Wildlife Acoustics SongMeter</a>
 			<p><a href=\"add_from_field.php\">Upload sound files from the field</a>
 			<p><a href=\"add_from_field.php?sm=1&local=1\">Add sound files from a Wildlife Acoustics SongMeter</a> (stored locally in server)
-			<p><a href=\"add_from_field.php&local=1\">Add sound files from the field</a> (stored locally in server)
+			<p><a href=\"add_from_field.php?&local=1\">Add sound files from the field</a> (stored locally in server)
 			<p><a href=\"add_from_db.php\">Import files from a database/spreadsheet</a>
 			<p><a href=\"#\" onclick=\"window.open('include/addsite.php', 'addsite', 'width=650,height=350,status=yes,resizable=yes,scrollbars=auto')\">Add sites</a>
 			<p><a href=\"admin.php?t=4\">Add sensors</a> (in the admin menu)";
