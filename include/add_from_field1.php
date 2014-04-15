@@ -1,7 +1,19 @@
 <?php
 
-$sm=filter_var($_GET["sm"], FILTER_SANITIZE_NUMBER_INT);
-$local=filter_var($_GET["local"], FILTER_SANITIZE_NUMBER_INT);
+if (!isset($_GET["sm"])){
+	$sm = 0;
+	}
+else{
+	$sm=filter_var($_GET["sm"], FILTER_SANITIZE_NUMBER_INT);
+	}
+
+if (isset($_GET["local"])){
+	$local=filter_var($_GET["local"], FILTER_SANITIZE_NUMBER_INT);
+	}
+else{
+	$local = 0;
+	}
+
 
 if ($sm==1) {
 	echo "<title>$app_custom_name - Add files from a Wildlife Acoustic SongMeter</title>";

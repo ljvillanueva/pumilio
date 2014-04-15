@@ -168,6 +168,10 @@ if (!isset($special_wrapper)){
 	$special_wrapper = FALSE;
 	}
 
+if (!isset($useR)){
+	$useR = FALSE;
+	}
+	
 if ($useR == TRUE){
 	if (!isset($Rscript)){
 		$Rscript = "Rscript --vanilla ";
