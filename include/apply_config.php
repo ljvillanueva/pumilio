@@ -207,6 +207,8 @@ if ($login_wordpress == TRUE){
 	}
 
 
+date_default_timezone_set('GMT');
+
 
 #Google Analytics
 $use_googleanalytics = FALSE;

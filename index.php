@@ -430,6 +430,8 @@ else{
 					</div>";
 
 					#Special section for plugins
+					#Taken out for the moment
+					/*
 					$dir="plugins/";
 		 			$plugins=scandir($dir);
 		 
@@ -446,7 +448,7 @@ else{
 		 						}
 			 				}
 			 			}
-
+					*/
 					
 					echo "<h3><a href=\"#\">Upload site photographs</a></h3>
 					<div>

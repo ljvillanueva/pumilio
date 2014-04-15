@@ -123,7 +123,7 @@ for ($k=0;$k<$commadata_count;$k++) {
 		}
 	else {
 		echo "\n<script type=\"text/javascript\">
-		var url='progressbar.php?per=$percent_done';
+		var url='include/progressbar.php?per=$percent_done';
 		document.getElementById('progress_bar').src = url;
 		document.getElementById('progress_counter').innerHTML=\"<strong>$kk of $commadata_count files imported ($percent_done_display %) <br>Time elapsed: $elapsed_time_display<br>Estimated time left: $time_to_complete</strong>\";
 		</script>\n";
@@ -131,7 +131,7 @@ for ($k=0;$k<$commadata_count;$k++) {
 		
 	if ($kk==$commadata_count) {
 		echo "\n<script type=\"text/javascript\">
-		var url='progressbar.php?per=100';
+		var url='include/progressbar.php?per=100';
 		document.getElementById('progress_bar').src = url;
 		document.getElementById('progress_counter').innerHTML=\"<strong>Import operation completed<br>Time elapsed: $elapsed_time_display</strong>\";
 		</script>\n";
