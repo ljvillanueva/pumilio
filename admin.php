@@ -436,11 +436,13 @@ if (is_file("$absolute_dir/customhead.php")) {
 			require("include/version.php");
 			$website_version_e=explode(".",$website_version);
 			
-			$w_dev = trim($website_version_e[3]);
-			if ($w_dev == "dev"){
-				echo "<div class=\"error\" id=\"pumversiondev\"><strong><img src=\"images/exclamation.png\"> You are using a development version of Pumilio. This version may be more up to date
-					than the current version, but may be unstable.<br>
-					This version is recommended ONLY for development and for testing since there can be data corruption or loss.</strong></div>";
+			if (count($website_version) == 4){
+				$w_dev = trim($website_version_e[3]);
+				if ($w_dev == "dev"){
+					echo "<div class=\"error\" id=\"pumversiondev\"><strong><img src=\"images/exclamation.png\"> You are using a development version of Pumilio. This version may be more up to date
+						than the current version, but may be unstable.<br>
+						This version is recommended ONLY for development and for testing since there can be data corruption or loss.</strong></div>";
+					}
 				}
 
 			if ($last_ver_e[2]>$website_version_e[2] && $last_ver_e[1] == $website_version_e[1]) {

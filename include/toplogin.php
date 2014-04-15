@@ -7,6 +7,10 @@ $q_logout = str_replace("&", "%", $q);
 
 echo "<p style=\"text-align: right;\"><small>";
 
+if (!isset($no_login)){
+	$no_login = FALSE;
+	}
+
 if ($no_login == TRUE) {
 	echo "[<a href=\"index.php\">Home</a>]";
 	}

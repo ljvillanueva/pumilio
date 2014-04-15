@@ -198,6 +198,10 @@ if (!isset($special_nofiles)){
 	$special_nofiles = FALSE;
 	}
 
+if (!isset($no_login)){
+	$no_login = FALSE;
+	}
+	
 if (!isset($force_login)){
 	$force_login = FALSE;
 	}
