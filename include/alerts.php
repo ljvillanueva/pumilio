@@ -208,26 +208,50 @@ require("get_jqueryui.php");
 	unset($out, $retval);
 	#$tmpperms=substr(decoct(fileperms("$absolute_dir/sounds/")),2);
 	#if ($tmpperms!=777)
-	if (!is_dir("../sounds/") || !is_writable("../sounds/")) {
-		echo "<div class=\"error\"><strong>The server can not write to the archive folder, sounds/, 
+	if (!is_dir("../sounds/")) {
+		echo "<div class=\"error\"><strong>The archive folder <em>sounds</em> does not exist. 
+			</strong></div>";
+		}
+	elseif(!is_writable("../sounds/")) {
+		echo "<div class=\"error\"><strong>The server can not write to the folder <em>sounds</em>, 
 			some features will not work.</strong> Please set the webserver as the owner of the 
 			directory or change the permissions to read and write.</div>";
 		}
-	elseif (!is_dir("../sounds/images") || !is_writable("../sounds/images")) {
-		echo "<div class=\"error\"><strong>The server can not write to the archive folder, sounds/images,
-			some features will not work.</strong> Please set the webserver as the owner of the
+
+
+	if (!is_dir("../sounds/images")) {
+		echo "<div class=\"error\"><strong>The archive folder <em>sounds/images</em> does not exist. 
+			</strong></div>";
+		}
+	elseif(!is_writable("../sounds/images")) {
+		echo "<div class=\"error\"><strong>The server can not write to the folder <em>sounds/images</em>, 
+			some features will not work.</strong> Please set the webserver as the owner of the 
 			directory or change the permissions to read and write.</div>";
 		}
-	elseif (!is_dir("../sounds/previewsounds") || !is_writable("../sounds/previewsounds")) {
-		echo "<div class=\"error\"><strong>The server can not write to the archive folder, sounds/previewsounds,
-			some features will not work.</strong> Please set the webserver as the owner of the
+
+	
+	if (!is_dir("../sounds/previewsounds")) {
+		echo "<div class=\"error\"><strong>The archive folder <em>sounds/previewsounds</em> does not exist. 
+			</strong></div>";
+		}
+	elseif(!is_writable("../sounds/previewsounds")) {
+		echo "<div class=\"error\"><strong>The server can not write to the folder <em>sounds/previewsounds</em>, 
+			some features will not work.</strong> Please set the webserver as the owner of the 
 			directory or change the permissions to read and write.</div>";
 		}
-	elseif (!is_dir("../sounds/sounds") || !is_writable("../sounds/sounds")) {
-		echo "<div class=\"error\"><strong>The server can not write to the archive folder, sounds/sounds,
-			some features will not work.</strong> Please set the webserver as the owner of the
+
+	
+	if (!is_dir("../sounds/sounds")) {
+		echo "<div class=\"error\"><strong>The archive folder <em>sounds/sounds</em> does not exist. 
+			</strong></div>";
+		}
+	elseif(!is_writable("../sounds/sounds")) {
+		echo "<div class=\"error\"><strong>The server can not write to the folder, <em>sounds/sounds</em>, 
+			some features will not work.</strong> Please set the webserver as the owner of the 
 			directory or change the permissions to read and write.</div>";
 		}
+
+
 
 	//Check for sitepictures folder
 	unset($out, $retval);
