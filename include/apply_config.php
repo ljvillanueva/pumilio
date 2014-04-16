@@ -104,6 +104,9 @@ if (!isset($special_noprocess)){
 	$special_noprocess = FALSE;
 	}
 
+if (!isset($special_iframe)){
+	$special_iframe = FALSE;
+	}
 	
 if ($googlemaps_ver == "3") {
 	$googlemaps3_key = DB::column('SELECT Value FROM `PumilioSettings` WHERE Settings = "googlemaps3_key"');

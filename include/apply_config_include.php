@@ -198,6 +198,10 @@ if (!isset($special_noprocess)){
 	$special_noprocess = FALSE;
 	}
 
+if (!isset($special_iframe)){
+	$special_iframe = FALSE;
+	}
+	
 if (!isset($special_nofiles)){
 	$special_nofiles = FALSE;
 	}
