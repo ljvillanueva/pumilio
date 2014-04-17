@@ -18,7 +18,7 @@ if ($login_wordpress == TRUE){
 		$pumilio_loggedin = FALSE;
 		}
 	}
-else {
+elseif(isset($_COOKIE["username"])) {
 	$username = $_COOKIE["username"];
 
 	if (is_user_admin2($username, $connection) == TRUE) {
@@ -31,6 +31,10 @@ else {
 		$pumilio_loggedin = FALSE;
 		}
 	}
+else{
+	$pumilio_admin = FALSE;
+	$pumilio_loggedin = FALSE;
+}
 	
 if (!isset($force_loggedin)){
 	$force_loggedin = FALSE;

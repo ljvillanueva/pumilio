@@ -190,7 +190,7 @@ echo "</select>\n";
 		if (!is_dir($temp_add_dir) || !is_readable($temp_add_dir)){
 			$temp_add_dir_d="<em style=\"color:red;\">Directory does not exist or could not be accessed.</em>";
 
-			DB::query('DELETE FROM `PumilioSettings` WHERE `Settings` = "temp_add_dir"');
+			#DB::query('DELETE FROM `PumilioSettings` WHERE `Settings` = "temp_add_dir"');
 			}
 		else {
 			$temp_add_dir_d="<em>$temp_add_dir</em>";

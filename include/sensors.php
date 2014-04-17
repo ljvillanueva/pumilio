@@ -11,12 +11,13 @@ echo "<strong>Add sensors to the database</strong>
 #Sensors in the db:
 echo "<hr noshade>";
 
-$rows = DB::fetch('SELECT * FROM `Sensors` ORDER BY `SensorID`', array(TRUE));
+$no_sensors = DB::column('SELECT COUNT(*) FROM `Sensors`');
 
-if (count($rows) == 0){
+if ($no_sensors == 0){
 	echo "<p>There are no sensors in the system.";
 	}
 else {
+	$rows = DB::fetch('SELECT * FROM `Sensors` ORDER BY `SensorID`', array(TRUE));
 	echo "<p>The system has the following ". count($rows) ." sensors:
 		<table>";
 

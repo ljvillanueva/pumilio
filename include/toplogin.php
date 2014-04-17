@@ -77,7 +77,13 @@ else {
 		else {
 			echo "[<a href=\"index.php\" title=\"Home of the application\">Home</a>] 
 				[<a href=\"search.php\" title=\"Search soundfiles\">Search</a>]<br>";
-			$e = filter_var($_GET["e"], FILTER_SANITIZE_NUMBER_INT);
+			
+			if (isset($_GET["e"])){
+				$e = filter_var($_GET["e"], FILTER_SANITIZE_NUMBER_INT);
+				}
+			else{
+				$e = FALSE;
+				}
 
 			if ($e == 1) {
 				echo "<div class=\"error\"><small>Invalid username or password, try again or <a href=\"recover_password.php\">recover password</a></small>";

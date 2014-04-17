@@ -206,6 +206,10 @@ if (!isset($special_nofiles)){
 	$special_nofiles = FALSE;
 	}
 
+if (!isset($special_noopen)){
+	$special_noopen = FALSE;
+	}
+	
 if (!isset($no_login)){
 	$no_login = FALSE;
 	}
