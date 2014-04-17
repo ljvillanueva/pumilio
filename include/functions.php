@@ -343,26 +343,31 @@ function delSubTree($dir) {
 
 function sessionAuthenticate($connection) {
 	// Get the cookie
-	$cookie_to_test = $_COOKIE["usercookie"];
-	$cookie_to_testa = explode(".", $cookie_to_test);
-	$cookie_to_test1 = $cookie_to_testa['0'];
-	$cookie_to_test2 = $cookie_to_testa['1'];
+	if (isset($_COOKIE["usercookie"])){
+		$cookie_to_test = $_COOKIE["usercookie"];
+		$cookie_to_testa = explode(".", $cookie_to_test);
+		$cookie_to_test1 = $cookie_to_testa['0'];
+		$cookie_to_test2 = $cookie_to_testa['1'];
 
-	#$cookie_to_test1=filter_var($_GET["cookie_to_test1"], FILTER_SANITIZE_NUMBER_INT);
-	#$cookie_to_test2=filter_var($_GET["cookie_to_test2"], FILTER_SANITIZE_STRING);
-	
-	#get host name of user
-	$remote_host = $_SERVER['REMOTE_ADDR'];
-	$user_loggedin = query_one("SELECT COUNT(*) FROM Cookies WHERE user_id = '$cookie_to_test1' AND cookie = '$cookie_to_test2' AND hostname = '$remote_host' LIMIT 1", $connection);
+		#$cookie_to_test1=filter_var($_GET["cookie_to_test1"], FILTER_SANITIZE_NUMBER_INT);
+		#$cookie_to_test2=filter_var($_GET["cookie_to_test2"], FILTER_SANITIZE_STRING);
+		
+		#get host name of user
+		$remote_host = $_SERVER['REMOTE_ADDR'];
+		$user_loggedin = query_one("SELECT COUNT(*) FROM Cookies WHERE user_id = '$cookie_to_test1' AND cookie = '$cookie_to_test2' AND hostname = '$remote_host' LIMIT 1", $connection);
 
-	#Check if active
-	$user_active = query_one("SELECT UserActive from Users WHERE UserID='$cookie_to_test1' LIMIT 1", $connection);
+		#Check if active
+		$user_active = query_one("SELECT UserActive from Users WHERE UserID='$cookie_to_test1' LIMIT 1", $connection);
 
-	// exactly one row? then we have found the user
-	if ($user_loggedin == 1 && $user_active == 1) {
-		return true;
+		// exactly one row? then we have found the user
+		if ($user_loggedin == 1 && $user_active == 1) {
+			return true;
+			}
+		else {
+			return false;
+			}
 		}
-	else {
+	else{
 		return false;
 		}
 	}
@@ -393,21 +398,6 @@ function is_user_admin2($username, $connection) {
 				}
 			}
 		else{
-			return false;
-			}
-		}
-	}
-
-
-
-function check_cookies() {
-	if (setcookie("test", "test", time() + 100)) {
-		//COOKIE IS SET 
-		if (isset ($_COOKIE['test'])) {
-			setcookie("test", "test", time() - 100);
-			return true;
-			}
-		else {
 			return false;
 			}
 		}
