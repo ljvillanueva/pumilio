@@ -267,14 +267,14 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 				if ($startid>1) {
 					$go_to=$startid-$how_many_to_show;
-					echo "<a href=\"$browse_site_link&amp;SiteID=$SiteID&amp;startid=$go_to&amp;order_by=$order_by&amp;order_dir=$order_dir\"><img src=\"$app_url/images/arrowleft.png\"></a>";
+					echo "<a href=\"$browse_site_link&amp;SiteID=$SiteID&amp;startid=$go_to&amp;order_by=$order_by&amp;order_dir=$order_dir&amp;Date=$QDate\"><img src=\"$app_url/images/arrowleft.png\"></a>";
 					}
 
 				echo " $startid to $endid_show ";
 
 				if ($endid_show<$no_sounds) {
 					$go_to=$startid+$how_many_to_show;
-					echo "<a href=\"$browse_site_link&amp;SiteID=$SiteID&amp;startid=$go_to&amp;order_by=$order_by&amp;order_dir=$order_dir\"><img src=\"$app_url/images/arrowright.png\"></a>";
+					echo "<a href=\"$browse_site_link&amp;SiteID=$SiteID&amp;startid=$go_to&amp;order_by=$order_by&amp;order_dir=$order_dir&amp;Date=$QDate\"><img src=\"$app_url/images/arrowright.png\"></a>";
 					}
 
 				echo "<br>of $no_sounds</div>";
@@ -283,21 +283,21 @@ if (is_file("$absolute_dir/customhead.php")) {
 		<div class="span-3">
 			<?php
 			#Order by sound name
-			echo "<p>Name <a href=\"browse_site_date.php?SiteID=$SiteID&Date=$QDate&order_by=SoundName&order_dir=ASC\"><img src=\"$app_url/images/arrowdown.png\"></a> <a href=\"browse_site_date.php?SiteID=$SiteID&Date=$QDate&order_by=SoundName&order_dir=DESC\"><img src=\"$app_url/images/arrowup.png\"></a>";
+			echo "<p>Name <a href=\"browse_site_date.php?SiteID=$SiteID&amp;Date=$QDate&amp;order_by=SoundName&amp;order_dir=ASC\"><img src=\"$app_url/images/arrowdown.png\"></a> <a href=\"browse_site_date.php?SiteID=$SiteID&amp;Date=$QDate&amp;order_by=SoundName&amp;order_dir=DESC\"><img src=\"$app_url/images/arrowup.png\"></a>";
 
 			?>
 		</div>
 		<div class="span-3">
 			<?php
 			#Order by sound date
-			echo "<p>Date <a href=\"browse_site_date.php?SiteID=$SiteID&Date=$QDate&order_by=Date&order_dir=ASC\"><img src=\"$app_url/images/arrowdown.png\"></a> <a href=\"browse_site_date.php?SiteID=$SiteID&Date=$QDate&order_by=Date&order_dir=DESC\"><img src=\"$app_url/images/arrowup.png\"></a>";
+			echo "<p>Date <a href=\"browse_site_date.php?SiteID=$SiteID&amp;Date=$QDate&amp;order_by=Date&amp;order_dir=ASC\"><img src=\"$app_url/images/arrowdown.png\"></a> <a href=\"browse_site_date.php?SiteID=$SiteID&amp;Date=$QDate&amp;order_by=Date&amp;order_dir=DESC\"><img src=\"$app_url/images/arrowup.png\"></a>";
 
 			?>
 		</div>
 		<div class="span-3 last">
 			<?php
 			#Order by sound duration
-			echo "<p>Display: <a href=\"browse_site_date.php?SiteID=$SiteID&Date=$QDate&order_by=$order_by&order_dir=$order_dir&display_type=summary&startid=$startid\" title=\"Display as summary\"><img src=\"$app_url/images/application_view_columns.png\" alt=\"Display as summary\"></a> <a href=\"browse_site_date.php?SiteID=$SiteID&Date=$QDate&order_by=$order_by&order_dir=$order_dir&display_type=gallery&startid=$startid\" title=\"Display as gallery\"><img src=\"$app_url/images/application_view_tile.png\" alt=\"Display as gallery\"></a>";
+			echo "<p>Display: <a href=\"browse_site_date.php?SiteID=$SiteID&amp;Date=$QDate&amp;order_by=$order_by&amp;order_dir=$order_dir&amp;display_type=summary&amp;startid=$startid\" title=\"Display as summary\"><img src=\"$app_url/images/application_view_columns.png\" alt=\"Display as summary\"></a> <a href=\"browse_site_date.php?SiteID=$SiteID&amp;Date=$QDate&amp;order_by=$order_by&amp;order_dir=$order_dir&amp;display_type=gallery&amp;startid=$startid\" title=\"Display as gallery\"><img src=\"$app_url/images/application_view_tile.png\" alt=\"Display as gallery\"></a>";
 
 			?>
 		</div>
@@ -378,14 +378,14 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 						if ($startid>1) {
 							$go_to=$startid-$how_many_to_show;
-							echo "<a href=\"$browse_site_link&amp;SiteID=$SiteID&amp;startid=$go_to&amp;order_by=$order_by&amp;order_dir=$order_dir\"><img src=\"$app_url/images/arrowleft.png\"></a>";
+							echo "<a href=\"$browse_site_link&amp;SiteID=$SiteID&amp;startid=$go_to&amp;order_by=$order_by&amp;order_dir=$order_dir&amp;Date=$QDate\"><img src=\"$app_url/images/arrowleft.png\"></a>";
 							}
 
 						echo " $startid to $endid_show ";
 
 						if ($endid_show<$no_sounds) {
 							$go_to=$startid+$how_many_to_show;
-							echo "<a href=\"$browse_site_link&amp;SiteID=$SiteID&amp;startid=$go_to&amp;order_by=$order_by&amp;order_dir=$order_dir\"><img src=\"$app_url/images/arrowright.png\"></a>";
+							echo "<a href=\"$browse_site_link&amp;SiteID=$SiteID&amp;startid=$go_to&amp;order_by=$order_by&amp;order_dir=$order_dir&amp;Date=$QDate\"><img src=\"$app_url/images/arrowright.png\"></a>";
 							}
 
 						echo "<br>of $no_sounds</div>";
@@ -406,7 +406,9 @@ if (is_file("$absolute_dir/customhead.php")) {
 					<input type=\"hidden\" name=\"SiteID\" value=\"$SiteID\">
 					<input type=\"hidden\" name=\"Date\" value=\"$QDate\">
 					<input type=\"hidden\" name=\"order_by\" value=\"$order_by\">
-					<input type=\"hidden\" name=\"order_dir\" value=\"$order_dir\">";
+					<input type=\"hidden\" name=\"order_dir\" value=\"$order_dir\">
+					<input type=\"hidden\" name=\"Date\" value=\"$QDate\">
+					";
 
 				echo "<select name=\"startid\" class=\"ui-state-default ui-corner-all\">";
 
@@ -427,7 +429,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 			?>
 
 		<div class="span-24 last">
-			&nbsp;
+			&amp;nbsp;
 		</div>
 		<div class="span-24 last">
 			<?php
