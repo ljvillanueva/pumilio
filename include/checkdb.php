@@ -105,7 +105,7 @@ if ($run){
 				$row_samp = mysqli_fetch_array($result_samp_rate);
 				extract($row_samp);
 				if (is_file("../sounds/sounds/$ColID/$DirID/$OriginalFilename")) {
-					exec('python ./soundcheck.py ../sounds/sounds/' . $ColID . '/' . $DirID . '/' . $OriginalFilename, $lastline, $retval);
+					exec('python soundcheck.py ../sounds/sounds/' . $ColID . '/' . $DirID . '/' . $OriginalFilename, $lastline, $retval);
 					if ($retval==0) {
 						$file_info=$lastline[0];
 						$file_info = explode(",", $file_info);
