@@ -101,7 +101,17 @@ if (is_file("$absolute_dir/customhead.php")) {
 				echo "<p><form enctype=\"multipart/form-data\" action=\"add_file2.php\" method=\"post\" id=\"EditForm\">";
 
 					echo "<input name=\"userfile\" type=\"file\" class=\"fg-button ui-state-default ui-corner-all\">&nbsp;&nbsp;";
-					$max=ini_get("upload_max_filesize");
+
+					#check php.ini values for uploads
+					$max1 = filter_var(ini_get("upload_max_filesize"), FILTER_SANITIZE_NUMBER_INT);
+					$max2 = filter_var(ini_get("post_max_size"), FILTER_SANITIZE_NUMBER_INT);
+
+					if ($max1 < $max2){
+						$max = ini_get("upload_max_filesize");
+						}
+					else{
+						$max = ini_get("post_max_size");
+						}
 	
 					echo "<p>Site: <select name=\"SiteID\" class=\"ui-state-default ui-corner-all\">";
 
@@ -121,7 +131,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 				
 					<p><input type=\"submit\" value=\" Upload \" class=\"fg-button ui-state-default ui-corner-all\">
 				</form><br><br>
-				<p><span class=\"notice\">Maximum file size is $max</span><br><br>";
+				<p><span class=\"notice\">Maximum file size allowed is $max</span><br><br>";
 				}
 			else {
 				echo "There are no sites yet. Please add sites before adding files.";

@@ -61,7 +61,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 			if(move_uploaded_file($_FILES['userfile']['tmp_name'], $target_path)) {
 				$filename=basename( $_FILES['userfile']['name']);
-				exec('include/soundcheck.py tmp/' . $random_cookie . '/' . $filename, $lastline, $retval);
+				exec('python include/soundcheck.py tmp/' . $random_cookie . '/' . $filename, $lastline, $retval);
 				if ($retval==0) {
 					echo "<div class=\"success\"><img src=\"images/accept.png\"> The file has been uploaded successfully.<br>";
 					$file_info = $lastline[0];
@@ -109,7 +109,16 @@ if (is_file("$absolute_dir/customhead.php")) {
 					}
 				}
 			else {
-				$max=ini_get("upload_max_filesize");
+				$max1 = filter_var(ini_get("upload_max_filesize"), FILTER_SANITIZE_NUMBER_INT);
+				$max2 = filter_var(ini_get("post_max_size"), FILTER_SANITIZE_NUMBER_INT);
+
+				if ($max1 < $max2){
+					$max = ini_get("upload_max_filesize");
+					}
+				else{
+					$max = ini_get("post_max_size");
+					}
+				
 				echo "<div class=\"error\">There was a problem with the upload or the file is too big. The maximum file size is $max. Please try again.</div>";
 				}
 
