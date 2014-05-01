@@ -43,11 +43,15 @@ require("include/get_jqueryui.php");
 				},
 				SiteID: {
 					required: true
+				},
+				ColID: {
+					required: true
 				}
 			},
 			messages: {
 				userfile: "Please select a file",
-				SiteID: "Please select a site"
+				SiteID: "Please select a site",
+				ColID: "Please select a collection"
 			}
 			});
 		});
@@ -112,7 +116,27 @@ if (is_file("$absolute_dir/customhead.php")) {
 					else{
 						$max = ini_get("post_max_size");
 						}
-	
+
+
+					$query = "SELECT * from Collections ORDER BY CollectionName";
+					$result = mysqli_query($connection, $query)
+						or die (mysqli_error($connection));
+					$nrows = mysqli_num_rows($result);
+
+					echo "<p>Collection: 
+						<select name=\"ColID\" class=\"ui-state-default ui-corner-all\">\n";
+
+					if ($nrows>0) {
+						for ($i=0;$i<$nrows;$i++) {
+							$row = mysqli_fetch_array($result);
+							extract($row);
+								echo "<option value=\"$ColID\">$CollectionName</option>\n";
+							}
+						}
+
+					echo "</select>";
+					
+
 					echo "<p>Site: <select name=\"SiteID\" class=\"ui-state-default ui-corner-all\">";
 
 					for ($i=0;$i<$nrowssites;$i++) {

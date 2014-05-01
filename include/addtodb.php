@@ -59,7 +59,7 @@ for ($k=0;$k<$commadata_count;$k++) {
 			or die(mysqli_error($connection));
 		}
 
-	exec('include/soundcheck.py ' . $dir . $this_file, $lastline, $retval);
+	exec('python include/soundcheck.py ' . $dir . $this_file, $lastline, $retval);
 	if ($retval==0) {
 		$file_info=$lastline[0];
 		$file_info=explode(",",$file_info);
@@ -67,10 +67,11 @@ for ($k=0;$k<$commadata_count;$k++) {
 		$no_channels=$file_info[1];
 		$file_format=$file_info[2];
 		$file_duration=$file_info[3];
+		$file_bits=$file_info[4];
 
 		$query_file = "UPDATE Sounds SET 
 				SamplingRate='$sampling_rate', Channels='$no_channels', 
-				Duration='$file_duration',SoundFormat='$file_format' 
+				Duration='$file_duration',SoundFormat='$file_format', BitRate='$file_bits' 
 				WHERE SoundID='$SoundID' LIMIT 1";
 		$result_file = mysqli_query($connection, $query_file)
 				or die (mysqli_error($connection));

@@ -105,7 +105,7 @@ if ($run){
 				$row_samp = mysqli_fetch_array($result_samp_rate);
 				extract($row_samp);
 				if (is_file("../sounds/sounds/$ColID/$DirID/$OriginalFilename")) {
-					exec('./soundcheck.py ../sounds/sounds/' . $ColID . '/' . $DirID . '/' . $OriginalFilename, $lastline, $retval);
+					exec('python ./soundcheck.py ../sounds/sounds/' . $ColID . '/' . $DirID . '/' . $OriginalFilename, $lastline, $retval);
 					if ($retval==0) {
 						$file_info=$lastline[0];
 						$file_info = explode(",", $file_info);
@@ -113,10 +113,11 @@ if ($run){
 						$no_channels=$file_info[1];
 						$file_format=$file_info[2];
 						$file_duration=$file_info[3];
+						$file_bits=$file_info[4];
 
 						$query_file1 = "UPDATE Sounds SET 
 								SamplingRate='$sampling_rate', Channels='$no_channels', 
-								Duration='$file_duration',SoundFormat='$file_format' 
+								Duration='$file_duration', SoundFormat='$file_format', BitRate='$file_bits'
 								WHERE SoundID='$SoundID' LIMIT 1";
 						$result_file1 = mysqli_query($connection, $query_file1)
 							or die (mysqli_error($connection));

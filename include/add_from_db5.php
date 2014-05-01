@@ -89,7 +89,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 					$file_errors+=1;
 					}
 				else{
-					exec('include/soundcheck.py ' . $dir . '/' . $this_file, $lastline, $retval);
+					exec('python include/soundcheck.py ' . $dir . '/' . $this_file, $lastline, $retval);
 					if ($retval!=0) {
 						echo "<div class=\"error\">The file " . $this_file . " does not seem to be an audio file.
 							Please go back and try again.</div>";

@@ -63,7 +63,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 			if(move_uploaded_file($_FILES['userfile']['tmp_name'], $target_path)) {
 				$filename=basename( $_FILES['userfile']['name']);
-				exec('include/soundcheck.py tmp/' . $random_cookie . '/' . $filename, $lastline, $retval);
+				exec('python include/soundcheck.py tmp/' . $random_cookie . '/' . $filename, $lastline, $retval);
 				if ($retval==0) {
 					echo "<div class=\"success\"><img src=\"images/accept.png\"> The file has been uploaded successfully.<br>";
 					$file_info=$lastline[0];
@@ -72,6 +72,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 					$no_channels=$file_info[1];
 					$file_format=$file_info[2];
 					$file_duration=$file_info[3];
+					$file_bits=$file_info[4];
 					#Get the size of the file
 					$soundfile_size=formatsize(filesize("tmp/$random_cookie/$filename"));
 					$fileID=$_POST["fileID"];
@@ -82,6 +83,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 					Number of channels: $no_channels<br>
 					Duration: $file_duration seconds<br>
 					Sampling Rate: $sampling_rate Hz<br>
+					Bits: $file_bits<br>
 					File ID: $fileID
 					</div>";
 

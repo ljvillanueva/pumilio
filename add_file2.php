@@ -70,6 +70,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 					$no_channels=$file_info[1];
 					$file_format=$file_info[2];
 					$file_duration=$file_info[3];
+					$file_bits=$file_info[4];
 					#Get the size of the file
 					$soundfile_size = formatsize(filesize("tmp/$random_cookie/$filename"));
 
@@ -86,8 +87,8 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 					if (copy("tmp/$random_cookie/$filename",$source_dir . "/" . $filename)) {
 						$query_file = "INSERT INTO Sounds 
-						(ColID, DirID, OriginalFilename, SoundName, SamplingRate, Channels, Duration, SoundFormat, SiteID)
- 						VALUES ('$ColID', '$DirID', '$filename', '$filename', '$sampling_rate', '$no_channels', '$file_duration', '$file_format', '$SiteID')";
+						(ColID, DirID, OriginalFilename, SoundName, SamplingRate, Channels, Duration, SoundFormat, SiteID, BitRate)
+ 						VALUES ('$ColID', '$DirID', '$filename', '$filename', '$sampling_rate', '$no_channels', '$file_duration', '$file_format', '$SiteID', '$file_bits')";
 						$result_file = mysqli_query($connection, $query_file)
 							or die (mysqli_error($connection));
 						}

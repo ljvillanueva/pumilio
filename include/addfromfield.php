@@ -93,10 +93,10 @@ for ($k=0;$k<$files_to_process_counter;$k++) {
 	$SoundID=mysqli_insert_id($connection);
 	
 	if ($wav_toflac == "1" && $flac_file_done == TRUE) {
-		exec('include/soundcheck.py ' . $dir . "/" . $this_file_flac, $lastline_file, $retval);
+		exec('python include/soundcheck.py ' . $dir . "/" . $this_file_flac, $lastline_file, $retval);
 		}
 	else {
-		exec('include/soundcheck.py ' . $dir . "/" . $this_file, $lastline_file, $retval);
+		exec('python include/soundcheck.py ' . $dir . "/" . $this_file, $lastline_file, $retval);
 		}
 		
 		if ($retval==0) {
@@ -106,9 +106,11 @@ for ($k=0;$k<$files_to_process_counter;$k++) {
 			$no_channels=$file_info[1];
 			$file_format=$file_info[2];
 			$file_duration=$file_info[3];
+			$file_bits=$file_info[4];
 
 			$query_file = "UPDATE Sounds SET SamplingRate='$sampling_rate', Channels='$no_channels', 
-					Duration='$file_duration',SoundFormat='$file_format' WHERE SoundID='$SoundID' LIMIT 1";
+					Duration='$file_duration', SoundFormat='$file_format', BitRate='$file_bits'
+					WHERE SoundID='$SoundID' LIMIT 1";
 			$result_file = mysqli_query($connection, $query_file)
 				or die (mysqli_error($connection));
 			unset($lastline_file);
