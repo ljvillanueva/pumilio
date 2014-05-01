@@ -50,8 +50,6 @@ if (is_file("$absolute_dir/customhead.php")) {
 				echo "<h3>Add sound files from the field</h3>";
 				}
 
-			echo "<form action=\"add_from_field.php\" method=\"POST\" id=\"AddForm\">
-				<input type=\"hidden\" name=\"step\" value=\"4\">";
 			
 				if ($sm==1) {
 					echo "<p>The date and time will be extracted from the filename. It is assumed to be encoded as: *YYYYMMDD_HHMMSS.(wav/flac), where * is
@@ -70,7 +68,32 @@ if (is_file("$absolute_dir/customhead.php")) {
 					}
 				else {
 					echo "<p>Type the positions of the coded information in the filename. 
-						For example, the file \"SM88_20080802_170000.flac,\" recorded at the site SM88, at 5:00 pm on 2 August 2008, would be coded as:<br>
+						For example, a file named <br>\"SM88_20080802_170000.flac,\"<br>";
+
+
+					$example_filename = "SM88_20080802_170000.flac";
+				    #Break name to show the limits
+					$example_filename_exploded = str_split($example_filename);
+					$example_size = count($example_filename_exploded);
+
+					echo "<table><tr>";
+					for ($f = 0; $f < $example_size; $f++) {
+							$ff = $f + 1;
+
+							if (is_odd($f)){
+								echo "<td style=\"background: #c3d9ff; text-align: center;\">";
+							}
+							else{
+								echo "<td style=\"text-align: center;\">";
+								}
+
+							echo $example_filename_exploded[$f] . "<br>" . $ff . "</td>";
+							}
+
+					echo "</tr></table>";
+
+
+					echo "recorded at the site SM88, at 5:00 pm on 2 August 2008, would be coded as:<br>
 						&nbsp;&nbsp; Year: 6:9<br>
 						&nbsp;&nbsp; Month: 10:11<br>
 						&nbsp;&nbsp; Day: 12:13<br>
@@ -83,12 +106,38 @@ if (is_file("$absolute_dir/customhead.php")) {
 				$cc=1;
 				while (false !== ($file = readdir($handle)) && $cc==1) {
 					if ($file != "." && $file != "..") {
-					    echo "<p>Filename example: <strong>$file</strong><br>\n";
+						$example_filename = $file;
+					    echo "<p>Filename example: <strong>$example_filename</strong><br>\n";
 						$cc=2;
-					}
+
+						#Break name to show the limits
+						$example_filename_exploded = str_split($example_filename);
+
+						$example_size = count($example_filename_exploded);
+						echo "<table><tr>\n";
+
+						for ($f = 0; $f < $example_size; $f++) {
+							$ff = $f + 1;
+
+							if (is_odd($f)){
+								echo "<td style=\"background: #c3d9ff; text-align: center;\">";
+							}
+							else{
+								echo "<td style=\"text-align: center;\">";
+								}
+
+							echo $example_filename_exploded[$f] . "<br>" . $ff . "</td>";
+							}
+
+						echo "</tr></table>";
+
+						}
 				    }
 				    closedir($handle);
 				    
+				echo "<form action=\"add_from_field.php\" method=\"POST\" id=\"AddForm\">
+				<input type=\"hidden\" name=\"step\" value=\"4\">";
+
 				echo "&nbsp;&nbsp; Year: <input type=\"text\" size=\"6\" name=\"codedyear\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"";
 				if (isset($_COOKIE["codedyear"]))
 					echo " value=\"" . $_COOKIE["codedyear"] . "\"";

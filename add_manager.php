@@ -164,6 +164,8 @@ if (is_file("$absolute_dir/customhead.php")) {
 					$query_to_insert="INSERT INTO FilesToAddMembers (FilesToAddID, FullPath, OriginalFilename, Date, Time, SiteID, ColID, DirID, SensorID)
 					VALUES ('$ToAddID', '$file_path', '$this_file', '$datecoded', '$timecoded', '$SiteID', '$ColID', '$DirID', '$SensorID')";
 
+					#echo "Query: $query_to_insert<br>";
+
 					$result = mysqli_query($connection, $query_to_insert)
 						or die (mysqli_error($connection));
 					$kk = $kk+1;		

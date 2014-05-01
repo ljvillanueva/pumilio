@@ -59,6 +59,7 @@ def extractflac(item_flac, FileFormat):
 			item_wav = 0
 	return item_wav
 
+
 def fileExists(f):
 	try:
 		file = open(f)
@@ -67,6 +68,7 @@ def fileExists(f):
 	else:
 		exists = 1
 	return exists
+
 	
 def cleanup(server_dir, ColID, DirID, FullPath, OriginalFilename, ToAddMemberID):
 	pathToSound = server_dir + 'sounds/sounds/' + ColID + '/' + DirID
@@ -104,6 +106,7 @@ def cleanup(server_dir, ColID, DirID, FullPath, OriginalFilename, ToAddMemberID)
 		sys.exit(5)
 	return
 
+
 def getmd5(flac_file):
 	"""
 	Getting the MD5 hash for the file.
@@ -116,6 +119,7 @@ def getmd5(flac_file):
 		m.update(t)
 	return m.hexdigest()
 
+
 def open_wave(file_wav):
 	"""
 	Open the wave file specified in the command line or elsewhere for processing.
@@ -123,48 +127,59 @@ def open_wave(file_wav):
 	wave_pointer = wave.open(file_wav,'rb')
 	return wave_pointer
 
+
 def find_values(wave_pointer):
 	"""
 	Read the values to fill the "wave_vars" array from the sound file.
 	"""
 	wave_vars = {}
-	wave_vars['samp_rate'] = wave_pointer.getframerate()
-	wave_vars['num_samps'] = wave_pointer.getnframes()
-	wave_vars['samp_width'] = wave_pointer.getsampwidth()
-	wave_vars['no_channels'] = wave_pointer.getnchannels()
-	if wave_vars['samp_width'] == 1:
-		# The data are 8 bit unsigned
-		wave_vars['bit_code'] = 'B'
-		wave_vars['bits'] = '8'
-	elif wave_vars['samp_width'] == 2:
-		# The data are 16 bit signed
-		wave_vars['bit_code'] = 'h'
-		wave_vars['bits'] = '16'
-	elif wave_vars['samp_width'] == 4:
-		# The data are 32 bit signed
-		wave_vars['bit_code'] = 'i'
-		wave_vars['bits'] = '32'
-	else:
-		# I don't know what the hell it is
-		print "I don't know what the hell bit width you're using."
-		updatefile(ToAddMemberID, str(9), "Weird file, could not determine bits")
-		sys.exit(6)
-	wave_vars['max_time'] = wave_vars['num_samps'] / wave_vars['samp_rate']
-	# Print wave file values, mostly to debug
+	#wave_vars['samp_rate'] = wave_pointer.getframerate()
+	#wave_vars['num_samps'] = wave_pointer.getnframes()
+	#wave_vars['samp_width'] = wave_pointer.getsampwidth()
+	#ave_vars['no_channels'] = wave_pointer.getnchannels()
+	# if wave_vars['samp_width'] == 1:
+	# 	# The data are 8 bit unsigned
+	# 	wave_vars['bit_code'] = 'B'
+	# 	wave_vars['bits'] = '8'
+	# elif wave_vars['samp_width'] == 2:
+	# 	# The data are 16 bit signed
+	# 	wave_vars['bit_code'] = 'h'
+	# 	wave_vars['bits'] = '16'
+	# elif wave_vars['samp_width'] == 4:
+	# 	# The data are 32 bit signed
+	# 	wave_vars['bit_code'] = 'i'
+	# 	wave_vars['bits'] = '32'
+	# else:
+	# 	# I don't know what the hell it is
+	# 	print "I don't know what the hell bit width you're using."
+	# 	updatefile(ToAddMemberID, str(9), "Weird file, could not determine bits")
+	# 	sys.exit(6)
+	# wave_vars['max_time'] = wave_vars['num_samps'] / wave_vars['samp_rate']
+	# # Print wave file values, mostly to debug
 	#print "Wave values: "
 	#for item in wave_vars.iteritems():
 	#	print item
+	#check valid file
+	p = subprocess.Popen(['python', 'soundcheck.py', FullPath],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+	output, errors = p.communicate()
+	wav_vals = output.split()
+	wave_vars['no_channels'] = wav_vals[2]
+	wave_vars['samp_rate'] = wav_vals[1]
+	wave_vars['bits'] = wav_vals[3]
+	wave_vars['max_time'] = wav_vals[4]
 	return wave_vars
+
 
 #Insert data to MySQL
 def tomysql(item_wav, OriginalFilename, FullPath, FileFormat, file_md5, ColID, SiteID, DirID, SensorID, Date, Time, ToAddMemberID):
 	filesize=os.path.getsize(FullPath)
-	wave_pointer = open_wave(item_wav)
-	wave_vars = find_values(wave_pointer)
+	#wave_pointer = open_wave(item_wav)
+	wave_vars = find_values(FullPath)
 	SoundID=insert(OriginalFilename, FileFormat, wave_vars['no_channels'], wave_vars['samp_rate'], wave_vars['bits'], wave_vars['max_time'], file_md5, str(filesize), ColID, SiteID, DirID, SensorID, Date, Time, ToAddMemberID)
 	updatefile(ToAddMemberID, str(0))
 	#print "\n  MySQL Insert was successful"
 	return SoundID
+
 
 def insert(soundname, soundformat, no_channels, samplingrate, bitres, soundlength, file_md5, filesize, ColID, SiteID, DirID, SensorID, Date, Time, ToAddMemberID):
 	#Open MySQL
@@ -189,6 +204,7 @@ def insert(soundname, soundformat, no_channels, samplingrate, bitres, soundlengt
 	con.close ()
 	return str(SoundID)
 
+
 def updatefile(ToAddMemberID, Status, message=""):
 	Status = str(Status)
 	#Open MySQL
@@ -205,6 +221,7 @@ def updatefile(ToAddMemberID, Status, message=""):
 	cursor.close ()
 	con.close ()
 	return
+
 
 def getallsounds():
 	#Open MySQL
@@ -226,6 +243,7 @@ def getallsounds():
 	con.close ()
 	return results
 
+
 def checkfile(soundname):
 	#Open MySQL
 	try:
@@ -240,6 +258,7 @@ def checkfile(soundname):
 	cursor.close ()
 	con.close ()
 	return str(how_many)
+
 
 def getrunningprocs():
 	#Open MySQL
@@ -261,6 +280,7 @@ def getrunningprocs():
 	cursor.close ()
 	con.close ()
 	return int(result)
+
 	
 def nocores():
 	#Open MySQL
@@ -279,6 +299,8 @@ def nocores():
 			result = 1
 	else:
 		result = 1
+	if result == 0:
+		result = 1
 	cursor.close ()
 	con.close ()
 	return int(result)
@@ -293,8 +315,12 @@ nocores = nocores()
 runningprocs = getrunningprocs()
 if runningprocs >= nocores:
 	#Don't run over the allowed parallel processes
+	print "Too many processes running"
 	sys.exit (0)
 
+
+#current path
+this_path = os.getcwd()
 
 #Get all soundfiles
 results=getallsounds()
@@ -335,13 +361,14 @@ try:
 		updatefile(ToAddMemberID, str(2))
 
 		#copy to tmp folder
-		status, output = commands.getstatusoutput('cp ' + FullPath + ' ' + server_dir + 'tmp/' + OriginalFilename)
-		FullPath = server_dir + 'tmp/' + OriginalFilename
+		status, output = commands.getstatusoutput('cp ' + FullPath + ' ' + this_path + '/' +  OriginalFilename)
+		FullPath = this_path + '/' + OriginalFilename
 		
 		#check valid file
 		p = subprocess.Popen(['python', 'soundcheck.py', FullPath],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 		output, errors = p.communicate()
-		FileFormat = output[:-1]
+		wav_vals = output.split()
+		FileFormat = wav_vals[0]
 		
 		if FileFormat != 'wav':
 			item_wav = extractflac(FullPath, FileFormat)

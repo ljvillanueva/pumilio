@@ -29,6 +29,9 @@ else:
 		sys.exit(1)
 	#if above worked, the rest should
 	status, fileformat = commands.getstatusoutput('soxi -t ' + file_2_check)
+	status, channels = commands.getstatusoutput('soxi -c ' + file_2_check)
+	status, bitrate = commands.getstatusoutput('soxi -b ' + file_2_check)
+	status, duration = commands.getstatusoutput('soxi -D ' + file_2_check)
 
-print str.lower(str(fileformat))
+print str.lower(str(fileformat)) + " " + str.lower(str(sampling_rate)) + " " + str.lower(str(channels)) + " " + str.lower(str(bitrate)) + " " + str.lower(str(duration))
 sys.exit(0)

@@ -93,6 +93,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 			$no_files = query_one("SELECT COUNT(*) FROM FilesToAddMembers", $connection);
 			$no_files_done = query_one("SELECT COUNT(*) FROM FilesToAddMembers WHERE ReturnCode='0'", $connection);
 			$no_files_todo = query_one("SELECT COUNT(*) FROM FilesToAddMembers WHERE ReturnCode='1'", $connection);
+			$no_files_running = query_one("SELECT COUNT(*) FROM FilesToAddMembers WHERE ReturnCode='2'", $connection);
 			$no_files_error = query_one("SELECT COUNT(*) FROM FilesToAddMembers WHERE ReturnCode='9'", $connection);
 			
 			$percent = floor(($no_files_done/($no_files-$no_files_error))*100);
@@ -100,6 +101,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 			echo "<p><strong>Overall statistics</strong> [<a href=\"file_manager.php\">Refresh</a>]:
 				<ul>
 				 <li>Completed files: $no_files_done</li>
+				 <li>Files being processed: $no_files_running</li>
 				 <li>Files yet to add: $no_files_todo</li>\n";
 			
 			if ($no_files_error > 0){
@@ -225,7 +227,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 				#don't show table with details unless it is requested or there is a problem
 				$this_show = FALSE;
 				
-				if ($no_files_error > 0){
+				if ($no_files_error > 0 || $no_files_inprogress > 0 || $no_files_todo > 0){
 					$this_show = TRUE;
 					}
 
@@ -256,11 +258,12 @@ if (is_file("$absolute_dir/customhead.php")) {
 								}
 							elseif ($ReturnCode == 2){
 								echo "<td> <img src=\"images/ajax-loader.gif\"> Working... ";
-								#$mins_working = query_one("SELECT TIMESTAMPDIFF(MINUTE, TimeStamp, NOW()) FROM FilesToAddMembers
-								#		WHERE ToAddMemberID='$ToAddMemberID'", $connection);
-								#if ($mins_working > 5){
-								#	echo "(working for more than five minutes, <a href=\"file_manager.php?ToAddMemberID=$ToAddMemberID&tab=$i\" title=\"Reset\">reset</a>?)";
-								#	}
+								$mins_working = query_one("SELECT TIMESTAMPDIFF(MINUTE, TimeStamp, NOW()) FROM FilesToAddMembers
+										WHERE ToAddMemberID='$ToAddMemberID'", $connection);
+								if ($mins_working > 5){
+									echo "(working for more than five minutes, <a href=\"file_manager.php?ToAddMemberID=$ToAddMemberID&tab=$i&action=1\" title=\"Reset\">reset</a> or 
+										<a href=\"file_manager.php?ToAddMemberID=$ToAddMemberID&tab=$i&action=2\" title=\"Reset\">delete</a>?)";
+									}
 								echo "</td></tr>\n";
 								}
 							elseif ($ReturnCode == 9){
