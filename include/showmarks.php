@@ -32,6 +32,7 @@ if ($nrowsm>0) {
 
 			if ($mark_freq_max>$frequency_max) {
 				$freq_i=0;
+				$mark_freq_max=$frequency_max;
 				}
 			else {
 				$freq_i=(((($frequency_range+$frequency_min)-$mark_freq_max)/$frequency_range)*$spectrogram_height);
