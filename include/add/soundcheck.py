@@ -19,19 +19,15 @@ if len(sys.argv) != 2:
 file_2_check = sys.argv[1]
 
 
-#First check if FLAC, audiolab does not support flac yet
-if file_2_check[-5:].lower() == ".flac":
-	fileformat = "flac"
+#get values
+status, sampling_rate = commands.getstatusoutput('soxi -r ' + file_2_check)
+if status != 0:
+	sys.exit(1)
+#if above worked, the rest should
+status, fileformat = commands.getstatusoutput('soxi -t ' + file_2_check)
+status, channels = commands.getstatusoutput('soxi -c ' + file_2_check)
+status, bitrate = commands.getstatusoutput('soxi -b ' + file_2_check)
+status, duration = commands.getstatusoutput('soxi -D ' + file_2_check)
 
-else:
-	status, sampling_rate = commands.getstatusoutput('soxi -r ' + file_2_check)
-	if status != 0:
-		sys.exit(1)
-	#if above worked, the rest should
-	status, fileformat = commands.getstatusoutput('soxi -t ' + file_2_check)
-	status, channels = commands.getstatusoutput('soxi -c ' + file_2_check)
-	status, bitrate = commands.getstatusoutput('soxi -b ' + file_2_check)
-	status, duration = commands.getstatusoutput('soxi -D ' + file_2_check)
-
-print str.lower(str(fileformat)) + " " + str.lower(str(sampling_rate)) + " " + str.lower(str(channels)) + " " + str.lower(str(bitrate)) + " " + str.lower(str(duration))
+print str.lower(str(fileformat)) + " " + str(sampling_rate) + " " + str(channels) + " " + str(bitrate) + " " + str(duration)
 sys.exit(0)
