@@ -61,6 +61,19 @@ elseif ($ac=="inactive") {
 		header("Location: ../admin.php?t=3&u=4");
 		die();
 	}
+elseif ($ac=="activate") {
+	if ($pumilio_admin==FALSE){
+		die();
+		}
+
+		$query_file = "UPDATE Users SET UserActive='1' WHERE UserID='$UserID'";
+		$result_file = mysqli_query($connection, $query_file)
+			or die (mysqli_error($connection));
+		// Relocate back to where you came from
+
+		header("Location: ../admin.php?t=3&u=4");
+		die();
+	}
 elseif ($ac=="selfedit") {
 		$UserEmail=filter_var($_POST["UserEmail"], FILTER_SANITIZE_EMAIL);
 

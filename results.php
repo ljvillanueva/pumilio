@@ -41,7 +41,7 @@ if ($Col!="0"){
 		$Col_comparisonq = "=";}
 	elseif ($Col_comparison==2) {
 		$Col_comparisonq = "!=";}
-	$Colq = "AND Collections.ColID $Col_comparisonq '$Col' ";
+	$Colq = "AND Sounds.ColID $Col_comparisonq '$Col' AND Sounds.ColID=Collections.ColID ";
 	}
 else{
 	$Colq = "";
@@ -56,7 +56,7 @@ if ($SiteID!="0"){
 		$Site_comparisonq = "=";}
 	elseif ($Site_comparison==2) {
 		$Site_comparisonq = "!=";}
-	$Siteq = "AND Sites.SiteID $Site_comparisonq '$SiteID' ";
+	$Siteq = "AND Sounds.SiteID $Site_comparisonq '$SiteID' AND Sounds.SiteID=Sites.SiteID ";
 	}
 else{
 	$Siteq = "";

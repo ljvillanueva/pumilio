@@ -608,6 +608,30 @@ if (is_file("$absolute_dir/customhead.php")) {
 					echo " &nbsp;&nbsp;<input type=submit value=\" Set user as inactive \" class=\"fg-button ui-state-default ui-corner-all\">
 					</form>";
 					}
+
+				$query = "SELECT * from Users WHERE UserName!='$username' AND UserActive='0' ORDER BY UserName";
+				$result = mysqli_query($connection, $query)
+					or die (mysqli_error($connection));
+				$nrows = mysqli_num_rows($result);
+				if ($nrows==0) {
+					#echo "There are no other users and you can not set yourself as inactive.";
+					}
+				else {
+					echo "
+					<form action=\"include/edit_user.php\" method=\"POST\">
+					<input type=\"hidden\" name=\"ac\" value=\"activate\">
+					<select name=\"UserID\" class=\"ui-state-default ui-corner-all\">";
+
+					for ($j=0; $j<$nrows; $j++) {
+						$row = mysqli_fetch_array($result);
+						extract($row);
+						echo "<option value=\"$UserID\">$UserFullname ($UserName)</option>";
+						}
+					echo "</select>";
+
+					echo " &nbsp;&nbsp;<input type=submit value=\" Reset user as active \" class=\"fg-button ui-state-default ui-corner-all\">
+					</form>";
+					}
 			?>
 					
 					
