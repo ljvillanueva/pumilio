@@ -19,7 +19,8 @@ if (!isset($no_login)){
 	}
 
 if ($no_login == TRUE) {
-	echo "[<a href=\"index.php\">Home</a>]";
+	echo "[<a href=\"index.php\">Home</a>] 
+			[<a href=\"search.php\" title=\"Search soundfiles\">Search</a>] ";
 	}
 else {
 	if ($login_wordpress == TRUE){

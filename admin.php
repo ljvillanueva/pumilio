@@ -436,7 +436,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 			require("include/version.php");
 			$website_version_e=explode(".",$website_version);
 			
-			if (count($website_version) == 4){
+			if (count($website_version_e) == 4){
 				$w_dev = trim($website_version_e[3]);
 				if ($w_dev == "dev"){
 					echo "<div class=\"error\" id=\"pumversiondev\"><strong><img src=\"images/exclamation.png\"> You are using a development version of Pumilio. This version may be more up to date
@@ -683,8 +683,10 @@ if (is_file("$absolute_dir/customhead.php")) {
 					echo "<p><form method=\"GET\" action=\"include/emptytmp.php\" target=\"tmp\" onsubmit=\"window.open('', 'tmp', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
 					<input type=submit value=\" Cleanup temp folder \" class=\"fg-button ui-state-default ui-corner-all\"></form> <br><hr noshade>";
 					
+					/*
 					echo "<p><form method=\"GET\" action=\"include/systemlog.php\" target=\"systemlog\" onsubmit=\"window.open('', 'systemlog', 'width=850,height=620,status=yes,resizable=yes,scrollbars=auto')\">
 					<input type=submit value=\" System log \" class=\"fg-button ui-state-default ui-corner-all\"></form><br><hr noshade>";
+					*/
 
 					#Check database values
 					echo "<p><form method=\"GET\" action=\"include/checkdb.php\" target=\"checkdb\" onsubmit=\"window.open('', 'checkdb', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
