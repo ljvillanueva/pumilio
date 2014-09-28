@@ -69,6 +69,16 @@ def fileExists(f):
 		exists = 1
 	return exists
 
+
+def fileValid(f):
+	file = open(f)
+	statinfo = os.stat(file)
+	if statinfo.st_size>0:
+		isvalid = 1
+	else:
+		isvalid = 0
+	return isvalid
+
 	
 def cleanup(server_dir, ColID, DirID, FullPath, OriginalFilename, ToAddMemberID):
 	pathToSound = server_dir + 'sounds/sounds/' + ColID + '/' + DirID
@@ -355,6 +365,11 @@ try:
 		#check if the file can be found
 		if fileExists(FullPath)==0:
 			updatefile(ToAddMemberID, str(9), "Could not find file")
+			continue
+
+		#check if the file is not empty
+		if fileValid(FullPath)==0:
+			updatefile(ToAddMemberID, str(9), "Empty or invalid file")
 			continue
 
 		#update record, set as in progress
