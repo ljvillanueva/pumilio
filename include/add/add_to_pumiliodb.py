@@ -367,11 +367,6 @@ try:
 			updatefile(ToAddMemberID, str(9), "Could not find file")
 			continue
 
-		#check if the file is not empty
-		if fileValid(FullPath)==0:
-			updatefile(ToAddMemberID, str(9), "Empty or invalid file")
-			continue
-
 		#update record, set as in progress
 		updatefile(ToAddMemberID, str(2))
 
@@ -379,6 +374,12 @@ try:
 		status, output = commands.getstatusoutput('cp ' + FullPath + ' ' + this_path + '/' +  OriginalFilename)
 		FullPath = this_path + '/' + OriginalFilename
 		
+		#check if the file is not empty
+		if fileValid(FullPath)==0:
+			updatefile(ToAddMemberID, str(9), "Empty or invalid file")
+			continue
+
+			
 		#check valid file
 		p = subprocess.Popen(['python', 'soundcheck.py', FullPath],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 		output, errors = p.communicate()
