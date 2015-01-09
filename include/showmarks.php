@@ -24,7 +24,7 @@ if ($nrowsm>0) {
 
 			if ($mark_time_min<$time_min) {
 				$time_i=0;
-				$mark_time_max=$mark_time_max-$time_min;
+				$mark_time_min=$time_min;
 				}
 			else {
 				$time_i=(($mark_time_min-$time_min)/$total_time)*$spectrogram_width;
