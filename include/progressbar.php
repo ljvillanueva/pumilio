@@ -18,7 +18,7 @@ $percent=$_GET["per"];
 if ($percent<100) {
 	echo "
 	<style type=\"text/css\">
-		.ui-progressbar-value { background-image: url(../js/jquery/start/images/pbar-ani.gif); }
+		.ui-progressbar-value { background-image: url(../images/pbar-ani.gif); }
 	</style>
 
 	<script type=\"text/javascript\">
@@ -28,7 +28,7 @@ if ($percent<100) {
 		});
 	});
 	</script>
-	
+
 	</head>
 	<body>";
 

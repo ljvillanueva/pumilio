@@ -38,7 +38,7 @@ if (isset($_GET["tab"])){
 else {
 	$tab = -1;
 	}
-	
+
 if ($special_noprocess == FALSE){
 	add_in_background($absolute_dir, $connection);
 	}
@@ -62,8 +62,8 @@ if ($use_googleanalytics) {
 if (is_file("$absolute_dir/customhead.php")) {
 		include("customhead.php");
 	}
-	
-	
+
+
 ?>
 
 </head>
@@ -95,24 +95,24 @@ if (is_file("$absolute_dir/customhead.php")) {
 			$no_files_todo = query_one("SELECT COUNT(*) FROM FilesToAddMembers WHERE ReturnCode='1'", $connection);
 			$no_files_running = query_one("SELECT COUNT(*) FROM FilesToAddMembers WHERE ReturnCode='2'", $connection);
 			$no_files_error = query_one("SELECT COUNT(*) FROM FilesToAddMembers WHERE ReturnCode='9'", $connection);
-			
+
 			$percent = floor(($no_files_done/($no_files-$no_files_error))*100);
-			
+
 			echo "<p><strong>Overall statistics</strong> [<a href=\"file_manager.php\">Refresh</a>]:
 				<ul>
 				 <li>Completed files: $no_files_done</li>
 				 <li>Files being processed: $no_files_running</li>
 				 <li>Files yet to add: $no_files_todo</li>\n";
-			
+
 			if ($no_files_error > 0){
 				echo "<li><img src=\"images/exclamation.png\"> Files with errors: $no_files_error</li>";
 				}
-				 
+
 			echo "</ul>\n";
-				
+
 			if ($percent<100) {
 				echo "\n<style type=\"text/css\">
-					.ui-progressbar .ui-progressbar-value { background-image: url(js/jquery/start/images/pbar-ani.gif); }
+					.ui-progressbar .ui-progressbar-value { background-image: url(images/pbar-ani.gif); }
 				</style>
 
 				<script type=\"text/javascript\">
@@ -133,7 +133,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 					else{
 						echo "<br>$how_many scripts are running in the background:";
 						}
-					
+
 					echo "<ul>\n";
 					for ($h=0; $h < $how_many; $h++) {
 						$this_PID = $PID_array[$h];
@@ -153,7 +153,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 						else {
 							$how_long = "$how_long_h hours and $how_long_m minutes";
 							}
-							
+
 						echo "<li>Script running for $how_long\n</li>";
 						}
 					echo "</ul>\n";
@@ -165,9 +165,9 @@ if (is_file("$absolute_dir/customhead.php")) {
 					</div>
 				</div>\n";
 				}
-			
+
 			echo "<br></p>";
-			
+
 			if ($tab >= 0){
 				echo "<script type=\"text/javascript\">
 				$(function() {
@@ -194,10 +194,10 @@ if (is_file("$absolute_dir/customhead.php")) {
 				</script>
 				";
 				}
-			
+
 			echo "
 			<div id=\"accordion\">";
-			
+
 			for ($i=0; $i < $nrows; $i++) {
 				$row = mysqli_fetch_array($result);
 				extract($row);
@@ -207,14 +207,14 @@ if (is_file("$absolute_dir/customhead.php")) {
 				$no_files_todo = query_one("SELECT COUNT(*) FROM FilesToAddMembers WHERE FilesToAddID='$FilesToAddID' AND ReturnCode='1'", $connection);
 				$no_files_inprogress = query_one("SELECT COUNT(*) FROM FilesToAddMembers WHERE FilesToAddID='$FilesToAddID' AND ReturnCode='2'", $connection);
 				$no_files_error = query_one("SELECT COUNT(*) FROM FilesToAddMembers WHERE FilesToAddID	='$FilesToAddID' AND ReturnCode='9'", $connection);
-				
+
 				$percent = floor(($no_files_done/$no_files)*100);
-				
+
 				echo "
-				
+
 				<h3><a href=\"#\">Path: $FilesPath ($percent% completed)</a></h3>
 				<div>
-				
+
 				<p>Path: $FilesPath<br>Started on: <strong>$StartTime</strong> by $UserFullname<br>
 					<ul>
 					 <li>Completed files: $no_files_done</li>
@@ -222,11 +222,11 @@ if (is_file("$absolute_dir/customhead.php")) {
 					 <li>Files yet to add: $no_files_todo</li>
 					 <li>Files with errors: $no_files_error</li>
 					</ul>\n";
-				
-				
+
+
 				#don't show table with details unless it is requested or there is a problem
 				$this_show = FALSE;
-				
+
 				if ($no_files_error > 0 || $no_files_inprogress > 0 || $no_files_todo > 0){
 					$this_show = TRUE;
 					}
@@ -261,13 +261,13 @@ if (is_file("$absolute_dir/customhead.php")) {
 								$mins_working = query_one("SELECT TIMESTAMPDIFF(MINUTE, TimeStamp, NOW()) FROM FilesToAddMembers
 										WHERE ToAddMemberID='$ToAddMemberID'", $connection);
 								if ($mins_working > 5){
-									echo "(working for more than five minutes, <a href=\"file_manager.php?ToAddMemberID=$ToAddMemberID&tab=$i&action=1\" title=\"Reset\">reset</a> or 
+									echo "(working for more than five minutes, <a href=\"file_manager.php?ToAddMemberID=$ToAddMemberID&tab=$i&action=1\" title=\"Reset\">reset</a> or
 										<a href=\"file_manager.php?ToAddMemberID=$ToAddMemberID&tab=$i&action=2\" title=\"Reset\">delete</a>?)";
 									}
 								echo "</td></tr>\n";
 								}
 							elseif ($ReturnCode == 9){
-								echo "<td> <img src=\"images/error.png\"> Error: $ErrorCode<br> 
+								echo "<td> <img src=\"images/error.png\"> Error: $ErrorCode<br>
 									<a href=\"file_manager.php?ToAddMemberID=$ToAddMemberID&tab=$i&action=1\" title=\"Reset\">reset</a> |
 									<a href=\"file_manager.php?ToAddMemberID=$ToAddMemberID&tab=$i&action=2\" title=\"Reset\">delete</a>
 									</td></tr>\n";
@@ -279,12 +279,12 @@ if (is_file("$absolute_dir/customhead.php")) {
 				else{
 					echo "<p><a href=\"file_manager.php?tab=$i\" title=\"Show details\">Show details</a>";
 					}
-					
-					
+
+
 				echo "</div>\n";
 				}
 			echo "</div><!-- End accordion -->\n";
-				
+
 			}
 		else {
 			echo "<p>There are no files waiting to be added.

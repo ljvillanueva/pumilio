@@ -69,8 +69,8 @@ if ($use_googleanalytics) {
 if (is_file("$absolute_dir/customhead.php")) {
 		include("customhead.php");
 	}
-	
-	
+
+
 ?>
 
 </head>
@@ -92,7 +92,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 		echo "<h3>Generation of extra quality control data</h3>
 			<p>By default, the system uses the file size and sound duration to detect
-				problems with particular files. If the system is set to use R, 
+				problems with particular files. If the system is set to use R,
 				it can generate additional data and indices that can be used to detect
 				problems with files.
 			<p>Check the data by exploring the <a href=\"qa.php\">figures</a>.";
@@ -107,24 +107,24 @@ if (is_file("$absolute_dir/customhead.php")) {
 				$no_files_waiting = query_one("SELECT COUNT(*) FROM Sounds WHERE SoundStatus!='9' AND SoundStats='0'", $connection);
 				$no_files_inprocess = query_one("SELECT COUNT(*) FROM Sounds WHERE SoundStatus!='9' AND SoundStats='1'", $connection);
 				$no_files_error = query_one("SELECT COUNT(*) FROM Sounds WHERE SoundStatus!='9' AND SoundStats='9'", $connection);
-			
+
 				$percent = floor(($no_files_done/($no_files-$no_files_error))*100);
-			
+
 				echo "<p><strong>Overall statistics</strong> [<a href=\"qc.php\">Refresh</a>]:
 					<ul>
 					 <li>Files in the system: $no_files</li>
 					 <li>Completed files: $no_files_done</li>
 					 <li>Files yet to be processed: $no_files_waiting</li>\n";
-			
+
 				if ($no_files_error > 0){
 					echo "<li><img src=\"images/exclamation.png\"> Files with errors: $no_files_error</li>";
 					}
-					 
+
 				echo "</ul>\n";
-				
+
 				if ($percent<100) {
 					echo "\n<style type=\"text/css\">
-						.ui-progressbar .ui-progressbar-value { background-image: url(js/jquery/start/images/pbar-ani.gif); }
+						.ui-progressbar .ui-progressbar-value { background-image: url(images/pbar-ani.gif); }
 					</style>
 
 					<script type=\"text/javascript\">
@@ -145,7 +145,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 						else{
 							echo "<br>$how_many scripts are running in the background:";
 							}
-					
+
 						echo "<ul>\n";
 						for ($h=0; $h < $how_many; $h++) {
 							$this_PID = $PID_array[$h];
@@ -165,7 +165,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 							else {
 								$how_long = "$how_long_h hours and $how_long_m minutes";
 								}
-							
+
 							echo "<li>Script running for $how_long [<a href=\"include/killpid.php?pid=$this_PID\">stop script</a>]\n</li>";
 							}
 						echo "</ul>\n";
@@ -177,9 +177,9 @@ if (is_file("$absolute_dir/customhead.php")) {
 						</div>
 					</div>\n";
 					}
-			
+
 				echo "<br></p>";
-			
+
 				if (isset($tab)){
 					echo "<script type=\"text/javascript\">
 					$(function() {
@@ -206,10 +206,10 @@ if (is_file("$absolute_dir/customhead.php")) {
 					</script>
 					";
 					}
-			
+
 				echo "<p>$type_s: [$type_link]<br>
 				<div id=\"accordion\">";
-							
+
 				$query = "SELECT DISTINCT $db_sel AS db_val FROM Sounds WHERE SoundStatus!='9' ORDER BY $db_sel";
 				$result = mysqli_query($connection, $query)
 					or die (mysqli_error($connection));
@@ -219,26 +219,26 @@ if (is_file("$absolute_dir/customhead.php")) {
 					$row = mysqli_fetch_array($result);
 					extract($row);
 
-					$no_files = query_one("SELECT COUNT(*) FROM Sounds WHERE SoundStatus!='9' 
+					$no_files = query_one("SELECT COUNT(*) FROM Sounds WHERE SoundStatus!='9'
 							AND $db_sel='$db_val'", $connection);
-					$no_files_done = query_one("SELECT COUNT(*) FROM Sounds WHERE SoundStatus!='9' 
+					$no_files_done = query_one("SELECT COUNT(*) FROM Sounds WHERE SoundStatus!='9'
 							AND $db_sel='$db_val' AND SoundStats='2'", $connection);
-					$no_files_todo = query_one("SELECT COUNT(*) FROM Sounds WHERE SoundStatus!='9' 
+					$no_files_todo = query_one("SELECT COUNT(*) FROM Sounds WHERE SoundStatus!='9'
 							AND $db_sel='$db_val' AND SoundStats='0'", $connection);
-					$no_files_inprogress = query_one("SELECT COUNT(*) FROM Sounds WHERE SoundStatus!='9' 
+					$no_files_inprogress = query_one("SELECT COUNT(*) FROM Sounds WHERE SoundStatus!='9'
 							AND $db_sel='$db_val' AND SoundStats='1'", $connection);
-					$no_files_error = query_one("SELECT COUNT(*) FROM Sounds WHERE SoundStatus!='9' 
+					$no_files_error = query_one("SELECT COUNT(*) FROM Sounds WHERE SoundStatus!='9'
 							AND $db_sel='$db_val' AND SoundStats='9'", $connection);
-				
+
 					$percent = floor(($no_files_done/$no_files)*100);
 
 					$this_name = query_one("SELECT $type_id FROM $type_s WHERE $db_sel='$db_val'", $connection);
 
-				
+
 					echo "
 					<h3><a href=\"#\">$type_s1: $this_name ($percent% completed)</a></h3>
 					<div>
-				
+
 					<p>$type_s1: $this_name<br>
 						<ul>
 						 <li>Completed files: $no_files_done</li>
@@ -246,11 +246,11 @@ if (is_file("$absolute_dir/customhead.php")) {
 						 <li>Files yet to add: $no_files_todo</li>
 						 <li>Files with errors: $no_files_error</li>
 						</ul>\n";
-							
+
 					echo "<table>\n";
 					echo "<tr><td>&nbsp;</td><td><strong>File</strong></td><td>&nbsp;</td><td><strong>Status</strong></td></tr>\n";
 
-					$query_1 = "SELECT SoundID, SoundName, SoundStats from Sounds WHERE SoundStatus!='9' 
+					$query_1 = "SELECT SoundID, SoundName, SoundStats from Sounds WHERE SoundStatus!='9'
 							AND $db_sel='$db_val' ORDER BY SoundStats DESC";
 					$result_1 = mysqli_query($connection, $query_1)
 						or die (mysqli_error($connection));
@@ -280,7 +280,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 					</div>\n";
 					}
 					echo "</div><!-- End accordion -->\n";
-			
+
 					}
 				}
 			else {
