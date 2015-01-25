@@ -83,11 +83,11 @@ function formatSize($size){
 	}
 
 
-function delete_old($dir, $days) {
+function delete_old($dir, $mins) {
 	if (substr($dir, -1, 1) != "/"){
 		$dir = $dir . "/";
 		}
-	exec('find '. $dir . '* -atime +' . $days . ' -exec rm {} \; > /dev/null &', $line, $retval);
+	exec('find '. $dir . '* -type d -amin +' . $mins . ' -exec rm {} \; > /dev/null &', $line, $retval);
 	}
 
 

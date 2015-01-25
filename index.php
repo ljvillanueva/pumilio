@@ -482,5 +482,5 @@ else{
 	session_write_close();
 	flush(); @ob_flush();
 	#Delete old temp files
-	delete_old('tmp/', 3);
+	delete_old('tmp/', 30);
 ?>
