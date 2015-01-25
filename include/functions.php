@@ -87,7 +87,7 @@ function delete_old($dir, $mins) {
 	if (substr($dir, -1, 1) != "/"){
 		$dir = $dir . "/";
 		}
-	exec('find '. $dir . '* -type d -amin +' . $mins . ' -exec rm {} \; > /dev/null &', $line, $retval);
+	exec('find '. $dir . '* -type d -amin +' . $mins . ' -exec rm -r {} \; > /dev/null &', $line, $retval);
 	}
 
 
