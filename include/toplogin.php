@@ -12,7 +12,7 @@ else{
 	$e = FALSE;
 	}
 
-echo "<p style=\"text-align: right;\"><small>";
+echo "<p style=\"text-align: right;\">";
 
 if (!isset($no_login)){
 	$no_login = FALSE;
@@ -111,6 +111,6 @@ else {
 		}
 	}
 
-echo "</small>\n";
+echo "\n";
 
 ?>

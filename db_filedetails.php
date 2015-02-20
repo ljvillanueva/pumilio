@@ -212,8 +212,17 @@ $use_googlemaps=FALSE;
 $use_leaflet=TRUE;
 ####################################################3
 
+if ($use_leaflet == TRUE){
+		#Leafet
+		echo "\n<link rel=\"stylesheet\" href=\"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css\" />\n
 
-if ($use_googlemaps=="3") {
+		<style>
+			#map { height: 220px; 
+					width: 320px;
+				}
+		</style>";
+	}
+elseif ($use_googlemaps=="3") {
 	#Get points from the database
 	$query_site = "SELECT * FROM Sites,Sounds WHERE SiteLat IS NOT NULL AND SiteLon IS NOT NULL
 				AND Sites.SiteID=Sounds.SiteID AND Sounds.SoundID='$SoundID' 
@@ -240,16 +249,7 @@ if ($use_googlemaps=="3") {
 		require("include/db_filedetails_map_head.php");
 		}
 	}
-elseif ($use_leaflet == TRUE){
-		#Leafet
-		echo "\n<link rel=\"stylesheet\" href=\"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css\" />\n
 
-		<style>
-			#map { height: 220px; 
-					width: 320px;
-				}
-		</style>";
-}
 
 #HTML5 player
 # http://www.jplayer.org
@@ -950,8 +950,11 @@ else {
 	
 	echo "<div class=\"span-9 last\">";
 	
-	#Add small GMap
-	if ($use_googlemaps=="1" || $use_googlemaps=="3") {
+	if ($use_leaflet == TRUE){
+			echo "\n<p>Map:<br>
+					<div id=\"map\"></div>\n";
+	}
+	elseif ($use_googlemaps=="1" || $use_googlemaps=="3") {#Add small GMap
 		if ($SiteID!="" && $SiteLat!="" && $SiteLon!=""){
 			echo "\n<p>Map:<br>
 				<div id=\"map_canvas\" style=\"width: 320px; height: 220px\">Your browser does not have JavaScript enabled, which is required to proceed, or can not connect to GoogleMaps. Please contact your administrator.</div>\n";
@@ -970,10 +973,7 @@ else {
 			echo "<br>";
 			}
 		}
-	elseif ($use_leaflet == TRUE){
-			echo "\n<p>Map:<br>
-					<div id=\"map\"></div>\n";
-	}
+
 
 	echo "</div>
 	<div class=\"span-24 last\">";

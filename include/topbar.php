@@ -27,12 +27,13 @@ if ($special_wrapper == FALSE && $special_iframe == FALSE){
 		$mainlogo = "images/logo2.png";
 		}
 
-
-	echo "<div class=\"span-12\">
-			<a href=\"$logolink\"><img src=\"$mainlogo\" alt=\"Logo\"></a>
-		</div>
-		<div class=\"span-12 last\">";
-			require("include/toplogin.php");
-	echo "</div>";
+	echo "<div class=\"row\">
+	        <div class=\"col-lg-8\">
+				<a href=\"$logolink\"><img src=\"$mainlogo\" alt=\"Logo\"></a>
+			</div>
+			<div class=\"col-lg-8\">";
+				require("include/toplogin.php");
+			echo "</div>
+		</div>";
 	}
 ?>
