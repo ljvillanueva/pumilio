@@ -15,6 +15,11 @@ if (file_exists($config_file)) {
 require("include/apply_config.php");
 require("include/check_admin.php");
 
+#DB
+use \DByte\DB;
+DB::$c = $pdo;
+
+
 #Sanitize inputs
 $SoundID=filter_var($_GET["SoundID"], FILTER_SANITIZE_NUMBER_INT);
 if (isset($_GET["hidemarks"])){
@@ -53,11 +58,15 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 
 <title>$app_custom_name - File Details</title>\n";
 
-require("include/get_css.php");
+require("include/get_css3.php");
 
 if ($valid_id != 1) {
 	echo "<body>
-		<div class=\"error\" style=\"margins: 10px;\"><img src=\"images/exclamation.png\"> The file requested does not exists or the Sound ID is not valid. Please go back and try again.</div>
+
+		<div class=\"alert alert-danger\" role=\"alert\">
+    	    <img src=\"images/exclamation.png\"> The file requested does not exists or the Sound ID is not valid. Please go back and try again.
+      	</div>
+
 		</body>
 		</html>";
 	die();
@@ -65,8 +74,10 @@ if ($valid_id != 1) {
 
 if ($SoundID_status == 9) {
 	echo "<body>
-		<div class=\"error\" style=\"margins: 10px;\"><img src=\"images/exclamation.png\"> The file requested was deleted.
-			Please contact the administrator for more information.</div>
+		<div class=\"alert alert-danger\" role=\"alert\">
+    	    <img src=\"images/exclamation.png\"> The file requested was deleted.
+			Please contact the administrator for more information.
+      	</div>
 		</body>
 		</html>";
 	die();
@@ -74,20 +85,39 @@ if ($SoundID_status == 9) {
 
 if ($SoundID_qf_check < $default_qf && $pumilio_loggedin==FALSE) {
 	echo "<body>
-		<div class=\"error\" style=\"margins: 10px;\"><img src=\"images/exclamation.png\"> You must be logged in to see
-			this file. Please contact the administrator for more information.</div>
+		<div class=\"alert alert-danger\" role=\"alert\">
+    	    <img src=\"images/exclamation.png\"> You must be logged in to see
+			this file. Please contact the administrator for more information.
+      	</div>
 		</body>
 		</html>";
 	die();
 	}
 
 
-$query = "SELECT *, DATE_FORMAT(Date,'%d-%b-%Y') AS HumanDate, TIME_FORMAT(Time,'%H:%i:%s') AS HumanTime, TIME_FORMAT(Duration,'%i:%s') AS Duration_human FROM Sounds WHERE SoundID='$SoundID'";
+$this_sound = DB::row('SELECT *, DATE_FORMAT(Date, \'%d-%b-%Y\') AS HumanDate, TIME_FORMAT(Time, \'%H:%i:%s\') AS HumanTime, TIME_FORMAT(Duration, \'%i:%s\') AS Duration_human FROM `Sounds` WHERE `SoundID`="' . $SoundID . '"');
+					  
 
-$result=query_several($query, $connection);
-$nrows = mysqli_num_rows($result);
-$row = mysqli_fetch_array($result);
-extract($row);
+$HumanDate = $this_sound->HumanDate;
+$HumanTime = $this_sound->HumanTime;
+$Duration_human = $this_sound->Duration_human;
+$ColID = $this_sound->ColID;
+$SiteID = $this_sound->SiteID;
+$DirID = $this_sound->DirID;
+$AudioPreviewFilename = $this_sound->AudioPreviewFilename;
+$SoundName = $this_sound->SoundName;
+$OriginalFilename = $this_sound->OriginalFilename;
+$Duration = $this_sound->Duration;
+$SoundFormat = $this_sound->SoundFormat;
+$SamplingRate = $this_sound->SamplingRate;
+$Channels = $this_sound->Channels;
+$OtherSoundID = $this_sound->OtherSoundID;
+$Notes = $this_sound->Notes;
+$SensorID = $this_sound->SensorID;
+$DerivedSound = $this_sound->DerivedSound;
+$QualityFlagID = $this_sound->QualityFlagID;
+
+
 
 require("include/get_jqueryui.php");
 ?>
@@ -175,6 +205,14 @@ if ($nrows_all_tags>0) {
 	
 #flush();
 #require("include/update_sites.php");
+
+
+####################################################3
+$use_googlemaps=FALSE;
+$use_leaflet=TRUE;
+####################################################3
+
+
 if ($use_googlemaps=="3") {
 	#Get points from the database
 	$query_site = "SELECT * FROM Sites,Sounds WHERE SiteLat IS NOT NULL AND SiteLon IS NOT NULL
@@ -202,6 +240,16 @@ if ($use_googlemaps=="3") {
 		require("include/db_filedetails_map_head.php");
 		}
 	}
+elseif ($use_leaflet == TRUE){
+		#Leafet
+		echo "\n<link rel=\"stylesheet\" href=\"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css\" />\n
+
+		<style>
+			#map { height: 220px; 
+					width: 320px;
+				}
+		</style>";
+}
 
 #HTML5 player
 # http://www.jplayer.org
@@ -396,7 +444,8 @@ else {
 	</div>
 		<?php
 
-		$source_name=query_one("SELECT Collections.CollectionName from Collections,Sounds WHERE Collections.ColID=Sounds.ColID AND Sounds.SoundID='$SoundID'", $connection);
+
+		$CollectionName = DB::column('SELECT `Collections`.`CollectionName` from `Collections`, `Sounds` WHERE `Collections`.`ColID` = `Sounds`.`ColID` AND `Sounds`.`SoundID`="' . $SoundID . '"');
 
 		#New top infobar
 		#file info
@@ -431,7 +480,7 @@ else {
 			echo "<a href=\"db_browse.php?ColID=$ColID\" title=\"Browse this collection\" style=\"color: white;\">";
 			}
 			
-		echo "<strong>$source_name</strong></a></p>
+		echo "<strong>$CollectionName</strong></a></p>
 		</div>";
 			
 		#site info
@@ -439,9 +488,11 @@ else {
 			<p class=\"highlight3 ui-corner-all\">";
 
 		if ($SiteID!="") {
-			$result_site=query_several("SELECT * FROM Sites WHERE SiteID=$SiteID LIMIT 1", $connection);
-			$row_site = mysqli_fetch_array($result_site);
-			extract($row_site);
+			$this_site = DB::row('SELECT * FROM `Sites` WHERE `SiteID`="' . $SiteID . '"');
+								  
+			$SiteLat = $this_site->SiteLat;
+			$SiteLon = $this_site->SiteLon;
+			$SiteName = $this_site->SiteName;
 
 			if ($SiteLat!="" && $SiteLon!=""){
 				if ($special_wrapper==TRUE){
@@ -452,7 +503,7 @@ else {
 					}
 				
 				#Check if there are images of the site
-				$site_pics=query_one("SELECT COUNT(*) FROM SitesPhotos WHERE SiteID='$SiteID'", $connection);
+				$site_pics = DB::column('SELECT COUNT(*) FROM `SitesPhotos` WHERE `SiteID`="' . $SoundID . '"');
 				if ($site_pics>0) {
 					echo " <a href=\"#\" title=\"Show photographs of this site\" onclick=\"window.open('sitephotos.php?SiteID=$SiteID', 'pics', 'width=550,height=400,status=yes,resizable=yes,scrollbars=yes'); return false;\">
 						<img src=\"images/image.png\" alt=\"Show photographs of this site\"></a>";
@@ -672,8 +723,11 @@ else {
 			
 		echo "<li>File size: $FileSize</li>";
 		
-		$SpecMaxFreq = DB::column("SELECT `SpecMaxFreq` from `SoundsImages` WHERE `SoundID`=" . $SoundID . " AND `ImageType`='spectrogram'");
-		$ImageFFT = DB::column("SELECT `ImageFFT` from `SoundsImages` WHERE `SoundID`=" . $SoundID . " AND `ImageType`='spectrogram'");
+
+		$specinfo = DB::row("SELECT `SpecMaxFreq`, `ImageFFT` from `SoundsImages` WHERE `SoundID`=" . $SoundID . " AND `ImageType`='spectrogram'");
+		$SpecMaxFreq = $specinfo->SpecMaxFreq;
+		$ImageFFT = $specinfo->ImageFFT;
+
 		echo "<li>Spectrogram settings:
 			<ul>
 				<li>Max frequency: $SpecMaxFreq Hz</li>
@@ -687,12 +741,12 @@ else {
 			}
 		
 		if ($SensorID!="") {
-			#$Recorder=query_one("SELECT Recorder from Sensors WHERE SensorID=$SensorID LIMIT 1", $connection);
-			$Recorder = DB::column('SELECT `Recorder` from `Sensors` WHERE `SensorID`=' . $SensorID . ' LIMIT 1');
-			#$Microphone=query_one("SELECT Microphone from Sensors WHERE SensorID=$SensorID LIMIT 1", $connection);
-			$Microphone = DB::column('SELECT `Microphone` from `Sensors` WHERE `SensorID`=' . $SensorID . ' LIMIT 1');
-			#$SensorNotes=query_one("SELECT Notes from Sensors WHERE SensorID=$SensorID LIMIT 1", $connection);
-			$SensorNotes = DB::column('SELECT `Notes` from `Sensors` WHERE `SensorID`=' . $SensorID . ' LIMIT 1');
+
+			$sensor = DB::row('SELECT `Recorder`, `Microphone`, `Notes` from `Sensors` WHERE `SensorID`=' . $SensorID);
+			$Recorder = $sensor->Recorder;
+			$Microphone = $sensor->Microphone;
+			$SensorNotes = $sensor->Notes;
+
 			echo "<li>Sensor used: $Recorder, $Microphone ($SensorNotes)</li>";
 			}
 		elseif ($SensorID == "1") {
@@ -721,12 +775,12 @@ else {
  			}
 
 		#Find weather data
-		$weather_data_id=get_closest_weather($connection,$SiteLat, $SiteLon,$Date,$Time);
-		$weather_data=explode(",",$weather_data_id);
-		$weather_data_id=$weather_data[0];
-		$time_diff=round(($weather_data[1]/60));
-		$distance=round($weather_data[2],2);
-		if ($weather_data_id!=0 && $time_diff<60) {
+		$weather_data_id = get_closest_weather($connection, $SiteLat, $SiteLon, $Date, $Time);
+		$weather_data = explode(",",$weather_data_id);
+		$weather_data_id = $weather_data[0];
+		$time_diff = round(($weather_data[1]/60));
+		$distance = round($weather_data[2],2);
+		if ($weather_data_id != 0 && $time_diff < 60) {
 			$result_w = mysqli_query($connection, "SELECT * FROM WeatherData WHERE WeatherDataID='$weather_data_id' LIMIT 1")
 				or die (mysqli_error($connection));
 			$row_w = mysqli_fetch_array($result_w);
@@ -916,6 +970,10 @@ else {
 			echo "<br>";
 			}
 		}
+	elseif ($use_leaflet == TRUE){
+			echo "\n<p>Map:<br>
+					<div id=\"map\"></div>\n";
+	}
 
 	echo "</div>
 	<div class=\"span-24 last\">";
@@ -965,3 +1023,9 @@ else {
 
 </body>
 </html>
+
+<?php
+if ($use_leaflet == TRUE){
+	require("include/leaflet1.php");
+}
+?>

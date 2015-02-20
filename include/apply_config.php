@@ -47,7 +47,7 @@ $result = mysqli_query($connection, $queryutf)
 # using 
 # https://github.com/Xeoncross/DByte
 // We need this!
-require('include/db/DB.php');
+require('libs/DB/DB.php');
 
 // Create a new PDO connection to MySQL
 $pdo = new PDO(
@@ -61,6 +61,7 @@ $pdo = new PDO(
 	)
 );
 
+use \DByte\DB;
 DB::$c = $pdo;
 
 $settings = DB::pairs('SELECT `Settings`, `Value` FROM `PumilioSettings`');
