@@ -276,7 +276,7 @@ if (!$special_noprocess){
 
 ################
 #Turn SoX option off while finishing rest of code
-$sox_images = FALSE;
+$sox_images = TRUE;
 
 #Execute custom code, if set
 if (is_file("$absolute_dir/customcode.php")) {
