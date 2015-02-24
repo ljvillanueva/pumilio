@@ -47,7 +47,7 @@ $result = mysqli_query($connection, $queryutf)
 # using 
 # https://github.com/Xeoncross/DByte
 // We need this!
-require('include/db/DB.php');
+require('libs/DB/DB.php');
 
 // Create a new PDO connection to MySQL
 $pdo = new PDO(
@@ -61,6 +61,7 @@ $pdo = new PDO(
 	)
 );
 
+use \DByte\DB;
 DB::$c = $pdo;
 
 $settings = DB::pairs('SELECT `Settings`, `Value` FROM `PumilioSettings`');
@@ -112,7 +113,18 @@ if (!isset($special_noopen)){
 	$special_noopen = FALSE;
 	}
 
-if ($googlemaps_ver == "3") {
+
+##########
+$use_leaflet=TRUE;
+if ($use_leaflet == TRUE){
+	$tileserver = DB::column('SELECT Value FROM `PumilioSettings` WHERE Settings = "tileserver"');
+	if ($tileserver == ""){
+		$tileserver = "mapbox";
+		}
+	}
+
+
+elseif ($googlemaps_ver == "3") {
 	$googlemaps3_key = DB::column('SELECT Value FROM `PumilioSettings` WHERE Settings = "googlemaps3_key"');
 	}
 
@@ -177,6 +189,49 @@ if ($useR == TRUE){
 		}
 	}
 
+
+#palette for SoX
+$spectrogram_palette=query_one("SELECT Value FROM PumilioSettings WHERE Settings='spectrogram_palette' LIMIT 1", $connection);
+	
+	if ($spectrogram_palette == "" || $spectrogram_palette == 0) {
+		$spectrogram_palette_c = " -m ";
+		$letter_color="black";
+	}
+	elseif ($spectrogram_palette < 1 || $spectrogram_palette > 6) {
+			$spectrogram_palette_c = " -m ";
+			$letter_color="black";
+			}
+	else {
+		$spectrogram_palette_c = " -m ";
+		$letter_color="black";
+		}
+
+	if ($spectrogram_palette==1) {
+		$spectrogram_palette_c = " -p 1 ";
+		$letter_color="black";
+		}
+	elseif ($spectrogram_palette==2) {
+		$spectrogram_palette_c = " -p 2 ";
+		$letter_color="black";
+		}
+	elseif ($spectrogram_palette==3) {
+		$spectrogram_palette_c = " -p 3 ";
+		$letter_color="black";
+		}
+	elseif ($spectrogram_palette==4) {
+		$spectrogram_palette_c = " -p 4 ";
+		$letter_color="black";
+		}
+	elseif ($spectrogram_palette==5) {
+		$spectrogram_palette_c = " -p 5 ";
+		$letter_color="black";
+		}
+	elseif ($spectrogram_palette==6) {
+		$spectrogram_palette_c = " -p 6 ";
+		$letter_color="black";
+		}
+
+
 if (!isset($login_wordpress)){
 	$login_wordpress = FALSE;
 	}
@@ -236,7 +291,7 @@ if (isset($googleanalytics_ID)){
 
 
 #Check sox version
-if (!$special_noprocess){
+if ($special_noprocess==FALSE){
 	#$sox_version=query_one("SELECT Value from PumilioSettings WHERE Settings='sox_version'", $connection);
 	$sox_version = DB::column('SELECT Value FROM `PumilioSettings` WHERE Settings = "sox_version"');
 
@@ -276,7 +331,9 @@ if (!$special_noprocess){
 
 ################
 #Turn SoX option off while finishing rest of code
-$sox_images = TRUE;
+#$sox_images = TRUE;
+$sox_images = FALSE;
+$spectrogram_palette = 2;
 
 #Execute custom code, if set
 if (is_file("$absolute_dir/customcode.php")) {

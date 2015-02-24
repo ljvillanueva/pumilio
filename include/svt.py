@@ -400,6 +400,9 @@ class SpectrogramImage(object):
         if nyquist_freq<f_max:
             print "\nWarning: The specified maximum frequency to draw (%d Hz) is higher that what the digital file allows, which is %d Hz. The image file will have blank areas on top that correspond to empty data.\n" % (f_max,nyquist_freq)
 
+        if palette>2:
+            palette=2
+
         if palette==2:
 	        colors = [
 	                    (255,255,255),

@@ -16,6 +16,11 @@ else {
 require("include/apply_config.php");
 require("include/check_login.php");
 
+
+use \DByte\DB;
+DB::$c = $pdo;
+
+
 #Sanitize inputs
 $SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
 

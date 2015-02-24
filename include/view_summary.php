@@ -1,5 +1,11 @@
 <?php
 
+
+
+use \DByte\DB;
+DB::$c = $pdo;
+
+
 #Special wrapper
 if ($special_wrapper==TRUE){
 	$db_filedetails_link = "$wrapper?page=db_filedetails";
@@ -317,6 +323,7 @@ if ($mobile==TRUE) {
 
 	}
 else {
+
 	#NON MOBILE VERSION
 	#HTML5 player
 	# http://www.jplayer.org

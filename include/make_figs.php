@@ -48,12 +48,12 @@ if (mkdir("tmp/$random_value", 0777)){
 		if ($file_format=="flac") {
 			exec('flac -fd sounds/sounds/' . $ColID . '/' . $DirID . '/' . $file . ' -o tmp/' . $random_value . '/' . $file2, $lastline, $retval);
 				if ($retval!=0)
-				die("<div class=\"error\">There was a problem with the FLAC decoder...<br></div>");
+				die("<div class=\"alert alert-danger\">There was a problem with the FLAC decoder...<br></div>");
 			}
 		else {
 			exec('sox sounds/sounds/' . $ColID . '/' . $DirID . '/' . $file . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
 				if ($retval!=0)
-				die("<div class=\"error\">There was a problem with SoX..</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with SoX..</div>");
 			}
 
 		}
@@ -65,6 +65,10 @@ if (mkdir("tmp/$random_value", 0777)){
 		
 	#Get the max freq to draw from db
 	$max_spec_freq = query_one("SELECT Value from PumilioSettings WHERE Settings='max_spec_freq'", $connection);
+
+	if ($max_spec_freq=="max"){
+		$max_spec_freq = $nyquist_freq;
+		}
 
 	$max_spec_freq_rate = round(($max_spec_freq * 2) / 1000, 2);
 
@@ -86,57 +90,6 @@ if (mkdir("tmp/$random_value", 0777)){
 		}
 	if (!is_dir("sounds/images/$ColID/$DirID")) {
 		mkdir("sounds/images/$ColID/$DirID", 0777);
-		}
-
-	$spectrogram_palette=query_one("SELECT Value FROM PumilioSettings WHERE Settings='spectrogram_palette' LIMIT 1", $connection);
-	
-	if ($sox_images){
-		#Palette to use
-		if ($spectrogram_palette == "") {
-			if ($spectrogram_palette < 1 || $spectrogram_palette > 6) {
-				$spectrogram_palette=6;
-				}
-			}
-		else {
-			$spectrogram_palette=6;
-			}
-
-		if ($spectrogram_palette==1) {
-			$letter_color="black";
-			}
-		elseif ($spectrogram_palette==2) {
-			$letter_color="black";
-			}
-		elseif ($spectrogram_palette==3) {
-			$letter_color="black";
-			}
-		elseif ($spectrogram_palette==4) {
-			$letter_color="black";
-			}
-		elseif ($spectrogram_palette==5) {
-			$letter_color="black";
-			}
-		elseif ($spectrogram_palette==6) {
-			$letter_color="black";
-			}
-		}
-	else {
-		#Palette to use
-		if ($spectrogram_palette == "") {
-			if ($spectrogram_palette!=1 || $spectrogram_palette!=2) {
-				$spectrogram_palette=2;
-				}
-			}
-		else {
-			$spectrogram_palette=2;
-			}
-
-		if ($spectrogram_palette==1) {
-			$letter_color="white";
-			}
-		elseif ($spectrogram_palette==2) {
-			$letter_color="black";
-			}
 		}
 
 
@@ -163,34 +116,34 @@ if (mkdir("tmp/$random_value", 0777)){
 	if ($Channels==1) {
 		if ($sox_images){
 			$image_height_med1 = $image_height_med + 1;
-			exec('sox tmp/' . $random_value . '/' . $file2 . ' -n rate ' . $max_spec_freq_rate . 'k spectrogram -x ' . $image_width_med . ' -y ' . $image_height_med1 . ' -a -r -l -p ' . $spectrogram_palette . ' -o tmp/' . $random_dir . '/' . $fileName_exp[0] . '_st1.png', $lastline, $retval);
+			exec('sox tmp/' . $random_value . '/' . $file2 . ' -n rate ' . $max_spec_freq_rate . 'k spectrogram -x ' . $image_width_med . ' -y ' . $image_height_med1 . ' -a -r -l ' . $spectrogram_palette_c . ' -o tmp/' . $random_dir . '/' . $fileName_exp[0] . '_st1.png', $lastline, $retval);
 			if ($retval!=0){
-				die("<div class=\"error\">There was a problem with SoX...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with SoX1...</div>");
 				}
 			#Trim
 			exec('convert tmp/' . $random_dir . '/' . $fileName_exp[0] . '_st1.png -crop ' . $image_width_med . 'x' . $image_height_med . '+0+0 tmp/' . $random_dir . '/' . $fileName_exp[0] . '_s1.png', $lastline, $retval);
 			if ($retval!=0){
-				die('<div class=\"error\">There was a problem with Imagemagick...</div>');
+				die('<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>');
 				}
 			}
 		else{
 			exec('include/svt.py -f ' . $fft . ' -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '_s1.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '_w1.png -w ' . $image_width_med . ' -o 1 -h ' . $image_height_med . ' -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
 			if ($retval!=0)
-			die("<div class=\"error\">There was a problem with svt...</div>");
+			die("<div class=\"alert alert-danger\">There was a problem with svt...</div>");
 			}
 
 		if ($sox_images == FALSE){
 			#Quality to resize
 			exec("convert tmp/" . $random_dir . "/" . $fileName_exp[0] . "_w1.png -quality 10 tmp/" . $random_dir . "/" . $fileName_exp[0] . "_w.png", $lastline, $retval);
 			if ($retval!=0){
-				die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 				}
 			}
 			
 		#Draw the max freq
 		exec("convert -fill " . $letter_color . " -draw \"text 5,15 '" . $max_spec_freq_t . "'\" -draw \"text 5,155 '" . $half_max_spec_freq_t . "'\" tmp/" . $random_dir . "/" . $fileName_exp[0] . "_s1.png -quality 10 tmp/" . $random_dir . "/" . $fileName_exp[0] . "_s.png", $lastline, $retval);
 			if ($retval!=0)
-			die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+			die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 			
 		}
 	elseif ($Channels==2) {
@@ -199,52 +152,52 @@ if (mkdir("tmp/$random_value", 0777)){
 		
 		if ($sox_images){
 			$image_height_med1 = $image_height_med + 1;
-			exec('sox tmp/' . $random_value . '/' . $file2 . ' -n rate ' . $max_spec_freq_rate . 'k spectrogram -x ' . $image_width_med . ' -y ' . $image_height_med1 . ' -a -r -l -p ' . $spectrogram_palette . ' -o tmp/' . $random_dir . '/' . $fileName_exp[0] . '_lt_s.png', $lastline, $retval);
+			exec('sox tmp/' . $random_value . '/' . $file2 . ' -n rate ' . $max_spec_freq_rate . 'k spectrogram -x ' . $image_width_med . ' -y ' . $image_height_med1 . ' -a -r -l ' . $spectrogram_palette_c . ' -o tmp/' . $random_dir . '/' . $fileName_exp[0] . '_lt_s.png', $lastline, $retval);
 			if ($retval!=0){
-				die("<div class=\"error\">There was a problem with SoX...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with SoX...</div>");
 				}
 			#Trim
 			exec('convert tmp/' . $random_dir . '/' . $fileName_exp[0] . '_lt_s.png -crop ' . $image_width_med . 'x' . $image_height_med . '+0+0 tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_s.png', $lastline, $retval);
 			if ($retval!=0){
-				die('<div class=\"error\">There was a problem with Imagemagick...</div>');
+				die('<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>');
 				}
 			
 			#Trim
 			exec('convert tmp/' . $random_dir . '/' . $fileName_exp[0] . '_lt_s.png -crop ' . $image_width_med . 'x' . $image_height_med . '+0+' . $image_height_med . ' tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_s.png', $lastline, $retval);
 			if ($retval!=0){
-				die('<div class=\"error\">There was a problem with Imagemagick...</div>');
+				die('<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>');
 				}
 			}
 		else {
 			exec('include/svt.py -f ' . $fft . ' -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_s.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_w.png -w ' . $image_width_med . ' -o 1 -h ' . $image_height_med . ' -c 1 -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
 			if ($retval!=0)
-			die("<div class=\"error\">There was a problem with svt...</div>");
+			die("<div class=\"alert alert-danger\">There was a problem with svt...</div>");
 
 			#right
 			exec('include/svt.py -f ' . $fft . ' -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_s.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_w.png -w ' . $image_width_med . ' -o 1 -h ' . $image_height_med . ' -c 2 -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
 			if ($retval!=0)
-			die("<div class=\"error\">There was a problem with svt...</div>");
+			die("<div class=\"alert alert-danger\">There was a problem with svt...</div>");
 			}
 		
 
 		#combine spectrograms
 		exec('montage -tile 1x2 -mode Concatenate tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_s.png tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_s.png tmp/' . $random_dir . '/' . $fileName_exp[0] . '_s1.png', $lastline, $retval);
 			if ($retval!=0)
-			die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+			die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 
 		exec("convert -fill " . $letter_color . " -draw \"text 5,15 '" . $max_spec_freq_t . "'\" -draw \"text 5,165 '" . $max_spec_freq_t . "'\" -draw \"text 590,15 'L'\" -draw \"text 590,165 'R'\" tmp/" . $random_dir . "/" . $fileName_exp[0] . "_s1.png -quality 10 tmp/" . $random_dir . "/" . $fileName_exp[0] . "_s.png", $lastline, $retval);
 		if ($retval!=0)
-			die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+			die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 			
 		if ($sox_images == FALSE){
 			#combine waveforms
 			exec('montage -tile 1x2 -mode Concatenate tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_w.png tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_w.png tmp/' . $random_dir . '/' . $fileName_exp[0] . '_w1.png', $lastline, $retval);
 				if ($retval!=0)
-				die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 
 			exec("convert -fill " . $letter_color . " -draw \"text 590,15 'L'\" -draw \"text 590	,165 'R'\" tmp/" . $random_dir . "/" . $fileName_exp[0] . "_w1.png -quality 10 tmp/" . $random_dir . "/" . $fileName_exp[0] . "_w.png", $lastline, $retval);
 				if ($retval!=0)
-				die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 
 			}
 		}
@@ -292,20 +245,20 @@ if (mkdir("tmp/$random_value", 0777)){
 	if ($Channels==1) {
 		if ($sox_images){
 			$image_height_small1 = $image_height_small + 1;
-			exec('sox tmp/' . $random_value . '/' . $file2 . ' -n rate ' . $max_spec_freq_rate . 'k spectrogram -x ' . $image_width_small . ' -y ' . $image_height_small1 . ' -a -r -l -p ' . $spectrogram_palette . ' -o tmp/' . $random_dir . '/' . $fileName_exp[0] . '_st1.png', $lastline, $retval);
+			exec('sox tmp/' . $random_value . '/' . $file2 . ' -n rate ' . $max_spec_freq_rate . 'k spectrogram -x ' . $image_width_small . ' -y ' . $image_height_small1 . ' -a -r -l ' . $spectrogram_palette_c . ' -o tmp/' . $random_dir . '/' . $fileName_exp[0] . '_st1.png', $lastline, $retval);
 			if ($retval!=0){
-				die("<div class=\"error\">There was a problem with SoX...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with SoX...</div>" . 'sox tmp/' . $random_value . '/' . $file2 . ' -n ' . $spectrogram_palette_c . ' rate ' . $max_spec_freq_rate . 'k spectrogram -x ' . $image_width_small . ' -y ' . $image_height_small1 . ' -a -r -l -o tmp/' . $random_dir . '/' . $fileName_exp[0] . '_st1.png');
 				}
 			#Trim
 			exec('convert tmp/' . $random_dir . '/' . $fileName_exp[0] . '_st1.png -crop ' . $image_width_small . 'x' . $image_height_small . '+0+0 tmp/' . $random_dir . '/' . $fileName_exp[0] . '-small_s1.png', $lastline, $retval);
 			if ($retval!=0){
-				die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 				}
 			}
 		else{
 			exec('include/svt.py -f ' . $fft . ' -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '-small_s1.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '-small_w1.png -w ' . $image_width_small . ' -o 1 -h ' . $image_height_small . ' -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
 			if ($retval!=0){
-				die("<div class=\"error\">There was a problem with svt...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with svt...</div>");
 				}
 			}
 			
@@ -313,14 +266,14 @@ if (mkdir("tmp/$random_value", 0777)){
 			#Quality to resize
 			exec("convert tmp/" . $random_dir . "/" . $fileName_exp[0] . "-small_w1.png -quality 10 tmp/" . $random_dir . "/" . $fileName_exp[0] . "-small_w.png", $lastline, $retval);
 			if ($retval!=0){
-				die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 				}
 			}
 
 		#Draw the max freq
 		exec("convert -fill " . $letter_color . " -draw \"text 5,15 '" . $max_spec_freq_t . "'\" tmp/" . $random_dir . "/" . $fileName_exp[0] . "-small_s1.png -quality 10 tmp/" . $random_dir . "/" . $fileName_exp[0] . "-small_s.png", $lastline, $retval);
 			if ($retval!=0)
-			die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+			die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 			
 		}
 	elseif ($Channels==2) {
@@ -329,52 +282,52 @@ if (mkdir("tmp/$random_value", 0777)){
 		if ($sox_images){
 			$image_height_small1 = $image_height_small + 1;
 			$image_height_small2 = $image_height_small * 2;
-			exec('sox tmp/' . $random_value . '/' . $file2 . ' -n rate ' . $max_spec_freq_rate . 'k spectrogram -x ' . $image_width_small . ' -y ' . $image_height_small1 . ' -a -r -l -p ' . $spectrogram_palette . ' -o tmp/' . $random_dir . '/' . $fileName_exp[0] . '_lt_s.png', $lastline, $retval);
+			exec('sox tmp/' . $random_value . '/' . $file2 . ' -n rate ' . $max_spec_freq_rate . 'k spectrogram -x ' . $image_width_small . ' -y ' . $image_height_small1 . ' -a -r -l ' . $spectrogram_palette_c . ' -o tmp/' . $random_dir . '/' . $fileName_exp[0] . '_lt_s.png', $lastline, $retval);
 			if ($retval!=0){
-				die("<div class=\"error\">There was a problem with SoX...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with SoX...</div>");
 				}
 			#Trim
 			exec('convert tmp/' . $random_dir . '/' . $fileName_exp[0] . '_lt_s.png -crop ' . $image_width_small . 'x' . $image_height_small . '+0+0 tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_s.png', $lastline, $retval);
 			if ($retval!=0){
-				die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 				}
 				
 			#Trim
 			exec('convert tmp/' . $random_dir . '/' . $fileName_exp[0] . '_lt_s.png -crop ' . $image_width_small . 'x' . $image_height_small . '+0+' . $image_height_small . ' tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_s.png', $lastline, $retval);
 			if ($retval!=0){
-				die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 				}
 			}
 		else{
 			#left
 			exec('include/svt.py -f ' . $fft . ' -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_s.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_w.png -w ' . $image_width_small . ' -o 1 -h ' . $image_height_small . ' -c 1 -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
 				if ($retval!=0)
-				die("<div class=\"error\">There was a problem with svt...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with svt...</div>");
 
 			#right
 			exec('include/svt.py -f ' . $fft . ' -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_s.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_w.png -w ' . $image_width_small . ' -o 1 -h ' . $image_height_small . ' -c 2 -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
 				if ($retval!=0)
-				die("<div class=\"error\">There was a problem with svt...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with svt...</div>");
 			}
 			
 		#combine spectrograms
 		exec('montage -tile 1x2 -mode Concatenate tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_s.png tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_s.png tmp/' . $random_dir . '/' . $fileName_exp[0] . '_s1.png', $lastline, $retval);
 			if ($retval!=0)
-			die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+			die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 
 			exec("convert -fill " . $letter_color . " -draw \"text 5,15 '" . $max_spec_freq_t . "'\" -draw \"text 5,85 '" . $max_spec_freq_t . "'\" -draw \"text 290,15 'L'\" -draw \"text 290,85 'R'\" tmp/" . $random_dir . "/" . $fileName_exp[0] . "_s1.png -quality 10 tmp/" . $random_dir . "/" . $fileName_exp[0] . "-small_s.png", $lastline, $retval);
 			if ($retval!=0)
-				die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 			
 		if ($sox_images == FALSE){
 			#combine waveforms
 			exec('montage -tile 1x2 -mode Concatenate tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_w.png tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_w.png tmp/' . $random_dir . '/' . $fileName_exp[0] . '_w1.png', $lastline, $retval);
 			if ($retval!=0)
-				die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 				
 			exec("convert -fill " . $letter_color . " -draw \"text 290,15 'L'\" -draw \"text 290,85 'R'\" tmp/" . $random_dir . "/" . $fileName_exp[0] . "_w1.png -quality 10 tmp/" . $random_dir . "/" . $fileName_exp[0] . "-small_w.png", $lastline, $retval);
 			if ($retval!=0)
-				die("<div class=\"error\">There was a problem with Imagemagick...</div>");				
+				die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");				
 			}
 		}
 
@@ -423,20 +376,20 @@ if (mkdir("tmp/$random_value", 0777)){
 	if ($Channels==1) {
 		if ($sox_images){
 			$image_height_large1 = $image_height_large + 1;
-			exec('sox tmp/' . $random_value . '/' . $file2 . ' -n rate ' . $max_spec_freq_rate . 'k spectrogram -x ' . $image_width_large . ' -y ' . $image_height_large1 . ' -a -r -l -p ' . $spectrogram_palette . ' -o tmp/' . $random_dir . '/' . $fileName_exp[0] . '_st1.png', $lastline, $retval);
+			exec('sox tmp/' . $random_value . '/' . $file2 . ' -n rate ' . $max_spec_freq_rate . 'k spectrogram -x ' . $image_width_large . ' -y ' . $image_height_large1 . ' -a -r -l ' . $spectrogram_palette_c . ' -o tmp/' . $random_dir . '/' . $fileName_exp[0] . '_st1.png', $lastline, $retval);
 			if ($retval!=0){
-				die("<div class=\"error\">There was a problem with SoX...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with SoX...</div>");
 				}
 			#Trim
 			exec('convert tmp/' . $random_dir . '/' . $fileName_exp[0] . '_st1.png -crop ' . $image_width_large . 'x' . $image_height_large . '+0+0 tmp/' . $random_dir . '/' . $fileName_exp[0] . '-large_s1.png', $lastline, $retval);
 			if ($retval!=0){
-				die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 				}
 			}
 		else{
 			exec('include/svt.py -f ' . $fft . ' -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '-large_s1.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '-large_w1.png -w ' . $image_width_large . ' -o 1 -h ' . $image_height_large . ' -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
 			if ($retval!=0){
-				die("<div class=\"error\">There was a problem with svt...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with svt...</div>");
 				}
 			}
 		
@@ -444,66 +397,66 @@ if (mkdir("tmp/$random_value", 0777)){
 			#Quality to resize
 			exec("convert tmp/" . $random_dir . "/" . $fileName_exp[0] . "-large_w1.png -quality 10 tmp/" . $random_dir . "/" . $fileName_exp[0] . "-large_w.png", $lastline, $retval);
 			if ($retval!=0){
-				die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 				}
 			}
 		
 		#Draw the max freq
 		exec("convert -fill " . $letter_color . " -draw \"text 5,15 '" . $max_spec_freq_t . "'\" -draw \"text 5,235 '" . $half_max_spec_freq_t . "'\" tmp/" . $random_dir . "/" . $fileName_exp[0] . "-large_s1.png -quality 10 tmp/" . $random_dir . "/" . $fileName_exp[0] . "-large_s.png", $lastline, $retval);
 			if ($retval!=0)
-			die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+			die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 		}
 	elseif ($Channels==2) {
 		$image_height_large = $image_height_large / 2;
 		if ($sox_images){
 			$image_height_large1 = $image_height_large + 1;
 			$image_height_large2 = $image_height_large * 2;
-			exec('sox tmp/' . $random_value . '/' . $file2 . ' -n rate ' . $max_spec_freq_rate . 'k spectrogram -x ' . $image_width_large . ' -y ' . $image_height_large1 . ' -a -r -l -p ' . $spectrogram_palette . ' -o tmp/' . $random_dir . '/' . $fileName_exp[0] . '_lt_s.png', $lastline, $retval);
+			exec('sox tmp/' . $random_value . '/' . $file2 . ' -n rate ' . $max_spec_freq_rate . 'k spectrogram -x ' . $image_width_large . ' -y ' . $image_height_large1 . ' -a -r -l ' . $spectrogram_palette_c . ' -o tmp/' . $random_dir . '/' . $fileName_exp[0] . '_lt_s.png', $lastline, $retval);
 			if ($retval!=0){
-				die("<div class=\"error\">There was a problem with SoX...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with SoX...</div>");
 				}
 			#Trim
 			exec('convert tmp/' . $random_dir . '/' . $fileName_exp[0] . '_lt_s.png -crop ' . $image_width_large . 'x' . $image_height_large . '+0+0 tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_s.png', $lastline, $retval);
 			if ($retval!=0){
-				die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 				}
 				
 			#Trim
 			exec('convert tmp/' . $random_dir . '/' . $fileName_exp[0] . '_lt_s.png -crop ' . $image_width_large . 'x' . $image_height_large . '+0+' . $image_height_large . ' tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_s.png', $lastline, $retval);
 			if ($retval!=0){
-				die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 				}
 			}
 		else{
 			#left
 			exec('include/svt.py -f ' . $fft . ' -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_s.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_w.png -w ' . $image_width_large . ' -o 1 -h ' . $image_height_large . ' -c 1 -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
 				if ($retval!=0)
-				die("<div class=\"error\">There was a problem with svt...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with svt...</div>");
 
 			#right
 			exec('include/svt.py -f ' . $fft . ' -s tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_s.png -a tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_w.png -w ' . $image_width_large . ' -o 1 -h ' . $image_height_large . ' -c 2 -m ' . $max_spec_freq . ' -p ' . $spectrogram_palette . ' tmp/' . $random_value . '/' . $file2, $lastline, $retval);
 				if ($retval!=0)
-				die("<div class=\"error\">There was a problem with svt...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with svt...</div>");
 			}
 			
 		#combine spectrograms
 		exec('montage -tile 1x2 -mode Concatenate tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_s.png tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_s.png tmp/' . $random_dir . '/' . $fileName_exp[0] . '_s1.png', $lastline, $retval);
 		if ($retval!=0)
-			die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+			die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 
 		exec("convert -fill " . $letter_color . " -draw \"text 5,15 '" . $max_spec_freq_t . "'\" -draw \"text 5,245 '" . $max_spec_freq_t . "'\" -draw \"text 905,15 'L'\" -draw \"text 905,245 'R'\" tmp/" . $random_dir . "/" . $fileName_exp[0] . "_s1.png -quality 10 tmp/" . $random_dir . "/" . $fileName_exp[0] . "-large_s.png", $lastline, $retval);
 		if ($retval!=0)
-			die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+			die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 
 		if ($sox_images == FALSE){
 			#combine waveforms
 			exec('montage -tile 1x2 -mode Concatenate tmp/' . $random_dir . '/' . $fileName_exp[0] . '_l_w.png tmp/' . $random_dir . '/' . $fileName_exp[0] . '_r_w.png tmp/' . $random_dir . '/' . $fileName_exp[0] . '_w1.png', $lastline, $retval);
 			if ($retval!=0)
-				die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 		
 			exec("convert -fill " . $letter_color . " -draw \"text 905,15 'L'\" -draw \"text 905,245 'R'\" tmp/" . $random_dir . "/" . $fileName_exp[0] . "_w1.png -quality 10 tmp/" . $random_dir . "/" . $fileName_exp[0] . "-large_w.png", $lastline, $retval);
 			if ($retval!=0)
-				die("<div class=\"error\">There was a problem with Imagemagick...</div>");
+				die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 			}
 		}
 
@@ -548,12 +501,12 @@ if (mkdir("tmp/$random_value", 0777)){
 delTree("tmp/" . $random_value);
 }
 else {
-	echo "<div class=\"error\">Could not create temporary folder.</div>";
+	echo "<div class=\"alert alert-danger\">Could not create temporary folder.</div>";
 	}
 
 if (isset($err_code)) {
 	if ($err_code=="1") {
-		echo "<div class=\"error\">The original sound file could not be found. Sound ID: $SoundID</div>";
+		echo "<div class=\"alert alert-danger\">The original sound file could not be found. Sound ID: $SoundID</div>";
 		}
 	}
 
