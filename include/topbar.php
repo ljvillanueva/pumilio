@@ -28,12 +28,14 @@ if ($special_wrapper == FALSE && $special_iframe == FALSE){
 		}
 
 	echo "<div class=\"row\">
-	        <div class=\"col-lg-8\">
+	        <div class=\"col-lg-6\">
 				<a href=\"$logolink\"><img src=\"$mainlogo\" alt=\"Logo\"></a>
 			</div>
-			<div class=\"col-lg-8\">";
-				require("include/toplogin.php");
-			echo "</div>
+			<div class=\"col-lg-6\">
+				<div class=\"right\">";
+					require("include/toplogin.php");
+				echo "</div>
+			</div>
 		</div>";
 	}
 ?>

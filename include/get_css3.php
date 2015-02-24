@@ -22,3 +22,8 @@ echo "\n<link type=\"text/css\" href=\"$app_url/js/jquery/jquery.custom.css\" re
 ?> 
 
 <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu">
+
+
+<!-- font-awesome -->
+<link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
+

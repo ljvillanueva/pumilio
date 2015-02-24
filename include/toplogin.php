@@ -12,7 +12,6 @@ else{
 	$e = FALSE;
 	}
 
-echo "<p style=\"text-align: right;\">";
 
 if (!isset($no_login)){
 	$no_login = FALSE;
@@ -54,7 +53,7 @@ else {
 			$login_url = wp_login_url( "$self?$q" );
 			echo "[<a href=\"index.php\" title=\"Home of the application\">Home</a>] 
 				[<a href=\"$login_url\" title=\"Login as a user\">Login</a>]
-				[<a href=\"search.php\" title=\"Search soundfiles\">Search</a>]</small>";
+				[<a href=\"search.php\" title=\"Search soundfiles\">Search</a>]";
 			$notlogged = TRUE;
 			}
 		}
@@ -86,14 +85,16 @@ else {
 				[<a href=\"search.php\" title=\"Search soundfiles\">Search</a>]<br>";
 			
 			if ($e == 1) {
-				echo "<div class=\"error\"><small>Invalid username or password, try again or <a href=\"recover_password.php\">recover password</a></small>";
+				echo "<div class=\"alert alert-danger\"><small>Invalid username or password, try again or <a href=\"recover_password.php\">recover password</a></small>";
 				}
 
-			echo "<form action=\"include/login.php\" method=\"POST\" style=\"text-align: right;\">
-				<input name=\"username\" type=\"text\" size=8 class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">	
-				<input name=\"password\" type=\"password\" size=8 class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\">
-				<input name=\"where_to\" type=\"hidden\" value=\"$self?$q\">
-				<input type=\"submit\" value=\"Log in\" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:10px\"></form>";
+			echo "<form action=\"include/login.php\" method=\"POST\" class=\"form-inline\">
+						<input name=\"username\" type=\"text\" size=\"8\" class=\"form-control input-sm\">
+						<input name=\"password\" type=\"password\" size=\"8\" class=\"form-control input-sm\">
+						<input name=\"where_to\" type=\"hidden\" value=\"$self?$q\">
+						
+						<button type=\"submit\" class=\"form-control btn btn-primary btn-xs\">Log in</button>
+				</form>";
 			if ($e == 1) {
 				echo "</div>";
 				}

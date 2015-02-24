@@ -1,5 +1,6 @@
 <?php
 session_start();
+header( 'Content-type: text/html; charset=utf-8' );
 
 require("include/functions.php");
 
@@ -95,6 +96,7 @@ if ($SoundID_qf_check < $default_qf && $pumilio_loggedin==FALSE) {
 	}
 
 
+
 $this_sound = DB::row('SELECT *, DATE_FORMAT(Date, \'%d-%b-%Y\') AS HumanDate, TIME_FORMAT(Time, \'%H:%i:%s\') AS HumanTime, TIME_FORMAT(Duration, \'%i:%s\') AS Duration_human FROM `Sounds` WHERE `SoundID`="' . $SoundID . '"');
 					  
 
@@ -173,12 +175,6 @@ $result_all_tags = query_several($query_all_tags, $connection);
 $nrows_all_tags = mysqli_num_rows($result_all_tags);
 
 if ($nrows_all_tags>0) {
-	/*
-	#Deprecated
-	echo "
-	<!-- JQuery Autocomplete http://docs.jquery.com/Plugins/Autocomplete -->
-	<script type=\"text/javascript\" src=\"$app_url/js/jquery/jquery.autocomplete.pack.js\"></script>";
-	*/
 	
 	echo "<script type=\"text/javascript\">
 	$(function() {
@@ -408,12 +404,17 @@ if (is_file("$absolute_dir/customhead.php")) {
 		include("customhead.php");
 	}
 	
-	
 ?>
 
+<script type="text/javascript">
+$(window).load(function() {
+	$(".loader").fadeOut("slow");
+})
+</script>
 
-</head>
 <?php
+	
+echo "</head>";
 
 if ($use_googlemaps=="3") {
 	echo "<body onload=\"initialize()\" onunload=\"GUnload()\">";
@@ -424,128 +425,36 @@ else {
 	
 ?>
 
-<!--Blueprint container-->
+<!--Bootstrap container-->
 <div class="container">
 	<?php
 		require("include/topbar.php");
+
+	#Loading... message
+	require("include/loadingtop.php");
 	?>
-	<div class="span-24 last">
+
 		<hr noshade>
-	</div>
-	<div class="span-24 last" id="loadingdiv">
-		<h5 class="highlight2 ui-corner-all">Please wait... loading... <img src="images/ajax-loader.gif" border="0"></h5>
-	</div>		
-	
-	<div class="span-24 last" id="loadingdiv2">
-		&nbsp;
-		<?php
-			flush();
-		?>
-	</div>
+
 		<?php
 
-
-		$CollectionName = DB::column('SELECT `Collections`.`CollectionName` from `Collections`, `Sounds` WHERE `Collections`.`ColID` = `Sounds`.`ColID` AND `Sounds`.`SoundID`="' . $SoundID . '"');
-
-		#New top infobar
-		#file info
-		echo "<div class=\"span-8\">
-			<p class=\"highlight3 ui-corner-all\">";
-			if ($guests_can_open || $pumilio_loggedin) {
-				echo "<a href=\"file_obtain.php?fileid=$SoundID&method=3\" title=\"Open file for analysis\" style=\"color: white;\"><strong>$SoundName</strong></a>";
-				}
-			else {
-				echo "<strong>$SoundName</strong>";
-				}
-			if ($Date!="" && $Time!="") {
-				echo "<br>$HumanDate $HumanTime";
-				}
-			elseif ($Date!="") {
-				echo "<br>Date: $HumanDate";
-				}
-			elseif ($Time!="") {
-				echo "<br>Time: $HumanTime";
-				}
-			echo "</p>
-		</div>";
-
-		#source info
-		echo "<div class=\"span-8\">
-			<p class=\"highlight3 ui-corner-all\">Collection: ";
-			
-		if ($special_wrapper==TRUE){
-			echo "<a href=\"$wrapper?page=db_browse&ColID=$ColID\" title=\"Browse this collection\" style=\"color: white;\">";
-			}
-		else {
-			echo "<a href=\"db_browse.php?ColID=$ColID\" title=\"Browse this collection\" style=\"color: white;\">";
-			}
-			
-		echo "<strong>$CollectionName</strong></a></p>
-		</div>";
-			
-		#site info
-		echo "<div class=\"span-8 last\">
-			<p class=\"highlight3 ui-corner-all\">";
-
-		if ($SiteID!="") {
-			$this_site = DB::row('SELECT * FROM `Sites` WHERE `SiteID`="' . $SiteID . '"');
-								  
-			$SiteLat = $this_site->SiteLat;
-			$SiteLon = $this_site->SiteLon;
-			$SiteName = $this_site->SiteName;
-
-			if ($SiteLat!="" && $SiteLon!=""){
-				if ($special_wrapper==TRUE){
-					echo "Site: <a href=\"$wrapper?page=browse_site&SiteID=$SiteID\" title=\"Browse the recordings made at this site\" style=\"color: white;\"><strong>$SiteName</strong></a>";
-					}
-				else {
-					echo "Site: <a href=\"browse_site.php?SiteID=$SiteID\" title=\"Browse the recordings made at this site\" style=\"color: white;\"><strong>$SiteName</strong></a>";
-					}
-				
-				#Check if there are images of the site
-				$site_pics = DB::column('SELECT COUNT(*) FROM `SitesPhotos` WHERE `SiteID`="' . $SoundID . '"');
-				if ($site_pics>0) {
-					echo " <a href=\"#\" title=\"Show photographs of this site\" onclick=\"window.open('sitephotos.php?SiteID=$SiteID', 'pics', 'width=550,height=400,status=yes,resizable=yes,scrollbars=yes'); return false;\">
-						<img src=\"images/image.png\" alt=\"Show photographs of this site\"></a>";
-					}
-
-				if ($pumilio_loggedin==FALSE && $hide_latlon_guests){
-					}
-				else {
-					echo "<br>Coordinates: $SiteLat, $SiteLon";
-					}
-				}
-			else {
-				echo "No site data";
-				}
-			}
-		else {
-			echo "No site data";
-			}
-		
-		echo "</p>
-		</div>";
-		#END NEW Topbar
-
+		if ($sox_images==FALSE){
 		echo "
-		<div class=\"span-24 last\">";
+		<div class=\"row\">
+		<div class=\"col-lg-12 center\">";
 
 		#HTML5 player
 		echo "<div id=\"jquery_jplayer_1\" class=\"jp-jplayer\"></div>\n";
 
 		echo "	<div style=\"height: 460px; width: 920px; position: relative;\">";
 
-		if ($sox_images==FALSE){
 			if ($d=="w"){
 				echo "<img src=\"$app_url/sounds/images/$ColID/$DirID/$sound_waveform\">";
 				}
 			else {
 				echo "<img src=\"$app_url/sounds/images/$ColID/$DirID/$sound_spectrogram\">";
 				}
-			}
-		else{
-			echo "<img src=\"$app_url/sounds/images/$ColID/$DirID/$sound_spectrogram\">";
-			}
+			
 
 		if ($hidemarks!=1){
 			require("include/showmarks_browse.php");
@@ -575,25 +484,72 @@ else {
 			</div>\n";
 
 
-		if ($sox_images==FALSE){
-			#dropped waveform when using SoX
 			if ($d=="w"){
 				echo "&nbsp;<a href=\"db_filedetails.php?SoundID=$SoundID&amp;hidekml=$hidekml&amp;hidemarks=$hidemarks\" style=\"position: relative; top: -28px; left: 200px; z-index: 2500;\" id=\"clickMe\">show spectrogram</a>";
 				}
 			else {
 				echo "&nbsp;<a href=\"db_filedetails.php?SoundID=$SoundID&amp;d=w&amp;hidekml=$hidekml&amp;hidemarks=$hidemarks\" style=\"position: relative; top: -28px; left: 200px; z-index: 2500;\" id=\"clickMe\">show waveform</a>";
 				}
-			}
-		else{
-			echo "&nbsp;<a href=\"#\" style=\"position: relative; top: -28px; left: 200px; z-index: 2500;\" onclick=\"window.open('images/SoX$spectrogram_palette.png', 'scale', 'width=20,height=434,status=no,resizable=no,scrollbars=no')\">show scale</a>";
-			}
 
-	echo "</div>";
+
+	echo "</div>
+	</div>"; #Close row
+	}
+	else{
+			echo "
+			<div class=\"row\">
+			<div class=\"col-lg-10\">";
+
+			#HTML5 player
+			echo "<div id=\"jquery_jplayer_1\" class=\"jp-jplayer\"></div>\n";
+
+			echo "	<div style=\"height: 460px; width: 920px; position: relative;\">";
+
+			echo "<img src=\"$app_url/sounds/images/$ColID/$DirID/$sound_spectrogram\">";
+
+			if ($hidemarks!=1){
+				require("include/showmarks_browse.php");
+				}
+
+			echo "	\n</div>
+				<div id=\"jp_container_1\" class=\"jp-audio\">
+					<div class=\"jp-type-single\">
+						<div id=\"jp_interface_1\" class=\"jp-interface\">
+							<div class=\"jp-progress\">
+								<div class=\"jp-seek-bar\">
+									<div class=\"jp-play-bar\"></div>
+								</div>
+							</div>
+							<ul class=\"jp-controls\">
+								<li><a href=\"javascript:;\" class=\"jp-play\" tabindex=\"1\">play</a></li>
+								<li><a href=\"javascript:;\" class=\"jp-pause\" tabindex=\"1\">pause</a></li>
+							</ul>
+							<div class=\"jp-volume-bar\">
+								<div class=\"jp-volume-bar-value\" title=\"volume\"></div>
+							</div>
+							<div class=\"jp-current-time\"></div>
+							<div class=\"jp-duration\"></div>
+						</div>
+
+					</div>
+				</div>\n";
+
+
+				echo "&nbsp;<a href=\"#\" style=\"position: relative; top: -28px; left: 200px; z-index: 2500;\" onclick=\"window.open('images/SoX$spectrogram_palette.png', 'scale', 'width=20,height=434,status=no,resizable=no,scrollbars=no')\">show scale</a>";
+				
+
+		echo "</div>
+		<div class=\"col-lg-2\">
+			Scale:<br>
+			<img src=\"images/SoX" . $spectrogram_palette . ".png\">
+		</div>
+		</div>"; #Close row
+	}
 			
 	#MD5 hash calculation
 	if ($pumilio_loggedin && $special_nofiles == FALSE) {
 		if (!file_exists("sounds/sounds/$ColID/$DirID/$OriginalFilename")) {
-			echo "<div class=\"span-24 last\" style=\"text-align: center;\"><div class=\"error\"><img src=\"images/exclamation.png\"> The file could not be found.</div></div>";
+			echo "<div class=\"alert alert-danger center\"><img src=\"images/exclamation.png\"> The file could not be found.</div>";
 			$file_error = 1;
 			$username = $_COOKIE["username"];
 			#$UserID = query_one("SELECT UserID FROM Users WHERE UserName='$username'", $connection);
@@ -610,8 +566,8 @@ else {
 				}
 
 			if ($MD5_hash!=$file_md5hash) {
-				echo "<div class=\"span-24 last\" style=\"text-align: center;\"><div class=\"error\"><img src=\"images/exclamation.png\"> 
-					The file does not match the stored MD5 hash.</div></div>";
+				echo "<div class=\"alert alert-danger center\"><img src=\"images/exclamation.png\"> 
+					The file does not match the stored MD5 hash.</div>";
 						
 				save_log($connection, $SoundID, "98", "The file sounds/sounds/$ColID/$DirID/$OriginalFilename does not match the stored MD5 hash.");
 				}
@@ -620,21 +576,134 @@ else {
 
 
 
-	echo "<div class=\"span-14\">\n";
+	echo "<div class=\"well well-sm\"><p>";
 
-	if ($guests_can_open || $pumilio_loggedin) {
-		if ($file_error == 1 || $special_noopen == TRUE || $special_noprocess == TRUE){
+     
+		$CollectionName = DB::column('SELECT `Collections`.`CollectionName` from `Collections`, `Sounds` WHERE `Collections`.`ColID` = `Sounds`.`ColID` AND `Sounds`.`SoundID`="' . $SoundID . '"');
+
+		#New top infobar
+		#file info
+			if ($guests_can_open || $pumilio_loggedin) {
+				$filename_text = "<a href=\"file_obtain.php?fileid=$SoundID&method=3\" title=\"Open file for analysis\"><strong>$SoundName</strong></a>";
+				}
+			else {
+				$filename_text = "<strong>$SoundName</strong>";
+				}
+			
+		if ($guests_can_open || $pumilio_loggedin) {
+			if ($file_error == 1 || $special_noopen == TRUE || $special_noprocess == TRUE){
+				echo $filename_text;
+				}
+			else {
+				echo "<form method=\"get\" action=\"file_obtain.php\" class=\"form-inline\">
+				$filename_text &nbsp;&nbsp;
+				<input type=\"hidden\" name=\"fileid\" value=\"$SoundID\">
+				<input type=\"hidden\" name=\"method\" value=\"3\">
+				<button type=\"submit\" class=\"btn btn-primary btn-xs\"> Open file in Pumilio Viewer </button>
+				</form>";
+				}
+			}
+
+		if ($Date!="" && $Time!="") {
+			echo "<br>$HumanDate $HumanTime";
+			}
+		elseif ($Date!="") {
+			echo "<br>Date: $HumanDate";
+			}
+		elseif ($Time!="") {
+			echo "<br>Time: $HumanTime";
+			}
+
+		#source info
+		echo "</p><p>
+			Collection: ";
+			
+		if ($special_wrapper==TRUE){
+			echo "<a href=\"$wrapper?page=db_browse&ColID=$ColID\" title=\"Browse this collection\">";
 			}
 		else {
-			echo "<form method=\"get\" action=\"file_obtain.php\">
-			<input type=\"hidden\" name=\"fileid\" value=\"$SoundID\">
-			<input type=\"hidden\" name=\"method\" value=\"3\">
-			<input type=\"submit\" value=\" Open file in Pumilio Viewer \" title=\"Open the file in the viewer\" class=\"fg-button ui-state-default ui-corner-all\">
-			</form><br><br>";
+			echo "<a href=\"db_browse.php?ColID=$ColID\" title=\"Browse this collection\">";
+			}
+			
+		echo "<strong>$CollectionName</strong></a></p>";
+			
+		#site info
+		echo "<p>";
+		if ($SiteID!="") {
+			
+			$this_site = DB::row('SELECT * FROM `Sites` WHERE `SiteID`="' . $SiteID . '"');
+								  
+			$SiteLat = $this_site->SiteLat;
+			$SiteLon = $this_site->SiteLon;
+			$SiteName = $this_site->SiteName;
+
+			if ($SiteLat!="" && $SiteLon!=""){
+				if ($special_wrapper==TRUE){
+					echo "Site: <a href=\"$wrapper?page=browse_site&SiteID=$SiteID\" title=\"Browse the recordings made at this site\"><strong>$SiteName</strong></a>";
+					}
+				else {
+					echo "Site: <a href=\"browse_site.php?SiteID=$SiteID\" title=\"Browse the recordings made at this site\"><strong>$SiteName</strong></a>";
+					}
+				
+				#Check if there are images of the site
+				$site_pics = DB::column('SELECT COUNT(*) FROM `SitesPhotos` WHERE `SiteID`="' . $SoundID . '"');
+				if ($site_pics>0) {
+					echo " <a href=\"#\" title=\"Show photographs of this site\" onclick=\"window.open('sitephotos.php?SiteID=$SiteID', 'pics', 'width=550,height=400,status=yes,resizable=yes,scrollbars=yes'); return false;\">
+						<img src=\"images/image.png\" alt=\"Show photographs of this site\"></a>";
+					}
+
+				if ($pumilio_loggedin==FALSE && $hide_latlon_guests){
+					}
+				else {
+					echo "<br>Coordinates: $SiteLat, $SiteLon";
+					}
+				}
+			else {
+				echo "No site data";
+				}
+			}
+		else {
+			echo "No site data";
 			}
 		
-		}
-			
+		echo "</p>";
+
+
+	echo "</div>"; #END WELL
+
+
+	echo "<div class=\"row\">";
+		echo "<div class=\"col-lg-4\">";#map
+
+				if ($use_leaflet == TRUE){
+						echo "<div id=\"map\">Your browser does not have JavaScript enabled, which is required to proceed, or can not connect to the tile server. Please contact your administrator.</div>\n";
+				}
+				elseif ($use_googlemaps=="1" || $use_googlemaps=="3") {#Add small GMap
+					if ($SiteID!="" && $SiteLat!="" && $SiteLon!=""){
+						echo "<div id=\"map_canvas\" style=\"width: 320px; height: 220px\">Your browser does not have JavaScript enabled, which is required to proceed, or can not connect to GoogleMaps. Please contact your administrator.</div>\n";
+						if (!isset($kml_default)){
+							$kml_default = 0;
+							}
+
+						if ($kml_default == 1){
+							if ($hidekml==1){
+								echo "<a href=\"db_filedetails.php?SoundID=$SoundID&hidekml=0&d=$d&hidemarks=$hidemarks\">Show default KML layers</a>";
+								}
+							else{
+								echo "<a href=\"db_filedetails.php?SoundID=$SoundID&hidekml=1&d=$d&hidemarks=$hidemarks\">Hide default KML layers</a>";
+								}
+							}
+						echo "<br>";
+						}
+					}
+
+		echo "</div>";
+
+		echo "<div class=\"col-lg-4\">
+			comments?
+		</div>";
+
+	echo "</div>";#end row
 			
 	#Marks
 	if ($d!="w") {
@@ -945,36 +1014,8 @@ else {
 		}
 
 	echo "</div>
-	</div>
-	<div class=\"span-1\">&nbsp;</div>\n";
+	</div>";
 	
-	echo "<div class=\"span-9 last\">";
-	
-	if ($use_leaflet == TRUE){
-			echo "\n<p>Map:<br>
-					<div id=\"map\"></div>\n";
-	}
-	elseif ($use_googlemaps=="1" || $use_googlemaps=="3") {#Add small GMap
-		if ($SiteID!="" && $SiteLat!="" && $SiteLon!=""){
-			echo "\n<p>Map:<br>
-				<div id=\"map_canvas\" style=\"width: 320px; height: 220px\">Your browser does not have JavaScript enabled, which is required to proceed, or can not connect to GoogleMaps. Please contact your administrator.</div>\n";
-			if (!isset($kml_default)){
-				$kml_default = 0;
-				}
-
-			if ($kml_default == 1){
-				if ($hidekml==1){
-					echo "<a href=\"db_filedetails.php?SoundID=$SoundID&hidekml=0&d=$d&hidemarks=$hidemarks\">Show default KML layers</a>";
-					}
-				else{
-					echo "<a href=\"db_filedetails.php?SoundID=$SoundID&hidekml=1&d=$d&hidemarks=$hidemarks\">Hide default KML layers</a>";
-					}
-				}
-			echo "<br>";
-			}
-		}
-
-
 	echo "</div>
 	<div class=\"span-24 last\">";
 	#License
@@ -1002,17 +1043,6 @@ else {
 
 	</div>
 	<div class="span-24 last">	
-		<script type="text/javascript">
-			function hidediv()
-			      {
-				loadingdiv.style.visibility= "hidden";
-				loadingdiv2.style.visibility= "hidden";
-				loadingdiv.style.height= "0";
-				loadingdiv2.style.height= "0";
-			      };
-		
-			hidediv();
-		</script>
 	
 		<?php
 		require("include/bottom.php");
@@ -1020,6 +1050,11 @@ else {
 
 	</div>
 </div>
+
+<?php
+#Loading... message
+require("include/loadingbottom.php");
+?>
 
 </body>
 </html>

@@ -212,6 +212,7 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <title>$app_custom_name - Pumilio Viewer</title>";
 
 require("include/get_css.php");
+require("include/get_css3.php");
 require("include/get_jqueryui.php");
 
 ?>
@@ -395,26 +396,29 @@ if (is_file("$absolute_dir/customhead.php")) {
 	<!--Blueprint container-->
 	<div class="container">
 		<?php
-		echo "<div class=\"span-7\">
+
+		echo "
+		<div class=\"row\">
+		<div class=\"col-md-4\">
 			<a href=\"$app_dir\"><img src=\"$app_logo\"></a>
 		</div>
-		<div class=\"span-10\">
+		<div class=\"col-md-4\">
 			<h5 class=\"highlight2 ui-corner-all\">$soundfile_name</h5>
 		</div>
-		<div class=\"span-7 last\">";
+		<div class=\"col-md-4\">";
 			require("include/toplogin.php");
 		echo "</div>";
+		echo "</div>";
+
+		#Loading... message
+		require("include/loadingtop.php");
 
 		?>
-		<div class="span-24 last">
-			<hr noshade>
-		</div>
-		<div class="span-24 last" id="loadingdiv">
-			<h5 class="highlight2 ui-corner-all">Please wait... loading... <img src="images/ajax-loader.gif" border="0" /></h5>
-		</div>		
-			<?php
-			flush();
-			
+		
+		<hr noshade>
+		
+		<?php
+					
 		#Deactivated this option for now
 		/*
 		echo "<div class=\"span-24 last\">";
@@ -621,16 +625,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 				}
 			?>
 		
-			<script type="text/javascript">
-			function hidediv()
-			      {
-				loadingdiv.style.visibility= "hidden";
-				loadingdiv.style.height= "0";
-			      };
-		
-			hidediv();
-			</script>
-		
+	
 		</div>
 		<div class="span-24 last">
 			<?php
@@ -639,5 +634,9 @@ if (is_file("$absolute_dir/customhead.php")) {
 		</div>
 	</div>
 
+<?php
+#Loading... message
+require("include/loadingbottom.php");
+?>
 </body>
 </html>

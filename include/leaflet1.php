@@ -17,8 +17,8 @@ if ($SiteLat != "" && $SiteLon != ""){
 
 				var map = L.map('map').setView([$SiteLat, $SiteLon], 13);";
 
-				$tileserver = "mapbox";
 				if ($tileserver == "mapbox"){
+					#From default leaflet demo
 					echo "
 					L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
 						maxZoom: 18,
