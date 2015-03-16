@@ -21,7 +21,7 @@ ob_flush(); flush();
 		echo "<div class=\"row\">
 			<div class=\"col-lg-5\">";
 
-		echo "<p class=\"lead\"><a class=\"text-primary\" href=\"db_filedetails.php?SoundID=$SoundID\" title=\"Click for file details and more options\">$SoundName</a></p>";
+		echo "<p class=\"lead\"><a class=\"text-primary\" href=\"loader.php?SoundID=$SoundID\" title=\"Click for file details and more options\">$SoundName</a></p>";
 		$ColID = DB::column('SELECT ColID FROM `Sounds` WHERE SoundID = ' . $SoundID);
 		$SiteID = DB::column('SELECT SiteID FROM `Sounds` WHERE SoundID = ' . $SoundID);
 

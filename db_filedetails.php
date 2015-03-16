@@ -431,8 +431,8 @@ else {
 	<?php
 		require("include/topbar.php");
 
-	#Loading... message
-	require("include/loadingtop.php");
+/*	#Loading... message
+	require("include/loadingtop.php");*/
 
 	?>
 
@@ -1103,7 +1103,7 @@ else {
 
 <?php
 #Loading... message
-require("include/loadingbottom.php");
+#require("include/loadingbottom.php");
 ?>
 
 </body>
