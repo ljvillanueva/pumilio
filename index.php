@@ -15,6 +15,13 @@ if (file_exists($config_file)) {
 require("include/apply_config.php");
 require("include/check_admin.php");
 
+
+#DB
+use \DByte\DB;
+DB::$c = $pdo;
+
+
+
 #If user is not logged in, add check for QF
 if ($pumilio_loggedin == FALSE) {
 	$qf_check = "AND `Sounds`.`QualityFlagID`>=$default_qf";
@@ -28,7 +35,7 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <head>
 <title>$app_custom_name</title>";
 
-require("include/get_css.php");
+require("include/get_css3.php");
 
 echo "<!-- IE Fix for accordion http://dev.jqueryui.com/ticket/4444 -->
 	<style type=\"text/css\">
@@ -36,6 +43,22 @@ echo "<!-- IE Fix for accordion http://dev.jqueryui.com/ticket/4444 -->
 	</style>\n";
 
 require("include/get_jqueryui.php");
+
+
+
+
+
+
+####################################################3
+$map_only="1";
+$use_googlemaps=FALSE;
+$use_leaflet=TRUE;
+#Get points from the database
+$results_map = DB::fetch('SELECT SiteID, SiteLat, SiteLon, SiteName FROM `Sites` WHERE `SiteLat` IS NOT NULL AND `SiteLon` IS NOT NULL');
+$no_results_map = count($results_map);
+
+####################################################3
+
 
 if ($map_only=="1"){
 	require("include/index_map_head.php");
@@ -477,7 +500,12 @@ else{
 
 </body>
 </html>
+
 <?php
+if ($use_leaflet == TRUE){
+	require("include/leaflet2.php");
+}
+
 #Close session to release script from php session
 	session_write_close();
 	flush(); @ob_flush();

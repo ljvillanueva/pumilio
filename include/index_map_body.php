@@ -85,13 +85,17 @@ if ($no_res==0) {
 		}
 	}
 else {
-	echo "<div id=\"map_canvas\" style=\"width: 940px; height: 500px\">$map_div_message</div>\n
-		<p>There are $no_res sites with soundfiles. ";
+	if ($use_leaflet == TRUE){
+				echo "<div id=\"map\">Your browser does not have JavaScript enabled or can not connect to the tile server. Please contact your administrator.</div>\n";
+			}
+	else{
+		echo "<div id=\"map_canvas\" style=\"width: 940px; height: 500px\">$map_div_message</div>\n
+			<p>There are $no_res sites with soundfiles. ";
 
-	if ($no_res>1){
-		echo "Some markers may be hidden behind others. Zoom in to see all the sites.";
+		if ($no_res>1){
+			echo "Some markers may be hidden behind others. Zoom in to see all the sites.";
+			}
 		}
-
 	echo "</p>
 		<p>\n";
 	}

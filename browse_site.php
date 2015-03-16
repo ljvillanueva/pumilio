@@ -102,7 +102,7 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 
 <title>$app_custom_name - Browse Sounds at a Site</title>";
 
-require("include/get_css.php");
+require("include/get_css3.php");
 require("include/get_jqueryui.php");
 require("include/nocache.php");
 
@@ -230,13 +230,11 @@ if (is_file("$absolute_dir/customhead.php")) {
 	<div class="container">
 		<?php
 			require("include/topbar.php");
-		?>
-		<div class="span-24 last">
-			<hr noshade>
-		</div>
-		<div class="span-11">
-			<?php
 
+			#Loading... message
+			require("include/loadingtop.php");
+		
+		
 				$query = "SELECT * from Sites WHERE SiteID=$SiteID";
 				$result = mysqli_query($connection, $query)
 					or die (mysqli_error($connection));
@@ -265,18 +263,27 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 				$sql_limit = "$startid_q, $endid";
 
-				echo "<p class=\"highlight3 ui-corner-all\" style=\"text-align: left;\"><strong>Site: $SiteName</strong>";
+
+
+			echo "
+			<div class=\"page-header\">
+				<h2>Sounds at the Site: $SiteName</h2>
+			</div>
+		
+			<div class=\"row\">
+				<div class=\"col-lg-4\">";
+
 				if (sessionAuthenticate($connection) || !$hide_latlon_guests) {
-					echo "<br>Coordinates: $SiteLat, $SiteLon | <a href=\"viewsite_map.php?SiteID=$SiteID\" title=\"View site in a map\" style=\"color: white;\"><strong>Map</strong></a>";
+					echo "Coordinates: $SiteLat, $SiteLon | <a href=\"viewsite_map.php?SiteID=$SiteID\" title=\"View site in a map\"><strong>Map</strong></a>";
 					}
 				else {
-					echo " <a href=\"viewsite_map.php?SiteID=$SiteID\" title=\"View site in a map\" style=\"color: white;\"><strong>Map</strong></a>";
+					echo "<a href=\"viewsite_map.php?SiteID=$SiteID\" title=\"View site in a map\"><strong>Map</strong></a>";
 					}
 
 				if (sessionAuthenticate($connection) && is_user_admin2($username, $connection)) {
-					echo "<br><a href=\"edit_site.php?SiteID=$SiteID\" title=\"Edit this site\" style=\"color: white;\">[edit site]</a>";
+					echo "<br><a href=\"edit_site.php?SiteID=$SiteID\" title=\"Edit this site\">[edit site]</a>";
 						}
-				echo "<br>$no_sounds sounds</p>";
+				echo "<br>$no_sounds sounds at this site";
 			?>
 			
 			
@@ -314,62 +321,36 @@ if (is_file("$absolute_dir/customhead.php")) {
 			
 			
 		</div>
-		<div class="span-4">
+		<div class="col-lg-5">
 			<?php
-				echo "<div class=\"center\">";
-				if ($special_wrapper==TRUE){
-					$browse_site_link = "$wrapper?page=browse_site";
-					$db_filedetails_link = "$wrapper?page=db_filedetails";
-					}
-				else {
-					$browse_site_link = "browse_site.php?";
-					$db_filedetails_link = "db_filedetails.php?";
-					}
-			
 				#count and next
-				echo "Results<br>";
-
-				if ($startid>1) {
-					$go_to=$startid-$how_many_to_show;
-					echo "<a href=\"$browse_site_link&amp;SiteID=$SiteID&amp;startid=$go_to&amp;order_by=$order_by&amp;order_dir=$order_dir\"><img src=\"$app_url/images/arrowleft.png\"></a>";
-					}
-
-				echo " $startid to $endid_show ";
-
-				if ($endid_show<$no_sounds) {
-					$go_to=$startid+$how_many_to_show;
-					echo "<a href=\"$browse_site_link&amp;SiteID=$SiteID&amp;startid=$go_to&amp;order_by=$order_by&amp;order_dir=$order_dir\"><img src=\"$app_url/images/arrowright.png\"></a>";
-					}
-
-				echo "<br>of $no_sounds</div>";
+				echo "<dl class=\"dl-horizontal\"><dt>Results</dt><dd>$startid to $endid_show of $no_sounds</dd></dl>";
 			?>
 		</div>
-		<div class="span-3">
+		<div class="col-lg-1 center">
 			<?php
 			#Order by sound name
-			echo "<p>Name <a href=\"$browse_site_link&SiteID=$SiteID&order_by=SoundName&order_dir=ASC\"><img src=\"$app_url/images/arrowdown.png\"></a> <a href=\"$browse_site_link&SiteID=$SiteID&order_by=SoundName&order_dir=DESC\"><img src=\"$app_url/images/arrowup.png\"></a>";
+			echo "Name<br><a href=\"$browse_site_link&SiteID=$SiteID&order_by=SoundName&order_dir=ASC\"><img src=\"$app_url/images/arrowdown.png\"></a> <a href=\"$browse_site_link&SiteID=$SiteID&order_by=SoundName&order_dir=DESC\"><img src=\"$app_url/images/arrowup.png\"></a>";
 
 			?>
 		</div>
-		<div class="span-3">
+		<div class="col-lg-1 center">
 			<?php
 			#Order by sound date
-			echo "<p>Date <a href=\"$browse_site_link&SiteID=$SiteID&order_by=Date&order_dir=ASC\"><img src=\"$app_url/images/arrowdown.png\"></a> <a href=\"$browse_site_link&SiteID=$SiteID&order_by=Date&order_dir=DESC\"><img src=\"$app_url/images/arrowup.png\"></a>";
+			echo "Date<br><a href=\"$browse_site_link&SiteID=$SiteID&order_by=Date&order_dir=ASC\"><img src=\"$app_url/images/arrowdown.png\"></a> <a href=\"$browse_site_link&SiteID=$SiteID&order_by=Date&order_dir=DESC\"><img src=\"$app_url/images/arrowup.png\"></a>";
 
 			?>
 		</div>
-		<div class="span-3 last">
+		<div class="col-lg-1 center">
 			<?php
-			#Order by sound duration
-			echo "<p>Display: <a href=\"$browse_site_link&SiteID=$SiteID&order_by=$order_by&order_dir=$order_dir&display_type=summary&startid=$startid\" title=\"Display as summary\"><img src=\"$app_url/images/application_view_columns.png\" alt=\"Display as summary\"></a> <a href=\"$browse_site_link&SiteID=$SiteID&order_by=$order_by&order_dir=$order_dir&display_type=gallery&startid=$startid\" title=\"Display as gallery\"><img src=\"$app_url/images/application_view_tile.png\" alt=\"Display as gallery\"></a>";
+			#Display
+			echo "Display:<br><a href=\"$browse_site_link&SiteID=$SiteID&order_by=$order_by&order_dir=$order_dir&display_type=summary&startid=$startid\" title=\"Display as summary\"><img src=\"$app_url/images/application_view_columns.png\" alt=\"Display as summary\"></a> <a href=\"$browse_site_link&SiteID=$SiteID&order_by=$order_by&order_dir=$order_dir&display_type=gallery&startid=$startid\" title=\"Display as gallery\"><img src=\"$app_url/images/application_view_tile.png\" alt=\"Display as gallery\"></a>";
 
 			?>
 		</div>
+		</div>
 			<?php
 
-			echo "<div class=\"span-24 last\">
-				<hr noshade style=\"margin-top: 10px;\">";
-				
 			#Confirm delete
 			if (isset($_GET["md"])){
 				$md=filter_var($_GET["md"], FILTER_SANITIZE_NUMBER_INT);
@@ -380,7 +361,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 					echo "<div <div class=\"success\" id=\"md\">$md files were deleted.</div>";
 					}
 				}
-			echo "</div>";
+
 
 			$query = "SELECT *, DATE_FORMAT(Date, '%d-%b-%Y') AS Date_h FROM Sounds WHERE SiteID='$SiteID' 
 				AND Sounds.SoundStatus!='9' $qf_check ORDER BY $order_byq $order_dir LIMIT $sql_limit";
@@ -398,128 +379,73 @@ if (is_file("$absolute_dir/customhead.php")) {
 					}
 				}
 
-			echo "<div class=\"span-24 last\">
-					<br><hr noshade>
-				</div>
-				<div class=\"span-10\">";
+			echo "<hr noshade>";
 
-			#Quick form to select a file based on its name
-			if ($special_wrapper==TRUE){
-				echo "<form action=\"$wrapper\" method=\"GET\">
-				<input type=\"hidden\" name=\"page\" value=\"db_filedetails\">";
-				}
-			else {
-				echo "<form action=\"db_filedetails.php\" method=\"GET\">";
-				}
-			
-			echo "Select a file from this site:<br>";
-				$query_q = "SELECT * from Sounds WHERE SiteID='$SiteID' AND Sounds.SoundStatus!='9' $qf_check ORDER BY SoundName";
-				$result_q = mysqli_query($connection, $query_q)
-					or die (mysqli_error($connection));
-				$nrows_q = mysqli_num_rows($result_q);
+			#Pagination
 
-				echo "<select name=\"SoundID\" class=\"ui-state-default ui-corner-all\" >";
+			if ($startid < 1){
+				$prev = -1;
+				$startid = 1;
+				$next = $startid + 10;
+			}
+			else{
+				$prev = $startid - 10;
+				$next = $startid + 10;
+			}
 
-				for ($q=0;$q<$nrows_q;$q++) {
-					$row_q = mysqli_fetch_array($result_q);
-					extract($row_q);
+			if ($next > $no_sounds){
+				$next = $no_sounds;
+			}
 
-					echo "<option value=\"$SoundID\">$SoundName</option>\n";
+			if (($startid + 10) > $no_sounds){
+				$next = "NA";
+			}
+
+
+				echo "<nav class=\"text-center\">
+			  		<ul class=\"pagination pagination-sm\">";
+					if ($prev > -1){
+						echo "<li>
+							<a href=\"browse_site.php?SiteID=$SiteID&startid=$prev\" aria-label=\"Previous\">
+							<span aria-hidden=\"true\">&laquo;</span>
+							</a>
+						</li>\n";
 					}
+					
+				    
+				    $pages = ceil($no_sounds / 10);
+				    for ($p=1; $p < ($pages + 1); $p++) {
+				    	$this_page = ($p - 1) * 10 + 1;
 
-				echo "</select> 
-				<input type=submit value=\" Select \" class=\"fg-button ui-state-default ui-corner-all\"></form>
-				</div>";
-			?>
-				<div class="span-8">
-					<?php
-						echo "<div class=\"center\">";
-						if ($special_wrapper==TRUE){
-							$browse_site_link = "$wrapper?page=browse_site";
-							$db_filedetails_link = "$wrapper?page=db_filedetails";
-							}
-						else {
-							$browse_site_link = "browse_site.php?";
-							$db_filedetails_link = "db_filedetails.php?";
-							}
-			
-						#count and next
-						echo "Results<br>";
+				    	if ($this_page == $startid){
+				    		echo "<li class=\"active\"><a href=\"browse_site.php?SiteID=$SiteID&startid=$this_page\">$p <span class=\"sr-only\">(current)</span></a></li>";
+				    	}
+				    	else{
+				    		echo "<li><a href=\"browse_site.php?SiteID=$SiteID&startid=$this_page\">$p</a></li>";
+				    	}
+				    }
 
-						if ($startid>1) {
-							$go_to=$startid-$how_many_to_show;
-							echo "<a href=\"$browse_site_link&amp;SiteID=$SiteID&amp;startid=$go_to&amp;order_by=$order_by&amp;order_dir=$order_dir\"><img src=\"$app_url/images/arrowleft.png\"></a>";
-							}
-
-						echo " $startid to $endid_show ";
-
-						if ($endid_show<$no_sounds) {
-							$go_to=$startid+$how_many_to_show;
-							echo "<a href=\"$browse_site_link&amp;SiteID=$SiteID&amp;startid=$go_to&amp;order_by=$order_by&amp;order_dir=$order_dir\"><img src=\"$app_url/images/arrowright.png\"></a>";
-							}
-
-						echo "<br>of $no_sounds</div>";
-					?>
-				
-				</div>
-
-				<?php
-				
-				echo "<div class=\"span-6 last\">";
-
-				if (($no_sounds%$how_many_to_show)==0) {
-					$no_pages=floor($no_sounds/$how_many_to_show)-1;
+				    if ($next != "NA"){
+						echo "<li>
+						  <a href=\"browse_site.php?SiteID=$SiteID&startid=$next\" aria-label=\"Next\">
+						    <span aria-hidden=\"true\">&raquo;</span>
+						  </a>
+						</li>\n";
 					}
-				else {
-					$no_pages=floor($no_sounds/$how_many_to_show);
-					}
-
-
-				#Jump to page
-				if ($special_wrapper==TRUE){
-					echo "<form action=\"$wrapper\" method=\"GET\">
-					<input type=\"hidden\" name=\"page\" value=\"browse_site\">";
-					}
-				else {
-					echo "<form action=\"browse_site.php\" method=\"GET\">";
-					}
-
-				echo "Jump to page:<br> 
-					<input type=\"hidden\" name=\"SiteID\" value=\"$SiteID\">
-					<input type=\"hidden\" name=\"order_by\" value=\"$order_by\">
-					<input type=\"hidden\" name=\"order_dir\" value=\"$order_dir\">";
-
-				echo "<select name=\"startid\" class=\"ui-state-default ui-corner-all\" >";
-
-				for ($p=0;$p<($no_pages+1);$p++) {
-					$this_p=$p+1;
-					$s_id=($p*$how_many_to_show)+1;
-					if ($s_id==$startid) {
-						echo "<option value=\"$s_id\" SELECTED>$this_p</option>\n";
-						}
-					else {
-						echo "<option value=\"$s_id\">$this_p</option>\n";
-						}
-					}
-
-				echo "</select> 
-				<input type=submit value=\" Select \" class=\"fg-button ui-state-default ui-corner-all\">
-				</form>
-
-				</div>";
+				echo "</ul></nav>";
 
 			?>
 
-		<div class="span-24 last">
-			&nbsp;
-		</div>
-		<div class="span-24 last">
-			<?php
-			require("include/bottom.php");
-			?>
+	
+	<?php
+	require("include/bottom.php");
+	?>
 
-		</div>
-	</div>
+
+<?php
+#Loading... message
+require("include/loadingbottom.php");
+?>
 
 </body>
 </html>

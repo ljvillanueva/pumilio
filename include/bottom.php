@@ -1,10 +1,11 @@
 <?php
-if ($special_wrapper == FALSE && $special_iframe == FALSE){
+
 	echo "<hr noshade>";
 
-	echo "<p style=\"float: left;\">
-		<small>$app_custom_name - 
-		<a href=\"#\" onClick=\"window.open('include/contact.php', 'admins', 'width=650,height=400,status=yes,resizable=yes,scrollbars=yes')\" title=\"Contact information\">Contact</a><br>";
+	echo "<div class=\"row\">
+		<div class=\"col-lg-8\">
+		$app_custom_name - 
+		<a href=\"about.php\" title=\"About this site\">About</a><br>";
 		
 	#License
 	$files_license = query_one("SELECT Value from PumilioSettings WHERE Settings='files_license'", $connection);
@@ -23,14 +24,19 @@ if ($special_wrapper == FALSE && $special_iframe == FALSE){
 			echo "\n$files_license_detail\n";
 			}
 		}
-	echo "</small>";
+	echo "<br><br>";
 	
 	require("include/version.php");
 
-	echo "<p class=\"right\">
-		<small>Powered by <a href=\"http://ljvillanueva.github.io/pumilio\" target=_blank title=\"Website of the Pumilio application\">Pumilio</a> v. $website_version<br>
-		<a href=\"#\" onClick=\"window.open('include/copyright.php', 'copyright', 'width=650,height=400,status=yes,resizable=yes,scrollbars=yes')\" title=\"Copyright information of the application\">&copy; 2010-2014 LJV</a>. Licensed under the GPLv3.</small>";
-	}
+	echo "</div>
+
+		<div class=\"col-lg-4\">
+
+		Powered by <a href=\"http://ljvillanueva.github.io/pumilio\" target=_blank title=\"Website of the Pumilio application\">Pumilio</a> v. $website_version<br>
+		<a href=\"#\" onClick=\"window.open('include/copyright.php', 'copyright', 'width=650,height=400,status=yes,resizable=yes,scrollbars=yes')\" title=\"Copyright information of the application\">&copy; 2010-2015 LJV</a>. Licensed under the GPLv3.<br><br>
+		</div></div>";
+
+
 
 require("include/check_login.php");
 if (isset($_GET["debug"]) && $pumilio_loggedin == TRUE){
@@ -42,4 +48,6 @@ if (isset($_GET["debug"]) && $pumilio_loggedin == TRUE){
 		print_r($settings);
 		}
 	}
+
+echo "</div>";
 ?>

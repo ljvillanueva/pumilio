@@ -156,11 +156,15 @@ div.jp-duration {
 div.jp-duration {
 	text-align: right;
 }
-div.jp-audio div.jp-type-single div.jp-current-time,
 div.jp-audio div.jp-type-single div.jp-duration {
 	top:20px;
 	left:50px;
 	width:866px;
+}
+div.jp-audio div.jp-type-single div.jp-current-time {
+	top:20px;
+	left:50px;
+	/*width:266px;*/
 }
 
 div.jp-type-single div.jp-playlist li {

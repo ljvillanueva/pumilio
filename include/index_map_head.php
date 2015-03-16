@@ -24,8 +24,18 @@ if ($nrows>0) {
 	$sites_rows=array();
 	$sites_bounds=array();
 	}
-	
-if ($googlemaps_ver == "3"){
+
+if ($use_leaflet == TRUE){
+		#Leafet
+		echo "\n<link rel=\"stylesheet\" href=\"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css\" />\n
+
+		<style>
+			#map { height: 500px; 
+					width: 940px;
+				}
+		</style>";
+	}	
+else if ($googlemaps_ver == "3"){
 ########################
 # GOOGLE MAPS v3
 ########################

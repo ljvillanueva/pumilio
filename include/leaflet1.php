@@ -1,4 +1,4 @@
-<?
+<?php
 
 use \DByte\DB;
 DB::$c = $pdo;
