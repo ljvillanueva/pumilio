@@ -198,5 +198,38 @@ echo "<body>";
 		</div>
 	</div>
 
+
+
+
+
+
+
+
+
+
+<?php
+
+require("include/db_select.php");
+require("include/site_select.php");
+
+
+#Compare sites
+				if ($sidetoside_comp=="1" || $sidetoside_comp=="") {
+					echo "<h3><a href=\"#\">Side-to-side comparison</a></h3>
+						<div>
+						<p>Select up to three sites to compare their sounds side-to-side on a particular date.</p>";
+					require("include/comparesites.php");
+					echo "</div>";
+					}
+
+
+
+?>
+
+
+
+
+
+
 </body>
 </html>

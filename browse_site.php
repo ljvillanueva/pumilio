@@ -320,6 +320,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 			?>
 			
 			
+
 		</div>
 		<div class="col-lg-5">
 			<?php
@@ -330,21 +331,22 @@ if (is_file("$absolute_dir/customhead.php")) {
 		<div class="col-lg-1 center">
 			<?php
 			#Order by sound name
-			echo "Name<br><a href=\"$browse_site_link&SiteID=$SiteID&order_by=SoundName&order_dir=ASC\"><img src=\"$app_url/images/arrowdown.png\"></a> <a href=\"$browse_site_link&SiteID=$SiteID&order_by=SoundName&order_dir=DESC\"><img src=\"$app_url/images/arrowup.png\"></a>";
+			echo "Name<br><a href=\"browse_site.php?SiteID=$SiteID&order_by=SoundName&order_dir=ASC\"><span class=\"glyphicon glyphicon-sort-by-attributes\" aria-hidden=\"true\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"browse_site.php?SiteID=$SiteID&order_by=SoundName&order_dir=DESC\"><span class=\"glyphicon glyphicon-sort-by-attributes-alt\" aria-hidden=\"true\"></span></a>";
 
 			?>
 		</div>
 		<div class="col-lg-1 center">
 			<?php
 			#Order by sound date
-			echo "Date<br><a href=\"$browse_site_link&SiteID=$SiteID&order_by=Date&order_dir=ASC\"><img src=\"$app_url/images/arrowdown.png\"></a> <a href=\"$browse_site_link&SiteID=$SiteID&order_by=Date&order_dir=DESC\"><img src=\"$app_url/images/arrowup.png\"></a>";
+			echo "Date<br><a href=\"browse_site.php?SiteID=$SiteID&order_by=Date&order_dir=ASC\"><span class=\"glyphicon glyphicon-sort-by-attributes\" aria-hidden=\"true\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"browse_site.php?SiteID=$SiteID&order_by=Date&order_dir=DESC\"><span class=\"glyphicon glyphicon-sort-by-attributes-alt\" aria-hidden=\"true\"></span></a>";
 
 			?>
 		</div>
 		<div class="col-lg-1 center">
 			<?php
 			#Display
-			echo "Display:<br><a href=\"$browse_site_link&SiteID=$SiteID&order_by=$order_by&order_dir=$order_dir&display_type=summary&startid=$startid\" title=\"Display as summary\"><img src=\"$app_url/images/application_view_columns.png\" alt=\"Display as summary\"></a> <a href=\"$browse_site_link&SiteID=$SiteID&order_by=$order_by&order_dir=$order_dir&display_type=gallery&startid=$startid\" title=\"Display as gallery\"><img src=\"$app_url/images/application_view_tile.png\" alt=\"Display as gallery\"></a>";
+			echo "Display:<br>
+				<a href=\"browse_site.php?SiteID=$SiteID&order_by=$order_by&order_dir=$order_dir&display_type=summary&startid=$startid\" title=\"Display as summary\"><span class=\"glyphicon glyphicon-th-list\" aria-hidden=\"true\"></span></a>&nbsp;&nbsp;&nbsp;<a href=\"browse_site.php?SiteID=$SiteID&order_by=$order_by&order_dir=$order_dir&display_type=gallery&startid=$startid\" title=\"Display as gallery\"><span class=\"glyphicon glyphicon-th\" aria-hidden=\"true\"></span></a>";
 
 			?>
 		</div>
@@ -421,7 +423,11 @@ if (is_file("$absolute_dir/customhead.php")) {
 				    		echo "<li class=\"active\"><a href=\"browse_site.php?SiteID=$SiteID&startid=$this_page\">$p <span class=\"sr-only\">(current)</span></a></li>";
 				    	}
 				    	else{
-				    		echo "<li><a href=\"browse_site.php?SiteID=$SiteID&startid=$this_page\">$p</a></li>";
+				    		if ($this_page < ($startid - 80) || $this_page > ($startid + 80)){
+				    			}
+				    		else{
+				    			echo "<li><a href=\"browse_site.php?SiteID=$SiteID&startid=$this_page\">$p</a></li>";
+				    			}
 				    	}
 				    }
 

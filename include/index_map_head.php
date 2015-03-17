@@ -30,8 +30,8 @@ if ($use_leaflet == TRUE){
 		echo "\n<link rel=\"stylesheet\" href=\"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css\" />\n
 
 		<style>
-			#map { height: 500px; 
-					width: 940px;
+			#map { height: 600px; 
+					width: 1140px;
 				}
 		</style>";
 	}	

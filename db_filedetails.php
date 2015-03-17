@@ -406,12 +406,13 @@ if (is_file("$absolute_dir/customhead.php")) {
 	
 ?>
 
-<script type="text/javascript">
-$(window).load(function() {
-	$(".loader").fadeOut("slow");
-})
-</script>
-
+<!--
+	<script type="text/javascript">
+	$(window).load(function() {
+		$(".loader").fadeOut("slow");
+	})
+	</script>
+-->
 
 <?php
 	
@@ -512,57 +513,7 @@ else {
 
 		echo "</div>
 		</div>"; #Close row
-		/*}
-		else{
-			echo "
-			<div class=\"row\">
-			<div class=\"col-lg-10\">";
-
-			#HTML5 player
-			echo "<div id=\"jquery_jplayer_1\" class=\"jp-jplayer\"></div>\n";
-
-			echo "	<div style=\"height: 460px; width: 920px; position: relative;\">";
-
-			echo "<img src=\"$app_url/sounds/images/$ColID/$DirID/$sound_spectrogram\">";
-
-			if ($hidemarks!=1){
-				require("include/showmarks_browse.php");
-				}
-
-			echo "	\n</div>
-				<div id=\"jp_container_1\" class=\"jp-audio\">
-					<div class=\"jp-type-single\">
-						<div id=\"jp_interface_1\" class=\"jp-interface\">
-							<div class=\"jp-progress\">
-								<div class=\"jp-seek-bar\">
-									<div class=\"jp-play-bar\"></div>
-								</div>
-							</div>
-							<ul class=\"jp-controls\">
-								<li><a href=\"javascript:;\" class=\"jp-play\" tabindex=\"1\">play</a></li>
-								<li><a href=\"javascript:;\" class=\"jp-pause\" tabindex=\"1\">pause</a></li>
-							</ul>
-							<div class=\"jp-volume-bar\">
-								<div class=\"jp-volume-bar-value\" title=\"volume\"></div>
-							</div>
-							<div class=\"jp-current-time\"></div>
-							<div class=\"jp-duration\"></div>
-						</div>
-
-					</div>
-				</div>\n";
-
-
-				echo "&nbsp;<a href=\"#\" style=\"position: relative; top: -28px; left: 200px; z-index: 2500;\" onclick=\"window.open('images/SoX$spectrogram_palette.png', 'scale', 'width=20,height=434,status=no,resizable=no,scrollbars=no')\">show scale</a>";
-				
-
-		echo "</div>
-		<div class=\"col-lg-2\">
-			Scale:<br>
-			<img src=\"images/SoX" . $spectrogram_palette . ".png\">
-		</div>
-		</div>"; #Close row
-	}*/
+		
 			
 	#MD5 hash calculation
 	if ($pumilio_loggedin && $special_nofiles == FALSE) {
@@ -631,10 +582,11 @@ else {
 				}
 
 
+
 			#source info
 			echo "</div>
 			<div class=\"col-lg-7\">
-			<dl class=\"dl-horizontal\">";
+				<dl class=\"dl-horizontal\">";
 
 				if ($HumanDate!="") {
 					echo "<dt>Date</dt><dd>$HumanDate</dd>";
@@ -723,6 +675,29 @@ else {
 					echo "<br>";
 					}
 				}
+
+
+
+				if ($pumilio_admin) {
+					echo "<br><br>
+							<form method=\"get\" action=\"file_edit.php\">
+							<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
+							<button type=\"submit\" class=\"btn btn-primary btn-xs\"> Edit file information </button>
+							</form>";
+
+							#Delete file div
+							echo "<div id=\"dialog\" title=\"Delete the file?\">
+								<p><span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>The file will be permanently deleted and cannot be recovered. Are you sure?</p>
+								</div>";
+
+							echo "
+							<form id=\"testconfirmJQ\" name=\"testconfirmJQ\" method=\"post\" action=\"del_file.php\">
+							<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
+							<button type=\"submit\" class=\"btn btn-primary btn-xs\"> Delete file from archive </button>
+							</form>\n";
+					}
+
+
 
 		echo "</div>";
 
@@ -869,8 +844,8 @@ else {
 
 
 					if ($pumilio_admin == TRUE) {
-						echo "<form method=\"GET\" action=\"editqf.php\" target=\"editqf\" onsubmit=\"window.open('', 'editqf', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
-						Edit the Quality Flag for this file:<br>
+						echo "<form method=\"GET\" action=\"editqf.php\" target=\"editqf\" onsubmit=\"window.open('', 'editqf', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\" class=\"form-horizontal\">
+						Edit the Quality Flag for this file: 
 						<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">";
 
 						$thisfile_QualityFlagID = $QualityFlagID;
@@ -880,7 +855,7 @@ else {
 							or die (mysqli_error($connection));
 						$nrows_qf = mysqli_num_rows($result_qf);
 
-						echo "<select name=\"newqf\" class=\"ui-state-default ui-corner-all formedge\">";
+						echo "<select name=\"newqf\">";
 						for ($f=0;$f<$nrows_qf;$f++) {
 							$row_qf = mysqli_fetch_array($result_qf);
 							extract($row_qf);
@@ -892,8 +867,8 @@ else {
 								}
 							}
 
-						echo "</select><br>
-						<input type=submit value=\" Change \" class=\"fg-button ui-state-default ui-corner-all\">
+						echo "</select>
+						<button type=\"submit\" class=\"btn btn-primary btn-xs\"> Change </button>
 						</form>";
 						}
 
@@ -934,174 +909,12 @@ else {
 				
 				echo "</dl>";
 					
-/*
-				#Other data associated with this file
-				$dir="data_sources/";
-				$other_data=scandir($dir);
-		 
-		 		if (count($other_data)>0) {
-		 			for ($o=0;$o<count($other_data);$o++) {
-						if (strpos(strtolower($other_data[$o]), ".php")) {
-							require("$dir/$other_data[$o]");
-							}
-		 				}
-		 			}
 
-				#Find weather data
-				$weather_data_id = get_closest_weather($connection, $SiteLat, $SiteLon, $Date, $Time);
-				$weather_data = explode(",",$weather_data_id);
-				$weather_data_id = $weather_data[0];
-				$time_diff = round(($weather_data[1]/60));
-				$distance = round($weather_data[2],2);
-				if ($weather_data_id != 0 && $time_diff < 60) {
-					$result_w = mysqli_query($connection, "SELECT * FROM WeatherData WHERE WeatherDataID='$weather_data_id' LIMIT 1")
-						or die (mysqli_error($connection));
-					$row_w = mysqli_fetch_array($result_w);
-					extract($row_w);
-
-					echo "<p><strong>Weather data</strong>: (From $distance km, $time_diff min)\n <ul>";
-					if ($Temperature!=NULL){
-						echo "<li>Temp: $Temperature &deg;C</li>\n";
-						}
-					if ($Precipitation!=NULL){
-						echo "<li>Precipitation: $Precipitation mm</li>\n";
-						}
-					if ($RelativeHumidity!=NULL){
-						echo "<li>Relative Humidity: $RelativeHumidity %</li>\n";
-						}
-					if ($WindSpeed!=NULL){
-						echo "<li>Wind Speed: $WindSpeed m/s</li>\n";
-						}
-					if ($WindDirection!=NULL){
-						echo "<li>Wind Direction: $WindDirection</li>\n";
-						}
-					if ($LightIntensity!=NULL){
-						echo "<li>Light Intensity: $LightIntensity</li>\n";
-						}
-					if ($BarometricPressure!=NULL){
-						echo "<li>Barometric Pressure: $BarometricPressure</li>\n";
-						}
-					if ($DewPoint!=NULL){
-						echo "<li>Dew Point: $DewPoint</li>\n";
-						}
-						
-					echo "</ul>";
-					}
-			*/
 		echo "</div>";
 	echo "</div>";#end row
 
+require("include/bottom.php");
 
-
-
-	echo "<div class=\"row\">
-		<div class=\"col-lg-8\">";
-
-
-
-
-				
-				
-
-				
-
-/*
-		#Other data associated with this file
-		$dir="data_sources/";
-		$other_data=scandir($dir);
- 
- 		if (count($other_data)>0) {
- 			for ($o=0;$o<count($other_data);$o++) {
-				if (strpos(strtolower($other_data[$o]), ".php")) {
-					require("$dir/$other_data[$o]");
-					}
- 				}
- 			}
-
-		#Find weather data
-		$weather_data_id = get_closest_weather($connection, $SiteLat, $SiteLon, $Date, $Time);
-		$weather_data = explode(",",$weather_data_id);
-		$weather_data_id = $weather_data[0];
-		$time_diff = round(($weather_data[1]/60));
-		$distance = round($weather_data[2],2);
-		if ($weather_data_id != 0 && $time_diff < 60) {
-			$result_w = mysqli_query($connection, "SELECT * FROM WeatherData WHERE WeatherDataID='$weather_data_id' LIMIT 1")
-				or die (mysqli_error($connection));
-			$row_w = mysqli_fetch_array($result_w);
-			extract($row_w);
-
-			echo "<p><strong>Weather data</strong>: (From $distance km, $time_diff min)\n <ul>";
-			if ($Temperature!=NULL){
-				echo "<li>Temp: $Temperature &deg;C</li>\n";
-				}
-			if ($Precipitation!=NULL){
-				echo "<li>Precipitation: $Precipitation mm</li>\n";
-				}
-			if ($RelativeHumidity!=NULL){
-				echo "<li>Relative Humidity: $RelativeHumidity %</li>\n";
-				}
-			if ($WindSpeed!=NULL){
-				echo "<li>Wind Speed: $WindSpeed m/s</li>\n";
-				}
-			if ($WindDirection!=NULL){
-				echo "<li>Wind Direction: $WindDirection</li>\n";
-				}
-			if ($LightIntensity!=NULL){
-				echo "<li>Light Intensity: $LightIntensity</li>\n";
-				}
-			if ($BarometricPressure!=NULL){
-				echo "<li>Barometric Pressure: $BarometricPressure</li>\n";
-				}
-			if ($DewPoint!=NULL){
-				echo "<li>Dew Point: $DewPoint</li>\n";
-				}
-				
-			echo "</ul>";
-			}
-			
-	echo "&nbsp;</div>\n";
-*/
-
-		
-		
-
-	
-	if ($pumilio_admin) {
-		echo "
-		<h3><a href=\"#\">Administrative options</a></h3>
-			<div>
-			<p><strong>Administrative options</strong>:
-			<form method=\"get\" action=\"file_edit.php\">
-			<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-			<input type=\"submit\" value=\" Edit file information \" class=\"fg-button ui-state-default ui-corner-all\">
-			</form>";
-
-			#Delete file div
-			echo "<div id=\"dialog\" title=\"Delete the file?\">
-				<p><span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>The file will be permanently deleted and cannot be recovered. Are you sure?</p>
-			</div>";
-
-			echo "<p>
-			<form id=\"testconfirmJQ\" name=\"testconfirmJQ\" method=\"post\" action=\"del_file.php\">
-			<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-			<input type=\"submit\" value=\" Delete file from archive \" class=\"fg-button ui-state-default ui-corner-all\">
-			</form>\n";
-		}
-
-
-	echo "</div>";
-
-
-	flush();
-	?>
-
-	
-	<?php
-	require("include/bottom.php");
-	?>
-
-
-<?php
 #Loading... message
 #require("include/loadingbottom.php");
 ?>
