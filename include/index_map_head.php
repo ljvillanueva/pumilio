@@ -35,7 +35,7 @@ $no_res = 0;
 $error_msg="";
 
 #Get points from the database
-$query = "SELECT * FROM Sites WHERE SiteLat IS NOT NULL AND SiteLon IS NOT NULL ORDER BY SiteName";
+$query = "SELECT Sites.SiteID, Sites.SiteLat, Sites.SiteLon, Sites.SiteName FROM Sites, Sounds WHERE Sites.SiteLat IS NOT NULL AND Sites.SiteLon IS NOT NULL AND Sites.SiteID=Sounds.SiteID  AND Sounds.SoundStatus != 9 GROUP BY Sites.SiteID, Sites.SiteLat, Sites.SiteLon, Sites.SiteName";
 $result=query_several($query, $connection);
 $nrows = mysqli_num_rows($result);
 

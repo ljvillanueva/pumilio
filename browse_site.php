@@ -415,7 +415,8 @@ if (is_file("$absolute_dir/customhead.php")) {
 						</li>\n";
 					}
 					
-				    
+				    $prevellipsis = FALSE;
+				    $nextellipsis = FALSE;
 				    $pages = ceil($no_sounds / 10);
 				    for ($p=1; $p < ($pages + 1); $p++) {
 				    	$this_page = ($p - 1) * 10 + 1;
@@ -424,7 +425,18 @@ if (is_file("$absolute_dir/customhead.php")) {
 				    		echo "<li class=\"active\"><a href=\"browse_site.php?SiteID=$SiteID&startid=$this_page\">$p <span class=\"sr-only\">(current)</span></a></li>";
 				    	}
 				    	else{
-				    		if ($this_page < ($startid - 80) || $this_page > ($startid + 80)){
+				    	
+				    		if ($this_page < ($startid - 80)){
+				    			if ($prevellipsis == FALSE){
+					    			echo "<li><span aria-hidden=\"true\">...</span></li>";
+					    			$prevellipsis = TRUE;
+					    			}
+				    			}
+				    		elseif ($this_page > ($startid + 80)){
+				    			if ($nextellipsis == FALSE){
+					    			echo "<li><span aria-hidden=\"true\">...</span></li>";
+					    			$nextellipsis = TRUE;
+					    			}
 				    			}
 				    		else{
 				    			echo "<li><a href=\"browse_site.php?SiteID=$SiteID&startid=$this_page\">$p</a></li>";
@@ -433,6 +445,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 				    }
 
 				    if ($next != "NA"){
+						
 						echo "<li>
 						  <a href=\"browse_site.php?SiteID=$SiteID&startid=$next\" aria-label=\"Next\">
 						    <span aria-hidden=\"true\">&raquo;</span>

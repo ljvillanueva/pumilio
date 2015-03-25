@@ -8,7 +8,7 @@ echo " <!-- Fixed navbar -->
         </div>
         <div id=\"navbar\" class=\"navbar-collapse collapse\">
           <ul class=\"nav navbar-nav\">
-            <li><a href=\"map.php\"><span class=\"glyphicon glyphicon-map-marker\"></span> Map of Sounds</a></li>
+            <!--<li><a href=\"map.php\"><span class=\"glyphicon glyphicon-map-marker\"></span> Map of Sounds</a></li>-->
             <li><a href=\"search.php\"><span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Search</a></li>
             <li><a href=\"about.php\"><span class=\"glyphicon glyphicon-info-sign\"></span> About</a></li>
           </ul>

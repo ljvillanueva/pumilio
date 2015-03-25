@@ -917,7 +917,6 @@ require("include/bottom.php");
 echo "</body>
 	</html>";
 
-<?php
 if ($use_leaflet == TRUE){
 	require("include/leaflet1.php");
 }

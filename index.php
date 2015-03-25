@@ -44,7 +44,7 @@ require("include/get_jqueryui.php");
 $use_googlemaps=FALSE;
 $use_leaflet=TRUE;
 #Get points from the database
-$results_map = DB::fetch('SELECT SiteID, SiteLat, SiteLon, SiteName FROM `Sites` WHERE `SiteLat` IS NOT NULL AND `SiteLon` IS NOT NULL');
+$results_map = DB::fetch('SELECT `Sites`.`SiteID`, `Sites`.`SiteLat`, `Sites`.`SiteLon`, `Sites`.`SiteName` FROM `Sites`, `Sounds` WHERE `Sites`.`SiteLat` IS NOT NULL AND `Sites`.`SiteLon` IS NOT NULL AND `Sites`.`SiteID`=`Sounds`.`SiteID` AND `Sounds`.`SoundStatus` != 9 GROUP BY `Sites`.`SiteID`, `Sites`.`SiteLat`, `Sites`.`SiteLon`, `Sites`.`SiteName`');
 $no_results_map = count($results_map);
 
 ####################################################3
