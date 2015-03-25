@@ -109,6 +109,42 @@ if (is_file("$absolute_dir/customhead.php")) {
 			echo "<p><a href=\"file_manager.php\">Check uploaded file status</a>";
 			}
 
+
+
+
+
+
+		echo "<p>Upload photographs of the sites to serve as a reference.</p>
+					<p><form action=\"photoupload.php\" method=\"GET\">
+					<input type=submit value=\" Upload a photo from your computer \" class=\"fg-button ui-state-default ui-corner-all\">
+					</form></p>
+
+
+			<form action=\"sample_archive.php\" method=\"GET\">
+							<input type=submit value=\" Sample the archive \" class=\"fg-button ui-state-default ui-corner-all\">
+						</form>
+
+
+			<form action=\"export_marks.php\" method=\"GET\">
+							<input type=submit value=\" Export marks data \" class=\"fg-button ui-state-default ui-corner-all\">
+						</form>
+
+			";
+			if ($useR==TRUE){
+						echo "<form action=\"qc.php\" method=\"GET\">
+							<input type=submit value=\" Data extraction for quality control \" class=\"fg-button ui-state-default ui-corner-all\">
+						</form>";
+						}
+					echo "<form action=\"qa.php\" method=\"GET\">
+						<input type=submit value=\" Figures for quality control \" class=\"fg-button ui-state-default ui-corner-all\">
+						</form>";
+
+
+						
+
+
+
+
 		?>
 
 	</div>

@@ -86,10 +86,10 @@ if ($no_res==0) {
 	}
 else {
 	if ($use_leaflet == TRUE){
-				echo "<div id=\"map\">Your browser does not have JavaScript enabled or can not connect to the tile server. Please contact your administrator.</div>\n";
+				echo "<div id=\"map\" class=\"text-center\">Your browser does not have JavaScript enabled or can not connect to the tile server. Please contact your administrator.</div>\n";
 			}
 	else{
-		echo "<div id=\"map_canvas\" style=\"width: 940px; height: 500px\">$map_div_message</div>\n
+		echo "<div id=\"map_canvas\" class=\"text-center\" style=\"width: 1140px; height: 600px\">$map_div_message</div>\n
 			<p>There are $no_res sites with soundfiles. ";
 
 		if ($no_res>1){

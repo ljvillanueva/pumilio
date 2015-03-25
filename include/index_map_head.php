@@ -56,8 +56,8 @@ if ($use_leaflet == TRUE){
 		echo "\n<link rel=\"stylesheet\" href=\"libs/leaflet/leaflet.css\" />\n
 
 		<style>
-			#map { height: 500px; 
-					width: 940px;
+			#map { height: 600px; 
+					width: 1140px;
 				}
 		</style>";
 	}	

@@ -406,12 +406,13 @@ if (is_file("$absolute_dir/customhead.php")) {
 	
 ?>
 
-<script type="text/javascript">
-$(window).load(function() {
-	$(".loader").fadeOut("slow");
-})
-</script>
-
+<!--
+	<script type="text/javascript">
+	$(window).load(function() {
+		$(".loader").fadeOut("slow");
+	})
+	</script>
+-->
 
 <?php
 	
@@ -581,10 +582,11 @@ else {
 				}
 
 
+
 			#source info
 			echo "</div>
 			<div class=\"col-lg-7\">
-			<dl class=\"dl-horizontal\">";
+				<dl class=\"dl-horizontal\">";
 
 				if ($HumanDate!="") {
 					echo "<dt>Date</dt><dd>$HumanDate</dd>";
@@ -673,6 +675,29 @@ else {
 					echo "<br>";
 					}
 				}
+
+
+
+				if ($pumilio_admin) {
+					echo "<br><br>
+							<form method=\"get\" action=\"file_edit.php\">
+							<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
+							<button type=\"submit\" class=\"btn btn-primary btn-xs\"> Edit file information </button>
+							</form>";
+
+							#Delete file div
+							echo "<div id=\"dialog\" title=\"Delete the file?\">
+								<p><span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>The file will be permanently deleted and cannot be recovered. Are you sure?</p>
+								</div>";
+
+							echo "
+							<form id=\"testconfirmJQ\" name=\"testconfirmJQ\" method=\"post\" action=\"del_file.php\">
+							<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
+							<button type=\"submit\" class=\"btn btn-primary btn-xs\"> Delete file from archive </button>
+							</form>\n";
+					}
+
+
 
 		echo "</div>";
 
@@ -819,8 +844,8 @@ else {
 
 
 					if ($pumilio_admin == TRUE) {
-						echo "<form method=\"GET\" action=\"editqf.php\" target=\"editqf\" onsubmit=\"window.open('', 'editqf', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
-						Edit the Quality Flag for this file:<br>
+						echo "<form method=\"GET\" action=\"editqf.php\" target=\"editqf\" onsubmit=\"window.open('', 'editqf', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\" class=\"form-horizontal\">
+						Edit the Quality Flag for this file: 
 						<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">";
 
 						$thisfile_QualityFlagID = $QualityFlagID;
@@ -830,7 +855,7 @@ else {
 							or die (mysqli_error($connection));
 						$nrows_qf = mysqli_num_rows($result_qf);
 
-						echo "<select name=\"newqf\" class=\"ui-state-default ui-corner-all formedge\">";
+						echo "<select name=\"newqf\">";
 						for ($f=0;$f<$nrows_qf;$f++) {
 							$row_qf = mysqli_fetch_array($result_qf);
 							extract($row_qf);
@@ -842,8 +867,8 @@ else {
 								}
 							}
 
-						echo "</select><br>
-						<input type=submit value=\" Change \" class=\"fg-button ui-state-default ui-corner-all\">
+						echo "</select>
+						<button type=\"submit\" class=\"btn btn-primary btn-xs\"> Change </button>
 						</form>";
 						}
 
@@ -883,59 +908,14 @@ else {
 
 				
 				echo "</dl>";
-					
+				
 		echo "</div>";
 	echo "</div>";#end row
 
+require("include/bottom.php");
 
-
-
-	echo "<div class=\"row\">
-		<div class=\"col-lg-8\">";
-
-
-
-
-	
-	if ($pumilio_admin) {
-		echo "
-		<h3><a href=\"#\">Administrative options</a></h3>
-			<div>
-			<p><strong>Administrative options</strong>:
-			<form method=\"get\" action=\"file_edit.php\">
-			<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-			<input type=\"submit\" value=\" Edit file information \" class=\"fg-button ui-state-default ui-corner-all\">
-			</form>";
-
-			#Delete file div
-			echo "<div id=\"dialog\" title=\"Delete the file?\">
-				<p><span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>The file will be permanently deleted and cannot be recovered. Are you sure?</p>
-			</div>";
-
-			echo "<p>
-			<form id=\"testconfirmJQ\" name=\"testconfirmJQ\" method=\"post\" action=\"del_file.php\">
-			<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-			<input type=\"submit\" value=\" Delete file from archive \" class=\"fg-button ui-state-default ui-corner-all\">
-			</form>\n";
-		}
-
-
-	
-	echo "</div>";
-	echo "</div>";
-
-
-	flush();
-	?>
-
-	
-	<?php
-	require("include/bottom.php");
-	?>
-
-
-</body>
-</html>
+echo "</body>
+	</html>";
 
 <?php
 if ($use_leaflet == TRUE){

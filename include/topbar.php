@@ -9,10 +9,10 @@ echo " <!-- Fixed navbar -->
         <div id=\"navbar\" class=\"navbar-collapse collapse\">
           <ul class=\"nav navbar-nav\">
             <li><a href=\"map.php\"><span class=\"glyphicon glyphicon-map-marker\"></span> Map of Sounds</a></li>
+            <li><a href=\"search.php\"><span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Search</a></li>
             <li><a href=\"about.php\"><span class=\"glyphicon glyphicon-info-sign\"></span> About</a></li>
           </ul>
           <ul class=\"nav navbar-nav navbar-right\">\n";
-
 
 	if ($login_wordpress == TRUE){
 		if (is_user_logged_in() == TRUE){
@@ -21,6 +21,7 @@ echo " <!-- Fixed navbar -->
 
 			$username = $current_user->user_login;
 		
+
 			echo "<li><a href=\"edit_myinfo.php\" title=\"Edit my information or change password\"><span class=\"glyphicon glyphicon-user\"></span> $username</a></li>";
 
 			#Check if user can enter admin area
@@ -41,11 +42,13 @@ echo " <!-- Fixed navbar -->
 	else{
 		if (sessionAuthenticate($connection)) {
 			$username = $_COOKIE["username"];
+
 			echo "<li><a href=\"edit_myinfo.php\" title=\"Edit my information or change password\"><span class=\"glyphicon glyphicon-user\"></span> $username</a></li>";
 
 			#Check if user can enter admin area
 			$username = $_COOKIE["username"];
 			if (is_user_admin2($username, $connection)) {
+
 					echo "<li><a href=\"admin.php\" title=\"Administration menu\"><span class=\"glyphicon glyphicon-wrench\"></span> Admin</a></li>";
 				}
 

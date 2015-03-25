@@ -320,6 +320,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 			?>
 			
 			
+
 		</div>
 		<div class="col-lg-5">
 			<?php
@@ -348,10 +349,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 				 &nbsp;&nbsp;&nbsp; 
 				 <a href=\"browse_site.php?SiteID=$SiteID&order_by=$order_by&order_dir=$order_dir&display_type=summary&startid=$startid\" title=\"Display as summary\"><span class=\"glyphicon glyphicon-th-list\" aria-hidden=\"true\"></span></a>";
 
-
-
-
-			?>
+		?>
 		</div>
 		</div>
 			<?php
@@ -426,7 +424,11 @@ if (is_file("$absolute_dir/customhead.php")) {
 				    		echo "<li class=\"active\"><a href=\"browse_site.php?SiteID=$SiteID&startid=$this_page\">$p <span class=\"sr-only\">(current)</span></a></li>";
 				    	}
 				    	else{
-				    		echo "<li><a href=\"browse_site.php?SiteID=$SiteID&startid=$this_page\">$p</a></li>";
+				    		if ($this_page < ($startid - 80) || $this_page > ($startid + 80)){
+				    			}
+				    		else{
+				    			echo "<li><a href=\"browse_site.php?SiteID=$SiteID&startid=$this_page\">$p</a></li>";
+				    			}
 				    	}
 				    }
 
