@@ -1,9 +1,35 @@
 <?php
 
-$date_to_browse=filter_var($_GET["date_to_browse"], FILTER_SANITIZE_STRING);
-$time_to_browse=filter_var($_GET["time_to_browse"], FILTER_SANITIZE_STRING);
-$usekml=filter_var($_GET["usekml"], FILTER_SANITIZE_NUMBER_INT);
-$nokml=filter_var($_GET["nokml"], FILTER_SANITIZE_NUMBER_INT);
+if(isset($_GET["date_to_browse"])){
+	$date_to_browse = filter_var($_GET["date_to_browse"], FILTER_SANITIZE_STRING);
+}
+else{
+	$date_to_browse = "";
+}
+
+if(isset($_GET["time_to_browse"])){
+	$time_to_browse = filter_var($_GET["time_to_browse"], FILTER_SANITIZE_STRING);
+}
+else{
+	$time_to_browse = "";
+}
+
+if(isset($_GET["usekml"])){
+	$usekml=filter_var($_GET["usekml"], FILTER_SANITIZE_NUMBER_INT);
+}
+else{
+	$usekml = "";
+}
+
+if(isset($_GET["nokml"])){
+	$nokml = filter_var($_GET["nokml"], FILTER_SANITIZE_NUMBER_INT);
+}
+else{
+	$nokml = "";
+}
+
+
+
 
 $no_res = 0;
 $error_msg="";
@@ -27,7 +53,7 @@ if ($nrows>0) {
 
 if ($use_leaflet == TRUE){
 		#Leafet
-		echo "\n<link rel=\"stylesheet\" href=\"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css\" />\n
+		echo "\n<link rel=\"stylesheet\" href=\"libs/leaflet/leaflet.css\" />\n
 
 		<style>
 			#map { height: 500px; 

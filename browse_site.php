@@ -55,7 +55,7 @@ else{
 		$display_type = $_COOKIE["display_type"];
 		}
 	else {
-		$display_type = "summary";
+		$display_type = "gallery";
 		setcookie("display_type", $display_type, time()+(3600*24*30), $app_dir);
 		}
 	}
@@ -96,8 +96,8 @@ else{
 		$qf_check = "";
 		}
 		
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
-<html>
+echo "<!DOCTYPE html>
+<html lang=\"en\">
 <head>
 
 <title>$app_custom_name - Browse Sounds at a Site</title>";
@@ -330,21 +330,26 @@ if (is_file("$absolute_dir/customhead.php")) {
 		<div class="col-lg-1 center">
 			<?php
 			#Order by sound name
-			echo "Name<br><a href=\"$browse_site_link&SiteID=$SiteID&order_by=SoundName&order_dir=ASC\"><img src=\"$app_url/images/arrowdown.png\"></a> <a href=\"$browse_site_link&SiteID=$SiteID&order_by=SoundName&order_dir=DESC\"><img src=\"$app_url/images/arrowup.png\"></a>";
+			echo "Name<br><a href=\"browse_site.php?SiteID=$SiteID&order_by=SoundName&order_dir=ASC\"><span class=\"glyphicon glyphicon-triangle-bottom\" aria-hidden=\"true\"></span></a> &nbsp;&nbsp; <a href=\"browse_site.php?SiteID=$SiteID&order_by=SoundName&order_dir=DESC\"><span class=\"glyphicon glyphicon-triangle-top\" aria-hidden=\"true\"></span></a>";
 
 			?>
 		</div>
 		<div class="col-lg-1 center">
 			<?php
 			#Order by sound date
-			echo "Date<br><a href=\"$browse_site_link&SiteID=$SiteID&order_by=Date&order_dir=ASC\"><img src=\"$app_url/images/arrowdown.png\"></a> <a href=\"$browse_site_link&SiteID=$SiteID&order_by=Date&order_dir=DESC\"><img src=\"$app_url/images/arrowup.png\"></a>";
+			echo "Date<br><a href=\"browse_site.php?SiteID=$SiteID&order_by=Date&order_dir=ASC\"><span class=\"glyphicon glyphicon-triangle-bottom\" aria-hidden=\"true\"></span></a> &nbsp;&nbsp; <a href=\"browse_site.php?SiteID=$SiteID&order_by=Date&order_dir=DESC\"><span class=\"glyphicon glyphicon-triangle-top\" aria-hidden=\"true\"></span></a>";
 
 			?>
 		</div>
 		<div class="col-lg-1 center">
 			<?php
 			#Display
-			echo "Display:<br><a href=\"$browse_site_link&SiteID=$SiteID&order_by=$order_by&order_dir=$order_dir&display_type=summary&startid=$startid\" title=\"Display as summary\"><img src=\"$app_url/images/application_view_columns.png\" alt=\"Display as summary\"></a> <a href=\"$browse_site_link&SiteID=$SiteID&order_by=$order_by&order_dir=$order_dir&display_type=gallery&startid=$startid\" title=\"Display as gallery\"><img src=\"$app_url/images/application_view_tile.png\" alt=\"Display as gallery\"></a>";
+			echo "Display:<br> <a href=\"browse_site.php?SiteID=$SiteID&order_by=$order_by&order_dir=$order_dir&display_type=gallery&startid=$startid\" title=\"Display as gallery\"><span class=\"glyphicon glyphicon-th\" aria-hidden=\"true\"></span></a>
+				 &nbsp;&nbsp;&nbsp; 
+				 <a href=\"browse_site.php?SiteID=$SiteID&order_by=$order_by&order_dir=$order_dir&display_type=summary&startid=$startid\" title=\"Display as summary\"><span class=\"glyphicon glyphicon-th-list\" aria-hidden=\"true\"></span></a>";
+
+
+
 
 			?>
 		</div>
@@ -379,7 +384,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 					}
 				}
 
-			echo "<hr noshade>";
+			echo "<div class=\"row\"><div class=\"col-lg-12\"><hr noshade></div></div>";
 
 			#Pagination
 

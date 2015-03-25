@@ -20,8 +20,8 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <head>
 <title>$app_custom_name</title>";
 
-require("get_css.php");
-require("get_jqueryui.php");
+require("get_css3_include.php");
+require("get_jqueryui_include.php");
 ?>
 
 </head>
@@ -33,7 +33,7 @@ require("get_jqueryui.php");
 	echo "<p>";
 	if ($op == 1){
 		delete_old('../tmp/',3);
-		echo "<div class=\"success\" >Deleted temporary files older than 3 days. <a href=\"alerts.php?op=2\">Delete all temporary files</a>.</div>";
+		echo "<div class=\"alert alert-success\" role=\"alert\">Deleted temporary files older than 3 days. <a href=\"alerts.php?op=2\">Delete all temporary files</a>.</div>";
 		}
 	elseif ($op == 2){
 		delete_old('tmp/',0);
@@ -41,7 +41,7 @@ require("get_jqueryui.php");
 			foreach($dir as $this_dir) { 
 				    delTree($this_dir);
 			}
-		echo "<div class=\"success\" >Deleted all the temporary files.</div>";
+		echo "<div class=\"alert alert-success\" role=\"alert\">Deleted all the temporary files.</div>";
 		}
 	
 	#Disk free space check
@@ -50,17 +50,19 @@ require("get_jqueryui.php");
 	$dfh=formatsize($df);
 
 	if ($df<1000000000) {
-		echo "<div class=\"notice\" ><strong>Warning</strong>: Disk free space: $dfh. 
+		echo "<div class=\"alert alert-warning\" role=\"alert\"><strong>Warning</strong>: Disk free space: $dfh. 
 			It is recommended to <a href=\"alerts.php?op=1\">delete temporary files</a> 
 			or upgrade the hard drive.</div>";
 		}
+
+
 
 	//Test if apache owns the files
 	#Does apache own the folders?
 	$fileowner = posix_getpwuid(fileowner("../index.php"));
 	$this_user = exec('whoami');
 	if ($fileowner['name'] != $this_user){
-		echo "<div class=\"error\"><strong>The permissions are not set up correctly</strong>. The apache user needs to own the files and folders of Pumilio.
+		echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>The permissions are not set up correctly</strong>. The apache user needs to own the files and folders of Pumilio.
 			You can change it using this command, changing PUMILIO_FOLDER for the path where Pumilio is installed:<br>
 			sudo chown -R $this_user:$this_user /var/www/PUMILIO_FOLDER</div>";
 
@@ -75,7 +77,7 @@ require("get_jqueryui.php");
 	$soxout=explode("v",$soxout[0]);
 	$soxout=$soxout[1];
 	if ($soxretval!=0) {
-		echo "<div class=\"error\"><strong>SoX is not installed</strong>. Please install by using this command:<br>
+		echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>SoX is not installed</strong>. Please install by using this command:<br>
 			sudo apt-get install sox libsox*</div>";
 		}
 
@@ -85,12 +87,12 @@ require("get_jqueryui.php");
 	exec('soxi', $out, $retval);
 	if ($retval!=0) {
 		if ($soxretval==0) {
-			echo "<div class=\"error\"><strong>The soxi utility from SoX is not installed</strong>. 
+			echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>The soxi utility from SoX is not installed</strong>. 
 				The version of SoX installed is $soxout, you need at least version 14.3.0. 
 				Download the latest version from http://sox.sourceforge.net/</div>";
 			}
 		else {
-			echo "<div class=\"error\"><strong>The soxi utility from SoX is not installed</strong>. 
+			echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>The soxi utility from SoX is not installed</strong>. 
 				Download the latest version of SoX from http://sox.sourceforge.net/</div>";
 			}
 		}
@@ -102,7 +104,7 @@ require("get_jqueryui.php");
 		unset($out, $retval);
 		exec('dir2ogg --version', $out, $retval);
 		if ($retval!=0) {
-			echo "<div class=\"error\"><strong>The ogg encoder is not installed</strong>. 
+			echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>The ogg encoder is not installed</strong>. 
 				If ogg encoding is desired, please install by using this command: <br>
 				sudo apt-get install dir2ogg</div>";
 			}
@@ -112,7 +114,7 @@ require("get_jqueryui.php");
 		unset($out, $retval);
 		exec('lame --version', $out, $retval);
 		if ($retval!=0) {
-			echo "<div class=\"error\"><strong>The LAME MP3 encoder is not installed</strong>. 
+			echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>The LAME MP3 encoder is not installed</strong>. 
 				If mp3 encoding is desired, please install by using this command: <br>
 				sudo apt-get install lame liblame*</div>";
 			}
@@ -123,7 +125,7 @@ require("get_jqueryui.php");
 	unset($out, $retval);
 	exec('flac --version', $out, $retval);
 	if ($retval!=0) {
-		echo "<div class=\"error\"><strong>FLAC is not installed</strong>. 
+		echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>FLAC is not installed</strong>. 
 			If flac support is desired, please install by using this command: <br>
 			sudo apt-get install flac</div>";
 		}
@@ -132,7 +134,7 @@ require("get_jqueryui.php");
 	unset($out, $retval);
 	exec('convert --version', $out, $retval);
 	if ($retval>1) {
-		echo "<div class=\"error\"><strong>Imagemagick is not installed</strong>. 
+		echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>Imagemagick is not installed</strong>. 
 			Please install by using this command: <br>
 			sudo apt-get install imagemagick</div>";
 		}
@@ -141,7 +143,7 @@ require("get_jqueryui.php");
 	unset($out, $retval);
 	exec($absolute_dir . '/include/check_audiolab.py', $out, $retval);
 	if ($retval!=0) {
-		echo "<div class=\"error\"><strong>The Python module 'audiolab' is not installed</strong>. 
+		echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>The Python module 'audiolab' is not installed</strong>. 
 			Please visit 
 			<a href=\"http://www.scipy.org/scipy/scikits/wiki/AudioLab\" target=_blank>http://www.scipy.org/scipy/scikits/wiki/AudioLab</a></div>";
 		$audiolab=1;
@@ -151,7 +153,7 @@ require("get_jqueryui.php");
 	unset($out, $retval);
 	exec($absolute_dir . '/include/svt.py -v', $out, $retval);
 	if ($retval!=0) {
-		echo "<div class=\"error\"><strong>The svt script is not installed or can not run</strong>.";
+		echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>The svt script is not installed or can not run</strong>.";
 		if ($audiolab==1) {
 			echo " Please install audiolab first.";
 			}
@@ -166,21 +168,21 @@ require("get_jqueryui.php");
 	#seewave_1.5.8.tar.gz uses tuneR and does not fail with fftw3
 	# signal, rpanel needed
 		if ($R_retval=="91") {
-			echo "<p class=\"error\"><strong>The R package 'tuneR' was not found.</strong></p>";
+			echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>The R package 'tuneR' was not found.</strong></div>";
 			}
 		elseif ($R_retval=="92") {
-			echo "<p class=\"error\"><strong>The R package 'seewave' was not found.</strong></p>";
+			echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>The R package 'seewave' was not found.</strong></div>";
 			}
 		elseif ($R_retval=="93") {
-			echo "<p class=\"notice\"><strong>The R package 'RMySQL' was not found.</strong></p>";
+			echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>The R package 'RMySQL' was not found.</strong></div>";
 			}
 		elseif ($R_retval=="94") {
-			echo "<p class=\"notice\"><strong>The R package 'ineq' was not found.</strong></p>";
+			echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>The R package 'ineq' was not found.</strong></div>";
 			}
 		elseif ($R_retval=="0") {
 			}
 		else {
-			echo "<p class=\"error\"><strong>R is not installed or there was an unknown error.</strong></p>";
+			echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>R is not installed or there was an unknown error.</strong></div>";
 			}
 		}
 		
@@ -188,7 +190,7 @@ require("get_jqueryui.php");
 
 	$use_googlemaps=query_one("SELECT Value from PumilioSettings WHERE Settings='use_googlemaps'", $connection);
 		if ($use_googlemaps=="1"){
-			echo "<p class=\"error\"><strong>The system is set up to use Google Maps v2. This version has been deprecated. Please update your settings in the administration menu or contact your administrator.</strong></p>";
+			echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>The system is set up to use Google Maps v2. This version has been deprecated. Please update your settings in the administration menu or contact your administrator.</strong></div>";
 			}
 
 
@@ -199,7 +201,7 @@ require("get_jqueryui.php");
 	#$tmpperms=substr(decoct(fileperms("$absolute_dir/tmp/")),2);
 	#if ($tmpperms!=777)
 	if (!is_dir("../tmp/") || !is_writable("../tmp/")) {
-		echo "<div class=\"error\"><strong>The server can not write to the temporary folder, tmp/, 
+		echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>The server can not write to the temporary folder, tmp/, 
 			some features will not work.</strong> Please set the webserver as the owner of the
 			directory or change the permissions to read and write.</div>";
 		}
@@ -209,44 +211,44 @@ require("get_jqueryui.php");
 	#$tmpperms=substr(decoct(fileperms("$absolute_dir/sounds/")),2);
 	#if ($tmpperms!=777)
 	if (!is_dir("../sounds/")) {
-		echo "<div class=\"error\"><strong>The archive folder <em>sounds</em> does not exist. 
+		echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>The archive folder <em>sounds</em> does not exist. 
 			</strong></div>";
 		}
 	elseif(!is_writable("../sounds/")) {
-		echo "<div class=\"error\"><strong>The server can not write to the folder <em>sounds</em>, 
+		echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>The server can not write to the folder <em>sounds</em>, 
 			some features will not work.</strong> Please set the webserver as the owner of the 
 			directory or change the permissions to read and write.</div>";
 		}
 
 
 	if (!is_dir("../sounds/images")) {
-		echo "<div class=\"error\"><strong>The archive folder <em>sounds/images</em> does not exist. 
+		echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>The archive folder <em>sounds/images</em> does not exist. 
 			</strong></div>";
 		}
 	elseif(!is_writable("../sounds/images")) {
-		echo "<div class=\"error\"><strong>The server can not write to the folder <em>sounds/images</em>, 
+		echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>The server can not write to the folder <em>sounds/images</em>, 
 			some features will not work.</strong> Please set the webserver as the owner of the 
 			directory or change the permissions to read and write.</div>";
 		}
 
 	
 	if (!is_dir("../sounds/previewsounds")) {
-		echo "<div class=\"error\"><strong>The archive folder <em>sounds/previewsounds</em> does not exist. 
+		echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>The archive folder <em>sounds/previewsounds</em> does not exist. 
 			</strong></div>";
 		}
 	elseif(!is_writable("../sounds/previewsounds")) {
-		echo "<div class=\"error\"><strong>The server can not write to the folder <em>sounds/previewsounds</em>, 
+		echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>The server can not write to the folder <em>sounds/previewsounds</em>, 
 			some features will not work.</strong> Please set the webserver as the owner of the 
 			directory or change the permissions to read and write.</div>";
 		}
 
 	
 	if (!is_dir("../sounds/sounds")) {
-		echo "<div class=\"error\"><strong>The archive folder <em>sounds/sounds</em> does not exist. 
+		echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>The archive folder <em>sounds/sounds</em> does not exist. 
 			</strong></div>";
 		}
 	elseif(!is_writable("../sounds/sounds")) {
-		echo "<div class=\"error\"><strong>The server can not write to the folder, <em>sounds/sounds</em>, 
+		echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>The server can not write to the folder, <em>sounds/sounds</em>, 
 			some features will not work.</strong> Please set the webserver as the owner of the 
 			directory or change the permissions to read and write.</div>";
 		}
@@ -258,7 +260,7 @@ require("get_jqueryui.php");
 	#$tmpperms=substr(decoct(fileperms("$absolute_dir/sitephotos/")),2);
 	#if ($tmpperms!=777)
 	if (!is_dir("../sitephotos/") || !is_writable("../sitephotos/")) {
-		echo "<div class=\"error\"><strong>The server can not write to the site photographs folder, sitephotos/,
+		echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>The server can not write to the site photographs folder, sitephotos/,
 			some features will not work.</strong> Please set the webserver as the owner of the 
 			directory or change the permissions to read and write.</div>";
 		}

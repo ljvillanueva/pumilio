@@ -160,11 +160,8 @@ if ($pumilio_admin==TRUE) {
 			$sys_errors++;
 			}
 
-	if ($sys_errors == 1) {
-		echo "<div class=\"notice\" style=\"padding: 0.2px; width: 160px; margin-right: 0px; margin-left: 200px; text-align: center;\"><small>There is <a href=\"#\" onclick=\"window.open('include/alerts.php', 'alerts', 'width=550,height=400,status=yes,resizable=yes,scrollbars=auto')\">$sys_errors alert</a>.</small></div>";
-		}
-	elseif ($sys_errors > 1) {
-		echo "<div class=\"notice\" style=\"padding: 0.2px; width: 160px; margin-right: 0px; margin-left: 200px; text-align: center;\"><small>There are <a href=\"#\" onclick=\"window.open('include/alerts.php', 'alerts', 'width=550,height=400,status=yes,resizable=yes,scrollbars=auto')\">$sys_errors alerts</a>.</small></div>";
+	if ($sys_errors > 0) {
+		echo "<li><a href=\"#\" title=\"There are $sys_errors problems\" onclick=\"window.open('include/alerts.php', 'alerts', 'width=550,height=400,status=yes,resizable=yes,scrollbars=auto')\"><span class=\"badge\">$sys_errors</span></a></li>";
 		}
 	}
 ?>

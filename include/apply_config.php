@@ -6,7 +6,14 @@ $absolute_dir = preg_replace('/include$/', '', $absolute_dir);
 
 $app_dir = substr($absolute_dir, strlen($_SERVER['DOCUMENT_ROOT']));
 
-$app_url = "http://" . $_SERVER['HTTP_HOST'] . $app_dir;
+if ($_SERVER['HTTPS']){
+	$app_url = "https://" . $_SERVER['HTTP_HOST'] . $app_dir;
+	}
+else{
+	$app_url = "http://" . $_SERVER['HTTP_HOST'] . $app_dir;
+	}
+
+
 
 $app_url = rtrim(preg_replace('/include$/', '', $app_url), "/");
 

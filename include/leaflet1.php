@@ -12,7 +12,7 @@ $SiteName = DB::column('SELECT SiteName FROM `Sites` WHERE SiteID = ' . $SiteID)
 
 if ($SiteLat != "" && $SiteLon != ""){
 
-		echo " <script src=\"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js\"></script>\n
+		echo " <script src=\"libs/leaflet/leaflet.js\"></script>\n
 				<script>
 
 				var map = L.map('map').setView([$SiteLat, $SiteLon], 13);";

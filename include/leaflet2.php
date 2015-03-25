@@ -7,7 +7,7 @@ DB::$c = $pdo;
 if ($no_results_map>0){
 
 
-	echo " <script src=\"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js\"></script>\n
+	echo " <script src=\"libs/leaflet/leaflet.js\"></script>\n
 			<link rel=\"stylesheet\" href=\"libs/leaflet/MarkerCluster.css\" />
 			<link rel=\"stylesheet\" href=\"libs/leaflet/MarkerCluster.Default.css\" />
 			<script src=\"libs/leaflet/leaflet.markercluster-src.js\"></script>

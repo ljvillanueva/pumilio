@@ -30,22 +30,13 @@ else {
 	$qf_check = "";
 	}
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
-<html>
+echo "<!DOCTYPE html>
+<html lang=\"en\">
 <head>
 <title>$app_custom_name</title>";
 
 require("include/get_css3.php");
-
-echo "<!-- IE Fix for accordion http://dev.jqueryui.com/ticket/4444 -->
-	<style type=\"text/css\">
-	.ui-accordion-content{ zoom: 1; }
-	</style>\n";
-
 require("include/get_jqueryui.php");
-
-
-
 
 
 
@@ -65,21 +56,9 @@ if ($map_only=="1"){
 	}
 #else{
 	echo "
-	<script type=\"text/javascript\">
-	$(function() {
-		$(\"#accordion\").accordion({
-			heightStyle: \"content\",
-			collapsible: true,\n";
-		if ($map_only=="1"){
-			echo "active: false\n";
-			}
-		echo "
-		});
-	});
-	</script>
 
 	<!-- Form validation from http://bassistance.de/jquery-plugins/jquery-plugin-validation/ -->
-	<script src=\"$app_url/js/jquery.validate.js\" type=\"text/javascript\"></script>
+	<script src=\"js/jquery.validate.js\" type=\"text/javascript\"></script>
 
 	<script type=\"text/javascript\">
 	$().ready(function() {
@@ -225,34 +204,7 @@ if ($map_only=="1"){
 
 	</script>
 	";
-/*
-#Broken in recent versions of JQuery
-	#Time 
-	#From https://github.com/perifer/timePicker
-	echo "
-	
-	<script type=\"text/javascript\" src=\"$app_url/js/jquery.timepicker.min.js\"></script>
-	
-		<script type=\"text/javascript\">
-		jQuery(function() {
 
-		// Validate.
-		$(\"#endTime\").change(function() {
-		  if($.timePicker(\"#startTime\").getTime() > $.timePicker(this).getTime()) {
-		    $(this).addClass(\"error\");
-		    $( \"#timemsg\" ).addClass(\"error\");
-		    $( \"#timemsg\" ).html(\"The end time can not be after start time.\");
-		  }
-		  else {
-		    $(this).removeClass(\"error\");
-		    $( \"#timemsg\" ).removeClass(\"error\");
-	    	    $( \"#timemsg\" ).html(\"\");
-		  }
-		});
-		});
-		</script>
-		";
-*/
 	
 	#Duration slider
 	#Get min and max
@@ -319,19 +271,13 @@ else{
 			$no_sounds = DB::column('SELECT COUNT(*) FROM `Sounds` WHERE SoundStatus!=9 ' . $qf_check);
 			$no_sites = DB::column('SELECT COUNT(DISTINCT SiteID) FROM `Sounds` WHERE SoundStatus!=9 ' . $qf_check);
 			
-			#Special when in iframe or inside another site
-			if ($special_wrapper==TRUE){
-				$browse_map_link = "$wrapper";
-				$db_browse_link = "$wrapper";
-				$db_filedetails_link = "$wrapper";
-				$advancedsearch_link = "$wrapper";
-				}
-			else {
-				$browse_map_link = "browse_map.php";
-				$db_browse_link = "db_browse.php";
-				$db_filedetails_link = "db_filedetails.php";
-				$advancedsearch_link = "results.php";
-				}
+
+			#from old wrapper
+			$browse_map_link = "browse_map.php";
+			$db_browse_link = "db_browse.php";
+			$db_filedetails_link = "db_filedetails.php";
+			$advancedsearch_link = "results.php";
+
 
 			if ($no_sounds > 0) {
 				$no_sounds_f = number_format($no_sounds);
@@ -358,12 +304,8 @@ else{
 			require("include/index_map_body.php");
 			}
 			
-		#else{
-			echo "\n<!--JQuery accordion container-->
-			<div id=\"accordion\">";
 
-				echo "<h3><a href=\"#\">Main Menu</a></h3>
-					<div>";
+				echo "<h3>Main Menu</h3>";
 				
 					if ($pumilio_loggedin == TRUE) {
 						if ($pumilio_admin == TRUE || $allow_upload){
@@ -392,36 +334,33 @@ else{
 								</form>";
 							}
 						}
-				echo "</div>";
+				
 
 				#Search
-				echo "<h3><a href=\"#\">Search</a></h3>
-					<div>";
+				echo "<h3>Search</h3>";
 					require("include/mainsearch.php");
-				echo "</div>";
+
 
 				#Compare sites
 				if ($sidetoside_comp=="1" || $sidetoside_comp=="") {
-					echo "<h3><a href=\"#\">Side-to-side comparison</a></h3>
-						<div>
+					echo "<h3>Side-to-side comparison</h3>
+						
 						<p>Select up to three sites to compare their sounds side-to-side on a particular date.</p>";
 					require("include/comparesites.php");
-					echo "</div>";
+
 					}
 
 				#Tag cloud
 				if ($use_tags=="1" || $use_tags=="") {
-					echo "<h3><a href=\"#\">Tag cloud</a></h3>
-						<div>
+					echo "<h3>Tag cloud</h3>
 						<p>Select sounds to browse according to their tags.";
 					require("include/tagcloud.php");
-					echo "</div>";
+
 					}
 
 				#Only for logged in users
 				if ($pumilio_loggedin == TRUE) {
-					echo "<h3><a href=\"#\">Quality control</a></h3>
-					<div>\n";
+					echo "<h3>Quality control</h3>\n";
 											
 					if ($useR==TRUE){
 						echo "<form action=\"qc.php\" method=\"GET\">
@@ -430,12 +369,9 @@ else{
 						}
 					echo "<form action=\"qa.php\" method=\"GET\">
 						<input type=submit value=\" Figures for quality control \" class=\"fg-button ui-state-default ui-corner-all\">
-						</form>
-						
-					</div>";
+						</form>";
 
-					echo "<h3><a href=\"#\">Other tasks</a></h3>
-					<div>\n";
+					echo "<h3>Other tasks</h3>\n";
 						echo "
 						
 						<form action=\"sample_archive.php\" method=\"GET\">
@@ -448,55 +384,26 @@ else{
 						*/
 						echo "<form action=\"export_marks.php\" method=\"GET\">
 							<input type=submit value=\" Export marks data \" class=\"fg-button ui-state-default ui-corner-all\">
-						</form>
-						
-					</div>";
+						</form>";
 
-					#Special section for plugins
-					#Taken out for the moment
-					/*
-					$dir="plugins/";
-		 			$plugins=scandir($dir);
-		 
-			 		if (count($plugins)>0) {
-			 			for ($a=0; $a<count($plugins); $a++) {
-		 					if (strpos(strtolower($plugins[$a]), ".php")) {
-								$lines = file("plugins/$plugins[$a]");
-								echo "<h3><a href=\"#\">$lines[2]</a></h3>
-									<div>\n";
-
-									require("plugins/$plugins[$a]");
-								
-						 		echo "\n</div>\n";
-		 						}
-			 				}
-			 			}
-					*/
 					
-					echo "<h3><a href=\"#\">Upload site photographs</a></h3>
-					<div>
+					echo "<h3>Upload site photographs</h3>
 					<p>Upload photographs of the sites to serve as a reference.</p>
 					<p><form action=\"photoupload.php\" method=\"GET\">
 					<input type=submit value=\" Upload a photo from your computer \" class=\"fg-button ui-state-default ui-corner-all\">
-					</form></p>
-					</div>\n";
+					</form></p>\n";
 					}
 
 			
 			
-				echo "</div>";
-			#}
 			?>
 
 		<br>
-		</div>
-		<div class="span-24 last">
-			<?php
-			require("include/bottom.php");
-			?>
-			
-		</div>
-	</div>
+		
+<?php
+require("include/bottom.php");
+?>
+
 
 </body>
 </html>

@@ -53,8 +53,8 @@ if ($d=="w"){
 	$hidemarks = 1;
 	}
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
-<html>
+echo "<!DOCTYPE html>
+<html lang=\"en\">
 <head>
 
 <title>$app_custom_name - File Details</title>\n";
@@ -210,7 +210,7 @@ $use_leaflet=TRUE;
 
 if ($use_leaflet == TRUE){
 		#Leafet
-		echo "\n<link rel=\"stylesheet\" href=\"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css\" />\n
+		echo "\n<link rel=\"stylesheet\" href=\"libs/leaflet/leaflet.css\" />\n
 
 		<style>
 			#map { height: 220px; 
@@ -249,8 +249,8 @@ elseif ($use_googlemaps=="3") {
 
 #HTML5 player
 # http://www.jplayer.org
-echo "\n<link href=\"$app_url/html5player/jplayer.css\" rel=\"stylesheet\" type=\"text/css\">";
-echo "\n<script type=\"text/javascript\" src=\"$app_url/js/jquery.jplayer.min.js\"></script>\n";
+echo "\n<link href=\"html5player/jplayer.css\" rel=\"stylesheet\" type=\"text/css\">";
+echo "\n<script type=\"text/javascript\" src=\"js/jquery.jplayer.min.js\"></script>\n";
 
 if ($DirID == 0 || $DirID == ""){
 	$DirID = rand(1,100);
@@ -452,10 +452,10 @@ else {
 		echo "	<div style=\"height: 460px; width: 920px; position: relative;\">";
 
 			if ($d=="w"){
-				echo "<img src=\"$app_url/sounds/images/$ColID/$DirID/$sound_waveform\">";
+				echo "<img src=\"sounds/images/$ColID/$DirID/$sound_waveform\">";
 				}
 			else {
-				echo "<img src=\"$app_url/sounds/images/$ColID/$DirID/$sound_spectrogram\">";
+				echo "<img src=\"sounds/images/$ColID/$DirID/$sound_spectrogram\">";
 				}
 			
 			#Marks
@@ -512,57 +512,7 @@ else {
 
 		echo "</div>
 		</div>"; #Close row
-		/*}
-		else{
-			echo "
-			<div class=\"row\">
-			<div class=\"col-lg-10\">";
-
-			#HTML5 player
-			echo "<div id=\"jquery_jplayer_1\" class=\"jp-jplayer\"></div>\n";
-
-			echo "	<div style=\"height: 460px; width: 920px; position: relative;\">";
-
-			echo "<img src=\"$app_url/sounds/images/$ColID/$DirID/$sound_spectrogram\">";
-
-			if ($hidemarks!=1){
-				require("include/showmarks_browse.php");
-				}
-
-			echo "	\n</div>
-				<div id=\"jp_container_1\" class=\"jp-audio\">
-					<div class=\"jp-type-single\">
-						<div id=\"jp_interface_1\" class=\"jp-interface\">
-							<div class=\"jp-progress\">
-								<div class=\"jp-seek-bar\">
-									<div class=\"jp-play-bar\"></div>
-								</div>
-							</div>
-							<ul class=\"jp-controls\">
-								<li><a href=\"javascript:;\" class=\"jp-play\" tabindex=\"1\">play</a></li>
-								<li><a href=\"javascript:;\" class=\"jp-pause\" tabindex=\"1\">pause</a></li>
-							</ul>
-							<div class=\"jp-volume-bar\">
-								<div class=\"jp-volume-bar-value\" title=\"volume\"></div>
-							</div>
-							<div class=\"jp-current-time\"></div>
-							<div class=\"jp-duration\"></div>
-						</div>
-
-					</div>
-				</div>\n";
-
-
-				echo "&nbsp;<a href=\"#\" style=\"position: relative; top: -28px; left: 200px; z-index: 2500;\" onclick=\"window.open('images/SoX$spectrogram_palette.png', 'scale', 'width=20,height=434,status=no,resizable=no,scrollbars=no')\">show scale</a>";
-				
-
-		echo "</div>
-		<div class=\"col-lg-2\">
-			Scale:<br>
-			<img src=\"images/SoX" . $spectrogram_palette . ".png\">
-		</div>
-		</div>"; #Close row
-	}*/
+		
 			
 	#MD5 hash calculation
 	if ($pumilio_loggedin && $special_nofiles == FALSE) {
@@ -934,60 +884,6 @@ else {
 				
 				echo "</dl>";
 					
-/*
-				#Other data associated with this file
-				$dir="data_sources/";
-				$other_data=scandir($dir);
-		 
-		 		if (count($other_data)>0) {
-		 			for ($o=0;$o<count($other_data);$o++) {
-						if (strpos(strtolower($other_data[$o]), ".php")) {
-							require("$dir/$other_data[$o]");
-							}
-		 				}
-		 			}
-
-				#Find weather data
-				$weather_data_id = get_closest_weather($connection, $SiteLat, $SiteLon, $Date, $Time);
-				$weather_data = explode(",",$weather_data_id);
-				$weather_data_id = $weather_data[0];
-				$time_diff = round(($weather_data[1]/60));
-				$distance = round($weather_data[2],2);
-				if ($weather_data_id != 0 && $time_diff < 60) {
-					$result_w = mysqli_query($connection, "SELECT * FROM WeatherData WHERE WeatherDataID='$weather_data_id' LIMIT 1")
-						or die (mysqli_error($connection));
-					$row_w = mysqli_fetch_array($result_w);
-					extract($row_w);
-
-					echo "<p><strong>Weather data</strong>: (From $distance km, $time_diff min)\n <ul>";
-					if ($Temperature!=NULL){
-						echo "<li>Temp: $Temperature &deg;C</li>\n";
-						}
-					if ($Precipitation!=NULL){
-						echo "<li>Precipitation: $Precipitation mm</li>\n";
-						}
-					if ($RelativeHumidity!=NULL){
-						echo "<li>Relative Humidity: $RelativeHumidity %</li>\n";
-						}
-					if ($WindSpeed!=NULL){
-						echo "<li>Wind Speed: $WindSpeed m/s</li>\n";
-						}
-					if ($WindDirection!=NULL){
-						echo "<li>Wind Direction: $WindDirection</li>\n";
-						}
-					if ($LightIntensity!=NULL){
-						echo "<li>Light Intensity: $LightIntensity</li>\n";
-						}
-					if ($BarometricPressure!=NULL){
-						echo "<li>Barometric Pressure: $BarometricPressure</li>\n";
-						}
-					if ($DewPoint!=NULL){
-						echo "<li>Dew Point: $DewPoint</li>\n";
-						}
-						
-					echo "</ul>";
-					}
-			*/
 		echo "</div>";
 	echo "</div>";#end row
 
@@ -999,71 +895,6 @@ else {
 
 
 
-
-				
-				
-
-				
-
-/*
-		#Other data associated with this file
-		$dir="data_sources/";
-		$other_data=scandir($dir);
- 
- 		if (count($other_data)>0) {
- 			for ($o=0;$o<count($other_data);$o++) {
-				if (strpos(strtolower($other_data[$o]), ".php")) {
-					require("$dir/$other_data[$o]");
-					}
- 				}
- 			}
-
-		#Find weather data
-		$weather_data_id = get_closest_weather($connection, $SiteLat, $SiteLon, $Date, $Time);
-		$weather_data = explode(",",$weather_data_id);
-		$weather_data_id = $weather_data[0];
-		$time_diff = round(($weather_data[1]/60));
-		$distance = round($weather_data[2],2);
-		if ($weather_data_id != 0 && $time_diff < 60) {
-			$result_w = mysqli_query($connection, "SELECT * FROM WeatherData WHERE WeatherDataID='$weather_data_id' LIMIT 1")
-				or die (mysqli_error($connection));
-			$row_w = mysqli_fetch_array($result_w);
-			extract($row_w);
-
-			echo "<p><strong>Weather data</strong>: (From $distance km, $time_diff min)\n <ul>";
-			if ($Temperature!=NULL){
-				echo "<li>Temp: $Temperature &deg;C</li>\n";
-				}
-			if ($Precipitation!=NULL){
-				echo "<li>Precipitation: $Precipitation mm</li>\n";
-				}
-			if ($RelativeHumidity!=NULL){
-				echo "<li>Relative Humidity: $RelativeHumidity %</li>\n";
-				}
-			if ($WindSpeed!=NULL){
-				echo "<li>Wind Speed: $WindSpeed m/s</li>\n";
-				}
-			if ($WindDirection!=NULL){
-				echo "<li>Wind Direction: $WindDirection</li>\n";
-				}
-			if ($LightIntensity!=NULL){
-				echo "<li>Light Intensity: $LightIntensity</li>\n";
-				}
-			if ($BarometricPressure!=NULL){
-				echo "<li>Barometric Pressure: $BarometricPressure</li>\n";
-				}
-			if ($DewPoint!=NULL){
-				echo "<li>Dew Point: $DewPoint</li>\n";
-				}
-				
-			echo "</ul>";
-			}
-			
-	echo "&nbsp;</div>\n";
-*/
-
-		
-		
 
 	
 	if ($pumilio_admin) {
@@ -1089,6 +920,8 @@ else {
 		}
 
 
+	
+	echo "</div>";
 	echo "</div>";
 
 
@@ -1100,11 +933,6 @@ else {
 	require("include/bottom.php");
 	?>
 
-
-<?php
-#Loading... message
-#require("include/loadingbottom.php");
-?>
 
 </body>
 </html>
