@@ -5,17 +5,25 @@ if ($tt==1) {
 	echo "<div class=\"success\" id=\"tt1\">The database was updated.</div>";
 	}
 
-echo "<strong>General settings:</strong>
-	<div style=\"margin-left: 10px;\">This installation custom name: $app_custom_name";
+echo "<div class=\"panel panel-primary\">
+		<div class=\"panel-heading\">
+			<h3 class=\"panel-title\">General settings</h3>
+		</div>
+        <div class=\"panel-body\">";
 
 echo "<form action=\"include/editpumiliosettings.php\" method=\"POST\">
 	<input type=\"hidden\" name=\"settings\" value=\"top\">
-	<input type=\"text\" name=\"app_custom_name\" maxlength=\"250\" size=\"36\" value=\"$app_custom_name\" class=\"fg-button ui-state-default ui-corner-all formedge\">";
+	<div class=\"form-group\">
+		<label for=\"app_custom_name\">This installation custom name:</label>
+		<input type=\"text\" id=\"app_custom_name\" name=\"app_custom_name\" value=\"$app_custom_name\" class=\"form-control\">
+	</div>";
 
-echo "<br>Short description of this system: $app_custom_text";
-
-echo "<input type=\"text\" name=\"app_custom_text\" maxlength=\"250\" size=\"50\" value=\"$app_custom_text\" class=\"fg-button ui-state-default ui-corner-all formedge\">";
+echo "<div class=\"form-group\">
+	<label for=\"app_custom_text\">Short description of this system:</label>";
+	echo "<input type=\"text\" name=\"app_custom_text\" id=\"app_custom_text\" value=\"$app_custom_text\" class=\"form-control\">
+</div>";
 	
+
 if ($use_googlemaps=="1"){
 	$use_googlemaps_d="No";
 	$use_googlemaps="0";
@@ -30,34 +38,36 @@ else{
 	$use_googlemaps_d="Not set";
 	}
 	
-echo "<br>Use the Google Maps system (using the v3 API): $use_googlemaps_d";
+echo "<div class=\"form-group\">
+	<label for=\"use_googlemaps\">Use the Google Maps system (using the v3 API):</label>";
 
-echo "<select name=\"use_googlemaps\" class=\"ui-state-default ui-corner-all formedge\">";
+	echo "<select name=\"use_googlemaps\" id=\"use_googlemaps\" class=\"form-control\">";
 
-	if ($use_googlemaps=="0") {
-		echo "<option SELECTED value=\"0\">No</option>
-			<option value=\"3\">Yes</option>";
-		}
-	elseif ($use_googlemaps=="3") {
-		echo "<option SELECTED value=\"3\">Yes</option>
-			<option value=\"0\">No</option>";
-		}
-	else {
-		echo "<option value=\"3\">Yes</option>
-			<option value=\"0\">No</option>";
-		}
+		if ($use_googlemaps=="0") {
+			echo "<option SELECTED value=\"0\">No</option>
+				<option value=\"3\">Yes</option>";
+			}
+		elseif ($use_googlemaps=="3") {
+			echo "<option SELECTED value=\"3\">Yes</option>
+				<option value=\"0\">No</option>";
+			}
+		else {
+			echo "<option value=\"3\">Yes</option>
+				<option value=\"0\">No</option>";
+			}
 
-echo "</select>\n";
-		
-#googlemaps_key
-if ($use_googlemaps=="3") {
-	echo "<p>
-	<a href=\"https://developers.google.com/maps/documentation/javascript/tutorial\" target=_blank>Request a key for Google Maps JavaScript API v3</a> (free and required for each server) 
-		<a href=\"#\" onclick=\"window.open('help.php?topic=GoogleMaps3', 'help', 'width=650,height=550,status=yes,resizable=yes,scrollbars=auto')\"><img src=\"images/help.png\" title=\"Click for instructions\"></a><br>
-	GoogleMaps v3 key: $googlemaps3_key";
-		
-	echo "<input type=\"text\" name=\"googlemaps3_key\" size=\"50\" maxlength=\"250\" value=\"$googlemaps3_key\" class=\"fg-button ui-state-default ui-corner-all formedge\">\n";
-	}	
+	echo "</select></div>\n";
+			
+	#key not needed if < 25k hits
+/*	#googlemaps_key
+	if ($use_googlemaps=="3") {
+		echo "<p>
+		<a href=\"https://developers.google.com/maps/documentation/javascript/tutorial\" target=_blank>Request a key for Google Maps JavaScript API v3</a> (free and required for each server) 
+			<a href=\"#\" onclick=\"window.open('help.php?topic=GoogleMaps3', 'help', 'width=650,height=550,status=yes,resizable=yes,scrollbars=auto')\"><img src=\"images/help.png\" title=\"Click for instructions\"></a><br>
+		GoogleMaps v3 key: $googlemaps3_key";
+			
+		echo "<input type=\"text\" name=\"googlemaps3_key\" size=\"50\" maxlength=\"250\" value=\"$googlemaps3_key\">\n";
+		}	*/
 	
 	#$map_only=query_one("SELECT Value from PumilioSettings WHERE Settings='map_only'", $connection);
 	
@@ -71,26 +81,30 @@ if ($use_googlemaps=="3") {
 
 
 #Google Analytics:
-	echo "<p>Google Analytics Tracking ID: ";
+	echo "<div class=\"form-group\">
+	<label for=\"googleanalytics_ID\">Google Analytics Tracking ID</label>";
 
-	echo "<input type=\"text\" name=\"googleanalytics_ID\" size=\"20\" maxlength=\"20\" value=\"$googleanalytics_ID\" class=\"fg-button ui-state-default ui-corner-all formedge\">
-			<a href=\"#\" onclick=\"window.open('help.php?topic=GoogleAnalytics', 'help', 'width=650,height=550,status=yes,resizable=yes,scrollbars=auto')\"><img src=\"images/help.png\" title=\"Click for instructions\"></a>\n";
+	echo "<input type=\"text\" name=\"googleanalytics_ID\" id=\"googleanalytics_ID\" value=\"$googleanalytics_ID\" class=\"form-control\">
+			<a href=\"#\" onclick=\"window.open('help.php?topic=GoogleAnalytics', 'help', 'width=650,height=550,status=yes,resizable=yes,scrollbars=auto')\"><img src=\"images/help.png\" title=\"Click for instructions\"></a>
+		</div>\n";
 
 
 
 
-echo "<br>Main menu: $map_only_d";
-	
-echo "<select name=\"map_only\" class=\"ui-state-default ui-corner-all formedge\">";
-	if ($map_only=="1") {
-		echo "<option value=\"0\">Full menu</option>
-			<option SELECTED value=\"1\">Main map</option>";
-		}
-	elseif ($map_only=="0" || $map_only=="") {
-		echo "<option SELECTED value=\"0\">Full menu</option>
-			<option value=\"1\">Main map</option>";
-		}
-echo "</select>\n";
+echo "<div class=\"form-group\">
+	<label for=\"map_only\">Main menu:</label>";
+		
+	echo "<select name=\"map_only\" id=\"map_only\" class=\"form-control\">";
+		if ($map_only=="1") {
+			echo "<option value=\"0\">Full menu</option>
+				<option SELECTED value=\"1\">Main map</option>";
+			}
+		elseif ($map_only=="0" || $map_only=="") {
+			echo "<option SELECTED value=\"0\">Full menu</option>
+				<option value=\"1\">Main map</option>";
+			}
+	echo "</select>\n
+	</div>";
 	
 	
 #Copyright or CC?
@@ -101,85 +115,87 @@ echo "</select>\n";
 		$files_license = "Not set";
 		}
 
-	echo "<br>Retain copyright or share with a <a href=\"http://creativecommons.org/licenses/\" target=_blank>Creative Commons</a> license? $files_license";
-	
-	echo "<select name=\"files_license\" class=\"ui-state-default ui-corner-all formedge\">";
-		if ($files_license=="Copyright") {
-			echo "<option SELECTED value=\"Copyright\">&#169; Copyright</option>
-				<option value=\"CC BY\">CC BY</option>
-				<option value=\"CC BY-SA\">CC BY-SA</option>
-				<option value=\"CC BY-ND\">CC BY-ND</option>
-				<option value=\"CC BY-NC\">CC BY-NC</option>
-				<option value=\"CC BY-NC-SA\">CC BY-NC-SA</option>
-				<option value=\"CC BY-NC-ND\">CC BY-NC-ND</option>\n";
-				}
-		elseif ($files_license=="CC BY") {
-			echo "<option value=\"Copyright\">&#169; Copyright</option>
-				<option SELECTED value=\"CC BY\">CC BY</option>
-				<option value=\"CC BY-SA\">CC BY-SA</option>
-				<option value=\"CC BY-ND\">CC BY-ND</option>
-				<option value=\"CC BY-NC\">CC BY-NC</option>
-				<option value=\"CC BY-NC-SA\">CC BY-NC-SA</option>
-				<option value=\"CC BY-NC-ND\">CC BY-NC-ND</option>\n";
-				}
-		elseif ($files_license=="CC BY-SA") {
-			echo "<option value=\"Copyright\">&#169; Copyright</option>
-				<option value=\"CC BY\">CC BY</option>
-				<option SELECTED value=\"CC BY-SA\">CC BY-SA</option>
-				<option value=\"CC BY-ND\">CC BY-ND</option>
-				<option value=\"CC BY-NC\">CC BY-NC</option>
-				<option value=\"CC BY-NC-SA\">CC BY-NC-SA</option>
-				<option value=\"CC BY-NC-ND\">CC BY-NC-ND</option>\n";
-				}
-		elseif ($files_license=="CC BY-ND") {
-			echo "<option value=\"Copyright\">&#169; Copyright</option>
-				<option value=\"CC BY\">CC BY</option>
-				<option value=\"CC BY-SA\">CC BY-SA</option>
-				<option SELECTED value=\"CC BY-ND\">CC BY-ND</option>
-				<option value=\"CC BY-NC\">CC BY-NC</option>
-				<option value=\"CC BY-NC-SA\">CC BY-NC-SA</option>
-				<option value=\"CC BY-NC-ND\">CC BY-NC-ND</option>\n";
-				}
-		elseif ($files_license=="CC BY-NC") {
-			echo "<option value=\"Copyright\">&#169; Copyright</option>
-				<option value=\"CC BY\">CC BY</option>
-				<option value=\"CC BY-SA\">CC BY-SA</option>
-				<option value=\"CC BY-ND\">CC BY-ND</option>
-				<option SELECTED value=\"CC BY-NC\">CC BY-NC</option>
-				<option value=\"CC BY-NC-SA\">CC BY-NC-SA</option>
-				<option value=\"CC BY-NC-ND\">CC BY-NC-ND</option>\n";
-				}
-		elseif ($files_license=="CC BY-NC-SA") {
-			echo "<option value=\"Copyright\">&#169; Copyright</option>
-				<option value=\"CC BY\">CC BY</option>
-				<option value=\"CC BY-SA\">CC BY-SA</option>
-				<option value=\"CC BY-ND\">CC BY-ND</option>
-				<option value=\"CC BY-NC\">CC BY-NC</option>
-				<option SELECTED value=\"CC BY-NC-SA\">CC BY-NC-SA</option>
-				<option value=\"CC BY-NC-ND\">CC BY-NC-ND</option>\n";
-				}
-		elseif ($files_license=="CC BY-NC-ND") {
-			echo "<option value=\"Copyright\">&#169; Copyright</option>
-				<option value=\"CC BY\">CC BY</option>
-				<option value=\"CC BY-SA\">CC BY-SA</option>
-				<option value=\"CC BY-ND\">CC BY-ND</option>
-				<option value=\"CC BY-NC\">CC BY-NC</option>
-				<option value=\"CC BY-NC-SA\">CC BY-NC-SA</option>
-				<option SELECTED value=\"CC BY-NC-ND\">CC BY-NC-ND</option>\n";
-				}
-		else {
-			echo "<option value=\"Copyright\">&#169; Copyright</option>
-				<option value=\"CC BY\">CC BY</option>
-				<option value=\"CC BY-SA\">CC BY-SA</option>
-				<option value=\"CC BY-ND\">CC BY-ND</option>
-				<option value=\"CC BY-NC\">CC BY-NC</option>
-				<option value=\"CC BY-NC-SA\">CC BY-NC-SA</option>
-				<option value=\"CC BY-NC-ND\">CC BY-NC-ND</option>\n";
-				}
-				
-		echo " </select>
+	echo "<div class=\"form-group\">
+	<label for=\"lic1\">Retain copyright or share with a <a href=\"http://creativecommons.org/licenses/\" target=_blank>Creative Commons</a> license? $files_license</label>";
 		
-	<input type=\"text\" name=\"files_license_detail\" size=\"40\" maxlength=\"250\" value=\"$files_license_detail\" class=\"fg-button ui-state-default ui-corner-all\">";
+		echo "<select name=\"files_license\" id =\"lic1\" class=\"form-control\">";
+			if ($files_license=="Copyright") {
+				echo "<option SELECTED value=\"Copyright\">&#169; Copyright</option>
+					<option value=\"CC BY\">CC BY</option>
+					<option value=\"CC BY-SA\">CC BY-SA</option>
+					<option value=\"CC BY-ND\">CC BY-ND</option>
+					<option value=\"CC BY-NC\">CC BY-NC</option>
+					<option value=\"CC BY-NC-SA\">CC BY-NC-SA</option>
+					<option value=\"CC BY-NC-ND\">CC BY-NC-ND</option>\n";
+					}
+			elseif ($files_license=="CC BY") {
+				echo "<option value=\"Copyright\">&#169; Copyright</option>
+					<option SELECTED value=\"CC BY\">CC BY</option>
+					<option value=\"CC BY-SA\">CC BY-SA</option>
+					<option value=\"CC BY-ND\">CC BY-ND</option>
+					<option value=\"CC BY-NC\">CC BY-NC</option>
+					<option value=\"CC BY-NC-SA\">CC BY-NC-SA</option>
+					<option value=\"CC BY-NC-ND\">CC BY-NC-ND</option>\n";
+					}
+			elseif ($files_license=="CC BY-SA") {
+				echo "<option value=\"Copyright\">&#169; Copyright</option>
+					<option value=\"CC BY\">CC BY</option>
+					<option SELECTED value=\"CC BY-SA\">CC BY-SA</option>
+					<option value=\"CC BY-ND\">CC BY-ND</option>
+					<option value=\"CC BY-NC\">CC BY-NC</option>
+					<option value=\"CC BY-NC-SA\">CC BY-NC-SA</option>
+					<option value=\"CC BY-NC-ND\">CC BY-NC-ND</option>\n";
+					}
+			elseif ($files_license=="CC BY-ND") {
+				echo "<option value=\"Copyright\">&#169; Copyright</option>
+					<option value=\"CC BY\">CC BY</option>
+					<option value=\"CC BY-SA\">CC BY-SA</option>
+					<option SELECTED value=\"CC BY-ND\">CC BY-ND</option>
+					<option value=\"CC BY-NC\">CC BY-NC</option>
+					<option value=\"CC BY-NC-SA\">CC BY-NC-SA</option>
+					<option value=\"CC BY-NC-ND\">CC BY-NC-ND</option>\n";
+					}
+			elseif ($files_license=="CC BY-NC") {
+				echo "<option value=\"Copyright\">&#169; Copyright</option>
+					<option value=\"CC BY\">CC BY</option>
+					<option value=\"CC BY-SA\">CC BY-SA</option>
+					<option value=\"CC BY-ND\">CC BY-ND</option>
+					<option SELECTED value=\"CC BY-NC\">CC BY-NC</option>
+					<option value=\"CC BY-NC-SA\">CC BY-NC-SA</option>
+					<option value=\"CC BY-NC-ND\">CC BY-NC-ND</option>\n";
+					}
+			elseif ($files_license=="CC BY-NC-SA") {
+				echo "<option value=\"Copyright\">&#169; Copyright</option>
+					<option value=\"CC BY\">CC BY</option>
+					<option value=\"CC BY-SA\">CC BY-SA</option>
+					<option value=\"CC BY-ND\">CC BY-ND</option>
+					<option value=\"CC BY-NC\">CC BY-NC</option>
+					<option SELECTED value=\"CC BY-NC-SA\">CC BY-NC-SA</option>
+					<option value=\"CC BY-NC-ND\">CC BY-NC-ND</option>\n";
+					}
+			elseif ($files_license=="CC BY-NC-ND") {
+				echo "<option value=\"Copyright\">&#169; Copyright</option>
+					<option value=\"CC BY\">CC BY</option>
+					<option value=\"CC BY-SA\">CC BY-SA</option>
+					<option value=\"CC BY-ND\">CC BY-ND</option>
+					<option value=\"CC BY-NC\">CC BY-NC</option>
+					<option value=\"CC BY-NC-SA\">CC BY-NC-SA</option>
+					<option SELECTED value=\"CC BY-NC-ND\">CC BY-NC-ND</option>\n";
+					}
+			else {
+				echo "<option value=\"Copyright\">&#169; Copyright</option>
+					<option value=\"CC BY\">CC BY</option>
+					<option value=\"CC BY-SA\">CC BY-SA</option>
+					<option value=\"CC BY-ND\">CC BY-ND</option>
+					<option value=\"CC BY-NC\">CC BY-NC</option>
+					<option value=\"CC BY-NC-SA\">CC BY-NC-SA</option>
+					<option value=\"CC BY-NC-ND\">CC BY-NC-ND</option>\n";
+					}
+					
+			echo " </select>
+		
+		<input type=\"text\" name=\"files_license_detail\" size=\"40\" maxlength=\"250\" value=\"$files_license_detail\">
+	</div>";
 	
 		
 	#Temp dir
@@ -201,13 +217,15 @@ echo "</select>\n";
 		$temp_add_dir_d="Not set";
 		}
 
-	echo "<br>Local directory for adding multiple files: $temp_add_dir_d";
+	echo "<div class=\"form-group\">
+	<label for=\"temp_add_dir\">Local directory for adding multiple files:</label>";
 
-	$apacheuser = exec('whoami');
-	echo "<input type=\"text\" name=\"temp_add_dir\" value=\"$temp_add_dir_f\" class=\"fg-button ui-state-default ui-corner-all formedge\">
-			<img src=\"images/help.png\" title=\"Users can add files to the archive that are stored in the
-				server or a network location mounted in the server. Add the full system path 
-				in this field. The path needs to exist and be readable by the Apache user ($apacheuser).\">";
+		$apacheuser = exec('whoami');
+		echo "<input type=\"text\" name=\"temp_add_dir\" id=\"temp_add_dir\" value=\"$temp_add_dir_f\" class=\"form-control\">
+				<img src=\"images/help.png\" title=\"Users can add files to the archive that are stored in the
+					server or a network location mounted in the server. Add the full system path 
+					in this field. The path needs to exist and be readable by the Apache user ($apacheuser).\">
+			</div>";
 
 
 /*
@@ -234,23 +252,24 @@ echo "</select>\n";
 				}
 
 		echo " </select>
-		<input type=submit value=\" Change selection \" class=\"fg-button ui-state-default ui-corner-all\"> <a href=\"#\" onclick=\"window.open('help.php?topic=R', 'help', 'width=650,height=550,status=yes,resizable=yes,scrollbars=auto')\"><img src=\"images/help.png\" title=\"Help\" alt=\"Help\"></a>
+		<input type=submit value=\" Change selection \"> <a href=\"#\" onclick=\"window.open('help.php?topic=R', 'help', 'width=650,height=550,status=yes,resizable=yes,scrollbars=auto')\"><img src=\"images/help.png\" title=\"Help\" alt=\"Help\"></a>
 		</form>";
 */
 
 	#Cores to use
 	#$cores_to_use=query_one("SELECT Value from PumilioSettings WHERE Settings='cores_to_use'", $connection);
-	if ($cores_to_use == ""){ 
+	/*if ($cores_to_use == ""){ 
 		$cores_to_use_d = "Not set (use 1)";
 		}
 	else {
 		$cores_to_use_d = $cores_to_use;
-		}
+		}*/
 
-	echo "<br>How many cores to use for background processes: $cores_to_use_d";
+	echo "<div class=\"form-group\">
+	<label for=\"cores_to_use\">How many cores to use for background processes:</label>";
 	$machine_cores = nocores();
 	
-	echo "<select name=\"cores_to_use\" class=\"ui-state-default ui-corner-all formedge\">";
+	echo "<select name=\"cores_to_use\" id=\"cores_to_use\" class=\"form-control\">";
 		for ($c = 0; $c < $machine_cores; $c++) {
 			$cc = $c + 1;
 			if ($cc == $cores_to_use){
@@ -263,11 +282,17 @@ echo "</select>\n";
 
 	echo " </select> 
 		<img src=\"images/help.png\" title=\"Set to maximum to speed up the background processes at the cost of server performance for other
-			tasks. Set to a lower number to leave some cores for other processes.\">";
+			tasks. Set to a lower number to leave some cores for other processes.\">
+		</div>";
 	
 	
-	echo "<p><input type=submit value=\" Update system settings \" class=\"fg-button ui-state-default ui-corner-all\">
-	</form>";
+	echo "<p><button type=\"submit\" class=\"btn btn-primary\"> Update system settings </button>
+	</form>
+
+
+
+	</div>
+</div>";
 
 
 
@@ -275,15 +300,18 @@ echo "</select>\n";
 
 
 	#Image settings
-	echo "</div>
-	<br><p><strong>Image settings:</strong>
-	<div style=\"margin-left: 10px;\">";
+	echo "
+	<div class=\"panel panel-primary\">
+	<div class=\"panel-heading\">
+		<h3 class=\"panel-title\">Image settings</h3>
+	</div>
+    <div class=\"panel-body\">";
 
 	if ($imgset == 1) {
 		echo "<div class=\"success\" id=\"imgset\">The database was updated. To force the system to recreate the images:<br>
 		<form method=\"GET\" action=\"include/delauxfiles.php\" target=\"delauxfiles\" onsubmit=\"window.open('', 'delauxfiles', 'width=450,height=700,status=yes,resizable=yes,scrollbars=auto')\">
 			<input type=\"hidden\" name=\"op\" value=\"7\">
-			<input type=submit value=\" Delete all images from system \" class=\"fg-button ui-state-default ui-corner-all\"></form>
+			<input type=submit value=\" Delete all images from system \"></form>
 		</div>";
 		}
 
@@ -302,9 +330,10 @@ echo "</select>\n";
 		$max_spec_freq_d = $max_spec_freq . " Hz";
 		}
 
-	echo "Maximum acoustic frequency for the spectrograms: $max_spec_freq_d";
+	echo "<div class=\"form-group\">
+	<label for=\"max_spec_freq\">Maximum acoustic frequency for the spectrograms</label>";
 	
-	echo "<select name=\"max_spec_freq\" class=\"ui-state-default ui-corner-all formedge\">";
+	echo "<select name=\"max_spec_freq\" id=\"max_spec_freq\" class=\"form-control\">";
 		if ($max_spec_freq == "max") {
 			echo "<option SELECTED value=\"max\">Maximum for each file</option>
 				<option value=\"24000\">24000 Hz</option>
@@ -372,12 +401,14 @@ echo "</select>\n";
 				<option $m9 value=\"3000\">3000 Hz</option>";
 			}
 
-	echo " </select>";
+	echo " </select>
+	</div>";
 
 	#FFT window size
-	echo "<br>FFT window size: $fft";
+	echo "<div class=\"form-group\">
+	<label for=\"fft\">FFT window size";
 	
-	echo "<select name=\"fft\" class=\"ui-state-default ui-corner-all formedge\">";
+	echo "<select name=\"fft\" id=\"fft\" class=\"form-control\">";
 		
 		$fft1="";
 		$fft2="";
@@ -406,13 +437,14 @@ echo "</select>\n";
 			<option $fft5>256</option>
 			<option $fft6>128</option>";
 
-	echo " </select>";
+	echo " </select></div>";
 
 
 	#spectrogram_palette
 	#$spectrogram_palette=query_one("SELECT Value from PumilioSettings WHERE Settings='spectrogram_palette'", $connection);
 	
-	echo "<br>Color palette to use for the spectrograms: ";
+	echo "<div class=\"form-group\">
+	<label for=\"spectrogram_palette\">Color palette to use for the spectrograms</label>";
 	
 	if ($sox_images == TRUE){
 		$sox_pal1 = "yellow, red, purple";
@@ -447,7 +479,7 @@ echo "</select>\n";
 			$selected6 = "SELECTED";
 			}
 	
-		echo "<select name=\"spectrogram_palette\" class=\"ui-state-default ui-corner-all formedge\">";
+		echo "<select name=\"spectrogram_palette\" id=\"spectrogram_palette\" class=\"form-control\">";
 			echo "<option $selected1 value=\"1\">$sox_pal1</option>
 			<option $selected2 value=\"2\">$sox_pal2</option>
 			<option $selected3 value=\"3\">$sox_pal3</option>
@@ -458,14 +490,14 @@ echo "</select>\n";
 		echo "</select>";
 		}
 	else{
-		if ($spectrogram_palette == "1"){
+		/*if ($spectrogram_palette == "1"){
 			echo "dark background";
 			}
 		elseif ($spectrogram_palette == "2"){
 			echo "white background";
-			}
+			}*/
 	
-		echo "<select name=\"spectrogram_palette\" class=\"ui-state-default ui-corner-all formedge\">";
+		echo "<select name=\"spectrogram_palette\" id=\"spectrogram_palette\" class=\"form-control\">";
 		if ($spectrogram_palette == 2 || $spectrogram_palette == "") {
 			echo "<option value=\"1\">dark background</option>
 			<option SELECTED value=\"2\">white background</option>";
@@ -477,11 +509,14 @@ echo "</select>\n";
 		echo "</select>";
 		}
 		
+	echo "</div>";
 
 
 	echo "
-	<p><input type=submit value=\" Update spectrogram settings \" class=\"fg-button ui-state-default ui-corner-all\">
-	</form>";
+	<button type=\"submit\" class=\"btn btn-primary\"> Update spectrogram settings </button>
+	</form>
+	</div>
+</div>";
 
 
 
@@ -490,9 +525,14 @@ echo "</select>\n";
 
 
 	#Bottom
-	echo "</div>
-	<br><p><strong>System behavior:</strong>
-	<div style=\"margin-left: 10px;\">
+	echo "
+	<div class=\"panel panel-primary\">
+	<div class=\"panel-heading\">
+		<h3 class=\"panel-title\">System behavior</h3>
+	</div>
+    <div class=\"panel-body\">
+
+
 	<form action=\"include/editpumiliosettings.php\" method=\"POST\">
 	<input type=\"hidden\" name=\"settings\" value=\"bottom\">";	
 		
@@ -513,9 +553,10 @@ echo "</select>\n";
 		$use_chorus_d = "Not set";
 		}
 
-	echo "Allow this website to be indexed in the <a href=\"http://pumilio.sourceforge.net/chorus.php\" target=_blank>Pumilio Chorus</a>: $use_chorus_d";
+	echo "<div class=\"form-group\">
+	<label for=\"use_chorus\">Allow this website to be indexed in the <a href=\"http://pumilio.sourceforge.net/chorus.php\" target=_blank>Pumilio Chorus</a></label>";
 	
-	echo "<select name=\"use_chorus\" class=\"ui-state-default ui-corner-all formedge\">";
+	echo "<select name=\"use_chorus\" id=\"use_chorus\" class=\"form-control\">";
 		if ($use_chorus) {
 			echo "<option SELECTED value=\"1\">Yes</option>
 				<option value=\"0\">No</option>";
@@ -525,7 +566,7 @@ echo "</select>\n";
 				<option SELECTED value=\"0\">No</option>";
 			}
 
-		echo " </select>\n";
+		echo " </select></div>\n";
 
 
 	#use tag cloud
@@ -541,9 +582,10 @@ echo "</select>\n";
 		$use_tags_d="Not set";
 		}
 
-	echo "<br>Use a tag cloud: $use_tags_d";
+	echo "<div class=\"form-group\">
+	<label for=\"use_tags\">Use a tag cloud</label>";
 	
-	echo "<select name=\"use_tags\" class=\"ui-state-default ui-corner-all formedge\">";
+	echo "<select name=\"use_tags\" id=\"use_tags\" class=\"form-control\">";
 		if ($use_tags) {
 			echo "<option SELECTED value=\"1\">Yes</option>
 				<option value=\"0\">No</option>";
@@ -552,7 +594,7 @@ echo "</select>\n";
 			echo "<option value=\"1\">Yes</option>
 				<option SELECTED value=\"0\">No</option>";
 			}
-	echo " </select>";
+	echo " </select></div>";
 
 
 	#audio preview format
@@ -582,7 +624,7 @@ echo "</select>\n";
 			}
 
 		echo " </select>
-		<input type=submit value=\" Change selection \" class=\"fg-button ui-state-default ui-corner-all\"></form>";
+		<input type=submit value=\" Change selection \"></form>";
 */
 	
 	#hide_latlon_guests
@@ -598,9 +640,10 @@ echo "</select>\n";
 		$hide_latlon_guests_d="Not set";
 		}
 			
-	echo "<br>Hide the coordinates from users that are not logged in: $hide_latlon_guests_d";
+	echo "<div class=\"form-group\">
+	<label for=\"hide_latlon_guests\">Hide the coordinates from users that are not logged in</label>";
 	
-	echo "<select name=\"hide_latlon_guests\" class=\"ui-state-default ui-corner-all formedge\">";
+	echo "<select name=\"hide_latlon_guests\" id=\"hide_latlon_guests\" class=\"form-control\">";
 		if ($hide_latlon_guests) {
 			echo "<option SELECTED value=\"1\">Yes</option>
 				<option value=\"0\">No</option>";
@@ -610,7 +653,7 @@ echo "</select>\n";
 				<option SELECTED value=\"0\">No</option>";
 			}
 
-	echo " </select>";
+	echo " </select></div>";
 
 
 	#use side-to-side comparison
@@ -626,9 +669,10 @@ echo "</select>\n";
 		$sidetoside_comp_d="Not set";
 		}
 			
-	echo "<br>Use Side-to-side comparison: $sidetoside_comp_d";
+	echo "<div class=\"form-group\">
+	<label for=\"sidetoside_comp\">Use Side-to-side comparison</label>";
 	
-	echo "<select name=\"sidetoside_comp\" class=\"ui-state-default ui-corner-all formedge\">";
+	echo "<select name=\"sidetoside_comp\" id=\"sidetoside_comp\" class=\"form-control\">";
 		if ($sidetoside_comp){
 			echo "<option SELECTED value=\"1\">Yes</option>
 			<option value=\"0\">No</option>";
@@ -638,7 +682,7 @@ echo "</select>\n";
 			<option SELECTED value=\"0\">No</option>";
 			}
 
-	echo " </select>";
+	echo " </select></div>";
 
 
 	#allow_upload
@@ -654,9 +698,10 @@ echo "</select>\n";
 		$allow_upload_d="Not set";
 		}
 			
-	echo "<br>Allow users to upload files: $allow_upload_d";
+	echo "<div class=\"form-group\">
+	<label for=\"allow_upload\">Allow users to upload files</label>";
 	
-	echo "<select name=\"allow_upload\" class=\"ui-state-default ui-corner-all formedge\">";
+	echo "<select name=\"allow_upload\" id=\"allow_upload\" class=\"form-control\">";
 		if ($allow_upload){
 			echo "<option SELECTED value=\"1\">Yes</option>
 				<option value=\"0\">No</option>";
@@ -666,7 +711,7 @@ echo "</select>\n";
 				<option SELECTED value=\"0\">No</option>";
 			}
 
-	echo " </select>";
+	echo " </select></div>";
 
 
 	#compress wav to flac
@@ -682,9 +727,10 @@ echo "</select>\n";
 		$wav_toflac_d="Not set";
 		}
 			
-	echo "<br>Compress uploaded wav files to flac: $wav_toflac_d";
+	echo "<div class=\"form-group\">
+	<label for=\"wav_toflac\">Compress uploaded wav files to flac</label>";
 	
-	echo "<select name=\"wav_toflac\" class=\"ui-state-default ui-corner-all formedge\">";
+	echo "<select name=\"wav_toflac\" id=\"wav_toflac\" class=\"form-control\">";
 		if ($use_tags) {
 			echo "<option SELECTED value=\"1\">Yes</option>
 				<option value=\"0\">No</option>";
@@ -694,7 +740,7 @@ echo "</select>\n";
 				<option SELECTED value=\"0\">No</option>";
 			}
 
-	echo " </select>";
+	echo " </select></div>";
 
 
 	#guests_can_open
@@ -710,9 +756,10 @@ echo "</select>\n";
 		$guests_can_open_d="Not set";
 		}
 
-	echo "<br>Allow users that are not logged in to open the files: $guests_can_open_d";
+	echo "<div class=\"form-group\">
+	<label for=\"guests_can_open\">Allow users that are not logged in to open the files</label>";
 	
-	echo "<select name=\"guests_can_open\" class=\"ui-state-default ui-corner-all formedge\">";
+	echo "<select name=\"guests_can_open\" id=\"guests_can_open\" class=\"form-control\">";
 		if ($guests_can_open) {
 			echo "<option SELECTED value=\"1\">Yes</option>
 				<option value=\"0\">No</option>";
@@ -722,7 +769,7 @@ echo "</select>\n";
 				<option SELECTED value=\"0\">No</option>";
 			}
 
-	echo " </select>";
+	echo " </select></div>";
 
 
 	#guests_can_download
@@ -738,9 +785,10 @@ echo "</select>\n";
 		$guests_can_dl_d="Not set";
 		}
 
-	echo "<br>Allow users that are not logged in to download the files: $guests_can_dl_d";
+	echo "<div class=\"form-group\">
+	<label for=\"guests_can_dl\">Allow users that are not logged in to download the files</label>";
 	
-	echo "<select name=\"guests_can_dl\" class=\"ui-state-default ui-corner-all formedge\">";
+	echo "<select name=\"guests_can_dl\" id=\"guests_can_dl\" class=\"form-control\">";
 		if ($guests_can_dl){
 			echo "<option SELECTED value=\"1\">Yes</option>
 				<option value=\"0\">No</option>";
@@ -749,7 +797,7 @@ echo "</select>\n";
 			echo "<option value=\"1\">Yes</option>
 				<option SELECTED value=\"0\">No</option>";
 			}
-	echo " </select>";
+	echo " </select></div>";
 
 
 
@@ -760,9 +808,10 @@ echo "</select>\n";
 		$default_qf = "0";
 		}
 
-	echo "<br>Level of data to display to guests: $default_qf";
+	echo "<div class=\"form-group\">
+	<label for=\"default_qf\">Level of data to display to guests</label>";
 	
-	echo "<select name=\"default_qf\" class=\"ui-state-default ui-corner-all formedge\">";
+	echo "<select name=\"default_qf\" id=\"default_qf\" class=\"form-control\">";
 
 	$query_level = "SELECT * FROM QualityFlags ORDER BY QualityFlagID";
 	$result_level = query_several($query_level, $connection);
@@ -778,7 +827,7 @@ echo "</select>\n";
 			echo "\n<option value=\"$QualityFlagID\">$QualityFlagID - $QualityFlag</option>";
 			}
 		}
-	echo "</select>";
+	echo "</select></div>";
 	
 	
 	#allow access using XML
@@ -794,9 +843,10 @@ echo "</select>\n";
 		$use_xml_d = "Not set";
 		}
 
-	echo "<br>Allow access using XML: $use_xml_d";
+	echo "<div class=\"form-group\">
+	<label for=\"use_xml\">Allow access using XML</label>";
 
-	echo "<select name=\"use_xml\" class=\"ui-state-default ui-corner-all formedge\">";
+	echo "<select name=\"use_xml\" id=\"use_xml\" class=\"form-control\">";
 		if ($use_xml) {
 			echo "<option SELECTED value=\"1\">Yes</option>
 				<option value=\"0\">No</option>";
@@ -809,7 +859,7 @@ echo "</select>\n";
 			echo "<option SELECTED value=\"1\">Yes</option>
 				<option value=\"0\">No</option>";
 			}
-	echo " </select>";
+	echo " </select></div>";
 	
 	
 	#Who to allow to access XML?
@@ -825,9 +875,10 @@ echo "</select>\n";
 			$xml_access_d="Any";
 			}
 
-		echo "<div class=\"formedge\">Who can access via XML: $xml_access_d";
+		echo "<div class=\"form-group\">
+		<label for=\"xml_access\">Who can access via XML</label>";
 
-		echo "<select name=\"xml_access\" class=\"ui-state-default ui-corner-all formedge\">";
+		echo "<select name=\"xml_access\" id=\"xml_access\" class=\"form-control\">";
 			if ($xml_access=="1") {
 				echo "<option SELECTED value=\"1\">Any</option>
 					<option value=\"0\">Only Users</option>";
@@ -840,8 +891,9 @@ echo "</select>\n";
 		}
 	
 	echo "
-	<p><input type=submit value=\" Update system behavior \" class=\"fg-button ui-state-default ui-corner-all\">
+	<button type=\"submit\" class=\"btn btn-primary\"> Update system behavior </button>
 	</form>";
 
-	echo "</div>";
+	echo "</div>
+	</div>";
 ?>

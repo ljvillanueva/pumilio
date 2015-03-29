@@ -111,7 +111,46 @@ echo "<body>";
 				
 		<h2>Search</h2>
 			<?php
+
+
+			echo "<p>Search sounds in the archive using several options:<br><hr noshade>";
+
+			$no_sounds_s = query_one("SELECT COUNT(*) as no_sounds FROM Sounds WHERE SoundStatus!='9' $qf_check", $connection);
+			if ($no_sounds_s == 0){
+				echo "<p>This archive does not have any sounds.";
+				}
+			else {
+				#Search by ID
+				echo "<div class=\"row\">
+						<div class=\"col-lg-6\">
+
+
+
+							<div class=\"panel panel-primary\">
+								<div class=\"panel-heading\">
+									<h3 class=\"panel-title\">Search by Sound ID</h3>
+								</div>
+								<div class=\"panel-body\">
+									<form action=\"db_filedetails.php\" method=\"GET\" class=\"form-inline\">
+									 	<label for=\"SoundID\">Sound ID: </label>
+										<input type=\"text\" name=\"SoundID\" id=\"SoundID\" class=\"form-control\" placeholder=\"SoundID\">
+										
+										<button type=\"submit\" class=\"btn btn-primary\"> Search </button>
+									</form>
+								</div>
+							</div>";
+
+					echo "</div><div class=\"col-lg-6\">&nbsp;</div></div>\n";
+
+			echo "<div class=\"row\">
+				<div class=\"col-lg-8\">";
 				require("include/mainsearch.php");
+			echo "</div>
+
+				<div class=\"col-lg-4\"></div>
+			</div>
+			<br><br>";
+			}
 			?>
 
 		<br>

@@ -1,12 +1,26 @@
 <?php
 
-echo "<strong>Add sensors to the database</strong>
-	<form action=\"include/add_sensors.php\" method=\"POST\" id=\"AddSensors\">
-		<p>Recorder:<br><input type=\"text\" name=\"Recorder\" maxlength=\"100\" size=\"40\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>
-		Microphone: <br><input type=\"text\" name=\"Microphone\" maxlength=\"80\" size=\"40\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>
-		Notes of the sensor: <br><input type=\"text\" name=\"Notes\" maxlength=\"255\" size=\"40\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>
-		<input type=submit value=\" Add sensor \" class=\"fg-button ui-state-default ui-corner-all\">
-	</form>";
+
+#DB
+use \DByte\DB;
+DB::$c = $pdo;
+
+
+echo "
+
+<div class=\"panel panel-primary\">
+	<div class=\"panel-heading\">
+		<h3 class=\"panel-title\">Sensors</h3>
+	</div>
+    <div class=\"panel-body\">
+
+	<strong>Add sensors to the database</strong>
+		<form action=\"include/add_sensors.php\" method=\"POST\" id=\"AddSensors\">
+			<p>Recorder:<br><input type=\"text\" name=\"Recorder\" maxlength=\"100\" size=\"40\"><br>
+			Microphone: <br><input type=\"text\" name=\"Microphone\" maxlength=\"80\" size=\"40\"><br>
+			Notes of the sensor: <br><input type=\"text\" name=\"Notes\" maxlength=\"255\" size=\"40\"><br>
+			<button type=\"submit\" class=\"btn btn-primary\"> Add sensor </button>
+		</form>";
 
 #Sensors in the db:
 echo "<hr noshade>";
@@ -54,5 +68,7 @@ else {
 		}
 	echo "</table>";
 	}
+
+echo "</div></div>";
 
 ?>

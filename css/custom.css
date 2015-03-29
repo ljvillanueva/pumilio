@@ -53,7 +53,7 @@ body {
 
 .center { text-align: center }
 
-label {display: inline-block; width: 5em;}
+/*label {display: inline-block; width: 5em;}*/
 
 .right {
     float: right;

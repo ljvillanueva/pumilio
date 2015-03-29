@@ -34,10 +34,10 @@ $SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
 
 		<title>$app_custom_name - File Details</title>\n";
 
-		require("include/get_css.php");
+		require("include/get_css3.php");
 
 		echo "<body>
-			<div class=\"error\" style=\"margins: 10px;\"><img src=\"images/exclamation.png\"> The site requested does not exists or it has no recordings. Please go back and try your query again.</div>
+			<div class=\"alert alert-danger\"><img src=\"images/exclamation.png\"> The site requested does not exists or it has no recordings. Please go back and try your query again.</div>
 			</body>
 			</html>";
 		die();
@@ -48,16 +48,9 @@ $SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
 #Display type saved as a cookie
 if (isset($_GET["display_type"])){
 	$display_type = filter_var($_GET["display_type"], FILTER_SANITIZE_STRING);
-	setcookie("display_type", $display_type, time()+(3600*24*30), $app_dir);
 	}
 else{
-	if(isset($_COOKIE["display_type"])) {
-		$display_type = $_COOKIE["display_type"];
-		}
-	else {
-		$display_type = "gallery";
-		setcookie("display_type", $display_type, time()+(3600*24*30), $app_dir);
-		}
+	$display_type = "gallery";
 	}
 
 if (isset($_GET["startid"])){
@@ -87,7 +80,9 @@ if ($order_by=="Date"){
 else{
 	$order_byq = $order_by;
 	}
-	
+
+
+
 #If user is not logged in, add check for QF
 	if ($pumilio_loggedin==FALSE) {
 		$qf_check = "AND Sounds.QualityFlagID>='$default_qf'";
@@ -104,7 +99,7 @@ echo "<!DOCTYPE html>
 
 require("include/get_css3.php");
 require("include/get_jqueryui.php");
-require("include/nocache.php");
+#require("include/nocache.php");
 
 
 #Multiple delete script to select all
@@ -176,12 +171,12 @@ if ($nrows_all_tags>0) {
 <?php
 echo "<script type=\"text/javascript\" src=\"$app_url/js/jquery.form.js\"></script>\n";
 
-for ($ajax=0;$ajax<10;$ajax++) {
+for ($ajaxi = 0; $ajaxi < 10; $ajaxi++) {
 	echo "
 	<script type=\"text/javascript\">
 	$(document).ready(function() { 
 	    var options = { 
-	        target:        '#tagspace$ajax',   // target element(s) to be updated with server response 
+	        target:        '#tagspace$ajaxi',   // target element(s) to be updated with server response 
 	        // beforeSubmit:  showRequest,  // pre-submit callback 
 	        // success:       showResponse,  // post-submit callback 
 	 	clearForm: true,
@@ -189,7 +184,7 @@ for ($ajax=0;$ajax<10;$ajax++) {
 	    }; 
 	 
 	    // bind form using 'ajaxForm' 
-	    $('#addtags$ajax').ajaxForm(options); 
+	    $('#addtags$ajaxi').ajaxForm(options); 
 	}); 
 	</script>
 	
@@ -220,15 +215,18 @@ $(function() {
 if (is_file("$absolute_dir/customhead.php")) {
 		include("customhead.php");
 	}
-	
+
 ?>
+
 
 </head>
 <body>
 
-	<!--Blueprint container-->
-	<div class="container">
-		<?php
+	<?php
+	
+		echo "<!--Blueprint container-->
+			<div class=\"container\">";
+
 			require("include/topbar.php");
 
 			#Loading... message
@@ -245,20 +243,20 @@ if (is_file("$absolute_dir/customhead.php")) {
 				$no_sounds=query_one("SELECT COUNT(*) as no_sounds FROM Sounds WHERE SiteID='$SiteID' 
 					AND Sounds.SoundStatus!='9' $qf_check", $connection);
 
-				if ($startid<1) {
-					$startid=1;
+				if ($startid < 1) {
+					$startid = 1;
 					}
 					
-				$startid_q=$startid-1;
+				$startid_q = $startid - 1;
 
-				if ($display_type=="summary"){
-					$how_many_to_show=10;}
-				elseif ($display_type=="gallery"){
-					$how_many_to_show=18;}
+				if ($display_type == "summary"){
+					$how_many_to_show = 10;}
+				elseif ($display_type == "gallery"){
+					$how_many_to_show = 24;}
 				$endid = $how_many_to_show;
-				$endid_show=$startid_q+$endid;
+				$endid_show = $startid_q + $endid;
 
-				if ($startid_q+$how_many_to_show >= $no_sounds) {
+				if ($startid_q + $how_many_to_show >= $no_sounds) {
 					$endid_show = $no_sounds;}
 
 				$sql_limit = "$startid_q, $endid";
@@ -284,13 +282,11 @@ if (is_file("$absolute_dir/customhead.php")) {
 					echo "<br><a href=\"edit_site.php?SiteID=$SiteID\" title=\"Edit this site\">[edit site]</a>";
 						}
 				echo "<br>$no_sounds sounds at this site";
-			?>
 			
-			
-		
-			<?php
+
+
 			#Select particular date
-			$query_dates = "SELECT DISTINCT DATE_FORMAT(Date,'%d-%b-%Y') AS Date_f, Date FROM Sounds 
+			/*$query_dates = "SELECT DISTINCT DATE_FORMAT(Date,'%d-%b-%Y') AS Date_f, Date FROM Sounds 
 				WHERE Date IS NOT NULL AND SiteID='$SiteID' AND Sounds.SoundStatus!='9' $qf_check ORDER BY Date";
 			$result_dates=query_several($query_dates, $connection);
 			$nrows_dates = mysqli_num_rows($result_dates);
@@ -316,10 +312,11 @@ if (is_file("$absolute_dir/customhead.php")) {
 				<input type=\"hidden\" name=\"SiteID\" value=\"$SiteID\">
 				<input type=submit value=\" Select \" class=\"fg-button ui-state-default ui-corner-all\">
 				</form>";
-				}
+				}*/
+
 			?>
 			
-			
+		
 
 		</div>
 		<div class="col-lg-5">
@@ -387,82 +384,79 @@ if (is_file("$absolute_dir/customhead.php")) {
 			#Pagination
 
 			if ($startid < 1){
-				$prev = -1;
-				$startid = 1;
-				$next = $startid + 10;
-			}
-			else{
-				$prev = $startid - 10;
-				$next = $startid + 10;
-			}
+					$prev = -1;
+					$startid = 1;
+					$next = $startid + 10;
+				}
+				else{
+					$prev = $startid - 10;
+					$next = $startid + 10;
+				}
 
-			if ($next > $no_sounds){
-				$next = $no_sounds;
-			}
+				if ($next > $no_sounds){
+					$next = $no_sounds;
+				}
 
-			if (($startid + 10) > $no_sounds){
-				$next = "NA";
-			}
+				if (($startid + 10) > $no_sounds){
+					$next = "NA";
+				}
 
 
-				echo "<nav class=\"text-center\">
-			  		<ul class=\"pagination pagination-sm\">";
-					if ($prev > -1){
-						echo "<li>
-							<a href=\"browse_site.php?SiteID=$SiteID&startid=$prev\" aria-label=\"Previous\">
-							<span aria-hidden=\"true\">&laquo;</span>
-							</a>
-						</li>\n";
-					}
-					
-				    $prevellipsis = FALSE;
-				    $nextellipsis = FALSE;
-				    $pages = ceil($no_sounds / 10);
-				    for ($p=1; $p < ($pages + 1); $p++) {
-				    	$this_page = ($p - 1) * 10 + 1;
-
-				    	if ($this_page == $startid){
-				    		echo "<li class=\"active\"><a href=\"browse_site.php?SiteID=$SiteID&startid=$this_page\">$p <span class=\"sr-only\">(current)</span></a></li>";
-				    	}
-				    	else{
-				    	
-				    		if ($this_page < ($startid - 80)){
-				    			if ($prevellipsis == FALSE){
-					    			echo "<li><span aria-hidden=\"true\">...</span></li>";
-					    			$prevellipsis = TRUE;
-					    			}
-				    			}
-				    		elseif ($this_page > ($startid + 80)){
-				    			if ($nextellipsis == FALSE){
-					    			echo "<li><span aria-hidden=\"true\">...</span></li>";
-					    			$nextellipsis = TRUE;
-					    			}
-				    			}
-				    		else{
-				    			echo "<li><a href=\"browse_site.php?SiteID=$SiteID&startid=$this_page\">$p</a></li>";
-				    			}
-				    	}
-				    }
-
-				    if ($next != "NA"){
+					echo "<nav class=\"text-center\">
+				  		<ul class=\"pagination pagination-sm\">";
+						if ($prev > -1){
+							echo "<li>
+								<a href=\"browse_site.php?SiteID=$SiteID&startid=$prev\" aria-label=\"Previous\">
+								<span aria-hidden=\"true\">&laquo;</span>
+								</a>
+							</li>\n";
+						}
 						
-						echo "<li>
-						  <a href=\"browse_site.php?SiteID=$SiteID&startid=$next\" aria-label=\"Next\">
-						    <span aria-hidden=\"true\">&raquo;</span>
-						  </a>
-						</li>\n";
-					}
-				echo "</ul></nav>";
+					    $prevellipsis = FALSE;
+					    $nextellipsis = FALSE;
+					    $pages = ceil($no_sounds / 10);
+					    for ($p=1; $p < ($pages + 1); $p++) {
+					    	$this_page = ($p - 1) * 10 + 1;
 
+					    	if ($this_page == $startid){
+					    		echo "<li class=\"active\"><a href=\"browse_site.php?SiteID=$SiteID&startid=$this_page\">$p <span class=\"sr-only\">(current)</span></a></li>";
+					    	}
+					    	else{
+					    	
+					    		if ($this_page < ($startid - 80)){
+					    			if ($prevellipsis == FALSE){
+						    			echo "<li><span aria-hidden=\"true\">...</span></li>";
+						    			$prevellipsis = TRUE;
+						    			}
+					    			}
+					    		elseif ($this_page > ($startid + 80)){
+					    			if ($nextellipsis == FALSE){
+						    			echo "<li><span aria-hidden=\"true\">...</span></li>";
+						    			$nextellipsis = TRUE;
+						    			}
+					    			}
+					    		else{
+					    			echo "<li><a href=\"browse_site.php?SiteID=$SiteID&startid=$this_page\">$p</a></li>";
+					    			}
+					    	}
+					    }
+
+					    if ($next != "NA"){
+							
+							echo "<li>
+							  <a href=\"browse_site.php?SiteID=$SiteID&startid=$next\" aria-label=\"Next\">
+							    <span aria-hidden=\"true\">&raquo;</span>
+							  </a>
+							</li>\n";
+						}
+					echo "</ul></nav>";
+				#}
 			?>
 
 	
-	<?php
-	require("include/bottom.php");
-	?>
-
-
 <?php
+require("include/bottom.php");
+
 #Loading... message
 require("include/loadingbottom.php");
 ?>
