@@ -621,6 +621,7 @@ function add_in_background($absolute_dir, $connection) {
 		copy('include/add/soundcheck.py', $tmp_dir . '/soundcheck.py');
 		#exec('chmod +x ' . $tmp_dir . '/*', $out, $retval);
 		exec('cd ' . $tmp_dir . '; python add_to_pumiliodb.py > /dev/null 2> /dev/null & echo $!', $out, $retval);
+		
 		#$thisPID = $out[0];
 		#$username = $_COOKIE["username"];
 		#query_one("INSERT INTO BackgroundProcs (PID, username) VALUES ('$thisPID', '$username')", $connection);

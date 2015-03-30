@@ -15,6 +15,7 @@ import hashlib
 import MySQLdb
 import subprocess
 import linecache
+import time
 
 #########################################################################
 # COMMAND LINE ARGUMENTS						#
@@ -48,14 +49,14 @@ def extractflac(item_flac, FileFormat):
 			print " "
 			print "There was a problem processing " + item_flac + "!"
 			print output
-			updatefile(ToAddMemberID, str(9), "There was a problem processing the file with the flac decoder")
+			updatefile(ToAddMemberID, str(9), '', "There was a problem processing the file with the flac decoder")
 			item_wav = 2
 	else:
 		FileFormat_len = len(FileFormat)
 		item_wav = item_flac[:-FileFormat_len] + 'wav'
 		status, output = commands.getstatusoutput('sox ' + item_flac + ' ' + item_wav)
 		if status != 0:
-			updatefile(ToAddMemberID, str(9), "There was a problem converting the file to wav using SoX")
+			updatefile(ToAddMemberID, str(9), '', "There was a problem converting the file to wav using SoX")
 			item_wav = 0
 	return item_wav
 
@@ -80,13 +81,13 @@ def fileValid(file):
 	return isvalid
 
 	
-def cleanup(server_dir, ColID, DirID, FullPath, OriginalFilename, ToAddMemberID):
+def cleanup(server_dir, ColID, DirID, FullPath, OriginalFilename, ToAddMemberID, SoundID):
 	pathToSound = server_dir + 'sounds/sounds/' + ColID + '/' + DirID
 	if os.path.exists(server_dir)==0:
 		f = open(logfile, 'a')
 		f.write("\n \n Could not find the sounds/ directory. Check your settings and try again.\n")
 		f.close()
-		updatefile(ToAddMemberID, str(9), "Could not find the sounds/ directory. Check your settings and try again.")
+		updatefile(ToAddMemberID, str(9), SoundID, "Could not find the sounds/ directory. Check your settings and try again.")
 		sys.exit(2)
 	#	
 	if os.path.exists(server_dir + 'sounds/sounds/' + ColID)==0:
@@ -95,16 +96,16 @@ def cleanup(server_dir, ColID, DirID, FullPath, OriginalFilename, ToAddMemberID)
 			f = open(logfile, 'a')
 			f.write(" ERROR: Could not create necessary folder " + server_dir + 'sounds/sounds/' + ColID)
 			f.close()
-			updatefile(ToAddMemberID, str(9), "ERROR: Could not create necessary folder " + server_dir + 'sounds/sounds/' + ColID)
-                       	sys.exit(3)
+			updatefile(ToAddMemberID, str(9), SoundID, "ERROR: Could not create necessary folder " + server_dir + 'sounds/sounds/' + ColID)
+			sys.exit(3)
 	if os.path.exists(pathToSound)==0:
 		status, output = commands.getstatusoutput('mkdir ' + pathToSound)
 		if status != 0:
 			f = open(logfile, 'a')
 			f.write(" ERROR: Could not create necessary folder " + pathToSound)
 			f.close()
-			updatefile(ToAddMemberID, str(9), "ERROR: Could not create necessary folder " + pathToSound)
-                       	sys.exit(4)
+			updatefile(ToAddMemberID, str(9), SoundID, "ERROR: Could not create necessary folder " + pathToSound)
+			sys.exit(4)
 	#
 	#Move the already processed file to a done folder
 	status, output = commands.getstatusoutput('cp ' + FullPath + ' ' + pathToSound + '/')
@@ -112,8 +113,10 @@ def cleanup(server_dir, ColID, DirID, FullPath, OriginalFilename, ToAddMemberID)
 		f = open(logfile, 'a')
 		f.write(" ERROR: Could not copy the file " + FullPath + " to the server directory")
 		f.close()
-		updatefile(ToAddMemberID, str(9), "ERROR: Could not copy the file to the server directory")
+		updatefile(ToAddMemberID, str(9), SoundID, "ERROR: Could not copy the file to the server directory")
 		sys.exit(5)
+	#mark file as success
+	updatefile(ToAddMemberID, str(0), '')
 	return
 
 
@@ -186,7 +189,6 @@ def tomysql(item_wav, OriginalFilename, FullPath, FileFormat, file_md5, ColID, S
 	#wave_pointer = open_wave(item_wav)
 	wave_vars = find_values(FullPath)
 	SoundID=insert(OriginalFilename, FileFormat, wave_vars['no_channels'], wave_vars['samp_rate'], wave_vars['bits'], wave_vars['max_time'], file_md5, str(filesize), ColID, SiteID, DirID, SensorID, Date, Time, ToAddMemberID)
-	updatefile(ToAddMemberID, str(0))
 	#print "\n  MySQL Insert was successful"
 	return SoundID
 
@@ -215,7 +217,26 @@ def insert(soundname, soundformat, no_channels, samplingrate, bitres, soundlengt
 	return str(SoundID)
 
 
-def updatefile(ToAddMemberID, Status, message=""):
+
+def delrow(SoundID):
+	#Open MySQL
+	if int(SoundID) > 0:
+		try:
+			con = MySQLdb.connect(host=db_hostname, user=db_username, passwd=db_password, db=db_database)
+		except MySQLdb.Error, e:
+			print "Error %d: %s" % (e.args[0], e.args[1])
+			sys.exit (7)
+		cursor = con.cursor()
+		query = "DELETE FROM Sounds WHERE SoundID=" + SoundID
+		cursor.execute (query)
+		#Close MySQL
+		cursor.close ()
+		con.close ()
+	return
+
+
+
+def updatefile(ToAddMemberID, Status, SoundID, message=""):
 	Status = str(Status)
 	#Open MySQL
 	try:
@@ -230,6 +251,8 @@ def updatefile(ToAddMemberID, Status, message=""):
 	#Close MySQL
 	cursor.close ()
 	con.close ()
+	if Status == 9:
+		delrow(SoundID)
 	return
 
 
@@ -316,6 +339,24 @@ def nocores():
 	return int(result)
 
 
+
+def countrows(md5hash):
+	#Open MySQL
+	try:
+		con = MySQLdb.connect(host=db_hostname, user=db_username, passwd=db_password, db=db_database)
+	except MySQLdb.Error, e:
+		print "Error %d: %s" % (e.args[0], e.args[1])
+		sys.exit (1)
+	cursor = con.cursor()
+	query = "SELECT * FROM Sounds WHERE MD5_hash='" + md5hash + "'"
+	cursor.execute (query)
+	cursor.rowcount
+	cursor.close ()
+	con.close ()
+	return cursor.rowcount
+
+
+
 #########################################################################
 # EXECUTE THE SCRIPT							#
 #########################################################################
@@ -359,21 +400,21 @@ try:
 		#check if filename already exists, don't add if it does
 		file_check = checkfile(OriginalFilename)
 		if file_check == 1:
-			updatefile(ToAddMemberID, str(9), "File already exists in archive")
+			updatefile(ToAddMemberID, str(9), '', "File already exists in archive")
 			continue
 		
 		#check if the file can be found
 		if fileExists(FullPath)==0:
-			updatefile(ToAddMemberID, str(9), "Could not find file")
+			updatefile(ToAddMemberID, str(9), '', "Could not find file")
 			continue
 
 		#check if the file is not empty
 		if fileValid(FullPath)==0:
-			updatefile(ToAddMemberID, str(9), "Empty or invalid file")
+			updatefile(ToAddMemberID, str(9), '', "Empty or invalid file")
 			continue
 
 		#update record, set as in progress
-		updatefile(ToAddMemberID, str(2))
+		updatefile(ToAddMemberID, str(2), '')
 
 		#copy to tmp folder
 		status, output = commands.getstatusoutput('cp ' + FullPath + ' ' + this_path + '/' +  OriginalFilename)
@@ -398,9 +439,22 @@ try:
 			continue
 
 		file_md5=getmd5(FullPath)
+		checkrows = int(countrows(file_md5))
+		if checkrows > 0:
+			print file_md5
+			print "File exist already"
+			updatefile(ToAddMemberID, str(9), '', "File is already in the database")
+			continue
 
 		SoundID=tomysql(item_wav, OriginalFilename, FullPath, FileFormat, file_md5, ColID, SiteID, DirID, SensorID, Date, Time, ToAddMemberID)
-		cleanup(server_dir, ColID, DirID, FullPath, OriginalFilename, ToAddMemberID)
+		cleanup(server_dir, ColID, DirID, FullPath, OriginalFilename, ToAddMemberID, SoundID)
+		#Wait when remote storage to allow for file to appear in NAS
+		time.sleep(2)
+		
+		if fileValid(server_dir + 'sounds/sounds/' + ColID + '/' + DirID + '/' + OriginalFilename)==0:
+			updatefile(ToAddMemberID, str(9), SoundID, "File could not be copied")
+ 			
+			
 
 		#remove tmp files
 		#status, output = commands.getstatusoutput('rm ' + FullPath)
