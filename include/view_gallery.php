@@ -31,7 +31,7 @@ for ($i=0;$i<$nrows;$i++) {
 		}
 
 	echo "<a href=\"db_filedetails.php?SoundID=$SoundID\" title=\"Click for file details and more options\">
-		<img src=\"$small_spectrogram_path\" width=\"300\" height=\"150\"><br>
+		<img src=\"$small_spectrogram_path\" width=\"300\" height=\"150\" style=\"margin-top: 20px;\"><br>
 		$SoundName</a>";
 
 	if (isset($Date_h) && $Date_h!="") {

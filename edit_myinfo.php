@@ -14,8 +14,15 @@ if (file_exists($config_file)) {
 
 require("include/apply_config.php");
 
+
+#DB
+use \DByte\DB;
+DB::$c = $pdo;
+
+
 $force_loggedin = TRUE;
 require("include/check_login.php");
+
 
 if (isset($_GET["d"])){
 	$d=filter_var($_GET["d"], FILTER_SANITIZE_NUMBER_INT);
@@ -31,12 +38,12 @@ else{
 	$t=0;
 	}
 	
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
-<html>
+echo "<!DOCTYPE html>
+<html lang=\"en\">
 <head>
 <title>$app_custom_name - Edit my information</title>";
 
-require("include/get_css.php");
+require("include/get_css3.php");
 require("include/get_jqueryui.php");
 ?>
 
@@ -94,34 +101,11 @@ require("include/get_jqueryui.php");
 	<style type="text/css">
 	#fileForm label.error {
 		margin-left: 10px;
-		width: auto;
+		width: 500px;
 		display: inline;
 	}
 	</style>
 
-<!-- JQuery Tabs -->
-<script type="text/javascript">
-
-<?php
-if ($t==2) {
-	echo "$(function() {
-		$(\"#tabs0\").tabs({ selected: 1 });
-		});";
-	}
-elseif ($t==1) {
-	echo "$(function() {
-		$(\"#tabs0\").tabs({ selected: 0 });
-		});";
-	}
-else {
-	echo "$(function() {
-		$(\"#tabs0\").tabs();
-		});";
-	}
-	
-?>
-
-	</script>
 	
 <?php
 if ($use_googleanalytics) {
@@ -145,23 +129,21 @@ if (is_file("$absolute_dir/customhead.php")) {
 		<?php
 			require("include/topbar.php");
 		?>
-		<div class="span-24 last">
-			<hr noshade>
-		</div>
-		<div class="span-24 last">
-			<h3>Edit my information</h3>
+
+		<h2>Edit my information</h2>
 			<p>Use this page to edit your email address or password.
+
+
+		
 
 			<?php
 			if ($login_wordpress == TRUE){
 				$path_parts = pathinfo($wordpress_require);
 				$path_dir = $path_parts['dirname'];
 				echo "<div class=\"notice\">Your account is managed by Wordpress, change your information <a href=\"$path_dir/wp-admin/profile.php\">there</a>.</div>
-				<br>
-				</div>
-					<div class=\"span-24 last\">";
+				<br>";
 					require("include/bottom.php");
-				echo "</div>
+				echo "
 					</div>
 				</body>
 				</html>";
@@ -173,13 +155,11 @@ if (is_file("$absolute_dir/customhead.php")) {
 					}
 				if ($d == 3) {
 					echo "<p><div class=\"success\">Your password was changed.</div>";
-					echo "<br>
-					</div>
-					<div class=\"span-24 last\">";
+					echo "<br>";
 	
 					require("include/bottom.php");
 	
-					echo "</div>
+					echo "
 					</div>
 					</body></html>";
 					die();
@@ -196,57 +176,88 @@ if (is_file("$absolute_dir/customhead.php")) {
 					}
 				}
 			?>
-				<div id="tabs0">
-					<ul>
-						<li><a href="#tabs-2">Edit my email address</a></li>
-						<li><a href="#tabs-3">Change my password</a></li>
-					</ul>
-
-				<div id="tabs-2">
-					<h3>Edit your email address</h3>
-					<form action="include/edit_user.php" method="POST" id="EditUserForm">
-					<input type="hidden" name="ac" value="selfedit">
-					Please enter your email address:<br>
-					<?php
-						echo "<input type=\"text\" name=\"UserEmail\" maxlength=\"100\" size=\"60\" class=\"fg-button ui-state-default ui-corner-all formedge\" value=\"$UserEmail\"><br>";
-					?>
-
-					<input type=submit value=" Edit email address " class="fg-button ui-state-default ui-corner-all">
-					</form>
-				</div>
-				<div id="tabs-3">
-					<h3>Change your password</h3>
-					<?php
-					if ($d == 4) {
-						echo "<p><div class=\"error\">The new passwords do not match, please try again.</div>";
-						}
-
-					if ($d == 2) {
-						echo "<p><div class=\"error\">The current password does not match, please try again.</div>";
-						}
-					?>
-
-					<form action="include/edit_user.php" method="POST" id="EditPassForm">
-					<input type="hidden" name="ac" value="editpassword">
-					Please enter your current password:<br>
-					<input type="password" name="curpassword" id="curpassword" maxlength="20" size="20" class="fg-button ui-state-default ui-corner-all formedge"><br>
-					Please enter a new password:<br>
-					<input type="password" name="newpassword1" id="newpassword1" maxlength="20" size="20" class="fg-button ui-state-default ui-corner-all formedge"><br>
-					Please retype the new password:<br>
-					<input type="password" name="newpassword2" id="newpassword2" maxlength="20" size="20" class="fg-button ui-state-default ui-corner-all formedge"><br>
-					<input type=submit value=" Edit my password " class="fg-button ui-state-default ui-corner-all">
-					</form>
-
-				</div>
-
-		<br>
+			
+		
+<div class="row">
+	<div class="col-lg-8">
+	
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">Edit your email address</h3>
 		</div>
-		<div class="span-24 last">
-			<?php
-			require("include/bottom.php");
-			?>
+		<div class="panel-body">
+		 	
+				<form action="include/edit_user.php" method="POST" id="EditUserForm">
+					<input type="hidden" name="ac" value="selfedit">
+					<p>Please enter your email address: 
+
+					<?php
+						echo "<input type=\"text\" name=\"UserEmail\" maxlength=\"60\" size=\"30\" value=\"$UserEmail\">";
+					?>
+
+					<button type="submit" class="btn btn-primary"> Edit email address </button>
+				</form>
 		</div>
 	</div>
+
+	</div>
+	<div class="col-lg-4">&nbsp;</div>
+</div>
+		
+
+
+
+<div class="row">
+	<div class="col-lg-4">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">Change your password</h3>
+		</div>
+		<div class="panel-body">
+		 	
+				<?php
+				if ($d == 4) {
+					echo "
+					<div class=\"alert alert-warning\" role=\"alert\">The new passwords do not match, please try again.</div>";
+					}
+
+				if ($d == 2) {
+					echo "<div class=\"alert alert-warning\" role=\"alert\">The current password does not match, please try again.</div>";
+					}
+			?>
+
+			<form action="include/edit_user.php" method="POST" id="EditPassForm">
+
+				<input type="hidden" name="ac" value="editpassword" class="form-control">
+				<div class="form-group">
+					<p>Please enter your current password:</p>
+					<input type="password" name="curpassword" id="curpassword" maxlength="20" size="20">
+				</div>
+				
+				<div class="form-group">
+					<p>Please enter a new password:</p>
+					<input type="password" name="newpassword1" id="newpassword1" maxlength="20" size="20"><br>
+				</div>
+
+				<div class="form-group">
+					<p>Please retype the new password:</p>
+					<input type="password" name="newpassword2" id="newpassword2" maxlength="20" size="20"><br>
+				</div>
+
+				<button type="submit" class="btn btn-primary"> Edit my password </button>
+			</form>
+		</div>
+	</div>
+	</div>
+	<div class="col-lg-8">&nbsp;</div>
+</div>
+
+
+
+
+<?php
+require("include/bottom.php");
+?>
 
 </body>
 </html>

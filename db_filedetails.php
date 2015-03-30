@@ -691,7 +691,7 @@ else {
 								</div>";
 
 							echo "
-							<form id=\"testconfirmJQ\" name=\"testconfirmJQ\" method=\"post\" action=\"del_file.php\">
+							<br><form id=\"testconfirmJQ\" name=\"testconfirmJQ\" method=\"post\" action=\"del_file.php\">
 							<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
 							<button type=\"submit\" class=\"btn btn-primary btn-xs\"> Delete file from archive </button>
 							</form>\n";

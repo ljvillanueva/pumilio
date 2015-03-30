@@ -1,5 +1,14 @@
 <?php
 
+echo "
+<div class=\"panel panel-primary\">
+	<div class=\"panel-heading\">
+		<h3 class=\"panel-title\">Quality control</h3>
+	</div>
+    <div class=\"panel-body\">";
+
+
+
 //Custom name of the app
 if ($t==9) {
 	if ($u==1) {
@@ -13,7 +22,6 @@ if ($t==9) {
 		}
 	}
 
-echo "<div style=\"margin-left: 10px;\">";
 
 	echo "<p><strong><a href=\"qc.php\">Data extraction for quality control</a>
 	<p><a href=\"qa.php\">Figures for quality control</a></strong><br><br>";
@@ -45,15 +53,14 @@ echo "<p>
 		</tr>";
 		}
 
-echo "</table>
-</div>";
+echo "</table>";
 
 echo "<p><form action=\"include/addqf.php\" method=\"POST\" id=\"AddQF\">Add new Quality Flags:<br>
 		Quality Flag Value:<br>
-			<input name=\"QualityFlagID\" type=\"text\" maxlength=\"4\" size=\"4\" class=\"fg-button ui-state-default ui-corner-all formedge\"> (Integer or decimal value)<br>
+			<input name=\"QualityFlagID\" type=\"text\" maxlength=\"4\" size=\"4\"> (Integer or decimal value)<br>
 		Quality Flag Meaning:<br>
-			<input name=\"QualityFlag\" type=\"text\" maxlength=\"40\" size=\"40\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>
-		<input type=\"submit\" value=\" Add quality flag \"  class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">
+			<input name=\"QualityFlag\" type=\"text\" maxlength=\"40\" size=\"40\"><br>
+		<button type=\"submit\" class=\"btn btn-primary\"> Add quality flag </button>
 	</form><br><br>";
 
 if ($u==4) {
@@ -70,7 +77,7 @@ echo "<p><form action=\"include/editqfdefault.php\" method=\"POST\" id=\"EditQFD
 		or die (mysqli_error($connection));
 	$nrows_qf = mysqli_num_rows($result_qf);
 
-	echo "<select name=\"defaultqf\" class=\"ui-state-default ui-corner-all formedge\">";
+	echo "<select name=\"defaultqf\">";
 
 		for ($f=0;$f<$nrows_qf;$f++) {
 			$row_qf = mysqli_fetch_array($result_qf);
@@ -84,8 +91,10 @@ echo "<p><form action=\"include/editqfdefault.php\" method=\"POST\" id=\"EditQFD
 			}
 
 	echo "</select><br>
-	<input type=submit value=\" Change \" class=\"fg-button ui-state-default ui-corner-all\">
+	<button type=\"submit\" class=\"btn btn-primary\"> Change </button>
 	<br>
 	</form>";
 	
+echo "</div></div>";
+
 ?>
