@@ -557,12 +557,7 @@ else {
 
 			#New top infobar
 			#file info
-				if ($guests_can_open || $pumilio_loggedin) {
-					$filename_text = "<h3><a href=\"file_obtain.php?fileid=$SoundID&method=3\" title=\"Open file for analysis\">$OriginalFilename</a></h3>";
-					}
-				else {
-					$filename_text = "<h3>$OriginalFilename</h3>";
-					}
+			$filename_text = "<h3>$OriginalFilename</h3>";
 				
 			if ($guests_can_open || $pumilio_loggedin) {
 				if ($file_error == 1 || $special_noopen == TRUE || $special_noprocess == TRUE){
@@ -570,7 +565,7 @@ else {
 					}
 				else {
 					echo "<form method=\"get\" action=\"file_obtain.php\" class=\"form-inline\">
-					$filename_text &nbsp;&nbsp;
+					$filename_text 	
 					<input type=\"hidden\" name=\"fileid\" value=\"$SoundID\">
 					<input type=\"hidden\" name=\"method\" value=\"3\">
 					<button type=\"submit\" class=\"btn btn-primary btn-xs\"> Open file in Pumilio Viewer </button>
@@ -652,54 +647,7 @@ else {
 
 
 	echo "<div class=\"row\">";
-		echo "<div class=\"col-lg-4\">";#MAP
-
-			if ($use_leaflet == TRUE){
-					echo "<div id=\"map\">Your browser does not have JavaScript enabled or can not connect to the tile server. Please contact your administrator.</div>\n";
-			}
-			elseif ($use_googlemaps=="1" || $use_googlemaps=="3") {#Add small GMap
-				if ($SiteID!="" && $SiteLat!="" && $SiteLon!=""){
-					echo "<div id=\"map_canvas\" style=\"width: 320px; height: 220px\">Your browser does not have JavaScript enabled or can not connect to GoogleMaps. Please contact your administrator.</div>\n";
-					if (!isset($kml_default)){
-						$kml_default = 0;
-						}
-
-					if ($kml_default == 1){
-						if ($hidekml==1){
-							echo "<a href=\"db_filedetails.php?SoundID=$SoundID&hidekml=0&d=$d&hidemarks=$hidemarks\">Show default KML layers</a>";
-							}
-						else{
-							echo "<a href=\"db_filedetails.php?SoundID=$SoundID&hidekml=1&d=$d&hidemarks=$hidemarks\">Hide default KML layers</a>";
-							}
-						}
-					echo "<br>";
-					}
-				}
-
-
-
-				if ($pumilio_admin) {
-					echo "<br><br>
-							<form method=\"get\" action=\"file_edit.php\">
-							<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-							<button type=\"submit\" class=\"btn btn-primary btn-xs\"> Edit file information </button>
-							</form>";
-
-							#Delete file div
-							echo "<div id=\"dialog\" title=\"Delete the file?\">
-								<p><span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>The file will be permanently deleted and cannot be recovered. Are you sure?</p>
-								</div>";
-
-							echo "
-							<br><form id=\"testconfirmJQ\" name=\"testconfirmJQ\" method=\"post\" action=\"del_file.php\">
-							<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-							<button type=\"submit\" class=\"btn btn-primary btn-xs\"> Delete file from archive </button>
-							</form>\n";
-					}
-
-
-
-		echo "</div>";
+		
 
 		echo "<div class=\"col-lg-8\">";
 
@@ -837,15 +785,11 @@ else {
 
 
 					$QualityFlag = DB::column('SELECT `QualityFlag` from `QualityFlags` WHERE `QualityFlagID` = ' . $QualityFlagID);
-					echo "<dt>File Quality</dt><dd>$QualityFlag (Quality ID: $QualityFlagID)</dd>";
-					if ($DerivedSound == "1"){
-						echo "<dt>Derived from</dt><dd><a href=\"db_filedetails.php?SoundID=$DerivedFromSoundID\">$DerivedFromSoundID";
-						}
-
+					echo "<dt>File Quality</dt><dd>$QualityFlag (Quality ID: $QualityFlagID)";
 
 					if ($pumilio_admin == TRUE) {
 						echo "<form method=\"GET\" action=\"editqf.php\" target=\"editqf\" onsubmit=\"window.open('', 'editqf', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\" class=\"form-horizontal\">
-						Edit the Quality Flag for this file: 
+						Edit the Quality Flag for this file: <br>
 						<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">";
 
 						$thisfile_QualityFlagID = $QualityFlagID;
@@ -870,6 +814,12 @@ else {
 						echo "</select>
 						<button type=\"submit\" class=\"btn btn-primary btn-xs\"> Change </button>
 						</form>";
+						}
+
+					echo "</dd>";
+
+					if ($DerivedSound == "1"){
+						echo "<dt>Derived from</dt><dd><a href=\"db_filedetails.php?SoundID=$DerivedFromSoundID\">$DerivedFromSoundID";
 						}
 
 
@@ -910,6 +860,57 @@ else {
 				echo "</dl>";
 				
 		echo "</div>";
+
+		echo "<div class=\"col-lg-4\">";#MAP
+
+			if ($use_leaflet == TRUE){
+					echo "<div id=\"map\">Your browser does not have JavaScript enabled or can not connect to the tile server. Please contact your administrator.</div>\n";
+			}
+			elseif ($use_googlemaps=="1" || $use_googlemaps=="3") {#Add small GMap
+				if ($SiteID!="" && $SiteLat!="" && $SiteLon!=""){
+					echo "<div id=\"map_canvas\" style=\"width: 320px; height: 220px\">Your browser does not have JavaScript enabled or can not connect to GoogleMaps. Please contact your administrator.</div>\n";
+					if (!isset($kml_default)){
+						$kml_default = 0;
+						}
+
+					if ($kml_default == 1){
+						if ($hidekml==1){
+							echo "<a href=\"db_filedetails.php?SoundID=$SoundID&hidekml=0&d=$d&hidemarks=$hidemarks\">Show default KML layers</a>";
+							}
+						else{
+							echo "<a href=\"db_filedetails.php?SoundID=$SoundID&hidekml=1&d=$d&hidemarks=$hidemarks\">Hide default KML layers</a>";
+							}
+						}
+					echo "<br>";
+					}
+				}
+
+
+
+				if ($pumilio_admin) {
+					echo "<br><br>
+							<form method=\"get\" action=\"file_edit.php\">
+							<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
+							<button type=\"submit\" class=\"btn btn-primary btn-xs\"> Edit file information </button>
+							</form>";
+
+							#Delete file div
+							echo "<div id=\"dialog\" title=\"Delete the file?\">
+								<p><span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>The file will be permanently deleted and cannot be recovered. Are you sure?</p>
+								</div>";
+
+							echo "
+							<br><form id=\"testconfirmJQ\" name=\"testconfirmJQ\" method=\"post\" action=\"del_file.php\">
+							<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
+							<button type=\"submit\" class=\"btn btn-primary btn-xs\"> Delete file from archive </button>
+							</form>\n";
+					}
+
+
+
+		echo "</div>";
+
+
 	echo "</div>";#end row
 
 require("include/bottom.php");

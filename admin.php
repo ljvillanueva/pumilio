@@ -444,12 +444,12 @@ if (is_file("$absolute_dir/customhead.php")) {
 			
 			echo "<form action=\"$app_url/include/add_user.php\" method=\"POST\" id=\"AddUserForm\">";
 			?>
-			<p>Username: <br><input type="text" name="UserName" maxlength="20" size="20"><br>
-			Full name of the user: <br><input type="text" name="UserFullname" maxlength="100" size="60"><br>
-			User email address: <br><input type="text" name="UserEmail" maxlength="100" size="60"><br>
-			User password:<br><input type="password" name="newpassword1" id="newpassword1" maxlength="20" size="20" /><br>
-			Please retype the password:<br><input type="password" name="newpassword2" id="newpassword2" maxlength="20" size="20" /><br>
-			User role:<br><select name="UserRole">
+			<p>Username: <br><input type="text" name="UserName" maxlength="20" class="form-control"><br>
+			Full name of the user: <br><input type="text" name="UserFullname" maxlength="100" class="form-control"><br>
+			User email address: <br><input type="text" name="UserEmail" maxlength="100" class="form-control"><br>
+			User password:<br><input type="password" name="newpassword1" id="newpassword1" maxlength="20" class="form-control" /><br>
+			Please retype the password:<br><input type="password" name="newpassword2" id="newpassword2" maxlength="20" class="form-control" /><br>
+			User role:<br><select name="UserRole" class="form-control">
 				<option value="user">Regular user</option>
 				<option value="admin">Administrator</option>
 			</select><br>
@@ -565,7 +565,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 				echo "
 				<form action=\"include/edit_user.php\" method=\"POST\">
 				<input type=\"hidden\" name=\"ac\" value=\"activate\">
-				<select name=\"UserID\">";
+				<select name=\"UserID\" class=\"form-control\">";
 
 				for ($j=0; $j<$nrows; $j++) {
 					$row = mysqli_fetch_array($result);
