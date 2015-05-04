@@ -435,17 +435,11 @@ else {
 /*	#Loading... message
 	require("include/loadingtop.php");*/
 
-	?>
-
-	<hr noshade>
-
-	<?php
-
 	/*if ($sox_images==FALSE){*/
 		echo "
 		<div class=\"row\">
-		<div class=\"col-lg-1\">&nbsp;</div>
-		<div class=\"col-lg-11\">";
+		<div class=\"col-md-1\">&nbsp;</div>
+		<div class=\"col-md-11\">";
 
 		#HTML5 player
 		echo "<div id=\"jquery_jplayer_1\" class=\"jp-jplayer\"></div>\n";
@@ -550,7 +544,7 @@ else {
 
 
 		echo "<div class=\"row\">";
-		echo "<div class=\"col-lg-5\">";
+		echo "<div class=\"col-md-5\">";
 
 
 	     	$CollectionName = DB::column('SELECT `Collections`.`CollectionName` from `Collections`, `Sounds` WHERE `Collections`.`ColID` = `Sounds`.`ColID` AND `Sounds`.`SoundID`="' . $SoundID . '"');
@@ -580,7 +574,7 @@ else {
 
 			#source info
 			echo "</div>
-			<div class=\"col-lg-7\">
+			<div class=\"col-md-7\">
 				<dl class=\"dl-horizontal\">";
 
 				if ($HumanDate!="") {
@@ -649,7 +643,7 @@ else {
 	echo "<div class=\"row\">";
 		
 
-		echo "<div class=\"col-lg-8\">";
+		echo "<div class=\"col-md-8\">";
 
 
 					#Tags
@@ -861,7 +855,7 @@ else {
 				
 		echo "</div>";
 
-		echo "<div class=\"col-lg-4\">";#MAP
+		echo "<div class=\"col-md-4\">";#MAP
 
 			if ($use_leaflet == TRUE){
 					echo "<div id=\"map\">Your browser does not have JavaScript enabled or can not connect to the tile server. Please contact your administrator.</div>\n";

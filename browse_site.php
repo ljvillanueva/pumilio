@@ -46,12 +46,15 @@ $SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
 
 
 #Display type saved as a cookie
-if (isset($_GET["display_type"])){
+#NOW only gallery
+/*if (isset($_GET["display_type"])){
 	$display_type = filter_var($_GET["display_type"], FILTER_SANITIZE_STRING);
 	}
 else{
 	$display_type = "gallery";
 	}
+*/
+$display_type = "gallery";
 
 if (isset($_GET["startid"])){
 	$startid=filter_var($_GET["startid"], FILTER_SANITIZE_NUMBER_INT);
@@ -75,10 +78,10 @@ else{
 	}
 
 if ($order_by=="Date"){
-	$order_byq = "Date $order_dir, Time";
+	$order_byq = "Date $order_dir, Time $order_dir ";
 	}
-else{
-	$order_byq = $order_by;
+elseif ($order_by=="SoundName"){
+	$order_byq = "SoundName $order_dir";
 	}
 
 
@@ -216,6 +219,16 @@ if (is_file("$absolute_dir/customhead.php")) {
 		include("customhead.php");
 	}
 
+
+#Leaflet
+echo "\n<link rel=\"stylesheet\" href=\"libs/leaflet/leaflet.css\" />\n
+
+<style>
+	#map { height: 220px; 
+			width: 320px;
+		}
+</style>";
+
 ?>
 
 
@@ -265,24 +278,33 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 			echo "
 			<div class=\"page-header\">
-				<h2>Sounds at the Site: $SiteName</h2>
+			<div class=\"row\">
+				<div class=\"col-lg-8\">
+					<h2>Sounds at the Site: $SiteName</h2>
+					<p>Coordinates: $SiteLat, $SiteLon</p>
+					<p>$no_sounds sounds at this site</p>
+				</div>
+				<div class=\"col-lg-4\">
+					<div id=\"map\"></div>
+				</div>
+			</div>
+
 			</div>
 		
 			<div class=\"row\">
 				<div class=\"col-lg-4\">";
 
-				if (sessionAuthenticate($connection) || !$hide_latlon_guests) {
-					echo "Coordinates: $SiteLat, $SiteLon | <a href=\"viewsite_map.php?SiteID=$SiteID\" title=\"View site in a map\"><strong>Map</strong></a>";
+				/*if (sessionAuthenticate($connection) || !$hide_latlon_guests) {
+					#echo "Coordinates: $SiteLat, $SiteLon | <a href=\"viewsite_map.php?SiteID=$SiteID\" title=\"View site in a map\"><strong>Map</strong></a>";
+					echo "Coordinates: $SiteLat, $SiteLon";
 					}
 				else {
-					echo "<a href=\"viewsite_map.php?SiteID=$SiteID\" title=\"View site in a map\"><strong>Map</strong></a>";
-					}
+					#echo "<a href=\"viewsite_map.php?SiteID=$SiteID\" title=\"View site in a map\"><strong>Map</strong></a>";
+					}*/
 
 				if (sessionAuthenticate($connection) && is_user_admin2($username, $connection)) {
 					echo "<br><a href=\"edit_site.php?SiteID=$SiteID\" title=\"Edit this site\">[edit site]</a>";
 						}
-				echo "<br>$no_sounds sounds at this site";
-			
 
 
 			#Select particular date
@@ -319,7 +341,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 		
 
 		</div>
-		<div class="col-lg-5">
+		<div class="col-lg-6">
 			<?php
 				#count and next
 				echo "<dl class=\"dl-horizontal\"><dt>Results</dt><dd>$startid to $endid_show of $no_sounds</dd></dl>";
@@ -339,15 +361,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 			?>
 		</div>
-		<div class="col-lg-1 center">
-			<?php
-			#Display
-			echo "Display:<br> <a href=\"browse_site.php?SiteID=$SiteID&order_by=$order_by&order_dir=$order_dir&display_type=gallery&startid=$startid\" title=\"Display as gallery\"><span class=\"glyphicon glyphicon-th\" aria-hidden=\"true\"></span></a>
-				 &nbsp;&nbsp;&nbsp; 
-				 <a href=\"browse_site.php?SiteID=$SiteID&order_by=$order_by&order_dir=$order_dir&display_type=summary&startid=$startid\" title=\"Display as summary\"><span class=\"glyphicon glyphicon-th-list\" aria-hidden=\"true\"></span></a>";
 
-		?>
-		</div>
 		</div>
 			<?php
 
@@ -364,7 +378,9 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 
 			$query = "SELECT *, DATE_FORMAT(Date, '%d-%b-%Y') AS Date_h FROM Sounds WHERE SiteID='$SiteID' 
-				AND Sounds.SoundStatus!='9' $qf_check ORDER BY $order_byq $order_dir LIMIT $sql_limit";
+				AND Sounds.SoundStatus!='9' $qf_check ORDER BY $order_byq LIMIT $sql_limit";
+
+			#print $query;
 
 			$result=query_several($query, $connection);
 			$nrows = mysqli_num_rows($result);
@@ -459,6 +475,8 @@ require("include/bottom.php");
 
 #Loading... message
 require("include/loadingbottom.php");
+
+require("include/leafletsmall.php");
 ?>
 
 </body>

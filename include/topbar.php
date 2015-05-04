@@ -10,9 +10,8 @@ echo " <!-- Fixed navbar -->
           <ul class=\"nav navbar-nav\">
             <!--<li><a href=\"map.php\"><span class=\"glyphicon glyphicon-map-marker\"></span> Map of Sounds</a></li>-->
             <li><a href=\"search.php\"><span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Search</a></li>
-            <li><a href=\"about.php\"><span class=\"glyphicon glyphicon-info-sign\"></span> About</a></li>
-          </ul>
-          <ul class=\"nav navbar-nav navbar-right\">\n";
+            <li><a href=\"about.php\"><span class=\"glyphicon glyphicon-info-sign\"></span> About</a></li>";
+
 
 	if ($login_wordpress == TRUE){
 		if (is_user_logged_in() == TRUE){
@@ -21,6 +20,9 @@ echo " <!-- Fixed navbar -->
 
 			$username = $current_user->user_login;
 		
+			echo "<li><a href=\"add.php\"><span class=\"glyphicon glyphicon-cloud-upload\"></span> Add files</a></li>
+						</ul>
+			    <ul class=\"nav navbar-nav navbar-right\">\n";
 
 			echo "<li><a href=\"edit_myinfo.php\" title=\"Edit my information or change password\"><span class=\"glyphicon glyphicon-user\"></span> $username</a></li>";
 
@@ -35,13 +37,20 @@ echo " <!-- Fixed navbar -->
 			
 			}
 		else {
-			echo "<li><a href=\"login.php\"><span class=\"glyphicon glyphicon-log-in\"></span> Login</a></li>";
+
+			echo "</ul><ul class=\"nav navbar-nav navbar-right\">\n
+				<li><a href=\"login.php\"><span class=\"glyphicon glyphicon-log-in\"></span> Login</a></li>";
 			$notlogged = TRUE;
 			}
 		}
 	else{
+
 		if (sessionAuthenticate($connection)) {
 			$username = $_COOKIE["username"];
+
+		echo "<li><a href=\"add.php\"><span class=\"glyphicon glyphicon-cloud-upload\"></span> Add files</a></li>
+					</ul>
+		    <ul class=\"nav navbar-nav navbar-right\">\n";
 
 			echo "<li><a href=\"edit_myinfo.php\" title=\"Edit my information or change password\"><span class=\"glyphicon glyphicon-user\"></span> $username</a></li>";
 
@@ -58,7 +67,9 @@ echo " <!-- Fixed navbar -->
 						
 			}
 		else {
-			echo "<li><a href=\"login.php\"><span class=\"glyphicon glyphicon-log-in\"></span> Login</a></li>";
+			echo "</ul><ul class=\"nav navbar-nav navbar-right\">
+
+				<li><a href=\"login.php\"><span class=\"glyphicon glyphicon-log-in\"></span> Login</a></li>";
 			$notlogged = TRUE;
 			}
 		}

@@ -20,12 +20,12 @@ require("include/check_admin.php");
 $SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
 $d=filter_var($_GET["d"], FILTER_SANITIZE_NUMBER_INT);
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+echo "<!DOCTYPE html>
 <html>
 <head>
 <title>$app_custom_name - Edit Site Info</title>";
 
-require("include/get_css.php");
+require("include/get_css3.php");
 require("include/get_jqueryui.php");
 ?>
 
@@ -84,16 +84,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 	<div class="container">
 		<?php
 			require("include/topbar.php");
-		?>
-		<div class="span-24 last">
-			<hr noshade>
-		</div>
-		<div class="span-24 last">
-			&nbsp;
-		</div>
-
-			<?php
-
+		
 			$query = "SELECT * FROM Sites WHERE SiteID='$SiteID'";
 
 			$result=query_several($query, $connection);
@@ -102,8 +93,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 				$row = mysqli_fetch_array($result);
 				extract($row);
 					
-				echo "<div class=\"span-24 last\">			
-					<h3>Edit site information</h3>";
+				echo "<h3>Edit site information</h3>";
 
 				if ($d==1) {
 					echo "<p><div class=\"success\">Site was updated successfully. 
@@ -114,23 +104,16 @@ if (is_file("$absolute_dir/customhead.php")) {
 				echo "<p>
 				<form action=\"edit_site2.php\" method=\"POST\" id=\"EditForm\">
 					<input name=\"SiteID\" type=\"hidden\" value=\"$SiteID\">
-					Name of the site: <br><input name=\"SiteName\" type=\"text\" maxlength=\"160\" size=\"30\" value=\"$SiteName\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>
-					Latitude: <br><input name=\"SiteLat\" type=\"text\" maxlength=\"20\" size=\"20\" value=\"$SiteLat\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>
-					Longitude: <br><input name=\"SiteLon\" type=\"text\" maxlength=\"20\" size=\"20\" value=\"$SiteLon\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>
+					Name of the site: <br><input name=\"SiteName\" type=\"text\" maxlength=\"160\" value=\"$SiteName\" class=\"form-control\"><br>
+					Latitude: <br><input name=\"SiteLat\" type=\"text\" maxlength=\"20\" value=\"$SiteLat\" class=\"form-control\"><br>
+					Longitude: <br><input name=\"SiteLon\" type=\"text\" maxlength=\"20\" value=\"$SiteLon\" class=\"form-control\"><br>
 
-					<input type=\"submit\" value=\" Edit Site \"  class=\"fg-button ui-state-default ui-corner-all\">
-				</form>
-			
-				<br>
-				<form action=\"browse_site.php\" method=\"GET\">
-					<input type=\"hidden\" name=\"SiteID\" value=\"$SiteID\">
-					<input type=submit value=\" Cancel \" class=\"fg-button ui-state-default ui-corner-all\">
-					</form><br><hr noshade>
-				</div>";
+					<button type=\"submit\" class=\"btn btn-primary\"> Edit Site </button>
+				</form>";
 
 
 				$no_sounds = query_one("SELECT COUNT(*) as no_sounds FROM Sounds WHERE SiteID='$SiteID' AND Sounds.SoundStatus!='9'", $connection);
-				echo "<div class=\"span-24 last\">
+				echo "<br>
 					<a name=\"anchor2\"></a>		
 					<h3>Add or edit metadata for all the files in this site</h3>\n";
 
@@ -147,7 +130,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 				$result_e = mysqli_query($connection, $query_e)
 					or die (mysqli_error($connection));
 				$nrows_e = mysqli_num_rows($result_e);
-				echo "Sensor used: <br><select name=\"SensorID\" class=\"ui-state-default ui-corner-all formedge\">";
+				echo "Sensor used: <br><select name=\"SensorID\" class=\"form-control\">";
 					echo "<option value=\"\"> </option>\n";
 
 				for ($e=0;$e<$nrows_e;$e++){
@@ -157,31 +140,18 @@ if (is_file("$absolute_dir/customhead.php")) {
 					}
 				echo "</select> <small><a href=\"admin.php?t=4\">Add sensors to the list</a></small><br>
 				
-				Notes: <br><input name=\"Notes\" type=\"text\" maxlength=\"250\" size=\"60\" value=\"$Notes\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>
+				Notes: <br><input name=\"Notes\" type=\"text\" maxlength=\"250\" value=\"$Notes\" class=\"form-control\"><br>
+				<div class=\"notice\"><img src=\"images/error.png\"> This will replace the fields in the $no_sounds files at this site.</div>
 
-				<input type=\"submit\" value=\" Add metadata of the files \"  class=\"fg-button ui-state-default ui-corner-all\">
+				<button type=\"submit\" class=\"btn btn-primary\">  Add metadata of the files </button>
 				</form>
 			
-				<br>
-				<div class=\"notice\"><img src=\"images/error.png\"> This will replace the fields in the $no_sounds files at this site.</div>
-				<form action=\"browse_site.php\" method=\"GET\">
-					<input type=\"hidden\" name=\"SiteID\" value=\"$SiteID\">
-					<input type=submit value=\" Cancel \" class=\"fg-button ui-state-default ui-corner-all\">
-					</form>
-				</div>";
+				<br>";
 				}
 
-			?>
+		require("include/bottom.php");
+		?>
 
-		<div class="span-24 last">
-			&nbsp;
-		</div>
-		<div class="span-24 last">
-			<?php
-			require("include/bottom.php");
-			?>
-
-		</div>
 	</div>
 
 </body>

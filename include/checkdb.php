@@ -29,14 +29,14 @@ mb_internal_encoding('UTF-8');
 $force_admin = TRUE;
 require("check_admin.php");
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+echo "<!DOCTYPE html>
 <html>
 <head>
 
 <title>Administration Area</title>";
 
 #Get CSS
-	require("get_css_include.php");
+	require("get_css3_include.php");
 	require("get_jqueryui_include.php");
 
 
@@ -176,7 +176,7 @@ if ($run){
 		$result_opt = mysqli_query($connection, $query_opt)
 			or die (mysqli_error($connection));
 
-	echo "<h4><div class=\"success\"><img src=\"../images/accept.png\"> Database fields were updated</div></h4>
+	echo "<h4><div class=\"alert alert-success\"><span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span> Database fields were updated</div></h4>
 	<br><br><br>
 	<p><a href=\"#\" onClick=\"window.close();\">Close window</a>\n";
 
@@ -191,8 +191,7 @@ else{
 
 		<br><br><br>
 		<h3>Working... 
-		<br>Please wait...
-		<img src=\"../images/wait20trans.gif\">
+		<br>Please wait... <i class=\"fa fa-cog fa-spin\"></i>
 		</h3>
 
 		<br><br><br>

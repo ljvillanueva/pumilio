@@ -15,13 +15,13 @@ if (file_exists($config_file)) {
 require("include/apply_config.php");
 
 if (!isset($_GET["Token"])){
-	echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+	echo "<!DOCTYPE html>
 	<html>
 	<head>
 	<title>$app_custom_name - Manage Marks</title>";
 
 	#Get CSS
-	require("include/get_css.php");
+	require("include/get_css3.php");
 	require("include/get_jqueryui.php");
 
 	if ($use_googleanalytics){
@@ -40,7 +40,7 @@ if (!isset($_GET["Token"])){
 
 	<div style = \"padding: 10px;\">";
 
-	echo "<div class=\"error\">The ID is not valid.</div>
+	echo "<div class=\"alert alert-danger\">The ID is not valid.</div>
 	<hr noshade>
 	<p><a href=\"#\" onClick=\"opener.location.reload();window.close();\">Close window</a>
 
@@ -98,13 +98,13 @@ if ($d) {
 		or die (mysqli_error($connection));
 	}
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+echo "<!DOCTYPE html>
 <html>
 <head>
 <title>$app_custom_name - Manage Marks</title>";
 
 #Get CSS
-require("include/get_css.php");
+require("include/get_css3.php");
 require("include/get_jqueryui.php");
 
 if ($use_googleanalytics){
@@ -165,7 +165,7 @@ if ($nrowsm>0){
 		$viewport_box_height = round($viewport_box_low-$viewport_box_high);
 
 		//Mark
-		echo "<tr><td><a href=\"editmarks.php?Token=$Token&markID=$marks_ID\"><img src=\"images/database_edit.png\" title=\" Edit \"></a> $mark_tag_name: $mark_tag (ID:$marks_ID) | Time: $mark_time_min - $mark_time_max sec | Frequency: $mark_freq_min - $mark_freq_max Hz <a href=\"managemarks.php?Token=$Token&marks_id=$marks_ID&d=1\"><img src=\"images/database_delete.png\" title=\" Delete \"></a><br><br>\n";
+		echo "<tr><td><a href=\"editmarks.php?Token=$Token&markID=$marks_ID\"><span title=\"Edit\" class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\"></span></a> $mark_tag_name: $mark_tag (ID:$marks_ID) | Time: $mark_time_min - $mark_time_max sec | Frequency: $mark_freq_min - $mark_freq_max Hz <a href=\"managemarks.php?Token=$Token&marks_id=$marks_ID&d=1\"><span class=\"glyphicon glyphicon-remove-circle\" title=\"Delete\" aria-hidden=\"true\"></a><br><br>\n";
 
 
 		exec("convert -stroke red -fill none -draw \"rectangle " . $viewport_box_left . "," . $viewport_box_high. " " . $viewport_box_right . "," . $viewport_box_low . "\" tmp/" . $random_cookie . "/marks-spectrogram.png tmp/" . $random_cookie . "/marks-spectrogram" . $w . ".png", $lastline, $retval);

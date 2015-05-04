@@ -20,8 +20,9 @@ require("include/apply_config.php");
 $Col_comparison=filter_var($_GET["Col_comparison"], FILTER_SANITIZE_NUMBER_INT);
 $Col=filter_var($_GET["Col"], FILTER_SANITIZE_NUMBER_INT);
 
+
 #Display type saved as a cookie
-if (isset($_GET["display_type"])){
+/*if (isset($_GET["display_type"])){
 	$display_type = filter_var($_GET["display_type"], FILTER_SANITIZE_STRING);
 	setcookie("display_type", $display_type, time()+(3600*24*30), $app_dir);
 	}
@@ -33,8 +34,8 @@ else{
 		$display_type = "summary";
 		setcookie("display_type", $display_type, time()+(3600*24*30), $app_dir);
 		}
-	}
-
+	}*/
+$display_type = "gallery";
 
 if ($Col!="0"){
 	if ($Col_comparison==1) {
@@ -400,7 +401,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 			<div class="col-lg-1">
 				<?php
 				#Display
-				echo "Display:<br> 
+				/*echo "Display:<br> 
 					<form action=\"results.php\" method=\"GET\" style=\"display:inline;\">
 					<input type=\"hidden\" value=\"$startDate\" name=\"startDate\">
 					<input type=\"hidden\" value=\"$endDate\" name=\"endDate\">
@@ -452,7 +453,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 					<input type=\"hidden\" value=\"$filename\" name=\"filename\">
 
 					<input type=\"image\" src=\"images/application_view_columns.png\" alt=\" Display as summary \" title=\" Display as summary \">
-					</form>";
+					</form>";*/
 
 			?>
 			</div>

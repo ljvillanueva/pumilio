@@ -1,36 +1,22 @@
+<!DOCTYPE html>
 <html>
 <head>
+
 <title>Pumilio - Copyright Statement</title>
 
+<?php
 
-<!-- JQuery -->
-<link type="text/css" href="../css/jqueryui/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
-	
-<link type="text/css" href="../js/jquery/jquery.custom.css" rel="stylesheet">
-<link type="text/css" href="../js/jquery/jquery.css.custom.css" rel="stylesheet">
-
-<!-- Blueprint -->
-<link rel="stylesheet" href="../css/screen.css" type="text/css" media="screen, projection">
-<link rel="stylesheet" href="../css/print.css" type="text/css" media="print">	
-<!--[if IE]><link rel="stylesheet" href="css/ie.css" type="text/css" media="screen, projection"><![endif]-->
-<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu">
-
-<!-- Scripts for JQuery -->
-	<script type="text/javascript" src="../js/jquery-1.10.2.js"></script>
-	<script type="text/javascript" src="../js/jquery-ui-1.10.4.custom.min.js"></script>
-	<script type="text/javascript" src="../js/jquery.fg-button.js"></script>
-
-<link rel="stylesheet" href="../css/custom.css" type="text/css" media="screen, projection">
-
-
+require("get_css3_include.php");
+require("get_jqueryui_include.php");
+?>
 
 </head>
 <body>
 
 <div style="padding: 10px;">
 
-<h4>Pumilio - A sound archive manager and visualization web application.
-    <br>Copyright (&copy;) 2010-2014 Luis J. Villanueva-Rivera (ljvillanueva@coquipr.com)</h4>
+<p><strong>Pumilio</strong> - A sound archive manager and visualization web application.
+    <br>Copyright (&copy;) 2010-2015 Luis J. Villanueva-Rivera (ljvillanueva@coquipr.com)</p>
 
 <p><strong>Citation</strong>: Villanueva-Rivera, Luis J., and Bryan C. Pijanowski. 2012. Pumilio: A Web-Based Management System for Ecological Recordings. Bulletin of the Ecological Society of America 93: 71-81. doi: 10.1890/0012-9623-93.1.71</p>
 
@@ -56,9 +42,9 @@
 <p>This application uses several other open source tools and programs, including:
 
 <ul>
-	<li> <a href="http://blueprintcss.org/" target="_blank">Blueprint CSS framework</a></li>
+	<li> <a href="http://getbootstrap.com/" target="_blank">Bootstrap Framework</a></li>
 	<li> <a href="http://sox.sourceforge.net/" target="_blank">SoX</a></li>
-	<li> <a href="http://www.freesound.org/blog/?p=10" target="_blank">wav2png script by Freesound</a></li>
+	<li> wav2png script by <a href="http://www.freesound.org" target="_blank">Freesound</a></li>
 	<li> <a href="http://www.longtailvideo.com/players/jw-flv-player/" target="_blank">JW Player</a></li>
 	<li> <a href="http://www.jplayer.org" target="_blank">JPlayer</a></li>
 	<li> <a href="http://www.flotcharts.org" target="_blank">Flot</a></li>
@@ -68,18 +54,19 @@
 	<li> <a href="http://deepliquid.com/content/Jcrop.html" target="_blank">JCrop image cropping plugin</a></li>
 	<li> <a href="http://github.com/Xeoncross/DByte">DByte database layer</a></li>
 	<li> <a href="http://www.plupload.com" target="_blank">Plupload</a></li>
-	<li> <a href="http://mobiledetect.net" target="_blank">Mobile Detect</a></li>
+	<!-- <li> <a href="http://mobiledetect.net" target="_blank">Mobile Detect</a></li> -->
 	<li> <a href="http://maps.google.com" target="_blank">Google Maps</a></li>
-	<li> <a href="http://www.google.com/webfonts" target="_blank">Google Web Fonts</a></li>
-	<li> <a href="http://www.andrewdavidson.com/articles/spinning-wait-icons/" target="_blank">Ajax wait icons by Andrew B. Davidson</a></li>
+	<!-- <li> <a href="http://www.google.com/webfonts" target="_blank">Google Web Fonts</a></li> -->
+	<!-- <li> <a href="http://www.andrewdavidson.com/articles/spinning-wait-icons/" target="_blank">Ajax wait icons by Andrew B. Davidson</a></li> -->
 	<li> <a href="http://everaldo.com/crystal/?action=downloads" target="_blank">Crystal Project icons</a></li>
 	<li> <a href="http://www.famfamfam.com/lab/icons/silk/" target="_blank">Silk icons</a></li>
 </ul>
 
 <p>The website for this app is hosted at GitHub: <a href="http://ljvillanueva.github.io/pumilio">http://ljvillanueva.github.io/pumilio</a>
 
+<br><br>
 <p><a href="#" onClick="window.close();">Close window</a>
-
+<br><br>
 </div>
 </body>
 </html>

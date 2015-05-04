@@ -74,35 +74,27 @@ else{
 
 #Check if cookies are empty
 if ($soundfile_name=="") {
-	echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+	echo "<!DOCTYPE html>
 	<html>
 	<head>
 	<title>$app_custom_name - Pumilio Viewer</title>";
 	
 	
-	require("include/get_css.php");
+	require("include/get_css3.php");
 	require("include/get_jqueryui.php");
 
 	echo "
 	</head>
 	<body>
 
-	<!--Blueprint container-->
 	<div class=\"container\">";
 
 	require("include/topbar.php");
 
-	echo "	<div class=\"span-24 last\">
-			<hr noshade>
-		</div>
-		<div class=\"span-24 last\">
-			<div class=\"error\"><h4>You do not have an open file. Please select or open a file and try again.</h4></div>
-		</div>
-		<div class=\"span-24 last\">";
+	echo "<div class=\"alert alert-danger\"><h4>You do not have an open file. Please select or open a file and try again.</h4></div>
+		</div>";
 	require("include/bottom.php");
-	echo "</div></div>
-		</body>
-		</html>";
+	echo "</div></body></html>";
 	die();
 	}
 
@@ -205,7 +197,7 @@ $player_file=$fileName_exp[0] . '_' . $frequency_min . '-' . $frequency_max . '_
 
 $wav_todl = 'tmp/' . $random_cookie . '/' . $sound_zoom;
 		
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+echo "<!DOCTYPE html>
 <html>
 <head>
 <script type=\"text/javascript\" src=\"mediaplayer/swfobject.js\"></script>
@@ -270,7 +262,7 @@ require("include/get_jqueryui.php");
 				jQuery('#y2_2').val(ymax);
 				";
 		?>
-		document.getElementById('zoom_submit').disabled = false;
+		/*document.getElementById('zoom_submit').disabled = false;*/
 		};
 </script>
 
@@ -396,29 +388,27 @@ if (is_file("$absolute_dir/customhead.php")) {
 	<!--Blueprint container-->
 	<div class="container">
 		<?php
+		require("include/topbar.php");
 
-		echo "
-		<div class=\"row\">
-		<div class=\"col-md-4\">
-			<a href=\"$app_dir\"><img src=\"$app_logo\"></a>
-		</div>
-		<div class=\"col-md-4\">
-			<h5 class=\"highlight2 ui-corner-all\">$soundfile_name</h5>
-		</div>
-		<div class=\"col-md-4\">";
-			require("include/toplogin.php");
-		echo "</div>";
-		echo "</div>";
-
+	
 		#Loading... message
 		require("include/loadingtop.php");
 
 		?>
 		
-		<hr noshade>
-		
+		<div class="row">
+		<div class="col-md-10">
+
+
+
+		<div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title"><?php echo $soundfile_name ?></h3>
+            </div>
+            <div class="panel-body">
+              
 		<?php
-					
+
 		#Deactivated this option for now
 		/*
 		echo "<div class=\"span-24 last\">";
@@ -458,51 +448,12 @@ if (is_file("$absolute_dir/customhead.php")) {
 		
 		#echo "<div class=\"span-8\" id=\"toolcontainer\">";
 
-		require("include/pumilio_buttons.php");
-		?>
-		
-		<div class="span-24 last">
-			<hr noshade>
-		</div>
-		
-		<?php
-			echo "<div class=\"span-20\">";
-				require("include/add_mark.php");
-			?>
-		</div>
-		<div class="span-4 last">
-			<?php
-			if ($no_channels==2) {
-				echo "<form id=\"form\" action=\"pumilio.php\" method=\"get\">
-					<input type=\"hidden\" name=\"Token\" value=\"$Token\">
-				Channel: <select name=\"ch\" id=\"selectchannel\" class=\"ui-state-default ui-corner-all\" onChange=\"this.form.submit();\">";
-				if ($ch=="1") {
-					echo "<option value=\"1\" SELECTED>LEFT</option>
-					<option value=\"2\">RIGHT</option>";
-					}
-				elseif ($ch=="2") {
-					echo "<option value=\"1\">LEFT</option>
-					<option value=\"2\" SELECTED>RIGHT</option>";
-					}
-				echo "</select>
-				</form>";
-				}
-			else {
-				echo "Channel: Mono file";
-				}
-			?>
-		</div>
 
-
-			<?php
 			#Time scale
 			require('include/pumilio_timescale.php');
-			?>
 
-		<div class="span-22">
-			<?php
 			require('include/pumilio_view.php');
-
+/*
 			echo "\n<script type=\"text/javascript\">
 				function changeText(){
 					document.getElementById('loadingdiv').innerHTML = ' <h5 class=\"highlight2\">Please wait... loading... 50% done... <img src=\"images/ajax-loader.gif\" border=\"0\" /></h5> ';
@@ -510,13 +461,10 @@ if (is_file("$absolute_dir/customhead.php")) {
 				changeText();
 				</script>\n";
 
-			flush();
+			flush();*/
 
 			require('include/pumilio_mp3.php');
-			?>
-		</div>
-		<div class="span-2 last">
-			<?php
+
 				#SCALE
 				$min_freq=$frequency_min;
 				$max_freq=$frequency_max;
@@ -531,7 +479,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 				$freq_5=$min_freq+($steps*5);
 				$freq_6=$min_freq+($steps*6);
 				$freq_7=$min_freq+($steps*7);
-
+/*
 				echo "
 				<table height=\"$spectrogram_height\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">
 					<tr height=\"24\"><td style=\"background:#FFFFFF;\">$max_freq Hz
@@ -552,20 +500,26 @@ if (is_file("$absolute_dir/customhead.php")) {
 					</td></tr>
 					<tr><td style=\"background:#FFFFFF;\">$min_freq Hz
 					</td></tr>
-				</table>";
+				</table>";*/
 			?>
-		</div>
 
-		<div class="span-4">
+	<div class="row">
+		<div class="col-md-4">
 			<?php
 				echo "
-				<a href=\"#\" onclick=\"pause(); return false\" class=\"fg-button1 ui-state-default fg-button1-icon-solo ui-corner-all\" title=\"Pause\"><span class=\"ui-icon ui-icon-pause\"></span> Pause</a>
-				<a href=\"#\" onclick=\"play(xmin); return false\" class=\"fg-button1 ui-state-default fg-button1-icon-solo ui-corner-all\" title=\"Play\"><span class=\"ui-icon ui-icon-play\"></span> Play</a>
-				<a href=\"#\" onclick=\"stop(); return false\" class=\"fg-button1 ui-state-default fg-button1-icon-solo ui-corner-all\" title=\"Stop\"><span class=\"ui-icon ui-icon-stop\"></span> Stop</a>";
+					<div style=\"margin: 10px;\"><button onclick=\"pause(xmin); return false\" type=\"button\" class=\"btn btn-primary btn-lg\">
+					<span class=\"glyphicon glyphicon-pause\" aria-hidden=\"true\"></span></button>&nbsp;
+
+					<button onclick=\"play(xmin); return false\" type=\"button\" class=\"btn btn-primary btn-lg\">
+					<span class=\"glyphicon glyphicon-play\" aria-hidden=\"true\"></span></button>&nbsp;
+
+					<button onclick=\"stop(); return false\" type=\"button\" class=\"btn btn-primary btn-lg\">
+					<span class=\"glyphicon glyphicon-stop\" aria-hidden=\"true\"></span></button>
+					</div>";
 
 			?>
 		</div>
-		<div class="span-8">
+		<div class="col-md-4 center">
 			<?php
 			
 			#Timer
@@ -589,52 +543,61 @@ if (is_file("$absolute_dir/customhead.php")) {
 					$sec_to_show="00";
 					}
 
-				echo "<h1 style=\"font-size:4em;\"><div id=\"time_min_div\" style=\"float: left;\">$min_to_show</div><div style=\"float: left;\">:</div><div id=\"time_sec_div\" style=\"float: left;\">$sec_to_show</div></h1>";
+				echo "<h1 style=\"font-size:5em; margin-top: -6px;\"><div id=\"time_min_div\" style=\"float: left;\">$min_to_show</div><div style=\"float: left;\">:</div><div id=\"time_sec_div\" style=\"float: left;\">$sec_to_show</div></h1>";
 			
 			?>
 		</div>
-		<div class="span-8">
+		<div class="col-md-4">
 			<?php
 			require("include/pumilio_tools.php");
 			?>
 		</div>
-		<div class="span-4 last">
-			<?php
-			require("include/pumilio_viewport.php");
-			?>
-		</div>
-		<div class="span-24 last">
-		
-			<?php
-			#Tags
-			$use_tags=query_one("SELECT Value from PumilioSettings WHERE Settings='use_tags'", $connection);
-			if ($use_tags=="1" || $use_tags==""){
-				if ($pumilio_loggedin) {
-					echo "<div id=\"tagspace\"><form method=\"get\" action=\"include/addtag_ajax2.php\" id=\"addtags\">";
-					require("include/managetagsp.php");
-					echo "&nbsp;&nbsp;&nbsp;Add tags:
-						<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-						<input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\">
-						<INPUT TYPE=\"image\" src=\"images/tag_blue_add.png\" BORDER=\"0\" alt=\"Add new tag\" alt=\"Add new tag\">
-						<em>Separate tags with a space</em></form><br></div>
-						\n\n";
-					}
-				else {
-					require("include/gettags.php");
-					}
-				}
-			?>
-		
-	
-		</div>
-		<div class="span-24 last">
-			<?php
-			require("include/bottom.php");
-			?>
-		</div>
 	</div>
 
+
+
+    </div>
+  </div>
+
+
+</div>
+<div class="col-md-2">
 <?php
+		require("include/pumilio_buttons.php");
+		require("include/pumilio_viewport.php");
+?>
+</div></div>
+
+
+
+<div class="row">
+	<div class="col-md-6">
+		<?php require("include/file_details.php"); ?>
+	</div>
+	<div class="col-md-6">&nbsp;
+		
+		<?php
+		#Tags
+			if ($pumilio_loggedin) {
+				echo "<div id=\"tagspace\"><form method=\"get\" action=\"include/addtag_ajax2.php\" id=\"addtags\" class=\"form-inline\">";
+				require("include/managetagsp.php");
+				echo "<div class=\"form-group\">Add tags:
+					<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
+					<input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"form-control input-sm\">
+					<button type=\"submit\" class=\"btn btn-sm btn-primary\"><span class=\"glyphicon glyphicon-save\" aria-hidden=\"true\"></span> Add new tag</button></div><br>
+					<em>Separate new tags with a space</em></form></div>
+					\n\n";
+				}
+			else {
+				require("include/gettags.php");
+				}
+		?>
+	</div>
+</div>
+
+<?php
+require("include/bottom.php");
+
 #Loading... message
 require("include/loadingbottom.php");
 ?>

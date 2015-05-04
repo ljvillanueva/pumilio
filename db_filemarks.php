@@ -29,13 +29,13 @@ if ($d == 1) {
 		or die (mysqli_error($connection));
 	}
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+echo "<!DOCTYPE html>
 <html>
 <head>
 <title>$app_custom_name - Manage Marks</title>";
 
 #Get CSS
-require("include/get_css.php");
+require("include/get_css3.php");
 require("include/get_jqueryui.php");
 
 if ($use_googleanalytics) {
@@ -66,7 +66,7 @@ extract($row);
 echo "<h4>Marks in the database for the file $SoundName (ID: $SoundID):</h4>";
 
 if ($d){
-	echo "<div class=\"success\">The mark was deleted</div>";
+	echo "<div class=\"alert alert-success\">The mark was deleted</div>";
 	}
 			
 $resultm=mysqli_query($connection, "SELECT marks_ID FROM SoundsMarks WHERE SoundID='$SoundID' ORDER BY marks_ID")
@@ -86,7 +86,7 @@ if ($nrowsm>0) {
 		unset($row);
 
 		//Mark
-		echo "<tr><td>$mark_tag_name: $mark_tag (ID:$marks_ID) | Time: $mark_time_min - $mark_time_max sec | Frequency: $mark_freq_min - $mark_freq_max Hz <a href=\"db_filemarks.php?d=1&SoundID=$SoundID&markID=$marks_ID\"><img src=\"images/database_delete.png\" title=\" Delete \"></a></td></tr>\n";
+		echo "<tr><td>$mark_tag_name: $mark_tag (ID:$marks_ID) | Time: $mark_time_min - $mark_time_max sec | Frequency: $mark_freq_min - $mark_freq_max Hz <a href=\"db_filemarks.php?d=1&SoundID=$SoundID&markID=$marks_ID\"><span class=\"glyphicon glyphicon-remove-circle\" aria-hidden=\"true\" title=\"Delete\"></span></a></td></tr>\n";
 
 		}
 	echo "</table>";
