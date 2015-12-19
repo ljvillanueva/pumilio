@@ -108,7 +108,7 @@ def cleanup(server_dir, ColID, DirID, FullPath, OriginalFilename, ToAddMemberID,
 			sys.exit(4)
 	#
 	#Move the already processed file to a done folder
-	status, output = commands.getstatusoutput('cp ' + FullPath + ' ' + pathToSound + '/')
+	status, output = commands.getstatusoutput('mv ' + FullPath + ' ' + pathToSound + '/')
 	if status != 0:
 		f = open(logfile, 'a')
 		f.write(" ERROR: Could not copy the file " + FullPath + " to the server directory")
@@ -436,6 +436,10 @@ try:
 			tmp_file2 = item_wav
 
 		if item_wav == '0' or item_wav == '1':
+			if os.path.isfile(tmp_file1):
+				os.remove(tmp_file1)
+			if os.path.isfile(tmp_file2):
+				os.remove(tmp_file2)
 			continue
 
 		file_md5=getmd5(FullPath)
@@ -444,6 +448,10 @@ try:
 			print file_md5
 			print "File exist already"
 			updatefile(ToAddMemberID, str(9), '', "File is already in the database")
+			if os.path.isfile(tmp_file1):
+				os.remove(tmp_file1)
+			if os.path.isfile(tmp_file2):
+				os.remove(tmp_file2)
 			continue
 
 		SoundID=tomysql(item_wav, OriginalFilename, FullPath, FileFormat, file_md5, ColID, SiteID, DirID, SensorID, Date, Time, ToAddMemberID)

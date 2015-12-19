@@ -4,7 +4,7 @@ echo " <!-- Fixed navbar -->
     <nav class=\"navbar navbar-inverse navbar-default\">
       <div class=\"container-fluid\">
         <div class=\"navbar-header\">
-          <a class=\"navbar-brand\" href=\"$app_dir\"><span class=\"glyphicon glyphicon-home\"></span> $app_custom_name</a>
+          <a class=\"navbar-brand\" href=\"$app_url\"><span class=\"glyphicon glyphicon-home\"></span> $app_custom_name</a>
         </div>
         <div id=\"navbar\" class=\"navbar-collapse collapse\">
           <ul class=\"nav navbar-nav\">
