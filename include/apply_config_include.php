@@ -123,10 +123,7 @@ else{
 		}
 	}
 	
-if ($googlemaps_ver=="2") {
-	$googlemaps_key=query_one("SELECT Value from PumilioSettings WHERE Settings='googlemaps_key'", $connection);
-	}
-elseif ($googlemaps_ver=="3") {
+if ($googlemaps_ver=="3") {
 	$googlemaps3_key=query_one("SELECT Value from PumilioSettings WHERE Settings='googlemaps3_key'", $connection);
 	}
 

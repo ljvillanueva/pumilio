@@ -33,7 +33,7 @@ require("include/apply_config_xml.php");
 	
 #Check if allowed
 if ($use_xml==""){
-	$use_xml="0";
+	$use_xml="1";
 	}
 
 #Allowed?

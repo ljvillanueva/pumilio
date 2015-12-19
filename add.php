@@ -1,5 +1,6 @@
 <?php
 session_start();
+header( 'Content-type: text/html; charset=utf-8' );
 
 require("include/functions.php");
 
@@ -25,9 +26,7 @@ echo "<!DOCTYPE html>
 
 require("include/get_css3.php");
 require("include/get_jqueryui.php");
-?>
 
-<?php
 if ($use_googleanalytics) {
 	echo $googleanalytics_code;
 	}
@@ -38,9 +37,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 		include("customhead.php");
 	}
 	
-	
 ?>
-
 
 </head>
 <body>
@@ -49,17 +46,28 @@ if (is_file("$absolute_dir/customhead.php")) {
 <div class="container">
 	<?php
 		require("include/topbar.php");
+	?>
+
+<h3>Add files to the database</h3>
+
+<div class="row">
+	<div class="col-md-4">
+
 	
-		echo "<h3>Add files to the database</h3>";
-		echo "<div class=\"row\">
-		<div class=\"col-md-6\">
-			<form action=\"add_file.php\" method=\"GET\" class=\"form-inline\">";
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Add a single file to a collection</h3>
+			</div>
+			<div class="panel-body">
+				
+			<?php
+			echo "<form action=\"add_file.php\" method=\"GET\" class=\"form-inline\">";
 			$query = "SELECT * from Collections ORDER BY CollectionName";
 			$result = mysqli_query($connection, $query)
 				or die (mysqli_error($connection));
 			$nrows = mysqli_num_rows($result);
 			if ($nrows>0) {
-				echo "Add a single file to the collection<br><select name=\"ColID\" class=\"form-control\">";
+				echo "Collection:<br><select name=\"ColID\" class=\"form-control\">";
 
 				for ($i = 0; $i < $nrows; $i++) {
 					$row = mysqli_fetch_array($result);
@@ -79,72 +87,56 @@ if (is_file("$absolute_dir/customhead.php")) {
 			else {
 				echo "<p>This archive has no Collections yet.";
 				}
+			?>
 
 
-		echo "</div>
-		<div class=\"col-md-6\">&nbsp;</div></div>
 
+			</div>
+		</div>
+	</div>
 
-		<hr noshade>
-			<p><strong> Add files from a Wildlife Acoustics SongMeter:</strong>";
-			echo "<p><a href=\"add_from_field.php?sm=1\">Upload sound files from a Wildlife Acoustics SongMeter</a>";
-			echo "<p><a href=\"add_from_field.php?sm=1&local=1\">Add sound files from a Wildlife Acoustics SongMeter</a> (stored locally in server)";
-				
-		echo "<hr noshade>
-			<p><strong> Add files from other sound recorders:</strong>";
-		echo "<p><a href=\"add_from_field.php\">Upload sound files from the field</a>
-			<p><a href=\"add_from_field.php?local=1\">Add sound files from the field</a> (stored locally in server)";
-		
-		echo "<p><a href=\"add_from_db.php\">Import files from a database/spreadsheet</a>";
-		
-		echo "<hr noshade>
-			<p><a href=\"add_collection.php\">Add Collections</a>";
-			echo "<p><a href=\"#\" onclick=\"window.open('include/addsite.php', 'addsite', 'width=650,height=350,status=yes,resizable=yes,scrollbars=auto')\">Add Sites</a>";
-			echo "<p><a href=\"admin.php?t=4\">Add Sensors</a> (in the admin menu)";
-			
+	<div class="col-md-4">
+
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Add files from a<br>Wildlife Acoustics SongMeter</h3>
+			</div>
+			<div class="panel-body">
+				<p><a href="add_from_field.php?sm=1">Upload sound files</a></p>
+				<p><a href="add_from_field.php?sm=1&local=1">Add sound files stored locally in server</a></p>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4">
+
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Add files from other types of sensors</h3>
+			</div>
+			<div class="panel-body">
+				<p><a href="add_from_field.php">Upload sound files</a></p>
+				<p><a href="add_from_field.php?local=1">Add sound files stored locally in server</a></p>
+				<p><a href="add_from_db.php">Import files from a database/spreadsheet</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php
 		$result_fm = query_one("SELECT COUNT(*) FROM FilesToAddMembers", $connection);
 		if ($result_fm > 0){
-			echo "<p><a href=\"file_manager.php\">Check uploaded file status</a>";
+			echo "<p><a href=\"file_manager.php\"><button type=\"button\" class=\"btn btn-primary\">Check uploaded file status</button></a></p>";
 			}
+	?>
+
+	<p><a href="#" onclick="window.open('include/addcollection.php', 'addcollection', 'width=650,height=350,status=yes,resizable=yes,scrollbars=auto')"><button type="button" class="btn btn-primary">Add Collections</button></a></p>
+	
+	<p><a href="#" onclick="window.open('include/addsite.php', 'addsite', 'width=650,height=350,status=yes,resizable=yes,scrollbars=auto')"><button type="button" class="btn btn-primary">Add Sites</button></a>
 
 
-
-
-
-
-		/*echo "<p>Upload photographs of the sites to serve as a reference.</p>
-					<p><form action=\"photoupload.php\" method=\"GET\">
-					<button type=\"submit\" class=\"btn btn-primary\"> Upload a photo from your computer </button>
-					</form></p>";*/
-
-		echo "<br>
-			<form action=\"sample_archive.php\" method=\"GET\">
-						<button type=\"submit\" class=\"btn btn-primary\"> Sample the archive </button>
-						</form>
-
-			<br>
-			<form action=\"export_marks.php\" method=\"GET\">
-							<button type=\"submit\" class=\"btn btn-primary\"> Export marks data </button>
-						</form>";
-			if ($useR==TRUE){
-						echo "<br><br><form action=\"qc.php\" method=\"GET\">
-							<input type=submit value=\" Data extraction for quality control \" class=\"form-control\">
-						</form>";
-						}
-			
-			echo "<br><form action=\"qa.php\" method=\"GET\">
-						<button type=\"submit\" class=\"btn btn-primary\"> Figures for quality control </button>
-						</form>";
-
-
-						
-
-
-
-		require("include/bottom.php");
-		?>
-
-</div>
+<?php
+require("include/bottom.php");
+?>
 
 </body>
 </html>

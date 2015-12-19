@@ -15,8 +15,8 @@ else {
 	$op = 0;
 	}
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
-<html>
+echo "<!DOCTYPE html>
+<html lang=\"en\">
 <head>
 <title>$app_custom_name</title>";
 

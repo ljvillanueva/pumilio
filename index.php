@@ -1,5 +1,6 @@
 <?php
 session_start();
+header( 'Content-type: text/html; charset=utf-8' );
 
 require("include/functions.php");
 
@@ -41,190 +42,14 @@ require("include/get_jqueryui.php");
 
 
 ####################################################3
-$use_googlemaps=FALSE;
-$use_leaflet=TRUE;
+#$use_googlemaps=FALSE;
+#$use_leaflet=TRUE;
 #Get points from the database
 $results_map = DB::fetch('SELECT `Sites`.`SiteID`, `Sites`.`SiteLat`, `Sites`.`SiteLon`, `Sites`.`SiteName` FROM `Sites`, `Sounds` WHERE `Sites`.`SiteLat` IS NOT NULL AND `Sites`.`SiteLon` IS NOT NULL AND `Sites`.`SiteID`=`Sounds`.`SiteID` AND `Sounds`.`SoundStatus` != 9 GROUP BY `Sites`.`SiteID`, `Sites`.`SiteLat`, `Sites`.`SiteLon`, `Sites`.`SiteName`');
 $no_results_map = count($results_map);
 
 ####################################################3
 
-
-require("include/index_map_head.php");
-
-
-	echo "
-	<!-- Form validation from http://bassistance.de/jquery-plugins/jquery-plugin-validation/ -->
-	<script src=\"js/jquery.validate.js\" type=\"text/javascript\"></script>
-
-	<script type=\"text/javascript\">
-	$().ready(function() {
-		// validate signup form on keyup and submit
-		$(\"#AddSample1\").validate({
-			rules: {
-				samplesize: {
-					required: true,
-					number: true
-				},
-				samplename: {
-					required: true
-				}
-			},
-			messages: {
-				samplesize: \"Please enter the size of the sample set you want to create\",
-				samplenaMe: \"Please enter a name for this sample set\"
-			}
-			});
-		});
-	</script>
-	
-	<script type=\"text/javascript\">
-	$().ready(function() {
-		// validate signup form on keyup and submit
-		$(\"#AddSample2\").validate({
-			rules: {
-				samplesize: {
-					required: true,
-					number: true
-				},
-				samplename: {
-					required: true
-				}
-			},
-			messages: {
-				samplesize: \"Please enter the size of the sample set you want to create\",
-				samplename: \"Please enter a name for this sample set\"
-			}
-			});
-		});
-	</script>
-	
-	<script type=\"text/javascript\">
-	$().ready(function() {
-		// validate signup form on keyup and submit
-		$(\"#AddSample3\").validate({
-			rules: {
-				sample_percent: {
-					required: true,
-					number: true
-				},
-				samplename: {
-					required: true
-				}
-			},
-			messages: {
-				samplesize: \"Please enter the percent size of the sample set you want to create\",
-				samplename: \"Please enter a name for this sample set\"
-			}
-			});
-		});
-	</script>
-
-	<script type=\"text/javascript\">
-	$().ready(function() {
-		// validate signup form on keyup and submit
-		$(\"#AddSample4\").validate({
-			rules: {
-				sample_percent: {
-					required: true,
-					number: true
-				},
-				samplename: {
-					required: true
-				}
-			},
-			messages: {
-				samplesize: \"Please enter the percent size of the sample set you want to create\",
-				samplename: \"Please enter a name for this sample set\"
-			}
-			});
-		});
-	</script>
-	
-	<script type=\"text/javascript\">
-	$().ready(function() {
-		// validate signup form on keyup and submit
-		$(\"#AddSample5\").validate({
-			rules: {
-				sample_percent: {
-					required: true,
-					number: true
-				},
-				samplename: {
-					required: true
-				}
-			},
-			messages: {
-				samplesize: \"Please enter the percent size of the sample set you want to create\",
-				samplename: \"Please enter a name for this sample set\"
-			}
-			});
-		});
-	</script>
-		
-	<style type=\"text/css\">
-	#fileForm label.error {
-		margin-left: 10px;
-		width: auto;
-		display: inline;
-	}
-	</style>";
-
-
-	$DateLow = DB::column('SELECT DATE_FORMAT(`Date`,"%Y, %c-1, %e") FROM `Sounds` WHERE `SoundStatus`!=9 ' . $qf_check . ' ORDER BY `Date` LIMIT 1');
-	$DateHigh = DB::column('SELECT DATE_FORMAT(`Date`, "%Y, %c-1, %e") FROM `Sounds` WHERE `SoundStatus`!=9 ' . $qf_check . ' ORDER BY `Date` DESC LIMIT 1');
-	$DateLow1 = DB::column('SELECT DATE_FORMAT(`Date`, "%d-%b-%Y") FROM `Sounds` WHERE `SoundStatus`!=9 ' . $qf_check . ' ORDER BY `Date` LIMIT 1');
-	$DateHigh1 = DB::column('SELECT DATE_FORMAT(`Date`, "%d-%b-%Y") FROM `Sounds` WHERE `SoundStatus`!=9 ' . $qf_check . ' ORDER BY `Date` DESC LIMIT 1');
-
-	
-	#from http://jsbin.com/orora3/75/
-	echo "	
-	<script type=\"text/javascript\">
-	$(function() {
-		var dates = $( \"#startDate, #endDate\" ).datepicker({
-			minDate: new Date($DateLow),
-			maxDate: new Date($DateHigh),
-			numberOfMonths: 3,
-			changeYear: true,
-			dateFormat: 'dd-MM-yy',
-			onSelect: function( selectedDate ) {
-				var option = this.id == \"startDate\" ? \"minDate\" : \"maxDate\",
-				instance = $( this ).data( \"datepicker\" ),
-				date = $.datepicker.parseDate(
-					instance.settings.dateFormat ||
-					$.datepicker._defaults.dateFormat,
-					selectedDate, instance.settings );
-				dates.not( this ).datepicker( \"option\", option, date );
-			}
-		});
-	});
-
-	</script>
-	";
-
-	
-	#Duration slider
-	#Get min and max
-	$DurationLow = floor(DB::column('SELECT DISTINCT `Duration` FROM `Sounds` WHERE `Duration` IS NOT NULL AND `SoundStatus`!=9 ' . $qf_check . ' ORDER BY `Duration` LIMIT 1'));
-	$DurationHigh = ceil(DB::column('SELECT DISTINCT `Duration` FROM `Sounds` WHERE `Duration` IS NOT NULL AND `SoundStatus`!=9 ' . $qf_check . ' ORDER BY `Duration` DESC LIMIT 1'));
-
-	echo "<script type=\"text/javascript\">
-		$(function() {
-			$( \"#durationslider\" ).slider({
-			range: true,
-				min: $DurationLow,
-				max: $DurationHigh,
-				values: [ $DurationLow, $DurationHigh ],
-				slide: function( event, ui ) {
-					$( \"#startDuration\" ).val( $( \"#durationslider\" ).slider( \"values\", 0 ));
-					$( \"#endDuration\" ).val( $( \"#durationslider\" ).slider( \"values\", 1 ));
-				}
-			});
-			$( \"#startDuration\" ).val( $( \"#durationslider\" ).slider( \"values\", 0 ));
-			$( \"#endDuration\" ).val( $( \"#durationslider\" ).slider( \"values\", 1 ));
-			});
-		</script>";
-#	}
 
 if ($use_googleanalytics) {
 	echo $googleanalytics_code;
@@ -236,10 +61,10 @@ if (is_file("$absolute_dir/customhead.php")) {
 		include("customhead.php");
 	}
 	
-	
+require("include/index_map_head.php");
 echo "</head>\n";
 
-if ($use_leaflet == FALSE){
+if ($mapping_system == "Gmaps"){
 	echo "<body onload=\"initialize()\" onunload=\"GUnload()\">";
 	}
 else{
@@ -258,12 +83,24 @@ else{
 	echo "<div class=\"jumbotron\">
 			<h2>Welcome to $app_custom_name</h2>";
 
-			echo "<div class=\"pull-right\"><p><a class=\"btn btn-primary btn-lg\" href=\"protocol.php\" role=\"button\">Our protocol</a></p>
-				<p><a class=\"btn btn-primary btn-lg\" href=\"science.php\" role=\"button\">The science of this project</a></p>
-				</div>
+			#Custom links
+			echo "<div class=\"pull-right\">";
+				if ($custom_link_url_1!=""){
+					echo "<p><a class=\"btn btn-primary btn-lg\" href=\"$custom_link_url_1\" role=\"button\">$custom_link_title_1</a></p>";
+				}
+				
+				if ($custom_link_url_2!=""){
+					echo "<p><a class=\"btn btn-primary btn-lg\" href=\"$custom_link_url_2\" role=\"button\">$custom_link_title_1</a></p>";
+				}
+
+				if ($custom_link_url_3!=""){
+					echo "<p><a class=\"btn btn-primary btn-lg\" href=\"$custom_link_url_3\" role=\"button\">$custom_link_title_1</a></p>";
+				}
+
+			echo "</div>
 
 
-			<p>$app_custom_text<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam suscipit lobortis leo sed maximus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin sed arcu ac tellus tempus facilisis eget ac diam. Maecenas purus leo, cursus ut consequat in, luctus eget libero. Etiam dictum massa enim, consectetur tincidunt sem fermentum finibus. Ut vulputate neque leo, ut vulputate dolor consequat in.</p>\n";
+			<p>$app_custom_text</p>\n";
 
 
 				$no_Collections = DB::column('SELECT COUNT(DISTINCT ColID) FROM `Sounds` WHERE SoundStatus!=9 ' . $qf_check);
@@ -294,14 +131,12 @@ else{
 
 		echo "</div>";
 
-			include("include/check_system.php");
-
 		
 
-			if ($use_leaflet == TRUE){
+			if ($mapping_system == "Leaflet"){
 				echo "<div id=\"map\">Your browser does not have JavaScript enabled or can not connect to the tile server. Please contact your administrator.</div>\n";
 			}
-			else{
+			elseif ($mapping_system == "GMaps"){
 				require("include/index_map_body.php");
 			}
 			
@@ -320,30 +155,30 @@ else{
 			echo " <div class=\"row\">
 			        <div class=\"col-lg-4 text-center\">
 			          <h2><span class=\"glyphicon glyphicon-cloud-upload\" aria-hidden=\"true\"></span> Add sounds<br>to this archive</h2>
-			          <p><a class=\"btn btn-primary\" href=\"add.php\" role=\"button\">View details »</a></p>
+			          <p><a class=\"btn btn-primary\" href=\"add.php\" role=\"button\">Add sounds »</a></p>
 			        </div>
 			        <div class=\"col-lg-4 text-center\">
 			          <h2><span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Explore the<br>sound archive</h2>
-			          <p><a class=\"btn btn-primary\" href=\"search.php\" role=\"button\">View details »</a></p>
+			          <p><a class=\"btn btn-primary\" href=\"search.php\" role=\"button\">Explore sounds »</a></p>
 			       </div>
 			        <div class=\"col-lg-4 text-center\">
-			          <h2><span class=\"glyphicon glyphicon-tasks\" aria-hidden=\"true\"></span> Data extraction<br>and analysis</h2>
-			          <p><a class=\"btn btn-primary\" href=\"data.php\" role=\"button\">View details »</a></p>
+			          <h2><span class=\"glyphicon glyphicon-cloud-download\" aria-hidden=\"true\"></span> Export<br>sounds and data</h2>
+			          <p><a class=\"btn btn-primary\" href=\"export.php\" role=\"button\">Export data »</a></p>
 			        </div>
 			       </div>";
-		?>
-
-
-<hr noshade>
-<?php
 
 ##################################
-$thanks_text = "Donec fringilla tortor metus, eu faucibus nunc hendrerit quis. Pellentesque in ex at arcu interdum laoreet. Curabitur in aliquam lacus. Pellentesque sed nibh enim. Nam condimentum tellus quam, ut efficitur turpis fermentum a. Morbi ut orci vitae tortor dapibus congue non nec neque. Nullam egestas tortor eu leo mollis condimentum. Aliquam sodales vel purus quis tincidunt. ";
+#$thanks_text = "Donec fringilla tortor metus, eu faucibus nunc hendrerit quis. Pellentesque in ex at arcu interdum laoreet. Curabitur in aliquam lacus. Pellentesque sed nibh enim. Nam condimentum tellus quam, ut efficitur turpis fermentum a. Morbi ut orci vitae tortor dapibus congue non nec neque. Nullam egestas tortor eu leo mollis condimentum. Aliquam sodales vel purus quis tincidunt. ";
 ##################################
-echo "<dl class=\"dl-horizontal\">
+
+if (isset($acknowledgement)){
+	if ($acknowledgement != ""){
+		echo "<dl class=\"dl-horizontal\">
 		  <dt>Acknowledgements</dt>
-		  <dd>$thanks_text</dd>
+		  <dd>$acknowledgement</dd>
 		</dl>";
+		}
+	}
 
 require("include/bottom.php");
 ?>
@@ -353,7 +188,7 @@ require("include/bottom.php");
 </html>
 
 <?php
-if ($use_leaflet == TRUE){
+if ($mapping_system == "Leaflet"){
 	require("include/leaflet2.php");
 }
 

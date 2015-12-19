@@ -10,16 +10,22 @@
 				";
 
 			echo "<form action=\"results.php\" method=\"GET\" class=\"form-inline\">
-				<label for=\"filename\">Filename: </label>
+				<label for=\"filename\">Filename &nbsp;&nbsp;</label>
 					<input type=\"text\" name=\"filename\" value=\"$filename\" id=\"filename\" class=\"form-control\" placeholder=\"Filename\"><br>
 
 
-				<label for=\"Col_comparison\">Collection: </label>
+				<label for=\"Col_comparison\">Collection &nbsp;&nbsp;</label>
 
-					<select name=\"Col_comparison\" id=\"Col_comparison\" class=\"form-control\">
-						<option value=\"1\" SELECTED> is </option>
-						<option value=\"2\"> is not </option>
-					</select> &nbsp;
+					<select name=\"Col_comparison\" id=\"Col_comparison\" class=\"form-control\">";
+					if ($Col_comparison==2){
+						echo "<option value=\"1\"> is </option>
+						<option value=\"2\"SELECTED> is not </option>";}
+					else{
+						echo "<option value=\"1\" SELECTED> is </option>
+						<option value=\"2\"> is not </option>";
+					}
+						
+				echo "</select> &nbsp;
 
 				<select name=\"Col\" id=\"Col\" class=\"form-control\">
 					<option value=\"0\"></option>";
@@ -33,25 +39,43 @@
 						for ($d = 0; $d < $nrows_dates; $d++)	{
 							$row_dates = mysqli_fetch_array($result_dates);
 							extract($row_dates);
-							echo "\n<option value=\"$ColID\">$CollectionName</option>";
+							if ($Col == $ColID){
+								echo "\n<option value=\"$ColID\" SELECTED>$CollectionName</option>";
+							}
+							else{
+								echo "\n<option value=\"$ColID\">$CollectionName</option>";
+							}
+
 							}
 						}
 				echo "</select><br>";
 
 
 			echo "
-				<label for=\"startTime\">Time range:</label>
-						<input type=\"text\" name=\"startTime\" id=\"startTime\" value=\"00:00\" class=\"form-control\"> to 
-					<input type=\"text\" name=\"endTime\" value=\"23:59\" class=\"form-control\"><br>";
+				<label for=\"startTime\">Time range &nbsp;&nbsp;</label>";
+					if ($startTime!=""){
+						echo "<input type=\"text\" name=\"startTime\" id=\"startTime\" value=\"$startTime\" class=\"form-control\">";
+					}
+					else{
+						echo "<input type=\"text\" name=\"startTime\" id=\"startTime\" value=\"00:00\" class=\"form-control\">";
+					}
 
+				echo "to ";
+				if ($endTime!=""){
+						echo "<input type=\"text\" name=\"endTime\" id=\"endTime\" value=\"$endTime\" class=\"form-control\">";
+					}
+					else{
+						echo "<input type=\"text\" name=\"endTime\" id=\"endTime\" value=\"23:59\" class=\"form-control\">";
+					}
 
-			echo "
-				<label for=\"startDate\">Date range:</label>
+			echo "<br>
+				<label for=\"startDate\">Date range &nbsp;&nbsp;</label>
+					
 					<input type=\"text\" id=\"startDate\" name=\"startDate\" value=\"$DateLow1\" class=\"form-control\" readonly> to 
 					<input type=\"text\" id=\"endDate\" name=\"endDate\" value=\"$DateHigh1\" class=\"form-control\" readonly><br>
 			
 
-				<label for=\"Site_comparison\">Site:</label>
+				<label for=\"Site_comparison\">Site &nbsp;&nbsp;</label>
 					<select name=\"Site_comparison\" id=\"Site_comparison\" class=\"form-control\">
 						<option value=\"1\" SELECTED> is </option>
 						<option value=\"2\"> is not </option>
@@ -73,13 +97,18 @@
 							$check_site = query_one("SELECT COUNT(*) FROM Sounds WHERE SiteID='$SiteID'", $connection);
 
 							if ($check_site > 0){
-								echo "\n<option value=\"$SiteID\">$SiteName</option>";
+								if ($Site == $SiteID){
+									echo "\n<option value=\"$SiteID\" SELECTED>$SiteName</option>";
+									}
+								else{
+									echo "\n<option value=\"$SiteID\">$SiteName</option>";
+								}
 								}
 							}
 						}
 				echo "</select><br>
 				
-				<label for=\"Tag_comparison\">Tags:</label>
+				<label for=\"Tag_comparison\">Tags &nbsp;&nbsp;</label>
 				<select name=\"Tag_comparison\" class=\"form-control\">
 					<option value=\"1\" SELECTED> include </option>
 				</select> &nbsp;
@@ -102,7 +131,7 @@
 						}
 				echo "</select><br><br>
 				
-				<label for=\"startDuration\">Duration (secs):</label>
+				<label for=\"startDuration\">Duration (secs) &nbsp;&nbsp;</label>
 				<div style=\"margin: 10 10 10 10;\"><div id=\"durationslider\"></div></div><br>
 							
 
@@ -110,7 +139,7 @@
 					<input type=\"text\" id=\"endDuration\" name=\"endDuration\" value=\"$DurationHigh\" class=\"form-control\" readonly><br>
 
 				
-				<label for=\"Channels_comparison\">Channels:</label>
+				<label for=\"Channels_comparison\">Channels &nbsp;&nbsp;</label>
 				<select name=\"Channels_comparison\" class=\"form-control\">
 					<option value=\"1\" SELECTED> is </option>
 					<option value=\"2\"> is not </option>
@@ -123,7 +152,7 @@
 				</select><br>
 				
 
-				<label for=\"SamplingRate_comparison\">Sampling Rate:</label>
+				<label for=\"SamplingRate_comparison\">Sampling Rate &nbsp;&nbsp;</label>
 				
 				<select name=\"SamplingRate_comparison\" class=\"form-control\">
 					<option value=\"1\" SELECTED> is </option>
@@ -147,7 +176,7 @@
 						}
 				echo "</select> Hz<br>
 
-				<label for=\"Orderby\">Order by:</label>
+				<label for=\"Orderby\">Order by &nbsp;&nbsp;</label>
 
 					<select name=\"Orderby\" class=\"form-control\">";
 						/*<option value=\"Sounds.SoundID\" SELECTED>original order</option>*/

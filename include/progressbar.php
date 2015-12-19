@@ -1,47 +1,25 @@
 <?php
 
-
 require("functions.php");
 require("../config.php");
 require("apply_config_include.php");
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
-<html>
+echo "<!DOCTYPE html>
+<html lang=\"en\">
 <head>
 ";
 
-require("get_css_include.php");
+require("get_css3_include.php");
 require("get_jqueryui_include.php");
 
-$percent=$_GET["per"];
+$percent=round(filter_var($_GET["per"], FILTER_SANITIZE_NUMBER_INT));
 
-if ($percent<100) {
-	echo "
-	<style type=\"text/css\">
-		.ui-progressbar-value { background-image: url(../images/pbar-ani.gif); }
-	</style>
-
-	<script type=\"text/javascript\">
-	$(function() {
-		$(\"#progressbar\").progressbar({
-			value: $percent
-		});
-	});
-	</script>
-
+echo "
 	</head>
-	<body>";
-
-	echo "<div id=\"progressbar\"></div>";
-	}
-else {
-	echo "\n</head>
 	<body>
-	<div aria-valuenow=\"100\" aria-valuemax=\"100\" aria-valuemin=\"0\" role=\"progressbar\" class=\"ui-progressbar ui-widget ui-widget-content ui-corner-all\" id=\"progressbar\">
-		<div style=\"width: 100%;\" class=\"ui-progressbar-value ui-widget-header ui-corner-all\">
-		</div>
-	</div>";
-	}
+	
+	<div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"$percent\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: $percent%;\"><span class=\"sr-only\">$percent% Complete</span></div>";
+
 
 ?>
 </body>

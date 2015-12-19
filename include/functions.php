@@ -171,13 +171,13 @@ function dbfile_mp3($filename, $file_format, $ColID, $DirID, $SamplingRate) {
 		if ($file_format == "flac") {
 			exec('flac -fd sounds/sounds/' . $ColID . '/' . $DirID . '/' . $filename . ' -o tmp/' . $random_value . '/temp1.wav', $lastline, $retval);
 			if ($retval != 0) {
-				exit("<p class=\"error\">There was a problem with the FLAC decoder...</div>");
+				exit("<div class=\"alert alert-danger\">There was a problem with the FLAC decoder...</div>");
 				}
 
 			if ($SamplingRate!=44100 || $SamplingRate!=22050 || $SamplingRate!=11025) {
 				exec('sox tmp/' . $random_value . '/temp1.wav tmp/' . $random_value . '/temp2.wav rate ' . $to_SamplingRate, $lastline, $retval);
 				if ($retval!=0) {
-					exit("<p class=\"error\">There was a problem with SoX...</div>");
+					exit("<div class=\"alert alert-danger\">There was a problem with SoX...</div>");
 					}
 					
 				unlink("tmp/$random_value/temp1.wav");
@@ -187,7 +187,7 @@ function dbfile_mp3($filename, $file_format, $ColID, $DirID, $SamplingRate) {
 		else {
 			exec('sox sounds/sounds/' . $ColID . '/' . $DirID . '/' . $filename . ' tmp/' . $random_value . '/temp1.wav rate ' . $to_SamplingRate, $lastline, $retval);
 			if ($retval!=0) {
-				exit("<p class=\"error\">There was a problem with SoX...</div>");
+				exit("<div class=\"alert alert-danger\">There was a problem with SoX...</div>");
 				}
 			}
 
@@ -278,14 +278,14 @@ function dbfile_ogg($filename, $file_format, $ColID, $DirID, $SamplingRate) {
 			exec('flac -fd sounds/sounds/' . $ColID . '/' . $DirID . '/' . $filename . ' -o tmp/' . $random_value . '/temp1.wav', $lastline, $retval);
 			if ($retval != 0) {
 				save_log($connection, $SoundID, "70", "FLAC had a problem with sounds/sounds/$ColID/$DirID/$filename.\n" . $lastline);
-				exit("<p class=\"error\">There was a problem with the FLAC decoder...</div>");
+				exit("<div class=\"alert alert-danger\">There was a problem with the FLAC decoder...</div>");
 				}
 
 			if ($SamplingRate != 44100 || $SamplingRate != 22050 || $SamplingRate != 11025) {
 				exec('sox tmp/' . $random_value . '/temp1.wav tmp/' . $random_value . '/temp2.wav rate ' . $to_SamplingRate, $lastline, $retval);
 				if ($retval != 0) {
 					save_log($connection, $SoundID, "80", "SoX had a problem with sounds/sounds/$ColID/$DirID/$filename." . $lastline);
-					exit("<p class=\"error\">There was a problem with SoX...</div>");
+					exit("<div class=\"alert alert-danger\">There was a problem with SoX...</div>");
 					}
 					
 				unlink("tmp/$random_value/temp1.wav");
@@ -296,7 +296,7 @@ function dbfile_ogg($filename, $file_format, $ColID, $DirID, $SamplingRate) {
 			exec('sox sounds/sounds/' . $ColID . '/' . $DirID . '/' . $filename . ' tmp/' . $random_value . '/temp1.wav rate ' . $to_SamplingRate, $lastline, $retval);
 			if ($retval != 0) {
 				save_log($connection, $SoundID, "80", "SoX had a problem with sounds/sounds/$ColID/$DirID/$filename." . $lastline);
-				exit("<p class=\"error\">There was a problem with SoX...</div>");
+				exit("<div class=\"alert alert-danger\">There was a problem with SoX...</div>");
 				}
 			}
 

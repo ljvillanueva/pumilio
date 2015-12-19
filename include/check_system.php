@@ -155,13 +155,10 @@ if ($pumilio_admin==TRUE) {
 			}
 		}
 
-	$use_googlemaps=query_one("SELECT Value from PumilioSettings WHERE Settings='use_googlemaps'", $connection);
-		if ($use_googlemaps=="1"){
-			$sys_errors++;
-			}
+
 
 	if ($sys_errors > 0) {
-		echo "<li><a href=\"#\" title=\"There are $sys_errors problems\" onclick=\"window.open('include/alerts.php', 'alerts', 'width=550,height=400,status=yes,resizable=yes,scrollbars=auto')\"><span class=\"badge\">$sys_errors</span></a></li>";
+		echo "<li><a href=\"#\" title=\"There are $sys_errors problems\" onclick=\"window.open('include/alerts.php', 'alerts', 'width=550,height=400,status=yes,resizable=yes,scrollbars=auto')\"><span class=\"badge\"> <span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=\"true\"></span> $sys_errors</span></a></li>";
 		}
 	}
 ?>

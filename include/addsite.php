@@ -1,5 +1,6 @@
 <?php
 session_start();
+header( 'Content-type: text/html; charset=utf-8' );
 
 require("functions.php");
 
@@ -16,11 +17,11 @@ require("apply_config_include.php");
 $force_admin = TRUE;
 require("check_admin.php");
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+echo "<!DOCTYPE html>
 <html>
 <head>";
 
-require("get_css_include.php");
+require("get_css3_include.php");
 require("get_jqueryui_include.php");
 ?>
 	
@@ -64,7 +65,7 @@ require("get_jqueryui_include.php");
 </head>
 <body>
 
-<div style="padding: 10px;">
+<div class="container">
 
 <?php
 
@@ -93,11 +94,11 @@ require("get_jqueryui_include.php");
 			}
 
 		if ($checkfail1==1) {
-			echo "<div class=\"error\">There is a site with that name already. Please try again.</div>";
+			echo "<div class=\"alert alert-danger\">There is a site with that name already. Please try again.</div>";
 			$checkfail=1;
 			}
 		if ($checkfail2==1) {
-			echo "<div class=\"error\">There is a site with those coordinates already. Please try again.</div>";
+			echo "<div class=\"alert alert-danger\">There is a site with those coordinates already. Please try again.</div>";
 			$checkfail=1;
 			}
 		if ($checkfail!=1) {
@@ -107,7 +108,7 @@ require("get_jqueryui_include.php");
 			$query_tags = "INSERT INTO Sites (SiteName, SiteLat, SiteLon, SiteNotes) VALUES ('$SiteName', '$SiteLat', '$SiteLon', '$SiteNotes')";
 			$result_tags = mysqli_query($connection, $query_tags)
 				or die (mysqli_error($connection));
-			echo "<div class=\"success\">The site was added to the database.</div>
+			echo "<div class=\"alert alert-success\">The site was added to the database.</div>
 				<br><br><p><a href=\"#\" onClick=\"opener.location.reload();window.close();\">Close window</a>";
 				die();
 			}
@@ -116,13 +117,18 @@ require("get_jqueryui_include.php");
 
 echo "<h3>Add a site to the database</h3>
 	<p>
-	<form action=\"addsite.php\" method=\"POST\" id=\"AddForm\">
+	<form action=\"addsite.php\" method=\"POST\" id=\"AddForm\" class=\"form-inline\">
 		<input name=\"submitted\" type=\"hidden\" value=\"1\">
-		Name of the site: <input name=\"SiteName\" type=\"text\" maxlength=\"60\" size=\"40\" class=\"fg-button ui-state-default ui-corner-all\"><br>
-		Notes about this site: <input name=\"SiteNotes\" type=\"text\" maxlength=\"60\" size=\"40\" class=\"fg-button ui-state-default ui-corner-all\"><br>
-		Latitude: <input name=\"SiteLat\" type=\"text\" maxlength=\"20\" size=\"24\" class=\"fg-button ui-state-default ui-corner-all\"> (decimal degrees)<br>
-		Longitude: <input name=\"SiteLon\" type=\"text\" maxlength=\"20\" size=\"24\" class=\"fg-button ui-state-default ui-corner-all\"> (decimal degrees)<br>
-		<input type=\"submit\" value=\" Add site \" class=\"fg-button ui-state-default ui-corner-all\">
+		<label for=\"SiteName\">Name of the site</label>
+			<input name=\"SiteName\" id=\"SiteName\" type=\"text\" maxlength=\"60\" class=\"form-control\">
+		<label for=\"SiteNotes\">Notes about this site</label>
+			<input name=\"SiteNotes\" id=\"SiteNotes\" type=\"text\" maxlength=\"60\" class=\"form-control\">
+		<label for=\"SiteLat\">Latitude</label>
+			<input name=\"SiteLat\" id=\"SiteLat\" type=\"text\" maxlength=\"20\" class=\"form-control\" placeholder=\"(decimal degrees)\">
+		<label for=\"SiteLon\">Longitude</label>	
+			<input name=\"SiteLon\" id=\"SiteLon\" type=\"text\" maxlength=\"20\" class=\"form-control\" placeholder=\"(decimal degrees)\">
+		<br>
+		<button type=\"submit\" class=\"btn btn-primary\"> Add Site </button>
 	</form>
 	
 	<br><br><p><a href=\"#\" onClick=\"window.close();\">Cancel and close window</a>";

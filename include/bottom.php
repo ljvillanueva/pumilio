@@ -7,8 +7,7 @@
 			<div class=\"container\">
 				<div class=\"col-lg-8\">
 					
-					$app_custom_name - 
-					<a href=\"about.php\" title=\"About this site\">About</a><br>";
+					$app_custom_name<br>";
 						
 					#License
 					$files_license = query_one("SELECT Value from PumilioSettings WHERE Settings='files_license'", $connection);

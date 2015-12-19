@@ -1,11 +1,21 @@
 <?php
 
+
+use \DByte\DB;
+DB::$c = $pdo;
+
+
 //Custom name of the app
 if ($tt==1) {
 	echo "<div class=\"success\" id=\"tt1\">The database was updated.</div>";
 	}
 
-echo "<div class=\"panel panel-primary\">
+
+
+echo "
+	<div class=\"row\">
+	<div class=\"col-lg-6\">
+		<div class=\"panel panel-primary\">
 		<div class=\"panel-heading\">
 			<h3 class=\"panel-title\">General settings</h3>
 		</div>
@@ -14,13 +24,18 @@ echo "<div class=\"panel panel-primary\">
 echo "<form action=\"include/editpumiliosettings.php\" method=\"POST\">
 	<input type=\"hidden\" name=\"settings\" value=\"top\">
 	<div class=\"form-group\">
-		<label for=\"app_custom_name\">This installation custom name:</label>
+		<label for=\"app_custom_name\">Name for this system:</label>
 		<input type=\"text\" id=\"app_custom_name\" name=\"app_custom_name\" value=\"$app_custom_name\" class=\"form-control\">
 	</div>";
 
 echo "<div class=\"form-group\">
-	<label for=\"app_custom_text\">Short description of this system:</label>";
-	echo "<input type=\"text\" name=\"app_custom_text\" id=\"app_custom_text\" value=\"$app_custom_text\" class=\"form-control\">
+	<label for=\"app_custom_text\">Short description of this system (will appear on the homepage):</label>";
+	echo "<textarea class=\"form-control\" rows=\"3\" name=\"app_custom_text\" id=\"app_custom_text\">$app_custom_text</textarea>
+</div>";
+
+echo "<div class=\"form-group\">
+	<label for=\"acknowledgement\">Acknowledgements (will appear on the homepage):</label>";
+	echo "<textarea class=\"form-control\" rows=\"3\" name=\"acknowledgement\" id=\"acknowledgement\">$acknowledgement</textarea>
 </div>";
 	
 
@@ -39,21 +54,24 @@ else{
 	}
 	
 echo "<div class=\"form-group\">
-	<label for=\"use_googlemaps\">Use the Google Maps system (using the v3 API):</label>";
+	<label for=\"mapping_system\">Mapping system:</label>";
 
-	echo "<select name=\"use_googlemaps\" id=\"use_googlemaps\" class=\"form-control\">";
+	echo "<select name=\"mapping_system\" id=\"mapping_system\" class=\"form-control\">";
 
-		if ($use_googlemaps=="0") {
-			echo "<option SELECTED value=\"0\">No</option>
-				<option value=\"3\">Yes</option>";
+		if ($mapping_system=="GMaps") {
+			echo "<option value=\"None\">None</option>
+				<option SELECTED value=\"Gmaps\">Google Maps</option>
+				<option value=\"Leaflet\">Leaflet</option>";
 			}
-		elseif ($use_googlemaps=="3") {
-			echo "<option SELECTED value=\"3\">Yes</option>
-				<option value=\"0\">No</option>";
+		elseif ($mapping_system=="Leaflet") {
+			echo "<option value=\"None\">None</option>
+				<option value=\"Gmaps\">Google Maps</option>
+				<option SELECTED value=\"Leaflet\">Leaflet</option>";
 			}
 		else {
-			echo "<option value=\"3\">Yes</option>
-				<option value=\"0\">No</option>";
+			echo "<option SELECTED value=\"None\">None</option>
+				<option value=\"Gmaps\">Google Maps</option>
+				<option value=\"Leaflet\">Leaflet</option>";
 			}
 
 	echo "</select></div>\n";
@@ -116,7 +134,7 @@ echo "<div class=\"form-group\">
 		}
 
 	echo "<div class=\"form-group\">
-	<label for=\"lic1\">Retain copyright or share with a <a href=\"http://creativecommons.org/licenses/\" target=_blank>Creative Commons</a> license? $files_license</label>";
+	<label for=\"lic1\">Retain copyright or share with a <a href=\"http://creativecommons.org/licenses/\" target=_blank>Creative Commons</a> license? $files_license</label><div class=\"form-group\">";
 		
 		echo "<select name=\"files_license\" id =\"lic1\" class=\"form-control\">";
 			if ($files_license=="Copyright") {
@@ -194,8 +212,8 @@ echo "<div class=\"form-group\">
 					
 			echo " </select>
 		
-		<input type=\"text\" name=\"files_license_detail\" size=\"40\" maxlength=\"250\" value=\"$files_license_detail\">
-	</div>";
+		<input type=\"text\" class=\"form-control\" name=\"files_license_detail\" size=\"40\" maxlength=\"250\" value=\"$files_license_detail\">
+	</div></div>";
 	
 		
 	#Temp dir
@@ -204,7 +222,7 @@ echo "<div class=\"form-group\">
 	if ($temp_add_dir!=""){
 		#check if dir exists and is readable
 		if (!is_dir($temp_add_dir) || !is_readable($temp_add_dir)){
-			$temp_add_dir_d="<em style=\"color:red;\">Directory does not exist or could not be accessed.</em>";
+			$temp_add_dir_d="<em class=\"text-danger\">Directory does not exist or could not be accessed.</em>";
 
 			#DB::query('DELETE FROM `PumilioSettings` WHERE `Settings` = "temp_add_dir"');
 			}
@@ -228,42 +246,6 @@ echo "<div class=\"form-group\">
 			</div>";
 
 
-/*
-	#Use R?
-	if ($useR=="" || $useR=="0") {
-		$useR_d="No";
-		}
-	elseif ($useR=="1") {
-		$useR_d="Yes";
-		}
-
-	echo "<br>Use R: $useR_d";
-	
-	echo "<form action=\"include/editpumiliosettings.php\" method=\"POST\">
-		<input type=\"hidden\" name=\"Settings\" value=\"useR\">
-		<select name=\"Value\" class=\"ui-state-default ui-corner-all\">";
-		if ($useR=="1") {
-			echo "<option SELECTED value=\"1\">Yes</option>
-				<option value=\"0\">No</option>\n";
-				}
-		else {
-			echo "<option value=\"1\">Yes</option>
-				<option SELECTED value=\"0\">No</option>\n";
-				}
-
-		echo " </select>
-		<input type=submit value=\" Change selection \"> <a href=\"#\" onclick=\"window.open('help.php?topic=R', 'help', 'width=650,height=550,status=yes,resizable=yes,scrollbars=auto')\"><img src=\"images/help.png\" title=\"Help\" alt=\"Help\"></a>
-		</form>";
-*/
-
-	#Cores to use
-	#$cores_to_use=query_one("SELECT Value from PumilioSettings WHERE Settings='cores_to_use'", $connection);
-	/*if ($cores_to_use == ""){ 
-		$cores_to_use_d = "Not set (use 1)";
-		}
-	else {
-		$cores_to_use_d = $cores_to_use;
-		}*/
 
 	echo "<div class=\"form-group\">
 	<label for=\"cores_to_use\">How many cores to use for background processes:</label>";
@@ -292,10 +274,11 @@ echo "<div class=\"form-group\">
 
 
 	</div>
-</div>";
+</div>
 
-
-
+</div>
+<div class=\"col-lg-6\">
+";
 
 
 
@@ -311,7 +294,8 @@ echo "<div class=\"form-group\">
 		echo "<div class=\"success\" id=\"imgset\">The database was updated. To force the system to recreate the images:<br>
 		<form method=\"GET\" action=\"include/delauxfiles.php\" target=\"delauxfiles\" onsubmit=\"window.open('', 'delauxfiles', 'width=450,height=700,status=yes,resizable=yes,scrollbars=auto')\">
 			<input type=\"hidden\" name=\"op\" value=\"7\">
-			<input type=submit value=\" Delete all images from system \"></form>
+			<button type=\"submit\" class=\"btn btn-primary\"> Delete all images from system </button>
+			</form>
 		</div>";
 		}
 
@@ -330,8 +314,8 @@ echo "<div class=\"form-group\">
 		$max_spec_freq_d = $max_spec_freq . " Hz";
 		}
 
-	echo "<div class=\"form-group\">
-	<label for=\"max_spec_freq\">Maximum acoustic frequency for the spectrograms</label>";
+	echo "
+	<label for=\"max_spec_freq\">Maximum acoustic frequency for the spectrograms:</label>";
 	
 	echo "<select name=\"max_spec_freq\" id=\"max_spec_freq\" class=\"form-control\">";
 		if ($max_spec_freq == "max") {
@@ -401,12 +385,10 @@ echo "<div class=\"form-group\">
 				<option $m9 value=\"3000\">3000 Hz</option>";
 			}
 
-	echo " </select>
-	</div>";
+	echo " </select>";
 
 	#FFT window size
-	echo "<div class=\"form-group\">
-	<label for=\"fft\">FFT window size";
+	echo "<label for=\"fft\">FFT window size:</label>";
 	
 	echo "<select name=\"fft\" id=\"fft\" class=\"form-control\">";
 		
@@ -437,14 +419,13 @@ echo "<div class=\"form-group\">
 			<option $fft5>256</option>
 			<option $fft6>128</option>";
 
-	echo " </select></div>";
+	echo " </select>";
 
 
 	#spectrogram_palette
 	#$spectrogram_palette=query_one("SELECT Value from PumilioSettings WHERE Settings='spectrogram_palette'", $connection);
 	
-	echo "<div class=\"form-group\">
-	<label for=\"spectrogram_palette\">Color palette to use for the spectrograms</label>";
+	echo "<label for=\"spectrogram_palette\">Color palette to use for the spectrograms</label>";
 	
 	if ($sox_images == TRUE){
 		$sox_pal1 = "yellow, red, purple";
@@ -509,11 +490,9 @@ echo "<div class=\"form-group\">
 		echo "</select>";
 		}
 		
-	echo "</div>";
-
 
 	echo "
-	<button type=\"submit\" class=\"btn btn-primary\"> Update spectrogram settings </button>
+	<br><button type=\"submit\" class=\"btn btn-primary\"> Update spectrogram settings </button>
 	</form>
 	</div>
 </div>";
@@ -521,10 +500,7 @@ echo "<div class=\"form-group\">
 
 
 
-
-
-
-	#Bottom
+	#System behavior
 	echo "
 	<div class=\"panel panel-primary\">
 	<div class=\"panel-heading\">
@@ -540,178 +516,6 @@ echo "<div class=\"form-group\">
 		echo "<div class=\"success\" id=\"tt2\">The database was updated.</div>";
 		}
 	
-	#allow chorus
-	#$use_chorus=query_one("SELECT Value from PumilioSettings WHERE Settings='use_chorus'", $connection);
-
-/*	if ($use_chorus == "1"){
-		$use_chorus_d = "Yes";
-		}
-	elseif ($use_chorus == "0"){
-		$use_chorus_d = "No";
-		}
-	else {
-		$use_chorus_d = "Not set";
-		}
-
-	echo "<div class=\"form-group\">
-	<label for=\"use_chorus\">Allow this website to be indexed in the <a href=\"http://pumilio.sourceforge.net/chorus.php\" target=_blank>Pumilio Chorus</a></label>";
-	
-	echo "<select name=\"use_chorus\" id=\"use_chorus\" class=\"form-control\">";
-		if ($use_chorus) {
-			echo "<option SELECTED value=\"1\">Yes</option>
-				<option value=\"0\">No</option>";
-			}
-		else {
-			echo "<option value=\"1\">Yes</option>
-				<option SELECTED value=\"0\">No</option>";
-			}
-
-		echo " </select></div>\n";*/
-
-
-	#use tag cloud
-	#$use_tags=query_one("SELECT Value from PumilioSettings WHERE Settings='use_tags'", $connection);
-/*
-	if ($use_tags=="1"){
-		$use_tags_d="Yes";
-		}
-	elseif ($use_tags=="0"){
-		$use_tags_d="No";
-		}
-	else {
-		$use_tags_d="Not set";
-		}
-
-	echo "<div class=\"form-group\">
-	<label for=\"use_tags\">Use a tag cloud</label>";
-	
-	echo "<select name=\"use_tags\" id=\"use_tags\" class=\"form-control\">";
-		if ($use_tags) {
-			echo "<option SELECTED value=\"1\">Yes</option>
-				<option value=\"0\">No</option>";
-			}
-		else {
-			echo "<option value=\"1\">Yes</option>
-				<option SELECTED value=\"0\">No</option>";
-			}
-	echo " </select></div>";
-*/
-
-	#audio preview format
-	#$audiopreview_format=query_one("SELECT Value from PumilioSettings WHERE Settings='audiopreview_format'", $connection);
-	if (!isset($audiopreview_format)){
-		$audiopreview_format = "mp3";
-		}
-
-/*
-	echo "<br>Audio preview format: $audiopreview_format";
-	
-	echo "<form action=\"include/editpumiliosettings.php\" method=\"POST\">
-		<input type=\"hidden\" name=\"Settings\" value=\"audiopreview_format\">
-		<select name=\"Value\" class=\"ui-state-default ui-corner-all\">";
-		if ($audiopreview_format=="mp3") {
-			echo "<option SELECTED value=\"mp3\">mp3</option>
-				<option value=\"ogg\">ogg</option>";
-			}
-		elseif ($audiopreview_format=="ogg") {
-			echo "<option value=\"mp3\">mp3</option>
-				<option SELECTED value=\"ogg\">ogg</option>";
-			}
-		elseif ($audiopreview_format=="wav") {
-			echo "<option value=\"mp3\">mp3</option>
-				<option value=\"ogg\">ogg</option>
-				<option SELECTED value=\"wav\">wav</option>";
-			}
-
-		echo " </select>
-		<input type=submit value=\" Change selection \"></form>";
-*/
-	
-	#hide_latlon_guests
-	#$hide_latlon_guests=query_one("SELECT Value from PumilioSettings WHERE Settings='hide_latlon_guests'", $connection);
-/*
-	if ($hide_latlon_guests=="1"){
-		$hide_latlon_guests_d="Yes";
-		}
-	elseif ($hide_latlon_guests=="0"){
-		$hide_latlon_guests_d="No";
-		}
-	else{
-		$hide_latlon_guests_d="Not set";
-		}
-			
-	echo "<div class=\"form-group\">
-	<label for=\"hide_latlon_guests\">Hide the coordinates from users that are not logged in</label>";
-	
-	echo "<select name=\"hide_latlon_guests\" id=\"hide_latlon_guests\" class=\"form-control\">";
-		if ($hide_latlon_guests) {
-			echo "<option SELECTED value=\"1\">Yes</option>
-				<option value=\"0\">No</option>";
-			}
-		else {
-			echo "<option value=\"1\">Yes</option>
-				<option SELECTED value=\"0\">No</option>";
-			}
-
-	echo " </select></div>";*/
-
-
-	#use side-to-side comparison
-	#$sidetoside_comp=query_one("SELECT Value from PumilioSettings WHERE Settings='sidetoside_comp'", $connection);
-/*
-	if ($sidetoside_comp=="1"){
-		$sidetoside_comp_d="Yes";
-		}
-	elseif ($sidetoside_comp=="0"){
-		$sidetoside_comp_d="No";
-		}
-	else{
-		$sidetoside_comp_d="Not set";
-		}
-			
-	echo "<div class=\"form-group\">
-	<label for=\"sidetoside_comp\">Use Side-to-side comparison</label>";
-	
-	echo "<select name=\"sidetoside_comp\" id=\"sidetoside_comp\" class=\"form-control\">";
-		if ($sidetoside_comp){
-			echo "<option SELECTED value=\"1\">Yes</option>
-			<option value=\"0\">No</option>";
-			}
-		else {
-			echo "<option value=\"1\">Yes</option>
-			<option SELECTED value=\"0\">No</option>";
-			}
-
-	echo " </select></div>";
-*/
-
-	#allow_upload
-	#$allow_upload=query_one("SELECT Value from PumilioSettings WHERE Settings='allow_upload'", $connection);
-/*
-	if ($allow_upload=="1"){
-		$allow_upload_d="Yes";
-		}
-	elseif ($allow_upload=="0"){
-		$allow_upload_d="No";
-		}
-	else{
-		$allow_upload_d="Not set";
-		}
-			
-	echo "<div class=\"form-group\">
-	<label for=\"allow_upload\">Allow users to upload files</label>";
-	
-	echo "<select name=\"allow_upload\" id=\"allow_upload\" class=\"form-control\">";
-		if ($allow_upload){
-			echo "<option SELECTED value=\"1\">Yes</option>
-				<option value=\"0\">No</option>";
-			}
-		else {
-			echo "<option value=\"1\">Yes</option>
-				<option SELECTED value=\"0\">No</option>";
-			}
-
-	echo " </select></div>";*/
 
 
 	#compress wav to flac
@@ -844,7 +648,7 @@ echo "<div class=\"form-group\">
 		}
 
 	echo "<div class=\"form-group\">
-	<label for=\"use_xml\">Allow access using XML</label>";
+	<label for=\"use_xml\">Allow access using the XML API</label>";
 
 	echo "<select name=\"use_xml\" id=\"use_xml\" class=\"form-control\">";
 		if ($use_xml) {
@@ -896,4 +700,512 @@ echo "<div class=\"form-group\">
 
 	echo "</div>
 	</div>";
-?>
+
+
+
+
+#close half and row div
+echo "</div></div>";
+
+
+
+
+
+
+
+
+
+
+
+#NEW ROW
+echo "<div class=\"row\">
+	<div class=\"col-lg-6\">";
+
+
+	?>
+
+
+
+		<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">Manage users</h3>
+		</div>
+        <div class="panel-body">
+	
+
+			<?php
+			if ($u==1) {
+				echo "<p><div class=\"success\">User was added successfully</div>";
+				}
+			if ($u==2) {
+				echo "<p><div class=\"error\">That username is already in use, please use another.</div>";
+				}
+			
+			echo "<form action=\"$app_url/include/add_user.php\" method=\"POST\" id=\"AddUserForm\">";
+			?>
+			<p>Username: <br><input type="text" name="UserName" maxlength="20" class="form-control"><br>
+			Full name of the user: <br><input type="text" name="UserFullname" maxlength="100" class="form-control"><br>
+			User email address: <br><input type="text" name="UserEmail" maxlength="100" class="form-control"><br>
+			User password:<br><input type="password" name="newpassword1" id="newpassword1" maxlength="20" class="form-control" /><br>
+			Please retype the password:<br><input type="password" name="newpassword2" id="newpassword2" maxlength="20" class="form-control" /><br>
+			User role:<br><select name="UserRole" class="form-control">
+				<option value="user">Regular user</option>
+				<option value="admin">Administrator</option>
+			</select><br>
+			<button type="submit" class="btn btn-primary"> Add user </button>
+			</form><br><br>
+			
+			<?php
+
+			if ($u==3) {
+				echo "<p><div class=\"success\">Change was made successfully</div>";
+				}
+
+			$no_users = DB::column('SELECT COUNT(*) FROM `Users` WHERE `UserActive` LIKE 1');
+			
+			$query = "SELECT * from Users WHERE UserActive='1' ORDER BY UserName";
+			$result = mysqli_query($connection, $query)
+				or die (mysqli_error($connection));
+			$nrows = mysqli_num_rows($result);
+
+			echo "<p>This system has $no_users users:
+				<table border=\"0\">";
+
+			for ($i=0; $i<$nrows; $i++) {
+				$row = mysqli_fetch_array($result);
+				extract($row);
+				
+				echo "<tr>
+					<td><strong>Name</strong></td><td>&nbsp;</td><td><strong>Username</strong></td><td>&nbsp;</td><td><strong>Role</strong></td><td>&nbsp;</td><td><strong>Change password</strong></td>
+					</tr><tr>";
+				
+				echo "<td><form action=\"include/edit_user.php\" method=\"POST\">$UserFullname</td><td>&nbsp;</td><td>$UserName</td><td>&nbsp;</td><td>";
+				if ($UserRole == "admin") {
+					#$other_admins=query_one("SELECT COUNT(*) FROM Users WHERE UserRole='admin' AND UserID!='$UserID'", $connection);
+					$other_admins = DB::column('SELECT COUNT(*) FROM `Users` WHERE  `UserRole`=`admin` AND `UserID`!= ?', $UserID);
+					if ($other_admins > 0 && $UserName != $username) {
+						echo "<input type=\"hidden\" name=\"ac\" value=\"remadmin\">
+						<input type=\"hidden\" name=\"UserID\" value=\"$UserID\">
+						<input type=submit value=\" Remove from administrators \"></form>";
+						}
+					else {
+						echo "[Administrator]</form>";
+						}
+					}
+				else {
+					echo "<input type=\"hidden\" name=\"ac\" value=\"makeadmin\">
+					<input type=\"hidden\" name=\"UserID\" value=\"$UserID\">
+					<input type=submit value=\" Make administrator \"></form>";
+					}
+
+				echo "</td><td>&nbsp;</td><td>";
+				
+				if ($UserName == $username){
+					echo "<a href=\"edit_myinfo.php?t=2\" title=\"Edit my information or change password\">Change my password</a>";
+					}
+				else{
+					echo "<form method=\"GET\" action=\"include/edit_user_password.php\" target=\"editpassword\" onsubmit=\"window.open('', 'editpassword', 'width=450,height=400,status=yes,resizable=yes,scrollbars=yes')\">
+						<input type=\"hidden\" name=\"UserID\" value=\"$UserID\">
+						<button type=\"submit\" class=\"btn btn-primary\"> Edit user password </button>
+					</form>
+					</td></tr>";
+					}
+				}
+			echo "</table>";
+			?>
+				</ul>
+				
+			<hr noshade>
+			<h4>Set users as inactive</h4>
+			<?php
+
+			if ($u==4) {
+				echo "<p><div class=\"success\">User was set as inactive successfully</div>";
+				}
+
+			#Delete div
+			echo "<div id=\"dialog\" title=\"Set user as inactive?\">
+			<p><span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>The user will be set as inactive immediately and will not be able to log in. Are you sure?</p></div>";
+
+			$query = "SELECT * from Users WHERE UserName!='$username' AND UserActive='1' ORDER BY UserName";
+			$result = mysqli_query($connection, $query)
+				or die (mysqli_error($connection));
+			$nrows = mysqli_num_rows($result);
+			if ($nrows==0) {
+				echo "There are no other users and you can not set yourself as inactive.";
+				}
+			else {
+				echo "
+				<form action=\"include/edit_user.php\" method=\"POST\" id=\"delform\" name=\"delform\">
+				<input type=\"hidden\" name=\"ac\" value=\"inactive\">
+				<select name=\"UserID\">";
+
+				for ($j=0; $j<$nrows; $j++) {
+					$row = mysqli_fetch_array($result);
+					extract($row);
+					echo "<option value=\"$UserID\">$UserFullname ($UserName)</option>";
+					}
+				echo "</select>";
+
+				echo " &nbsp;&nbsp;<button type=\"submit\" class=\"btn btn-primary\"> Set user as inactive </button>
+				</form>";
+				}
+
+			$query = "SELECT * from Users WHERE UserName!='$username' AND UserActive='0' ORDER BY UserName";
+			$result = mysqli_query($connection, $query)
+				or die (mysqli_error($connection));
+			$nrows = mysqli_num_rows($result);
+			if ($nrows==0) {
+				#echo "There are no other users and you can not set yourself as inactive.";
+				}
+			else {
+				echo "
+				<form action=\"include/edit_user.php\" method=\"POST\">
+				<input type=\"hidden\" name=\"ac\" value=\"activate\">
+				<select name=\"UserID\" class=\"form-control\">";
+
+				for ($j=0; $j<$nrows; $j++) {
+					$row = mysqli_fetch_array($result);
+					extract($row);
+					echo "<option value=\"$UserID\">$UserFullname ($UserName)</option>";
+					}
+				echo "</select>";
+
+				echo " &nbsp;&nbsp;
+				<button type=\"submit\" class=\"btn btn-primary\"> Reset user as active </button>
+				</form>";
+				}
+			?>
+			</p>
+			</div>
+			</div>
+</div>
+
+			<?php
+				
+echo "
+<div class=\"col-lg-6\">
+<div class=\"panel panel-primary\">
+	<div class=\"panel-heading\">
+		<h3 class=\"panel-title\">Sensors</h3>
+	</div>
+    <div class=\"panel-body\">
+
+	<strong>Add sensors to the database</strong>
+		<form action=\"include/add_sensors.php\" method=\"POST\" id=\"AddSensors\">
+			<p>Recorder:<br><input type=\"text\" name=\"Recorder\" maxlength=\"100\" size=\"40\"><br>
+			Microphone: <br><input type=\"text\" name=\"Microphone\" maxlength=\"80\" size=\"40\"><br>
+			Notes of the sensor: <br><input type=\"text\" name=\"Notes\" maxlength=\"255\" size=\"40\"><br>
+			<button type=\"submit\" class=\"btn btn-primary\"> Add sensor </button>
+		</form>";
+
+#Sensors in the db:
+echo "<hr noshade>";
+
+$no_sensors = DB::column('SELECT COUNT(*) FROM `Sensors`');
+
+if ($no_sensors == 0){
+	echo "<p>There are no sensors in the system.";
+	}
+else {
+	$rows = DB::fetch('SELECT * FROM `Sensors` ORDER BY `SensorID`', array(TRUE));
+	echo "<p>The system has the following ". count($rows) ." sensors:
+		<table>";
+
+	echo "<tr>
+			<td>Sensor ID</td>
+			<td>&nbsp;</td>
+			<td>Recorder</td>
+			<td>&nbsp;</td>
+			<td>Microphone</td>
+			<td>&nbsp;</td>
+			<td>Notes</td>
+			<td>&nbsp;</td>
+			<td>Edit</td>
+		</tr>\n";
+
+
+ 	foreach($rows as $row){
+#	for ($i = 0; $i < $nrows; $i++) {
+		#$row = mysqli_fetch_array($result);
+		#extract($row);
+		
+			echo "<tr>
+				<td>" . $row->SensorID . "</td>
+				<td>&nbsp;</td>
+				<td>" . $row->Recorder . "</td>
+				<td>&nbsp;</td>
+				<td>" . $row->Microphone . "</td>
+				<td>&nbsp;</td>
+				<td>" . $row->Notes . "</td>
+				<td>&nbsp;</td>
+				<td><a href=\"sensor_edit.php?SensorID=" . $row->SensorID . "\"><img src=\"images/pencil.png\"></td>
+			</tr>\n";
+		
+		}
+	echo "</table>";
+	}
+
+echo "</div>
+
+
+<!-- close row -->
+</div></div></div>
+";
+			
+		
+
+
+
+
+
+#NEW ROW
+echo "<div class=\"row\">
+	<div class=\"col-lg-6\">";			
+
+	#KML
+
+	echo "
+
+	<div class=\"panel panel-primary\">
+			<div class=\"panel-heading\">
+				<h3 class=\"panel-title\">Add a KML/KMZ layer</h3>
+			</div>
+	        <div class=\"panel-body\">
+
+
+		<form action=\"include/editkml.php\" method=\"POST\" id=\"AddKML\">
+			<input type=\"hidden\" name=\"op\" value=\"1\">
+			
+			<div class=\"form-group\">
+				<label for=\"KmlName\">Name</label>
+				<input type=\"text\" name=\"KmlName\" id=\"KmlName\" class=\"form-control\">
+			</div>
+			
+			<div class=\"form-group\">
+				<label for=\"KmlURL\">Complete URL</label>
+				<input type=\"text\" name=\"KmlURL\" id=\"KmlURL\" class=\"form-control\" value=\"http://\">
+			</div>
+
+			<div class=\"form-group\">
+				<label for=\"KmlNotes\">Notes</label>
+				<input type=\"text\" name=\"KmlNotes\" id=\"KmlNotes\" class=\"form-control\">
+			</div>
+
+			<button type=\"submit\" class=\"btn btn-primary\"> Add layer </button>
+		</form>
+		<br><br>\n";
+		
+
+	$no_kml=query_one("SELECT COUNT(*) FROM Kml", $connection);
+	if ($no_kml>0) {
+		echo "<div class=\"form-group\">
+				<label>KML/KMZ layers</label>
+			<ul>";
+
+		$query_kml = "SELECT * FROM Kml ORDER BY KmlName";
+		$result_kml=query_several($query_kml, $connection);
+		$nrows_kml = mysqli_num_rows($result_kml);
+
+		for ($k=0;$k<$nrows_kml;$k++) {
+			$row_kml = mysqli_fetch_array($result_kml);
+			extract($row_kml);
+
+			echo "<li><form action=\"include/editkml.php\" method=\"POST\">$KmlName 
+					(<a href=\"http://maps.google.com/maps?q=$KmlURL\" title=\"Open layer in GoogleMaps\" target=\"_blank\">$KmlURL</a>)
+					<input type=\"hidden\" name=\"op\" value=\"2\">
+					<input type=\"hidden\" name=\"KmlID\" value=\"$KmlID\">
+					<button type=\"submit\" class=\"btn btn-primary\"> Delete </button>
+				</form>\n";
+				
+				$default_kml=query_one("SELECT KmlDefault FROM Kml WHERE KmlID='$KmlID'", $connection);
+				if ($default_kml == 0) {
+					$selkml0 = "SELECTED";
+					$selkml1 = "";
+					$selkml2 = "";
+					}
+				elseif ($default_kml == 1) {
+					$selkml0 = "";
+					$selkml1 = "SELECTED";
+					$selkml2 = "";
+					}
+				elseif ($default_kml == 2) {
+					$selkml0 = "";
+					$selkml1 = "";
+					$selkml2 = "SELECTED";
+					}
+					
+				echo "
+				<form action=\"include/editkml2.php\" method=\"GET\"> 
+					<input type=\"hidden\" name=\"KmlID\" value=\"$KmlID\">
+					<select name=\"KmlDefault\" class=\"form-control\">
+						<option value=\"0\" $selkml0>optional</option>
+						<option value=\"1\" $selkml1>default</option>
+						<option value=\"2\" $selkml2>always on</option>
+					</select>
+					<button type=\"submit\" class=\"btn btn-primary\"> Change status </button>
+				</form>\n";
+			}
+			echo "</ul></div>";
+		}
+	else {
+		echo "<p>There are no KML/KMZ data layers.";
+		}
+
+	echo "</div></div>
+	</div>
+	<div class=\"col-lg-6\">";
+
+		
+echo "
+<div class=\"panel panel-primary\">
+	<div class=\"panel-heading\">
+		<h3 class=\"panel-title\">Quality control</h3>
+	</div>
+    <div class=\"panel-body\">";
+
+
+
+//Custom name of the app
+if ($t==9) {
+	if ($u==1) {
+		echo "<div class=\"success\">The database was updated.</div>";
+		}
+	elseif ($u==2) {
+		echo "<div class=\"error\">The Quality Flag could not be added. Please try again.</div>";
+		}
+	elseif ($u==3) {
+		echo "<div class=\"notice\">The Quality Flag already exists in the database.</div>";
+		}
+	}
+
+
+	echo "<p><strong><a href=\"qc.php\">Data extraction for quality control</a>
+	<p><a href=\"qa.php\">Figures for quality control</a></strong><br><br>";
+							
+							
+$query_qf = "SELECT * from QualityFlags ORDER BY QualityFlagID";
+$result_qf = mysqli_query($connection, $query_qf)
+	or die (mysqli_error($connection));
+$nrows_qf = mysqli_num_rows($result_qf);
+
+echo "<p>
+	<table border=\"0\">
+	<tr>
+		<td><strong>Quality Flag</strong></td><td>&nbsp;</td><td><strong>Meaning</strong></td><td>&nbsp;</td><td><strong>Delete (files that have it will be changed to 0)</strong></td>
+	</tr>";
+
+	for ($f=0;$f<$nrows_qf;$f++) {
+		$row_qf = mysqli_fetch_array($result_qf);
+		extract($row_qf);
+		echo "	<tr>
+		<td>$QualityFlagID</td><td>&nbsp;</td><td>$QualityFlag</td><td>&nbsp;</td><td>";
+		if ($QualityFlagID=="0"){
+			echo " (default) ";
+			}
+		else {
+			echo "<a href=\"include/delqf.php?QualityFlagID=$QualityFlagID\"><img src=\"images/cross.png\"></a>";
+			}
+		echo "</td>
+		</tr>";
+		}
+
+echo "</table>";
+
+echo "<p><div style=\"width: 200px;\"><form action=\"include/addqf.php\" method=\"POST\" id=\"AddQF\">Add new Quality Flags:<br>
+		Quality Flag Value:<br>
+			<input name=\"QualityFlagID\" type=\"text\" maxlength=\"4\" size=\"4\" class=\"form-control\"> (Integer or decimal value)<br>
+		Quality Flag Meaning:<br>
+			<input name=\"QualityFlag\" type=\"text\" maxlength=\"40\" size=\"40\" class=\"form-control\"><br>
+		<button type=\"submit\" class=\"btn btn-primary\"> Add quality flag </button>
+	</form></div><br><br>";
+
+if ($u==4) {
+	echo "<div class=\"success\">The database was updated.</div>";
+	}
+
+echo "Minimum Quality Flag to display to anonymous users: $default_qf
+	<br>&nbsp;&nbsp;&nbsp;(useful to hide unchecked data to the public)";
+
+echo "<p><form action=\"include/editqfdefault.php\" method=\"POST\" id=\"EditQFDef\">";
+
+	$query_qf = "SELECT * from QualityFlags ORDER BY QualityFlagID";
+	$result_qf = mysqli_query($connection, $query_qf)
+		or die (mysqli_error($connection));
+	$nrows_qf = mysqli_num_rows($result_qf);
+
+	echo "<select name=\"defaultqf\">";
+
+		for ($f=0;$f<$nrows_qf;$f++) {
+			$row_qf = mysqli_fetch_array($result_qf);
+			extract($row_qf);
+			if ($QualityFlagID == $default_qf){
+				echo "<option value=\"$QualityFlagID\" SELECTED>$QualityFlagID: $QualityFlag</option>\n";
+				}
+			else {
+				echo "<option value=\"$QualityFlagID\">$QualityFlagID: $QualityFlag</option>\n";
+				}
+			}
+
+	echo "</select><br>
+	<button type=\"submit\" class=\"btn btn-primary\"> Change </button>
+	<br>
+	</form>";
+	
+echo "</div></div>
+</div></div>";
+
+					?>
+			
+
+<div class="row">
+	<div class="col-lg-6">
+
+
+			<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Maintenance</h3>
+			</div>
+	        <div class="panel-body">
+
+				<?php
+					echo "<p>Execute maintenance tasks:";
+
+					echo "<p><form method=\"GET\" action=\"admin_generate.php\">
+					<button type=\"submit\" class=\"btn btn-primary\"> Generate mp3 and image files </button>
+					</form> <br>";
+					
+					echo "<p><form method=\"GET\" action=\"include/emptytmp.php\" target=\"tmp\" onsubmit=\"window.open('', 'tmp', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
+					<button type=\"submit\" class=\"btn btn-primary\"> Cleanup temp folder </button>
+					</form> <br>";
+					
+					/*
+					echo "<p><form method=\"GET\" action=\"include/systemlog.php\" target=\"systemlog\" onsubmit=\"window.open('', 'systemlog', 'width=850,height=620,status=yes,resizable=yes,scrollbars=auto')\">
+					<input type=submit value=\" System log \"></form><br><hr noshade>";
+					*/
+
+					#Check database values
+					echo "<p><form method=\"GET\" action=\"include/checkdb.php\" target=\"checkdb\" onsubmit=\"window.open('', 'checkdb', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
+					<button type=\"submit\" class=\"btn btn-primary\"> Check database for missing data and optimize tables </button>
+					</form>  <br>";
+					
+					#Window to get disk used
+					echo "<p><form method=\"GET\" action=\"include/diskused.php\" target=\"disk\" onsubmit=\"window.open('', 'disk', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
+					<button type=\"submit\" class=\"btn btn-primary\"> Check disk usage </button>
+					</form> <br>";
+
+					#Delete mp3 or images
+					echo "<p><form method=\"GET\" action=\"include/delauxfiles.php\" target=\"delauxfiles\" onsubmit=\"window.open('', 'delauxfiles', 'width=450,height=700,status=yes,resizable=yes,scrollbars=auto')\">
+					<button type=\"submit\" class=\"btn btn-primary\"> Delete mp3 and/or images from system </button>
+					</form> <br>";
+
+					#Delete collection
+					echo "<p><form method=\"GET\" action=\"include/delcol.php\" target=\"delcol\" onsubmit=\"window.open('', 'delcol', 'width=550,height=400,status=yes,resizable=yes,scrollbars=auto')\">
+					<button type=\"submit\" class=\"btn btn-primary\"> Delete a collection and all the files </button>
+
+					</form>  <br>";
+
+
+				?>
+			</div></div>
+</div><div class="col-lg-6">&nbsp;</div></div>

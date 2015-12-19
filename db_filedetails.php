@@ -306,8 +306,6 @@ $(document).ready(function(){
 #CHECK IMAGES
 #Check if there are images
 $makefigures = FALSE;
-#$query_img = "SELECT COUNT(*) FROM SoundsImages WHERE SoundID='$SoundID'";
-#$sound_images=query_one($query_img, $connection);
 $sound_images = DB::column('SELECT COUNT(*) FROM `SoundsImages` WHERE SoundID = ' . $SoundID);
 
 if ($sox_images==FALSE){
@@ -315,37 +313,31 @@ if ($sox_images==FALSE){
 		$makefigures=TRUE;
 		}
 	else{
-		#$query_img2 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform'", $connection);
 		$query_img2 = DB::column('SELECT `ImageFile` FROM `SoundsImages` WHERE ImageType="waveform" AND SoundID = ' . $SoundID);
 		if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img2")) {
 			$makefigures=TRUE;
 			}
 
-		#$query_img3 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram'", $connection);
 		$query_img3 = DB::column('SELECT `ImageFile` FROM `SoundsImages` WHERE ImageType="spectrogram" AND SoundID = ' . $SoundID);
 		if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img3")) {
 			$makefigures=TRUE;
 			}
 
-		#$query_img4 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform-small'", $connection);
 		$query_img4 = DB::column('SELECT `ImageFile` FROM `SoundsImages` WHERE ImageType="waveform-small" AND SoundID = ' . $SoundID);
 		if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img4")) {
 			$makefigures=TRUE;
 			}
 
-		#$query_img5 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-small'", $connection);
 		$query_img5 = DB::column('SELECT `ImageFile` FROM `SoundsImages` WHERE ImageType="spectrogram-small" AND SoundID = ' . $SoundID);
 		if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img5"))	{
 			$makefigures=TRUE;
 			}
 
-		#$query_img6 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform-large'", $connection);
 		$query_img6 = DB::column('SELECT `ImageFile` FROM `SoundsImages` WHERE ImageType="waveform-large" AND SoundID = ' . $SoundID);
 		if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img6"))	{
 			$makefigures=TRUE;
 			}
 
-		#$query_img7 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-large'", $connection);
 		$query_img7 = DB::column('SELECT `ImageFile` FROM `SoundsImages` WHERE ImageType="spectrogram-large" AND SoundID = ' . $SoundID);
 		if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img7"))	{
 			$makefigures=TRUE;
@@ -357,19 +349,14 @@ elseif($sox_images==TRUE){
 		$makefigures=TRUE;
 		}
 	else{
-		#$query_img3 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram'", $connection);
 		$query_img3 = DB::column('SELECT `ImageFile` FROM `SoundsImages` WHERE ImageType="spectrogram" AND SoundID = ' . $SoundID);
 		if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img3")) {
 			$makefigures=TRUE;
 			}
-
-		#$query_img5 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-small'", $connection);
 		$query_img5 = DB::column('SELECT `ImageFile` FROM `SoundsImages` WHERE ImageType="spectrogram-small" AND SoundID = ' . $SoundID);
 		if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img5"))	{
 			$makefigures=TRUE;
 			}
-
-		#$query_img7 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='spectrogram-large'", $connection);
 		$query_img7 = DB::column('SELECT `ImageFile` FROM `SoundsImages` WHERE ImageType="spectrogram-large" AND SoundID = ' . $SoundID);
 		if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img7"))	{
 			$makefigures=TRUE;
@@ -377,20 +364,13 @@ elseif($sox_images==TRUE){
 		}
 	}
 
-if ($makefigures==TRUE) {
-	require("include/make_figs.php");
-	}
-
-#$sound_spectrogram=query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' AND ImageType='spectrogram-large'", $connection);
 $sound_spectrogram = DB::column('SELECT `ImageFile` FROM `SoundsImages` WHERE ImageType="spectrogram-large"
 	AND SoundID = ' . $SoundID);
 
 if ($sox_images==FALSE){
-	#$sound_waveform=query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' AND ImageType='waveform-large'", $connection);
 	$sound_waveform = DB::column('SELECT `ImageFile` FROM `SoundsImages` WHERE ImageType="waveform-large" AND SoundID = ' . $SoundID);
 	}
 else{
-	#$spectrogram_palette=query_one("SELECT ColorPalette FROM SoundsImages WHERE SoundID='$SoundID' AND ImageType='spectrogram-large' AND ImageCreator='SoX' LIMIT 1", $connection);
 	$spectrogram_palette = DB::column('SELECT `ColorPalette` FROM `SoundsImages` WHERE ImageType="spectrogram-large" AND ImageCreator="SoX" LIMIT 1');
 	}
 
@@ -404,17 +384,6 @@ if (is_file("$absolute_dir/customhead.php")) {
 		include("customhead.php");
 	}
 	
-?>
-
-<!--
-	<script type="text/javascript">
-	$(window).load(function() {
-		$(".loader").fadeOut("slow");
-	})
-	</script>
--->
-
-<?php
 	
 echo "</head>";
 
@@ -432,8 +401,15 @@ else {
 	<?php
 		require("include/topbar.php");
 
-/*	#Loading... message
-	require("include/loadingtop.php");*/
+	#Loading... message
+	require("include/loadingtop.php");
+
+
+
+	if ($makefigures==TRUE) {
+		require("include/make_figs.php");
+		}
+
 
 	/*if ($sox_images==FALSE){*/
 		echo "
@@ -782,7 +758,7 @@ else {
 					echo "<dt>File Quality</dt><dd>$QualityFlag (Quality ID: $QualityFlagID)";
 
 					if ($pumilio_admin == TRUE) {
-						echo "<form method=\"GET\" action=\"editqf.php\" target=\"editqf\" onsubmit=\"window.open('', 'editqf', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\" class=\"form-horizontal\">
+						echo "<form method=\"GET\" action=\"editqf.php\" target=\"editqf\" onsubmit=\"window.open('', 'editqf', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\" class=\"form-inline\">
 						Edit the Quality Flag for this file: <br>
 						<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">";
 
@@ -793,7 +769,7 @@ else {
 							or die (mysqli_error($connection));
 						$nrows_qf = mysqli_num_rows($result_qf);
 
-						echo "<select name=\"newqf\">";
+						echo "<select name=\"newqf\" class=\"form-control input-sm\">";
 						for ($f=0;$f<$nrows_qf;$f++) {
 							$row_qf = mysqli_fetch_array($result_qf);
 							extract($row_qf);
@@ -806,7 +782,7 @@ else {
 							}
 
 						echo "</select>
-						<button type=\"submit\" class=\"btn btn-primary btn-xs\"> Change </button>
+						<button type=\"submit\" class=\"btn btn-primary btn-sm\"> Change </button>
 						</form>";
 						}
 
@@ -843,9 +819,9 @@ else {
 					if ($guests_can_dl || $pumilio_loggedin) {
 						echo "<dt>Download</dt>";
 						
-						echo "<dd><a href=\"dl.php?file=sounds/sounds/$ColID/$DirID/$OriginalFilename\" title=\"Please read the license field on the right for legal limitations on the use of these files.\">$SoundFormat</a>";
+						echo "<dd><a href=\"dl.php?file=sounds/sounds/$ColID/$DirID/$OriginalFilename\" title=\"Please read the license field on the right for legal limitations on the use of these files.\"><button type=\"button\" class=\"btn btn-primary btn-sm\">$SoundFormat</button></a>";
 						echo " | ";					
-						echo "<a href=\"dl.php?file=sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename\" title=\"Please read the license field on the right for legal limitations on the use of these files.\">$AudioPreviewFormat</a>
+						echo "<a href=\"dl.php?file=sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename\" title=\"Please read the license field on the right for legal limitations on the use of these files.\"><button type=\"button\" class=\"btn btn-primary btn-sm\">$AudioPreviewFormat</button></a>
 							</dd>";
 						}
 
@@ -900,11 +876,7 @@ else {
 							</form>\n";
 					}
 
-
-
 		echo "</div>";
-
-
 	echo "</div>";#end row
 
 require("include/bottom.php");
@@ -915,4 +887,8 @@ echo "</body>
 if ($use_leaflet == TRUE){
 	require("include/leaflet1.php");
 }
+
+
+require("include/loadingbottom.php");
+
 ?>

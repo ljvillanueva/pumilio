@@ -54,6 +54,34 @@ if ($settings == "top"){
 		}
 
 
+	$value = filter_var($_POST["mapping_system"], FILTER_SANITIZE_STRING);
+	$check = DB::column('SELECT COUNT(*) FROM `PumilioSettings` WHERE Settings = "mapping_system"');
+	$settings = array(
+		'Settings' => 'mapping_system',
+		'Value' => $value
+	);
+	if ($check == 0){
+		DB::insert('PumilioSettings', $settings);
+		}
+	else{
+		DB::update('PumilioSettings', $settings, 'mapping_system', 'Settings');
+		}
+
+
+	$value = filter_var($_POST["acknowledgement"], FILTER_SANITIZE_STRING);
+	$check = DB::column('SELECT COUNT(*) FROM `PumilioSettings` WHERE Settings = "acknowledgement"');
+	$settings = array(
+		'Settings' => 'acknowledgement',
+		'Value' => $value
+	);
+	if ($check == 0){
+		DB::insert('PumilioSettings', $settings);
+		}
+	else{
+		DB::update('PumilioSettings', $settings, 'acknowledgement', 'Settings');
+		}
+
+
 	$value = filter_var($_POST["use_googlemaps"], FILTER_SANITIZE_STRING);
 	$check = DB::column('SELECT COUNT(*) FROM `PumilioSettings` WHERE Settings = "use_googlemaps"');
 	$settings = array(
@@ -68,18 +96,6 @@ if ($settings == "top"){
 		}
 
 		
-	$value = filter_var($_POST["googlemaps3_key"], FILTER_SANITIZE_STRING);
-	$check = DB::column('SELECT COUNT(*) FROM `PumilioSettings` WHERE Settings = "googlemaps3_key"');
-	$settings = array(
-		'Settings' => 'googlemaps3_key',
-		'Value' => $value
-	);
-	if ($check == 0){
-		DB::insert('PumilioSettings', $settings);
-		}
-	else{
-		DB::update('PumilioSettings', $settings, 'googlemaps3_key', 'Settings');
-		}
 
 
 	$value = filter_var($_POST["googleanalytics_ID"], FILTER_SANITIZE_STRING);

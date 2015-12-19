@@ -16,12 +16,12 @@ require("include/apply_config.php");
 $force_admin = TRUE;
 require("include/check_admin.php");
 		
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
-<html>
+echo "<!DOCTYPE html>
+<html lang=\"en\">
 <head>
 <title>$app_custom_name - Generate preview files</title>";
 
-require("include/get_css.php");
+require("include/get_css3.php");
 require("include/get_jqueryui.php");
 
 if ($use_googleanalytics){
@@ -38,22 +38,19 @@ if (is_file("$absolute_dir/customhead.php")) {
 </head>
 <body>
 
-	<!--Blueprint container-->
+	<!--Bootstrap container-->
 	<div class="container">
 		<?php
 			require("include/topbar.php");
-		?>
-		<div class="span-24 last">
-			<hr noshade>
-		</div>
-		<div class="span-24 last">
-			<?php
+
+
+			echo "<h2>Generate preview sound and image files</h2>
+
+			<div class=\"row\">
+				<div class=\"col-lg-6\">";
+
 				$no_sounds=query_one("SELECT COUNT(*) FROM Sounds WHERE SoundStatus!='9'", $connection);
-				echo "<h4>Generate preview sound and image files</h4>
-				<p>Use this link to generate the preview files for each sound file in the database. 
-				<p><div class=\"notice\">Please note that this task may take some
-				time and computer power. To cancel, just click stop in the browser.</div>
-				<p>";
+				echo "<p>Use this link to generate the preview files for each sound file in the database. <br><br>";
 
 			if ($no_sounds>0) {
 
@@ -80,26 +77,27 @@ if (is_file("$absolute_dir/customhead.php")) {
 					echo "	</select><br>";
 
 					*/
-				echo "&nbsp;&nbsp;&nbsp;<input type=submit value=\" Generate preview files \" class=\"fg-button ui-state-default ui-corner-all\">
+				echo "<button type=\"submit\" class=\"btn btn-primary\"> Generate preview files </button>
 						</form>
 						<br><br>";
+
+
+
+				echo "</div><div class=\"col-lg-6\">
+					<div class=\"alert alert-warning\">Please note that this task may take some
+					time and computer power. To cancel, just click stop in the browser.</div></div></div>";
+
+
 					}
 			else {
 				echo "There are no sounds in the archive.";
 					}
 
-			?>
-		</div>
-		<div class="span-24 last">
-			&nbsp;
-		</div>
-		<div class="span-24 last">
-			<?php
-			require("include/bottom.php");
-			?>
 
-		</div>
-	</div>
+
+
+require("include/bottom.php");
+?>
 
 </body>
 </html>

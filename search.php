@@ -120,9 +120,82 @@ echo "<body>";
 				echo "<p>This archive does not have any sounds.";
 				}
 			else {
+
 				#Search by ID
 				echo "<div class=\"row\">
-						<div class=\"col-lg-6\">
+				<div class=\"col-lg-6\">";
+
+
+
+					#By site
+					echo "<div class=\"panel panel-primary\">
+								<div class=\"panel-heading\">
+									<h3 class=\"panel-title\">Browse a Site</h3>
+								</div>
+								<div class=\"panel-body\">
+									<form action=\"browse_site.php\" method=\"GET\" class=\"form-inline\">
+
+										<label for=\"\SiteID\">Site &nbsp;&nbsp;</label>
+										<select name=\"SiteID\" id=\"SiteID\" class=\"form-control\">";
+												
+											#Get all dates
+											$query_sites = "SELECT SiteID, SiteName FROM Sites ORDER BY SiteName";
+											$result_sites = query_several($query_sites, $connection);
+											$nrows_sites = mysqli_num_rows($result_sites);
+
+											if ($nrows_sites > 0) {
+												for ($s = 0; $s < $nrows_sites; $s++) {
+													$row_sites = mysqli_fetch_array($result_sites);
+													extract($row_sites);
+
+													$check_site = query_one("SELECT COUNT(*) FROM Sounds WHERE SiteID='$SiteID'", $connection);
+
+													if ($check_site > 0){
+														echo "\n<option value=\"$SiteID\">$SiteName</option>";
+														}
+													}
+												}
+										echo "</select>
+										<button type=\"submit\" class=\"btn btn-primary\"> Browse</button>
+									</form>
+								</div>
+							</div>";
+
+
+					#By collection
+					echo "<div class=\"panel panel-primary\">
+								<div class=\"panel-heading\">
+									<h3 class=\"panel-title\">Browse a Collection</h3>
+								</div>
+								<div class=\"panel-body\">
+									<form action=\"browse_col.php\" method=\"GET\" class=\"form-inline\">
+										<label for=\"\ColID\">Collection &nbsp;&nbsp;</label>
+										<select name=\"ColID\" id=\"ColID\" class=\"form-control\">";
+						
+
+										$query_dates = "SELECT ColID, CollectionName FROM Collections ORDER BY CollectionName";
+										$result_dates = query_several($query_dates, $connection);
+										$nrows_dates = mysqli_num_rows($result_dates);
+
+										if ($nrows_dates > 0) {
+											for ($d = 0; $d < $nrows_dates; $d++)	{
+												$row_dates = mysqli_fetch_array($result_dates);
+												extract($row_dates);
+												echo "\n<option value=\"$ColID\">$CollectionName</option>";
+												}
+											}
+									echo "</select> 
+										
+										<button type=\"submit\" class=\"btn btn-primary\">Browse</button>
+									</form>
+								</div>
+							</div>";
+
+
+
+
+					echo "</div><div class=\"col-lg-6\">
+
 
 
 
@@ -132,26 +205,34 @@ echo "<body>";
 								</div>
 								<div class=\"panel-body\">
 									<form action=\"db_filedetails.php\" method=\"GET\" class=\"form-inline\">
-									 	<label for=\"SoundID\">Sound ID: </label>
+									 	<label for=\"SoundID\">Sound ID &nbsp;&nbsp;</label>
 										<input type=\"text\" name=\"SoundID\" id=\"SoundID\" class=\"form-control\" placeholder=\"SoundID\">
 										
 										<button type=\"submit\" class=\"btn btn-primary\"> Search </button>
 									</form>
 								</div>
-							</div>";
+							</div>
 
-					echo "</div><div class=\"col-lg-6\">&nbsp;</div></div>\n";
 
-			echo "<div class=\"row\">
-				<div class=\"col-lg-8\">";
-				require("include/mainsearch.php");
-			echo "</div>
 
-				<div class=\"col-lg-4\"></div>
-			</div>
-			<br><br>";
+					</div></div>\n";
+
+
+
+				echo "<br>
+				<div class=\"row\">
+					<div class=\"col-lg-8\">";
+					require("include/mainsearch.php");
+				echo "</div>
+
+					<div class=\"col-lg-4\"></div>
+				</div>
+				<br>";
+
+
+
 			}
-			?>
+		?>
 
 		<br>
 		</div>
