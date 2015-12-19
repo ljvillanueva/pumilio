@@ -17,13 +17,13 @@ require("include/apply_config.php");
 $force_loggedin = TRUE;
 require("include/check_login.php");
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+echo "<!DOCTYPE html>
 <html>
 <head>
 
 <title>$app_custom_name - Add File</title>";
 
-require("include/get_css.php");
+require("include/get_css3.php");
 require("include/get_jqueryui.php");
 ?>
 
@@ -49,23 +49,17 @@ if (is_file("$absolute_dir/customhead.php")) {
 <div class="container">
 	<?php
 		require("include/topbar.php");
-	?>
-	<div class="span-24 last">
-		<hr noshade>
-	</div>
-	<div class="span-24 last">
-		&nbsp;
-	</div>
-	<div class="span-24 last">
-		<?php
+	
 		echo "<h3>Add files to the database</h3>";
-		echo "<form action=\"add_file.php\" method=\"GET\">";
+		echo "<div class=\"row\">
+		<div class=\"col-md-6\">
+			<form action=\"add_file.php\" method=\"GET\" class=\"form-inline\">";
 			$query = "SELECT * from Collections ORDER BY CollectionName";
 			$result = mysqli_query($connection, $query)
 				or die (mysqli_error($connection));
 			$nrows = mysqli_num_rows($result);
 			if ($nrows>0) {
-				echo "Add a single file to the collection &nbsp;&nbsp;<select name=\"ColID\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">";
+				echo "Add a single file to the collection<br><select name=\"ColID\" class=\"form-control\">";
 
 				for ($i = 0; $i < $nrows; $i++) {
 					$row = mysqli_fetch_array($result);
@@ -80,14 +74,18 @@ if (is_file("$absolute_dir/customhead.php")) {
 					}
 
 				echo "</select> 
-				<input type=submit value=\" Select \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\"></form>";
+				<button type=\"submit\" class=\"btn btn-primary\"> Select </button></form>";
 				}
 			else {
 				echo "<p>This archive has no Collections yet.";
 				}
 
 
-		echo "<hr noshade>
+		echo "</div>
+		<div class=\"col-md-6\">&nbsp;</div></div>
+
+
+		<hr noshade>
 			<p><strong> Add files from a Wildlife Acoustics SongMeter:</strong>";
 			echo "<p><a href=\"add_from_field.php?sm=1\">Upload sound files from a Wildlife Acoustics SongMeter</a>";
 			echo "<p><a href=\"add_from_field.php?sm=1&local=1\">Add sound files from a Wildlife Acoustics SongMeter</a> (stored locally in server)";
@@ -114,29 +112,28 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 
 
-		echo "<p>Upload photographs of the sites to serve as a reference.</p>
+		/*echo "<p>Upload photographs of the sites to serve as a reference.</p>
 					<p><form action=\"photoupload.php\" method=\"GET\">
-					<input type=submit value=\" Upload a photo from your computer \" class=\"fg-button ui-state-default ui-corner-all\">
-					</form></p>
+					<button type=\"submit\" class=\"btn btn-primary\"> Upload a photo from your computer </button>
+					</form></p>";*/
 
-
+		echo "<br>
 			<form action=\"sample_archive.php\" method=\"GET\">
-							<input type=submit value=\" Sample the archive \" class=\"fg-button ui-state-default ui-corner-all\">
+						<button type=\"submit\" class=\"btn btn-primary\"> Sample the archive </button>
 						</form>
 
-
+			<br>
 			<form action=\"export_marks.php\" method=\"GET\">
-							<input type=submit value=\" Export marks data \" class=\"fg-button ui-state-default ui-corner-all\">
-						</form>
-
-			";
+							<button type=\"submit\" class=\"btn btn-primary\"> Export marks data </button>
+						</form>";
 			if ($useR==TRUE){
-						echo "<form action=\"qc.php\" method=\"GET\">
-							<input type=submit value=\" Data extraction for quality control \" class=\"fg-button ui-state-default ui-corner-all\">
+						echo "<br><br><form action=\"qc.php\" method=\"GET\">
+							<input type=submit value=\" Data extraction for quality control \" class=\"form-control\">
 						</form>";
 						}
-					echo "<form action=\"qa.php\" method=\"GET\">
-						<input type=submit value=\" Figures for quality control \" class=\"fg-button ui-state-default ui-corner-all\">
+			
+			echo "<br><form action=\"qa.php\" method=\"GET\">
+						<button type=\"submit\" class=\"btn btn-primary\"> Figures for quality control </button>
 						</form>";
 
 
@@ -144,19 +141,9 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 
 
-
-		?>
-
-	</div>
-	<div class="span-24 last">
-		&nbsp;
-	</div>
-	<div class="span-24 last">
-		<?php
 		require("include/bottom.php");
 		?>
 
-	</div>
 </div>
 
 </body>

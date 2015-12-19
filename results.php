@@ -20,8 +20,9 @@ require("include/apply_config.php");
 $Col_comparison=filter_var($_GET["Col_comparison"], FILTER_SANITIZE_NUMBER_INT);
 $Col=filter_var($_GET["Col"], FILTER_SANITIZE_NUMBER_INT);
 
+
 #Display type saved as a cookie
-if (isset($_GET["display_type"])){
+/*if (isset($_GET["display_type"])){
 	$display_type = filter_var($_GET["display_type"], FILTER_SANITIZE_STRING);
 	setcookie("display_type", $display_type, time()+(3600*24*30), $app_dir);
 	}
@@ -33,8 +34,8 @@ else{
 		$display_type = "summary";
 		setcookie("display_type", $display_type, time()+(3600*24*30), $app_dir);
 		}
-	}
-
+	}*/
+$display_type = "gallery";
 
 if ($Col!="0"){
 	if ($Col_comparison==1) {
@@ -357,10 +358,10 @@ if (is_file("$absolute_dir/customhead.php")) {
 			$startid_q = $startid - 1;
 
 			if ($display_type == "summary"){
-				$how_many_to_show = 10;
+				$how_many_to_show = 20;
 				}
 			elseif ($display_type == "gallery"){
-				$how_many_to_show = 18;
+				$how_many_to_show = 36;
 				}
 			$endid = $how_many_to_show;
 			$endid_show = $startid_q + $endid;
@@ -390,118 +391,17 @@ if (is_file("$absolute_dir/customhead.php")) {
 		
 			?>
 
+		
 
 		<div class="row">
-			<div class="col-lg-12">
 
-			<div id="searchaccordion">
-			  <h3>Change Search</h3>
-			  <div><p>
-
-				<?php
-					require("include/mainsearch.php");
-				?>
-				</p></div>
+			<div class="col-lg-11">
+				<?php echo "<p>Results $startid to $endid_show of $no_sounds</p>"; ?>
 			</div>
-			</div>
-		</div>
-
-
-
-
-		<div class="row">
-			
-			<?php
-
-			#count and next
-			echo "<div class=\"col-lg-5\">Results $startid to $endid_show of $no_sounds</div>";
-
-			echo "<div class=\"col-lg-2\">&nbsp;";
-			if ($startid > 1) {
-				$go_to = $startid - $how_many_to_show;
-				echo "
-				<form action=\"results.php\" method=\"GET\" class=\"form-inline\">
-				<input type=\"hidden\" value=\"$startDate\" name=\"startDate\">
-				<input type=\"hidden\" value=\"$endDate\" name=\"endDate\">
-				<input type=\"hidden\" value=\"$startTime\" name=\"startTime\">
-				<input type=\"hidden\" value=\"$endTime\" name=\"endTime\">
-				<input type=\"hidden\" value=\"$Site_comparison\" name=\"Site_comparison\">
-				<input type=\"hidden\" value=\"$SiteID\" name=\"SiteID\">
-				<input type=\"hidden\" value=\"$startDuration\" name=\"startDuration\">
-				<input type=\"hidden\" value=\"$endDuration\" name=\"endDuration\">
-				<input type=\"hidden\" value=\"$Channels_comparison\" name=\"Channels_comparison\">
-				<input type=\"hidden\" value=\"$Channels\" name=\"Channels\">
-				<input type=\"hidden\" value=\"$SamplingRate_comparison\" name=\"SamplingRate_comparison\">
-				<input type=\"hidden\" value=\"$SamplingRate\" name=\"SamplingRate\">
-				<input type=\"hidden\" value=\"$Orderby\" name=\"Orderby\">
-				<input type=\"hidden\" value=\"$Orderby_dir\" name=\"Orderby_dir\">
-				<input type=\"hidden\" value=\"$go_to\" name=\"startid\">
-				<input type=\"hidden\" value=\"$Tags\" name=\"Tags\">
-				<input type=\"hidden\" value=\"$Tag_comparison\" name=\"Tag_comparison\">
-				<input type=\"hidden\" value=\"$Col\" name=\"Col\">
-				<input type=\"hidden\" value=\"$Col_comparison\" name=\"Col_comparison\">
-				<input type=\"hidden\" value=\"$filename\" name=\"filename\">
-
-				<input type=\"image\" src=\"images/arrowleft.png\" alt=\" Prev \" title=\" Prev \">
-				</form>";
-				}
-			echo "</div>";
-
-
-			echo "<div class=\"col-lg-2\">&nbsp;";
-			if ($endid_show < $no_sounds) {
-				$go_to = $startid + $how_many_to_show;
-				echo "
-				
-				<form action=\"results.php\" method=\"GET\" class=\"form-inline\">
-				<input type=\"hidden\" value=\"$startDate\" name=\"startDate\">
-				<input type=\"hidden\" value=\"$endDate\" name=\"endDate\">
-				<input type=\"hidden\" value=\"$startTime\" name=\"startTime\">
-				<input type=\"hidden\" value=\"$endTime\" name=\"endTime\">
-				<input type=\"hidden\" value=\"$Site_comparison\" name=\"Site_comparison\">
-				<input type=\"hidden\" value=\"$SiteID\" name=\"SiteID\">
-				<input type=\"hidden\" value=\"$startDuration\" name=\"startDuration\">
-				<input type=\"hidden\" value=\"$endDuration\" name=\"endDuration\">
-				<input type=\"hidden\" value=\"$Channels_comparison\" name=\"Channels_comparison\">
-				<input type=\"hidden\" value=\"$Channels\" name=\"Channels\">
-				<input type=\"hidden\" value=\"$SamplingRate_comparison\" name=\"SamplingRate_comparison\">
-				<input type=\"hidden\" value=\"$SamplingRate\" name=\"SamplingRate\">
-				<input type=\"hidden\" value=\"$Orderby\" name=\"Orderby\">
-				<input type=\"hidden\" value=\"$Orderby_dir\" name=\"Orderby_dir\">
-				<input type=\"hidden\" value=\"$go_to\" name=\"startid\">
-				<input type=\"hidden\" value=\"$Tags\" name=\"Tags\">
-				<input type=\"hidden\" value=\"$Tag_comparison\" name=\"Tag_comparison\">
-				<input type=\"hidden\" value=\"$Col\" name=\"Col\">
-				<input type=\"hidden\" value=\"$Col_comparison\" name=\"Col_comparison\">
-				<input type=\"hidden\" value=\"$filename\" name=\"filename\">
-
-				<input type=\"image\" src=\"images/arrowright.png\" alt=\" Next \" title=\" Next \">
-				</form>";
-				}
-			echo "</div>";
-
-		?>
-		
-		
-			<div class="col-lg-1 center">
-				<?php
-				#Order by sound name
-				/*echo "Name<br><a href=\"browse_site.php?SiteID=$SiteID&order_by=SoundName&order_dir=ASC\"><span class=\"glyphicon glyphicon-triangle-bottom\" aria-hidden=\"true\"></span></a> &nbsp;&nbsp; <a href=\"browse_site.php?SiteID=$SiteID&order_by=SoundName&order_dir=DESC\"><span class=\"glyphicon glyphicon-triangle-top\" aria-hidden=\"true\"></span></a>";*/
-
-				?>
-			</div>
-			<div class="col-lg-1 center">
-				<?php
-				#Order by sound date
-				/*echo "Date<br><a href=\"browse_site.php?SiteID=$SiteID&order_by=Date&order_dir=ASC\"><span class=\"glyphicon glyphicon-triangle-bottom\" aria-hidden=\"true\"></span></a> &nbsp;&nbsp; <a href=\"browse_site.php?SiteID=$SiteID&order_by=Date&order_dir=DESC\"><span class=\"glyphicon glyphicon-triangle-top\" aria-hidden=\"true\"></span></a>";*/
-
-				?>
-			</div>
-			<div class="col-lg-1 center">
+			<div class="col-lg-1">
 				<?php
 				#Display
-				echo "Display:<br> 
-
+				/*echo "Display:<br> 
 					<form action=\"results.php\" method=\"GET\" style=\"display:inline;\">
 					<input type=\"hidden\" value=\"$startDate\" name=\"startDate\">
 					<input type=\"hidden\" value=\"$endDate\" name=\"endDate\">
@@ -553,11 +453,36 @@ if (is_file("$absolute_dir/customhead.php")) {
 					<input type=\"hidden\" value=\"$filename\" name=\"filename\">
 
 					<input type=\"image\" src=\"images/application_view_columns.png\" alt=\" Display as summary \" title=\" Display as summary \">
-					</form>";
+					</form>";*/
 
 			?>
 			</div>
 		</div> <!-- end row -->
+
+
+
+
+
+
+
+		<div class="row">
+			<div class="col-lg-12">
+
+			<div id="searchaccordion">
+			  <h3>Change Search</h3>
+			  <div><p>
+
+				<?php
+					require("include/mainsearch.php");
+				?>
+				</p></div>
+			</div>
+			</div>
+		</div>
+
+
+
+
 
 
 			<?php
@@ -572,8 +497,169 @@ if (is_file("$absolute_dir/customhead.php")) {
 				}
 			
 						
+
+
+
+				#Get vars again
+				#Sanitize form inputs
+				$Col_comparison=filter_var($_GET["Col_comparison"], FILTER_SANITIZE_NUMBER_INT);
+				$Col=filter_var($_GET["Col"], FILTER_SANITIZE_NUMBER_INT);
+				if ($Col!="0"){
+					if ($Col_comparison==1) {
+						$Col_comparisonq = "=";}
+					elseif ($Col_comparison==2) {
+						$Col_comparisonq = "!=";}
+					$Colq = "AND Sounds.ColID $Col_comparisonq '$Col' AND Sounds.ColID=Collections.ColID ";
+					}
+				else{
+					$Colq = "";
+					}
+
+				$SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
+				if ($SiteID!="0"){
+					if ($Site_comparison==1) {
+						$Site_comparisonq = "=";}
+					elseif ($Site_comparison==2) {
+						$Site_comparisonq = "!=";}
+					$Siteq = "AND Sounds.SiteID $Site_comparisonq '$SiteID' AND Sounds.SiteID=Sites.SiteID ";
+					}
+				else{
+					$Siteq = "";
+					}
+
+				$startDuration=filter_var($_GET["startDuration"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+				$endDuration=filter_var($_GET["endDuration"], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+				$Channels=filter_var($_GET["Channels"], FILTER_SANITIZE_NUMBER_INT);
+
+				if ($Channels!="0"){
+					if ($Channels_comparison==1) {
+						$Channels_comparisonq = "=";}
+					elseif ($Channels_comparison==2) {
+						$Channels_comparisonq = "<";}
+					elseif ($Channels_comparison==3) {
+						$Channels_comparisonq = ">";}
+					$Channelsq = "AND Sounds.Channels $Channels_comparisonq '$Channels' ";
+					}
+				else{
+					$Channelsq = "";
+					}
+
+				$SamplingRate=filter_var($_GET["SamplingRate"], FILTER_SANITIZE_NUMBER_INT);
+				if ($SamplingRate!="0"){
+					if ($SamplingRate_comparison==1) {
+						$SamplingRate_comparisonq = "=";}
+					elseif ($SamplingRate_comparison==2) {
+						$SamplingRate_comparisonq = "!=";}
+					$SamplingRateq = "AND Sounds.SamplingRate $SamplingRate_comparisonq '$SamplingRate' ";
+					}
+				else{
+					$SamplingRateq = "";
+					}
+
+				$startDate=filter_var($_GET["startDate"], FILTER_SANITIZE_STRING);
+				$endDate=filter_var($_GET["endDate"], FILTER_SANITIZE_STRING);
+				$startTime=filter_var($_GET["startTime"], FILTER_SANITIZE_STRING);
+				$endTime=filter_var($_GET["endTime"], FILTER_SANITIZE_STRING);
+				if (isset($_GET["filename"])){
+					$filename = filter_var($_GET["filename"], FILTER_SANITIZE_STRING);
+					$filename_q = " AND Sounds.SoundName LIKE '%" . $filename. "%'";
+					}
+				else{
+					$filename_q = " ";
+					$Filen = 0;
+					}
+				$Tags=filter_var($_GET["Tags"], FILTER_SANITIZE_STRING);
+				if ($Tags!="0"){
+					if ($Tag_comparison=="1"){
+						$Tagq = "AND Sounds.SoundID=Tags.SoundID AND Tags.Tag='$Tags'";
+						}
+					elseif ($Tag_comparison=="2"){
+						$Tagq = "AND Sounds.SoundID=Tags.SoundID AND Tags.Tag!='$Tags'";
+						}
+					}
+				else{
+					$Tagq = "";
+					}
+
+
+
+
 			echo "<div class=\"row\">
-				<div class=\"col-lg-10\">&nbsp;</div>";
+				<div class=\"col-lg-10\">";
+
+					#Pagination
+					#First, have to make the very long links to carry the query
+					if ($startid < 1){
+							$prev = -1;
+							$startid = 1;
+							$next = $startid + $how_many_to_show;
+						}
+						else{
+							$prev = $startid - $how_many_to_show;
+							$next = $startid + $how_many_to_show;
+						}
+
+						if ($next > $no_sounds){
+							$next = $no_sounds;
+						}
+
+						if (($startid + $how_many_to_show) > $no_sounds){
+							$next = "NA";
+						}
+
+							echo "<nav class=\"text-center\">
+						  		<ul class=\"pagination pagination-sm\">";
+								if ($prev > -1){
+									echo "<li>
+										<a href=\"results.php?startDate=$startDate&endDate=$endDate&startTime=$startTime&endTime=$endTime&Site_comparison=$Site_comparison&SiteID=$SiteID&startDuration=$startDuration&endDuration=$endDuration&Channels_comparison=$Channels_comparison&Channels=$Channels&SamplingRate_comparison=$SamplingRate_comparison&SamplingRate=$SamplingRate&Orderby=$Orderby&Orderby_dir=$Orderby_dir&Tags=$Tags&Tag_comparison=$Tag_comparison&Col=$Col&Col_comparison=$Col_comparison&filename=$filename&startid=$prev\" aria-label=\"Previous\">
+										<span aria-hidden=\"true\">&laquo;</span>
+										</a>
+									</li>\n";
+								}
+								
+							    $prevellipsis = FALSE;
+							    $nextellipsis = FALSE;
+							    $pages = ceil($no_sounds / $how_many_to_show);
+							    for ($p=1; $p < ($pages + 1); $p++) {
+							    	$this_page = ($p - 1) * $how_many_to_show + 1;
+
+							    	if ($this_page == $startid){
+							    		echo "<li class=\"active\"><a href=\"results.php?startDate=$startDate&endDate=$endDate&startTime=$startTime&endTime=$endTime&Site_comparison=$Site_comparison&SiteID=$SiteID&startDuration=$startDuration&endDuration=$endDuration&Channels_comparison=$Channels_comparison&Channels=$Channels&SamplingRate_comparison=$SamplingRate_comparison&SamplingRate=$SamplingRate&Orderby=$Orderby&Orderby_dir=$Orderby_dir&Tags=$Tags&Tag_comparison=$Tag_comparison&Col=$Col&Col_comparison=$Col_comparison&filename=$filename&startid=$this_page\">$p <span class=\"sr-only\">(current)</span></a></li>";
+							    	}
+							    	else{
+							    	
+							    		if ($this_page < ($startid - ($how_many_to_show*7)  )){
+							    			if ($prevellipsis == FALSE){
+								    			echo "<li><span aria-hidden=\"true\">...</span></li>";
+								    			$prevellipsis = TRUE;
+								    			}
+							    			}
+							    		elseif ($this_page > ($startid + ($how_many_to_show*7)  )){
+							    			if ($nextellipsis == FALSE){
+								    			echo "<li><span aria-hidden=\"true\">...</span></li>";
+								    			$nextellipsis = TRUE;
+								    			}
+							    			}
+							    		else{
+							    			echo "<li><a href=\"results.php?startDate=$startDate&endDate=$endDate&startTime=$startTime&endTime=$endTime&Site_comparison=$Site_comparison&SiteID=$SiteID&startDuration=$startDuration&endDuration=$endDuration&Channels_comparison=$Channels_comparison&Channels=$Channels&SamplingRate_comparison=$SamplingRate_comparison&SamplingRate=$SamplingRate&Orderby=$Orderby&Orderby_dir=$Orderby_dir&Tags=$Tags&Tag_comparison=$Tag_comparison&Col=$Col&Col_comparison=$Col_comparison&filename=$filename&startid=$this_page\">$p</a></li>";
+							    			}
+							    	}
+							    }
+
+							    if ($next != "NA"){
+									
+									echo "<li>
+									  <a href=\"results.php?startDate=$startDate&endDate=$endDate&startTime=$startTime&endTime=$endTime&Site_comparison=$Site_comparison&SiteID=$SiteID&startDuration=$startDuration&endDuration=$endDuration&Channels_comparison=$Channels_comparison&Channels=$Channels&SamplingRate_comparison=$SamplingRate_comparison&SamplingRate=$SamplingRate&Orderby=$Orderby&Orderby_dir=$Orderby_dir&Tags=$Tags&Tag_comparison=$Tag_comparison&Col=$Col&Col_comparison=$Col_comparison&filename=$filename&startid=$next\" aria-label=\"Next\">
+									    <span aria-hidden=\"true\">&raquo;</span>
+									  </a>
+									</li>\n";
+								}
+							echo "</ul></nav>";
+
+
+
+				echo "</div>";
+
 
 			echo "<div class=\"col-lg-2\">";
 
@@ -603,7 +689,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 					<input type=\"hidden\" value=\"$Col_comparison\" name=\"Col_comparison\">
 					<input type=\"hidden\" value=\"$filename\" name=\"filename\">";
 
-				echo "<select name=\"startid\" class=\"form-control\">";
+				echo "<select name=\"startid\" class=\"form-control input-sm\">";
 
 				for ($p = 0; $p < ($no_pages + 1); $p++) {
 					$this_p = $p + 1;
@@ -617,84 +703,13 @@ if (is_file("$absolute_dir/customhead.php")) {
 					}
 
 				echo "</select> 
-				<button type=\"submit\" class=\"btn btn-primary\"> Select </button>
+				<button type=\"submit\" class=\"btn btn-primary btn-sm\"> Select </button>
 				</form>
 				</div></div>";
 
 		
 
-			#Pagination
-			#First, have to make the very long links to carry the query
-/*
-			if ($startid < 1){
-					$prev = -1;
-					$startid = 1;
-					$next = $startid + 10;
-				}
-				else{
-					$prev = $startid - 10;
-					$next = $startid + 10;
-				}
 
-				if ($next > $no_sounds){
-					$next = $no_sounds;
-				}
-
-				if (($startid + 10) > $no_sounds){
-					$next = "NA";
-				}
-
-
-
-
-					echo "<nav class=\"text-center\">
-				  		<ul class=\"pagination pagination-sm\">";
-						if ($prev > -1){
-							echo "<li>
-								<a href=\"browse_site.php?SiteID=$SiteID&startid=$prev\" aria-label=\"Previous\">
-								<span aria-hidden=\"true\">&laquo;</span>
-								</a>
-							</li>\n";
-						}
-						
-					    $prevellipsis = FALSE;
-					    $nextellipsis = FALSE;
-					    $pages = ceil($no_sounds / 10);
-					    for ($p=1; $p < ($pages + 1); $p++) {
-					    	$this_page = ($p - 1) * 10 + 1;
-
-					    	if ($this_page == $startid){
-					    		echo "<li class=\"active\"><a href=\"browse_site.php?SiteID=$SiteID&startid=$this_page\">$p <span class=\"sr-only\">(current)</span></a></li>";
-					    	}
-					    	else{
-					    	
-					    		if ($this_page < ($startid - 80)){
-					    			if ($prevellipsis == FALSE){
-						    			echo "<li><span aria-hidden=\"true\">...</span></li>";
-						    			$prevellipsis = TRUE;
-						    			}
-					    			}
-					    		elseif ($this_page > ($startid + 80)){
-					    			if ($nextellipsis == FALSE){
-						    			echo "<li><span aria-hidden=\"true\">...</span></li>";
-						    			$nextellipsis = TRUE;
-						    			}
-					    			}
-					    		else{
-					    			echo "<li><a href=\"browse_site.php?SiteID=$SiteID&startid=$this_page\">$p</a></li>";
-					    			}
-					    	}
-					    }
-
-					    if ($next != "NA"){
-							
-							echo "<li>
-							  <a href=\"browse_site.php?SiteID=$SiteID&startid=$next\" aria-label=\"Next\">
-							    <span aria-hidden=\"true\">&raquo;</span>
-							  </a>
-							</li>\n";
-						}
-					echo "</ul></nav>";*/
 			
 			?>
 

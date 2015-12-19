@@ -11,14 +11,14 @@ require("check_admin.php");
 $op=filter_var($_GET["op"], FILTER_SANITIZE_NUMBER_INT);
 $ColID=filter_var($_GET["ColID"], FILTER_SANITIZE_NUMBER_INT);
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+echo "<!DOCTYPE html>
 <html>
 <head>
 
 <title>$app_custom_name - Delete Collections</title>";
 
 #Get CSS
- require("get_css_include.php");
+ require("get_css3_include.php");
  require("get_jqueryui_include.php");
 ?>
 
@@ -107,7 +107,7 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 	$result = mysqli_query($connection, $query)
 		or die (mysqli_error($connection));
 	$nrows = mysqli_num_rows($result);
-	echo "<select name=\"ColID\" class=\"ui-state-default ui-corner-all\">";
+	echo "<select name=\"ColID\" class=\"form-control\">";
 
 		for ($i=0;$i<$nrows;$i++) {
 			$row = mysqli_fetch_array($result);
@@ -124,7 +124,7 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 
 		echo "</select> 
 		<input type=\"hidden\" name=\"op\" value=\"1\">
-		<input type=submit value=\" Delete \" class=\"fg-button ui-state-default ui-corner-all\">
+		<button type=\"submit\" class=\"btn btn-primary\"> Delete </button>
 	</form>
 	<hr noshade>";
 

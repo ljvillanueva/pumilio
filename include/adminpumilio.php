@@ -543,7 +543,7 @@ echo "<div class=\"form-group\">
 	#allow chorus
 	#$use_chorus=query_one("SELECT Value from PumilioSettings WHERE Settings='use_chorus'", $connection);
 
-	if ($use_chorus == "1"){
+/*	if ($use_chorus == "1"){
 		$use_chorus_d = "Yes";
 		}
 	elseif ($use_chorus == "0"){
@@ -566,12 +566,12 @@ echo "<div class=\"form-group\">
 				<option SELECTED value=\"0\">No</option>";
 			}
 
-		echo " </select></div>\n";
+		echo " </select></div>\n";*/
 
 
 	#use tag cloud
 	#$use_tags=query_one("SELECT Value from PumilioSettings WHERE Settings='use_tags'", $connection);
-
+/*
 	if ($use_tags=="1"){
 		$use_tags_d="Yes";
 		}
@@ -595,7 +595,7 @@ echo "<div class=\"form-group\">
 				<option SELECTED value=\"0\">No</option>";
 			}
 	echo " </select></div>";
-
+*/
 
 	#audio preview format
 	#$audiopreview_format=query_one("SELECT Value from PumilioSettings WHERE Settings='audiopreview_format'", $connection);
@@ -629,7 +629,7 @@ echo "<div class=\"form-group\">
 	
 	#hide_latlon_guests
 	#$hide_latlon_guests=query_one("SELECT Value from PumilioSettings WHERE Settings='hide_latlon_guests'", $connection);
-
+/*
 	if ($hide_latlon_guests=="1"){
 		$hide_latlon_guests_d="Yes";
 		}
@@ -653,12 +653,12 @@ echo "<div class=\"form-group\">
 				<option SELECTED value=\"0\">No</option>";
 			}
 
-	echo " </select></div>";
+	echo " </select></div>";*/
 
 
 	#use side-to-side comparison
 	#$sidetoside_comp=query_one("SELECT Value from PumilioSettings WHERE Settings='sidetoside_comp'", $connection);
-
+/*
 	if ($sidetoside_comp=="1"){
 		$sidetoside_comp_d="Yes";
 		}
@@ -683,11 +683,11 @@ echo "<div class=\"form-group\">
 			}
 
 	echo " </select></div>";
-
+*/
 
 	#allow_upload
 	#$allow_upload=query_one("SELECT Value from PumilioSettings WHERE Settings='allow_upload'", $connection);
-
+/*
 	if ($allow_upload=="1"){
 		$allow_upload_d="Yes";
 		}
@@ -711,7 +711,7 @@ echo "<div class=\"form-group\">
 				<option SELECTED value=\"0\">No</option>";
 			}
 
-	echo " </select></div>";
+	echo " </select></div>";*/
 
 
 	#compress wav to flac

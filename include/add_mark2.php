@@ -4,23 +4,16 @@ require("../config.php");
 require("apply_config_include.php");
 require("check_login.php");
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+
+echo "<!DOCTYPE html>
 <html>
 <head>
 
 <title>Pumilio</title>";
 
+require("get_css3_include.php");
+require("get_jqueryui_include.php");
 ?>
-
-<link rel="stylesheet" href="../css/screen.css" type="text/css" media="screen, projection">
-<link rel="stylesheet" href="../css/print.css" type="text/css" media="print">	
-<!--[if IE]><link rel="stylesheet" href="../css/ie.css" type="text/css" media="screen, projection"><![endif]-->
-
-<!-- Scripts for JQuery -->
-	<script src="../js/jquery-1.3.2.min.js"></script>
-	<link type="text/css" href="../js/jquery/start/jquery-ui-1.7.3.custom.css" rel="stylesheet" />	
-	<script type="text/javascript" src="../js/jquery/jquery-ui-1.7.3.custom.min.js"></script>
-	<script src="../js/jquery.fg-button.js"></script>
 
 </head>
 <body>
@@ -100,7 +93,7 @@ if ($nrows==0) {
 		or die (mysqli_error($connection));
 	}
 
-echo "<p class=\"success\">Record inserted in database.";
+echo "<div class=\"alert alert-success\">Record inserted in database</div>";
 
 ?>
 

@@ -11,7 +11,7 @@
 
 			echo "<form action=\"results.php\" method=\"GET\" class=\"form-inline\">
 				<label for=\"filename\">Filename: </label>
-					<input type=\"text\" name=\"filename\" id=\"filename\" class=\"form-control\" placeholder=\"Filename\"><br>
+					<input type=\"text\" name=\"filename\" value=\"$filename\" id=\"filename\" class=\"form-control\" placeholder=\"Filename\"><br>
 
 
 				<label for=\"Col_comparison\">Collection: </label>
@@ -149,9 +149,9 @@
 
 				<label for=\"Orderby\">Order by:</label>
 
-					<select name=\"Orderby\" class=\"form-control\">
-						<option value=\"Sounds.SoundID\" SELECTED>original order</option>
-						<option value=\"Time\">date and time</option>
+					<select name=\"Orderby\" class=\"form-control\">";
+						/*<option value=\"Sounds.SoundID\" SELECTED>original order</option>*/
+						echo "<option value=\"Time\">date and time</option>
 						<option value=\"Duration\">duration</option>
 					</select>
 

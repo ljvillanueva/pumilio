@@ -185,6 +185,6 @@ else {
 		}
 
 // Relocate back to the first page of the application
-	header("Location: ./pumilio.php?Token=$TokenID");
+	header("Location: ./pumilioloading.php?Token=$TokenID");
 	die();
 ?>

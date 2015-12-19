@@ -28,6 +28,9 @@ if (!isset($showmarks)){
 	$showmarks = 0;
 	}
 
-echo "<img src=\"tmp/$random_cookie/$viewport_blackbox\" onClick=\"parent.location='pumilio.php?Token=$Token&showmarks=$showmarks'\" alt=\"Click to return to default view\" title=\"Click to return to default view\">";
+echo "<hr noshade>
+<p><strong>Spectrogram navigator</strong></p>
+
+	<img style=\"border-style: dotted; border-width: 1px;\" src=\"tmp/$random_cookie/$viewport_blackbox\" onClick=\"parent.location='pumilio.php?Token=$Token&showmarks=$showmarks'\" alt=\"Click to return to default view\" title=\"Click to return to default view\">";
 
 ?>

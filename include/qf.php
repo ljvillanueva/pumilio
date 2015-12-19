@@ -55,13 +55,13 @@ echo "<p>
 
 echo "</table>";
 
-echo "<p><form action=\"include/addqf.php\" method=\"POST\" id=\"AddQF\">Add new Quality Flags:<br>
+echo "<p><div style=\"width: 200px;\"><form action=\"include/addqf.php\" method=\"POST\" id=\"AddQF\">Add new Quality Flags:<br>
 		Quality Flag Value:<br>
-			<input name=\"QualityFlagID\" type=\"text\" maxlength=\"4\" size=\"4\"> (Integer or decimal value)<br>
+			<input name=\"QualityFlagID\" type=\"text\" maxlength=\"4\" size=\"4\" class=\"form-control\"> (Integer or decimal value)<br>
 		Quality Flag Meaning:<br>
-			<input name=\"QualityFlag\" type=\"text\" maxlength=\"40\" size=\"40\"><br>
+			<input name=\"QualityFlag\" type=\"text\" maxlength=\"40\" size=\"40\" class=\"form-control\"><br>
 		<button type=\"submit\" class=\"btn btn-primary\"> Add quality flag </button>
-	</form><br><br>";
+	</form></div><br><br>";
 
 if ($u==4) {
 	echo "<div class=\"success\">The database was updated.</div>";

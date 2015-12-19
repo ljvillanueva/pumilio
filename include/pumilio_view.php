@@ -68,6 +68,11 @@ if (!file_exists('tmp/' . $random_cookie . '/' . $imgfile)) {
 	$min_freq=$frequency_min;
 	$max_freq=$frequency_max;
 	$mid_freq=((($frequency_max-$frequency_min)/2) + $frequency_min);
+
+	#Draw the max freq
+	exec("convert -fill " . $letter_color . " -draw \"text 5,15 '" . $max_freq . "'\" -draw \"text 5,205 '" . $mid_freq . "'\" tmp/$random_cookie/$imgfile -quality 10 tmp/$random_cookie/_$imgfile; rm tmp/$random_cookie/$imgfile; mv tmp/$random_cookie/_$imgfile tmp/$random_cookie/$imgfile", $lastline, $retval);
+		if ($retval!=0)
+		die("<div class=\"alert alert-danger\">There was a problem with Imagemagick...</div>");
 	}
 
 //mp3
