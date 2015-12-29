@@ -5,16 +5,18 @@
 use \DByte\DB;
 DB::$c = $pdo;
 
-//Custom name of the app
-if ($tt==1) {
-	echo "<div class=\"success\" id=\"tt1\">The database was updated.</div>";
-	}
-
-echo "<div class=\"panel panel-primary\">
+echo "
+<a name=\"gen\"></a>
+<div class=\"panel panel-primary\">
 		<div class=\"panel-heading\">
 			<h3 class=\"panel-title\">General Settings</h3>
 		</div>
         <div class=\"panel-body\">";
+
+//Custom name of the app
+if ($tt==1) {
+	echo "<div class=\"alert alert-success\" id=\"tt1\">The database was updated.</div>";
+	}
 
 echo "<form action=\"include/editpumiliosettings.php\" method=\"POST\">
 	<input type=\"hidden\" name=\"settings\" value=\"top\">
@@ -274,6 +276,7 @@ echo "<div class=\"form-group\">
 
 	#Image settings
 	echo "
+	<a name=\"image\"></a>
 	<div class=\"panel panel-primary\">
 	<div class=\"panel-heading\">
 		<h3 class=\"panel-title\">Image Settings</h3>

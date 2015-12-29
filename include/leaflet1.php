@@ -17,6 +17,8 @@ if ($SiteLat != "" && $SiteLon != ""){
 
 				var map = L.map('map').setView([$SiteLat, $SiteLon], 13);";
 
+
+
 				if ($tileserver == "mapbox"){
 					#From default leaflet demo
 					echo "

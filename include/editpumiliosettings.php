@@ -169,7 +169,7 @@ if ($settings == "top"){
 		}
 
 			
-	header("Location: ../admin.php?t=1&tt=1");
+	header("Location: ../admin.php?tt=1#gen");
 	die();
 	}
 elseif ($settings == "image"){
@@ -215,7 +215,7 @@ elseif ($settings == "image"){
 		}
 
 
-	header("Location: ../admin.php?t=1&imgset=1");
+	header("Location: ../admin.php?imgset=1#image");
 	die();	
 	}
 elseif ($settings == "bottom"){
