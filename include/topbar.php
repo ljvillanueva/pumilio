@@ -10,7 +10,7 @@ echo " <!-- Fixed navbar -->
           <ul class=\"nav navbar-nav\">
             <!--<li><a href=\"map.php\"><span class=\"glyphicon glyphicon-map-marker\"></span> Map of Sounds</a></li>-->
             <li><a href=\"search.php\"><span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Search</a></li>
-            <li><a href=\"about.php\"><span class=\"glyphicon glyphicon-info-sign\"></span> About</a></li>";
+            <!--<li><a href=\"about.php\"><span class=\"glyphicon glyphicon-info-sign\"></span> About</a></li>-->";
 
 
 	if ($login_wordpress == TRUE){
@@ -21,6 +21,7 @@ echo " <!-- Fixed navbar -->
 			$username = $current_user->user_login;
 		
 			echo "<li><a href=\"add.php\"><span class=\"glyphicon glyphicon-cloud-upload\"></span> Add files</a></li>
+				<li><a href=\"export.php\"><span class=\"glyphicon glyphicon-cloud-download\"></span> Export</a></li>
 						</ul>
 			    <ul class=\"nav navbar-nav navbar-right\">\n";
 
@@ -49,6 +50,7 @@ echo " <!-- Fixed navbar -->
 			$username = $_COOKIE["username"];
 
 		echo "<li><a href=\"add.php\"><span class=\"glyphicon glyphicon-cloud-upload\"></span> Add files</a></li>
+			<li><a href=\"export.php\"><span class=\"glyphicon glyphicon-cloud-download\"></span> Export</a></li>
 					</ul>
 		    <ul class=\"nav navbar-nav navbar-right\">\n";
 
@@ -81,6 +83,5 @@ echo " <!-- Fixed navbar -->
         </div><!--/.nav-collapse -->
       </div>
     </nav>";
-
 
 ?>

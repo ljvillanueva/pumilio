@@ -13,29 +13,31 @@ flush(); @ob_flush();
 
 $archive_name=date("YMd_His");
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+echo "<!DOCTYPE html>
 <html>
 <head>
 
 <title>$app_custom_name - Administration Area</title>";
 
 #Get CSS
-	require("get_css_include.php");
+	require("get_css3_include.php");
 	require("get_jqueryui_include.php");
 ?>
 
 </head>
 <body>
 
-<div style="padding: 10px;">
-<h4>Export sound files</h4>
+
+<div class="container">
+
+<h2>Export sound files</h2>
 
 <p>Select a collection or a site below to export all the sound files from that source in a tar 
 	or zip file. The system will create a comma-separated value (csv) 
 	file with the data from the files in the database. The size in parenthesis 
 	is the estimated size of the archive.<br>
 
-<div class="notice">The archiving process may take from a few minutes to a few hours, 
+<div class="alert alert-warning">The archiving process may take from a few minutes to a few hours, 
 	depending on the number and size of the files, server load, disk speed, 
 	free space, and other factors.<br><br> 
 	The archives will not be compressed. Sound files do not compress well, 
@@ -53,8 +55,8 @@ if ($total_no_sounds>0) {
 
 	echo "<form action=\"tar_data.php\" method=\"POST\" id=\"tarform\" name=\"tarform\">
 	<input type=\"hidden\" name=\"archivefrom\" value=\"ColID\">
-	<strong>Export all files from a collection</strong>: <br>
-	<select name=\"ColID\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">";
+	<h3>Export all files from a collection</h3>
+	<select name=\"ColID\" class=\"form-control\">";
 
 	for ($i=0;$i<$nrows;$i++) {
 		$row = mysqli_fetch_array($result);
@@ -81,7 +83,7 @@ if ($total_no_sounds>0) {
 
 	echo "</select><br>";
 
-	echo "Archive format: <select name=\"method\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">";
+	echo "Archive format: <select name=\"method\" class=\"form-control\">";
 	unset($out, $retval);
 	exec('zip -v', $out, $retval);
 	if ($retval==0) {
@@ -95,7 +97,7 @@ if ($total_no_sounds>0) {
 		}
 
 	echo "</select><br>";
-	echo "<input type=submit value=\" Package files from this collection \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">
+	echo "<button type=\"submit\" class=\"btn btn-primary\">Package files from this collection</button>
 		</form>
 		<br>
 	<hr noshade>";
@@ -107,7 +109,8 @@ if ($total_no_sounds>0) {
 
 	echo "<form action=\"tar_data.php\" method=\"POST\" id=\"tarform\" name=\"tarform\">
 		<input type=\"hidden\" name=\"archivefrom\" value=\"SiteID\">
-		<strong>Export all files from a site</strong>: <br><select name=\"SiteID\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">";
+		<h3>Export all files from a site</h3>
+		<select name=\"SiteID\" class=\"form-control\">";
 
 		for ($i=0;$i<$nrows;$i++) {
 			$row = mysqli_fetch_array($result);
@@ -133,7 +136,7 @@ if ($total_no_sounds>0) {
 			}
 		echo "</select><br>";
 
-		echo "Archive format: <select name=\"method\" class=\"ui-state-default ui-corner-all\" style=\"font-size:12px\">";
+		echo "Archive format: <select name=\"method\" class=\"form-control\" style=\"font-size:12px\">";
 		unset($out, $retval);
 		exec('zip -v', $out, $retval);
 		if ($retval==0) {
@@ -147,11 +150,11 @@ if ($total_no_sounds>0) {
 			}
 
 		echo "</select><br>";
-		echo "<input type=submit value=\" Package files from this site \" class=\"fg-button ui-state-default ui-corner-all\" style=\"font-size:12px\">
+		echo "<button type=\"submit\" class=\"btn btn-primary\">Package files from this site</button>
 	</form>";
 	}
 else {
-	echo "<div class=\"notice\">There are no sound files in the system.</div>";
+	echo "<div class=\"alert alert-warning\">There are no sound files in the system.</div>";
 	}
 
 #Display free disk space
@@ -160,10 +163,10 @@ else {
 	$dfh=formatsize($df);
 	echo "<br><br><p>";
 	if ($df<5000000000){
-		echo "<div class=\"notice\"><strong>Warning</strong>: ";
+		echo "<div class=\"alert alert-warning\"><strong>Notice</strong>: ";
 		}
 	else {
-		echo "<div class=\"success\">";
+		echo "<div class=\"alert alert-success\">";
 		}
 	echo "Free disk space available on this server: $dfh</div>";
 ?>

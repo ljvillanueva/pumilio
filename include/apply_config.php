@@ -122,18 +122,16 @@ if (!isset($special_noopen)){
 
 
 ##########
-$use_leaflet=TRUE;
-if ($use_leaflet == TRUE){
+if ($mapping_system=="GMaps"){
+
+}
+elseif ($mapping_system=="Leaflet"){
 	$tileserver = DB::column('SELECT Value FROM `PumilioSettings` WHERE Settings = "tileserver"');
-	if ($tileserver == ""){
-		$tileserver = "mapbox";
+		if ($tileserver == ""){
+			$tileserver = "mapbox";
+			}
 		}
-	}
 
-
-elseif ($googlemaps_ver == "3") {
-	$googlemaps3_key = DB::column('SELECT Value FROM `PumilioSettings` WHERE Settings = "googlemaps3_key"');
-	}
 
 if (!isset($AudioPreviewFormat)){
 	$AudioPreviewFormat = "";
@@ -173,6 +171,8 @@ if (!isset($special_wrapper)){
 	$special_wrapper = FALSE;
 	}
 
+#set R as false
+$useR = FALSE;
 if (!isset($useR)){
 	$useR = FALSE;
 	}
@@ -346,5 +346,22 @@ $spectrogram_palette = 2;
 if (is_file("$absolute_dir/customcode.php")) {
 		include("customcode.php");
 	}
+
+
+if (!isset($custom_link_url_1)){
+	$custom_link_url_1 = "";
+}
+if (!isset($custom_link_url_2)){
+	$custom_link_url_2 = "";
+}
+if (!isset($custom_link_url_3)){
+	$custom_link_url_3 = "";
+}
+
+if (!isset($acknowledgement)){
+	$acknowledgement = "";
+}
+
+
 
 ?>

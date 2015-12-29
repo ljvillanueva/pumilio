@@ -16,13 +16,13 @@ $SiteID=filter_var($_POST["SiteID"], FILTER_SANITIZE_NUMBER_INT);
 $method=filter_var($_POST["method"], FILTER_SANITIZE_STRING);
 $archivefrom=filter_var($_POST["archivefrom"], FILTER_SANITIZE_STRING);
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+echo "<!DOCTYPE html>
 <html>
 <head>
 <title>Pumilio - Administration Area</title>";
 
 #Get CSS
-	require("get_css_include.php");
+	require("get_css3_include.php");
 	require("get_jqueryui_include.php");
 
 if (isset($_GET["run"])){
@@ -75,7 +75,7 @@ if ($run){
 			$row_f = mysqli_fetch_array($result_f);
 			extract($row_f);
 			if (!copy("../../../sounds/sounds/$ColID/$DirID/$OriginalFilename", $OriginalFilename)) {
-				die("<div class=\"error\"><img src=\"../images/exclamation.png\"> Failed to copy $OriginalFilename.</div>\n");
+				die("<div class=\"alert alert-danger\"><img src=\"../images/exclamation.png\"> Failed to copy $OriginalFilename.</div>\n");
 				}
 
 			$result_i = mysqli_query($connection, "SELECT Sounds.SoundID,Sounds.OriginalFilename, Sounds.Date,
@@ -125,7 +125,7 @@ if ($run){
 			exec("zip -0 " . $target_path . $archive_name . ".zip *", $out, $retval);
 			if ($retval == 0) {
 				$file_size = formatsize(filesize($target_path . $archive_name . ".zip"));
-				echo "<div class=\"success\"><img src=\"../images/accept.png\"> The archive was created successfully.
+				echo "<div class=\"alert alert-success\"><span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span> The archive was created successfully.
 					<a href=\"../tmp/" . $random_dir . "/" . $archive_name . ".zip\">Download the file</a> ($file_size).</div>";
 				}
 			}
@@ -133,7 +133,7 @@ if ($run){
 			exec("tar -cvf " . $target_path . $archive_name . ".tar *", $out, $retval);
 			if ($retval == 0) {
 				$file_size = formatsize(filesize($target_path . $archive_name . ".tar"));
-				echo "<div class=\"success\"><img src=\"../images/accept.png\"> The archive was created successfully.
+				echo "<div class=\"alert alert-success\"><span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span> The archive was created successfully.
 					<a href=\"../tmp/" . $random_dir . "/" . $archive_name . ".tar\">Download the file</a> ($file_size).</div>";
 				}
 			}
@@ -163,7 +163,7 @@ if ($run){
 			extract($row_f);
 		
 			if (!copy("../../../sounds/sounds/$ColID/$DirID/$OriginalFilename", $OriginalFilename)) {
-				die("<div class=\"error\"><img src=\"../images/exclamation.png\"> Failed to copy $OriginalFilename.</div>\n");
+				die("<div class=\"alert alert-danger\"><img src=\"../images/exclamation.png\"> Failed to copy $OriginalFilename.</div>\n");
 				}
 			
 			$result_i = mysqli_query($connection, "SELECT Sounds.SoundID,Sounds.OriginalFilename, Sounds.Date,
@@ -215,7 +215,7 @@ if ($run){
 			exec("zip -0 " . $target_path . $archive_name . ".zip *", $out, $retval);
 			if ($retval == 0) {
 				$file_size = formatsize(filesize($target_path . $archive_name . ".zip"));
-				echo "<div class=\"success\"><img src=\"../images/accept.png\"> The archive was created successfully.
+				echo "<div class=\"alert alert-success\"><span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span> The archive was created successfully.
 					<a href=\"../tmp/" . $random_dir . "/" . $archive_name . ".zip\">Download the file</a> ($file_size).</div>";
 				}
 			}
@@ -223,7 +223,7 @@ if ($run){
 			exec("tar -cvf " . $target_path . $archive_name . ".tar *", $out, $retval);
 			if ($retval == 0) {
 				$file_size = formatsize(filesize($target_path . $archive_name . ".tar"));
-				echo "<div class=\"success\"><img src=\"../images/accept.png\"> The archive was created successfully.
+				echo "<div class=\"alert alert-success\"><span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span> The archive was created successfully.
 					<a href=\"../tmp/" . $random_dir . "/" . $archive_name . ".tar\">Download the file</a> ($file_size).</div>";
 				}
 			}
@@ -247,11 +247,11 @@ else{
 
 	<div style=\"padding: 10px; text-align:center;\">
 
-	<br><br><br><br><br>
-	<h3>Working... 
-	<br>Please wait...
-	<img src=\"../images/wait20trans.gif\">
-	</h3>
+	<p>
+		<div class=\"alert alert-info center\" role=\"alert\">
+     		<h3>Please wait</h3><h4>Loading... <i class=\"fa fa-cog fa-spin\"></i></h4>
+     	</div>
+	</p>
 
 	<br><br><br><br><br>
 	<br><p><a href=\"#\" onClick=\"window.close();\">Cancel and close window</a>";

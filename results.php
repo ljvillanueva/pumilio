@@ -51,7 +51,7 @@ else{
 
 $Site_comparison=filter_var($_GET["Site_comparison"], FILTER_SANITIZE_STRING);
 $SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
-
+$Site=$SiteID;
 if ($SiteID!="0"){
 	if ($Site_comparison==1) {
 		$Site_comparisonq = "=";}
@@ -171,8 +171,8 @@ else{
 	}
 
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
-<html>
+echo "<!DOCTYPE html>
+<html lang=\"en\">
 <head>
 
 <title>$app_custom_name - Search Results</title>";

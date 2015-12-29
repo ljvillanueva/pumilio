@@ -1,5 +1,6 @@
 <?php
 session_start();
+header( 'Content-type: text/html; charset=utf-8' );
 
 require("include/functions.php");
 
@@ -28,7 +29,7 @@ $SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
 	$valid_id = DB::column('SELECT COUNT(*) FROM `Sounds` WHERE SiteID = ' . $SiteID);
 
 	if ($valid_id == 0) {
-		echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+		echo "<!DOCTYPE html>
 		<html>
 		<head>
 
@@ -265,7 +266,7 @@ echo "\n<link rel=\"stylesheet\" href=\"libs/leaflet/leaflet.css\" />\n
 				if ($display_type == "summary"){
 					$how_many_to_show = 10;}
 				elseif ($display_type == "gallery"){
-					$how_many_to_show = 24;}
+					$how_many_to_show = 36;}
 				$endid = $how_many_to_show;
 				$endid_show = $startid_q + $endid;
 
@@ -303,7 +304,7 @@ echo "\n<link rel=\"stylesheet\" href=\"libs/leaflet/leaflet.css\" />\n
 					}*/
 
 				if (sessionAuthenticate($connection) && is_user_admin2($username, $connection)) {
-					echo "<br><a href=\"edit_site.php?SiteID=$SiteID\" title=\"Edit this site\">[edit site]</a>";
+					echo "<br><a href=\"edit_site.php?SiteID=$SiteID\" title=\"Edit this Site\">[edit site]</a>";
 						}
 
 
@@ -402,18 +403,18 @@ echo "\n<link rel=\"stylesheet\" href=\"libs/leaflet/leaflet.css\" />\n
 			if ($startid < 1){
 					$prev = -1;
 					$startid = 1;
-					$next = $startid + 10;
+					$next = $startid + $how_many_to_show;
 				}
 				else{
-					$prev = $startid - 10;
-					$next = $startid + 10;
+					$prev = $startid - $how_many_to_show;
+					$next = $startid + $how_many_to_show;
 				}
 
 				if ($next > $no_sounds){
 					$next = $no_sounds;
 				}
 
-				if (($startid + 10) > $no_sounds){
+				if (($startid + $how_many_to_show) > $no_sounds){
 					$next = "NA";
 				}
 
@@ -430,22 +431,22 @@ echo "\n<link rel=\"stylesheet\" href=\"libs/leaflet/leaflet.css\" />\n
 						
 					    $prevellipsis = FALSE;
 					    $nextellipsis = FALSE;
-					    $pages = ceil($no_sounds / 10);
+					    $pages = ceil($no_sounds / $how_many_to_show);
 					    for ($p=1; $p < ($pages + 1); $p++) {
-					    	$this_page = ($p - 1) * 10 + 1;
+					    	$this_page = ($p - 1) * $how_many_to_show + 1;
 
 					    	if ($this_page == $startid){
 					    		echo "<li class=\"active\"><a href=\"browse_site.php?SiteID=$SiteID&startid=$this_page\">$p <span class=\"sr-only\">(current)</span></a></li>";
 					    	}
 					    	else{
 					    	
-					    		if ($this_page < ($startid - 80)){
+					    		if ($this_page < ($startid - 120)){
 					    			if ($prevellipsis == FALSE){
 						    			echo "<li><span aria-hidden=\"true\">...</span></li>";
 						    			$prevellipsis = TRUE;
 						    			}
 					    			}
-					    		elseif ($this_page > ($startid + 80)){
+					    		elseif ($this_page > ($startid + 120)){
 					    			if ($nextellipsis == FALSE){
 						    			echo "<li><span aria-hidden=\"true\">...</span></li>";
 						    			$nextellipsis = TRUE;

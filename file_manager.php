@@ -43,14 +43,15 @@ if ($special_noprocess == FALSE){
 	add_in_background($absolute_dir, $connection);
 	}
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
-<html>
+
+echo "<!DOCTYPE html>
+<html lang=\"en\">
 <head>
 
 <title>$app_custom_name - Files manager</title>
 <meta http-equiv=\"refresh\" content=\"30\">\n";
 
-require("include/get_css.php");
+require("include/get_css3.php");
 require("include/get_jqueryui.php");
 
 if ($use_googleanalytics) {
@@ -73,17 +74,9 @@ if (is_file("$absolute_dir/customhead.php")) {
 <div class="container">
 	<?php
 		require("include/topbar.php");
-	?>
-	<div class="span-24 last">
-		<hr noshade>
-	</div>
-	<div class="span-24 last">
-		&nbsp;
-	</div>
-	<div class="span-24 last">
-		<?php
 
-		echo "<h3>Added files status</h3>";
+
+		echo "<h2>Added files status</h2>";
 
 		$query = "SELECT *, DATE_FORMAT(FilesToAdd.StartTime, '%d-%b-%Y %H:%i:%s') AS StartTime from FilesToAdd, Users WHERE FilesToAdd.UserID=Users.UserID ORDER BY FilesToAdd.StartTime DESC";
 		$result = mysqli_query($connection, $query)
@@ -109,21 +102,10 @@ if (is_file("$absolute_dir/customhead.php")) {
 				}
 
 			echo "</ul>\n";
-
+			
 			if ($percent<100) {
-				echo "\n<style type=\"text/css\">
-					.ui-progressbar .ui-progressbar-value { background-image: url(images/pbar-ani.gif); }
-				</style>
 
-				<script type=\"text/javascript\">
-				$(function() {
-					$(\"#progressbar\").progressbar({
-						value: $percent
-					});
-				});
-				</script>\n";
-
-				echo "<div id=\"progressbar\"></div>";
+				echo "<div class=\"progress\"><div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"$percent\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: $percent%;\"><span class=\"sr-only\">$percent% Complete</span></div></div>";
 				$how_many = bgHowManyAdd();
 				if ($how_many > 0){
 					$PID_array = bgHowManyAdd_PID();
@@ -160,10 +142,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 					}
 				}
 			else {
-				echo "\n<div aria-valuenow=\"100\" aria-valuemax=\"100\" aria-valuemin=\"0\" role=\"progressbar\" class=\"ui-progressbar ui-widget ui-widget-content ui-corner-all\" id=\"progressbar\">
-					<div style=\"width: 100%;\" class=\"ui-progressbar-value ui-widget-header ui-corner-all\">
-					</div>
-				</div>\n";
+				echo "\n<div class=\"progress\"><div class=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"100\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 100%;\"><span class=\"sr-only\">100% Complete</span></div></div>";
 				}
 
 			echo "<br></p>";

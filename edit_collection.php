@@ -20,13 +20,13 @@ require("include/check_admin.php");
 $ColID=filter_var($_GET["ColID"], FILTER_SANITIZE_NUMBER_INT);
 $d=filter_var($_GET["d"], FILTER_SANITIZE_NUMBER_INT);
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+echo "<!DOCTYPE html>
 <html>
 <head>
 
 <title>$app_custom_name - Edit Collection Info</title>";
 
-require("include/get_css.php");
+require("include/get_css3.php");
 require("include/get_jqueryui.php");
 ?>
 
@@ -84,15 +84,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 	<div class="container">
 		<?php
 			require("include/topbar.php");
-		?>
-		<div class="span-24 last">
-			<hr noshade>
-		</div>
-		<div class="span-24 last">
-			&nbsp;
-		</div>
 
-			<?php
 
 			$query = "SELECT * FROM Collections WHERE ColID='$ColID'";
 
@@ -102,8 +94,9 @@ if (is_file("$absolute_dir/customhead.php")) {
 				$row = mysqli_fetch_array($result);
 				extract($row);
 					
-				echo "<div class=\"span-24 last\">			
-					<h3>Edit collection information</h3>";
+				echo "<h3>Edit collection information</h3>
+				<div class=\"row\">
+				<div class=\"col-md-6\">";
 
 				if ($d==1) {
 					echo "<p><div class=\"success\">Collection was updated successfully. Return to <a href=\"db_browse.php?ColID=$ColID\">browsing</a></div>";
@@ -113,12 +106,12 @@ if (is_file("$absolute_dir/customhead.php")) {
 				<form action=\"include/edit_collection.php\" method=\"POST\" id=\"EditForm\">
 					<input name=\"ColID\" type=\"hidden\" value=\"$ColID\">
 
-					Name of the collection: <br><input name=\"CollectionName\" type=\"text\" maxlength=\"160\" size=\"60\" value=\"$CollectionName\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>
-					Author: <br><input name=\"Author\" type=\"text\" size=\"40\" value=\"$Author\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>
-					Full citation: <br><input name=\"CollectionFullCitation\" type=\"text\" maxlength=\"250\" size=\"80\" value=\"$CollectionFullCitation\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>
-					URL: <br><input name=\"MiscURL\" type=\"text\" size=\"40\" value=\"$MiscURL\" maxlength=\"250\" id=\"MiscURL\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>
-					Notes: <br><input name=\"Notes\" type=\"text\" size=\"60\" value=\"$Notes\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>
-					Type of Collection: <br><select name=\"FilesSource\" class=\"ui-state-default ui-corner-all formedge\">\n";
+					Name of the collection: <br><input name=\"CollectionName\" type=\"text\" maxlength=\"160\" value=\"$CollectionName\" class=\"form-control\"><br>
+					Author: <br><input name=\"Author\" type=\"text\" size=\"40\" value=\"$Author\" class=\"form-control\"><br>
+					Full citation: <br><input name=\"CollectionFullCitation\" type=\"text\" maxlength=\"250\" value=\"$CollectionFullCitation\" class=\"form-control\"><br>
+					URL: <br><input name=\"MiscURL\" type=\"text\" value=\"$MiscURL\" maxlength=\"250\" id=\"MiscURL\" class=\"form-control\"><br>
+					Notes: <br><input name=\"Notes\" type=\"text\" value=\"$Notes\" class=\"form-control\"><br>
+					Type of Collection: <br><select name=\"FilesSource\" class=\"form-control\">\n";
 
 					if ($FilesSource=="Field Recording")
 						echo "<option SELECTED>Field Recording</option>";
@@ -178,20 +171,15 @@ if (is_file("$absolute_dir/customhead.php")) {
 					echo "</select><br>";
 
 					echo "
-					<input type=\"submit\" value=\" Edit Collection \"  class=\"fg-button ui-state-default ui-corner-all\">
+					<button type=\"submit\" class=\"btn btn-primary form-control\"> Edit Collection </button>
 				</form>
 			
 				<br>
-				<form action=\"db_browse.php\" method=\"GET\">
-					<input type=\"hidden\" name=\"ColID\" value=\"$ColID\">
-					<input type=submit value=\" Cancel \" class=\"fg-button ui-state-default ui-corner-all\">
-				</form>
-				<br>
 				<hr noshade>
-				</div>";
+				";
 
 				$no_sounds = query_one("SELECT COUNT(*) as no_sounds FROM Sounds WHERE ColID='$ColID' AND Sounds.SoundStatus!='9'", $connection);
-				echo "<div class=\"span-24 last\">
+				echo "
 					<a name=\"anchor2\"></a>		
 					<h3>Add or edit metadata for all the files in this collection</h3>\n";
 
@@ -206,7 +194,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 					$result_e = mysqli_query($connection, $query_e)
 						or die (mysqli_error($connection));
 					$nrows_e = mysqli_num_rows($result_e);
-					echo "Sensor used: <br><select name=\"SensorID\" class=\"ui-state-default ui-corner-all formedge\">";
+					echo "Sensor used: <br><select name=\"SensorID\" class=\"form-control\">";
 						echo "<option value=\"\"> </option>\n";
 
 					for ($e=0;$e<$nrows_e;$e++){
@@ -221,36 +209,24 @@ if (is_file("$absolute_dir/customhead.php")) {
 					echo "</select> <small><a href=\"admin.php?t=4\">Add sensors to the list</a></small><br>";
 
 					echo "
-					Notes: <br><input name=\"Notes\" type=\"text\" maxlength=\"250\" size=\"60\" value=\"$Notes\" class=\"fg-button ui-state-default ui-corner-all formedge\"><br>
+					Notes: <br><input name=\"Notes\" type=\"text\" maxlength=\"250\" value=\"$Notes\" class=\"form-control\"><br>
 
-					<input type=\"submit\" value=\" Add metadata of the files \"  class=\"fg-button ui-state-default ui-corner-all\">
+					<button type=\"submit\" class=\"btn btn-primary form-control\"> Add metadata of the files </button>
 				</form>
-				
-				<div class=\"notice\">
-					<img src=\"images/error.png\"> This will replace the fields in the $no_sounds files for this collection.
-				</div>
-			
 				<br>
-				<form action=\"db_browse.php\" method=\"GET\">
-					<input type=\"hidden\" name=\"ColID\" value=\"$ColID\">
-					<input type=submit value=\" Cancel \" class=\"fg-button ui-state-default ui-corner-all\">
-					</form>
-				</div>";
+				<div class=\"alert alert-warning\">
+					<span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=\"true\"></span>
+					 This will replace the fields in the $no_sounds files for this collection.
+				</div>
+
+				</div>
+				<div class=\"col-md-6\">&nbsp;</div></div>";
 
 				}
 
-			?>
 
-		<div class="span-24 last">
-			&nbsp;
-		</div>
-		<div class="span-24 last">
-			<?php
-			require("include/bottom.php");
-			?>
-
-		</div>
-	</div>
+require("include/bottom.php");
+?>
 
 </body>
 </html>
