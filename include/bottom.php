@@ -7,8 +7,7 @@
 			<div class=\"container\">
 				<div class=\"col-lg-8\">
 					
-					$app_custom_name - 
-					<a href=\"about.php\" title=\"About this site\">About</a><br>";
+					$app_custom_name<br>";
 						
 					#License
 					$files_license = query_one("SELECT Value from PumilioSettings WHERE Settings='files_license'", $connection);
@@ -36,7 +35,7 @@
 				<div class=\"col-lg-4\">
 
 					Powered by <a href=\"http://ljvillanueva.github.io/pumilio\" target=_blank title=\"Website of the Pumilio application\">Pumilio</a> v. $website_version<br>
-					<a href=\"#\" onClick=\"window.open('include/copyright.php', 'copyright', 'width=650,height=400,status=yes,resizable=yes,scrollbars=yes')\" title=\"Copyright information of the application\">&copy; 2010-2015 LJV</a>. Licensed under the GPLv3.<br><br>";
+					<a href=\"about.php\" title=\"Copyright information of the application\">&copy; $copyright_years LJV</a>. Licensed under the GPLv3.<br><br>";
 
 			echo "</div></div>";
 

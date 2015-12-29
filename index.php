@@ -258,12 +258,35 @@ else{
 	echo "<div class=\"jumbotron\">
 			<h2>Welcome to $app_custom_name</h2>";
 
-			echo "<div class=\"pull-right\"><p><a class=\"btn btn-primary btn-lg\" href=\"protocol.php\" role=\"button\">Our protocol</a></p>
-				<p><a class=\"btn btn-primary btn-lg\" href=\"science.php\" role=\"button\">The science of this project</a></p>
-				</div>
+			$btn1text = DB::column('SELECT Value FROM `PumilioSettings` WHERE `Settings` = ?', array('btn1text'));
+			$btn1url = DB::column('SELECT Value FROM `PumilioSettings` WHERE `Settings` = ?', array('btn1url'));
+			$btn2text = DB::column('SELECT Value FROM `PumilioSettings` WHERE `Settings` = ?', array('btn2text'));
+			$btn2url = DB::column('SELECT Value FROM `PumilioSettings` WHERE `Settings` = ?', array('btn2url'));
+			$btn3text = DB::column('SELECT Value FROM `PumilioSettings` WHERE `Settings` = ?', array('btn3text'));
+			$btn3url = DB::column('SELECT Value FROM `PumilioSettings` WHERE `Settings` = ?', array('btn3url'));
+			$btn4text = DB::column('SELECT Value FROM `PumilioSettings` WHERE `Settings` = ?', array('btn4text'));
+			$btn4url = DB::column('SELECT Value FROM `PumilioSettings` WHERE `Settings` = ?', array('btn4url'));
+
+			echo "<div class=\"pull-right\">";
+				
+				if ($btn1text != "" && $btn1url != ""){
+					echo "<p><a class=\"btn btn-primary btn-lg\" href=\"$btn1url\" role=\"button\">$btn1text</a></p>";
+					}
+				if ($btn2text != "" && $btn2url != ""){
+					echo "<p><a class=\"btn btn-primary btn-lg\" href=\"$btn2url\" role=\"button\">$btn2text</a></p>";
+					}
+				if ($btn3text != "" && $btn3url != ""){
+					echo "<p><a class=\"btn btn-primary btn-lg\" href=\"$btn3url\" role=\"button\">$btn3text</a></p>";
+					}
+				if ($btn4text != "" && $btn4url != ""){
+					echo "<p><a class=\"btn btn-primary btn-lg\" href=\"$btn4url\" role=\"button\">$btn4text</a></p>";
+					}
+				
+				
+			echo "</div>";
 
 
-			<p>$app_custom_text<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam suscipit lobortis leo sed maximus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin sed arcu ac tellus tempus facilisis eget ac diam. Maecenas purus leo, cursus ut consequat in, luctus eget libero. Etiam dictum massa enim, consectetur tincidunt sem fermentum finibus. Ut vulputate neque leo, ut vulputate dolor consequat in.</p>\n";
+			echo "<p>$app_custom_text<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam suscipit lobortis leo sed maximus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin sed arcu ac tellus tempus facilisis eget ac diam. Maecenas purus leo, cursus ut consequat in, luctus eget libero. Etiam dictum massa enim, consectetur tincidunt sem fermentum finibus. Ut vulputate neque leo, ut vulputate dolor consequat in.</p>\n";
 
 
 				$no_Collections = DB::column('SELECT COUNT(DISTINCT ColID) FROM `Sounds` WHERE SoundStatus!=9 ' . $qf_check);
@@ -294,7 +317,7 @@ else{
 
 		echo "</div>";
 
-			include("include/check_system.php");
+			#include("include/check_system.php");
 
 		
 

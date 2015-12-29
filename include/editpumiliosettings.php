@@ -355,6 +355,118 @@ elseif ($settings == "bottom"){
 	header("Location: ../admin.php?t=1&tt=2");
 	die();
 	}
+elseif ($settings == "homelink"){
+
+	$check = DB::column('SELECT COUNT(*) FROM `PumilioSettings` WHERE Settings = "btn1text"');
+
+	$btn1text = filter_var($_POST["btn1text"], FILTER_SANITIZE_STRING);
+	$btn1url = filter_var($_POST["btn1url"], FILTER_SANITIZE_URL);
+	$btn2text = filter_var($_POST["btn2text"], FILTER_SANITIZE_STRING);
+	$btn2url = filter_var($_POST["btn2url"], FILTER_SANITIZE_URL);
+	$btn3text = filter_var($_POST["btn3text"], FILTER_SANITIZE_STRING);
+	$btn3url = filter_var($_POST["btn3url"], FILTER_SANITIZE_URL);
+	$btn4text = filter_var($_POST["btn4text"], FILTER_SANITIZE_STRING);
+	$btn4url = filter_var($_POST["btn4url"], FILTER_SANITIZE_URL);
+
+	$settings = array(
+		'Settings' => 'btn1text',
+		'Value' => $btn1text
+	);
+	if ($check == 0){
+		DB::insert('PumilioSettings', $settings);
+		}
+	else{
+		DB::update('PumilioSettings', $settings, 'btn1text', 'Settings');
+		}
+
+
+	$settings = array(
+		'Settings' => 'btn1url',
+		'Value' => $btn1url
+	);
+	if ($check == 0){
+		DB::insert('PumilioSettings', $settings);
+		}
+	else{
+		DB::update('PumilioSettings', $settings, 'btn1url', 'Settings');
+		}
+
+
+
+	$settings = array(
+		'Settings' => 'btn2text',
+		'Value' => $btn2text
+	);
+	if ($check == 0){
+		DB::insert('PumilioSettings', $settings);
+		}
+	else{
+		DB::update('PumilioSettings', $settings, 'btn2text', 'Settings');
+		}
+
+
+	$settings = array(
+		'Settings' => 'btn2url',
+		'Value' => $btn2url
+	);
+	if ($check == 0){
+		DB::insert('PumilioSettings', $settings);
+		}
+	else{
+		DB::update('PumilioSettings', $settings, 'btn2url', 'Settings');
+		}
+
+
+	$settings = array(
+		'Settings' => 'btn3text',
+		'Value' => $btn3text
+	);
+	if ($check == 0){
+		DB::insert('PumilioSettings', $settings);
+		}
+	else{
+		DB::update('PumilioSettings', $settings, 'btn3text', 'Settings');
+		}
+
+
+	$settings = array(
+		'Settings' => 'btn3url',
+		'Value' => $btn3url
+	);
+	if ($check == 0){
+		DB::insert('PumilioSettings', $settings);
+		}
+	else{
+		DB::update('PumilioSettings', $settings, 'btn3url', 'Settings');
+		}
+
+
+	$settings = array(
+		'Settings' => 'btn4text',
+		'Value' => $btn4text
+	);
+	if ($check == 0){
+		DB::insert('PumilioSettings', $settings);
+		}
+	else{
+		DB::update('PumilioSettings', $settings, 'btn4text', 'Settings');
+		}
+
+
+	$settings = array(
+		'Settings' => 'btn4url',
+		'Value' => $btn4url
+	);
+	if ($check == 0){
+		DB::insert('PumilioSettings', $settings);
+		}
+	else{
+		DB::update('PumilioSettings', $settings, 'btn4url', 'Settings');
+		}
+
+	header("Location: ../admin.php#homelink");
+	die();	
+	}
 
 	
 header("Location: ../admin.php?t=1");

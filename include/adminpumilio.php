@@ -1,5 +1,10 @@
 <?php
 
+
+#DB
+use \DByte\DB;
+DB::$c = $pdo;
+
 //Custom name of the app
 if ($tt==1) {
 	echo "<div class=\"success\" id=\"tt1\">The database was updated.</div>";
@@ -7,7 +12,7 @@ if ($tt==1) {
 
 echo "<div class=\"panel panel-primary\">
 		<div class=\"panel-heading\">
-			<h3 class=\"panel-title\">General settings</h3>
+			<h3 class=\"panel-title\">General Settings</h3>
 		</div>
         <div class=\"panel-body\">";
 
@@ -38,38 +43,6 @@ else{
 	$use_googlemaps_d="Not set";
 	}
 	
-echo "<div class=\"form-group\">
-	<label for=\"use_googlemaps\">Use the Google Maps system (using the v3 API):</label>";
-
-	echo "<select name=\"use_googlemaps\" id=\"use_googlemaps\" class=\"form-control\">";
-
-		if ($use_googlemaps=="0") {
-			echo "<option SELECTED value=\"0\">No</option>
-				<option value=\"3\">Yes</option>";
-			}
-		elseif ($use_googlemaps=="3") {
-			echo "<option SELECTED value=\"3\">Yes</option>
-				<option value=\"0\">No</option>";
-			}
-		else {
-			echo "<option value=\"3\">Yes</option>
-				<option value=\"0\">No</option>";
-			}
-
-	echo "</select></div>\n";
-			
-	#key not needed if < 25k hits
-/*	#googlemaps_key
-	if ($use_googlemaps=="3") {
-		echo "<p>
-		<a href=\"https://developers.google.com/maps/documentation/javascript/tutorial\" target=_blank>Request a key for Google Maps JavaScript API v3</a> (free and required for each server) 
-			<a href=\"#\" onclick=\"window.open('help.php?topic=GoogleMaps3', 'help', 'width=650,height=550,status=yes,resizable=yes,scrollbars=auto')\"><img src=\"images/help.png\" title=\"Click for instructions\"></a><br>
-		GoogleMaps v3 key: $googlemaps3_key";
-			
-		echo "<input type=\"text\" name=\"googlemaps3_key\" size=\"50\" maxlength=\"250\" value=\"$googlemaps3_key\">\n";
-		}	*/
-	
-	#$map_only=query_one("SELECT Value from PumilioSettings WHERE Settings='map_only'", $connection);
 	
 	if ($map_only=="1"){
 		$map_only_d="Main map";
@@ -92,7 +65,7 @@ echo "<div class=\"form-group\">
 
 
 echo "<div class=\"form-group\">
-	<label for=\"map_only\">Main menu:</label>";
+	<label for=\"map_only\">Main Menu:</label>";
 		
 	echo "<select name=\"map_only\" id=\"map_only\" class=\"form-control\">";
 		if ($map_only=="1") {
@@ -303,7 +276,7 @@ echo "<div class=\"form-group\">
 	echo "
 	<div class=\"panel panel-primary\">
 	<div class=\"panel-heading\">
-		<h3 class=\"panel-title\">Image settings</h3>
+		<h3 class=\"panel-title\">Image Settings</h3>
 	</div>
     <div class=\"panel-body\">";
 
@@ -524,7 +497,88 @@ echo "<div class=\"form-group\">
 
 
 
-	#Bottom
+
+#Custom pages
+$btn1text = DB::column('SELECT Value FROM `PumilioSettings` WHERE `Settings` = ?', array('btn1text'));
+$btn1url = DB::column('SELECT Value FROM `PumilioSettings` WHERE `Settings` = ?', array('btn1url'));
+$btn2text = DB::column('SELECT Value FROM `PumilioSettings` WHERE `Settings` = ?', array('btn2text'));
+$btn2url = DB::column('SELECT Value FROM `PumilioSettings` WHERE `Settings` = ?', array('btn2url'));
+$btn3text = DB::column('SELECT Value FROM `PumilioSettings` WHERE `Settings` = ?', array('btn3text'));
+$btn3url = DB::column('SELECT Value FROM `PumilioSettings` WHERE `Settings` = ?', array('btn3url'));
+$btn4text = DB::column('SELECT Value FROM `PumilioSettings` WHERE `Settings` = ?', array('btn4text'));
+$btn4url = DB::column('SELECT Value FROM `PumilioSettings` WHERE `Settings` = ?', array('btn4url'));
+
+echo "
+<a name=\"homelink\"></a>
+	<div class=\"panel panel-primary\">
+	<div class=\"panel-heading\">
+		<h3 class=\"panel-title\">Custom Homepage Links</h3>
+	</div>
+    <div class=\"panel-body\">
+    	Here you can add links to pages that will appear in the homepage. These links can be
+    		useful to display a link to your lab's website, a page about the methods,
+    		or other relevant pages. If the text or URL are empty, the button will not be used.";
+
+
+	echo "
+
+	<form action=\"include/editpumiliosettings.php\" method=\"POST\">
+		<input type=\"hidden\" name=\"settings\" value=\"homelink\">
+		
+		<table class=\"table table-striped\">
+		<thead> 
+			<tr> 
+				<th>Order</th>
+				<th>Button text</th>
+				<th>Link URL</th>
+			</tr>
+			</thead> 
+
+		<tbody> 
+
+			<tr> 
+				<th>1</th>
+				<th><input type=\"text\" class=\"form-control\" id=\"btn1text\" name=\"btn1text\" placeholder=\"Text\" value=\"$btn1text\"></th>
+				<th><input type=\"text\" class=\"form-control\" id=\"btn1url\" name=\"btn1url\" placeholder=\"URL\" value=\"$btn1url\"></th>
+			</tr>
+
+			<tr> 
+				<th>2</th>
+				<th><input type=\"text\" class=\"form-control\" id=\"btn2text\" name=\"btn2text\" placeholder=\"Text\" value=\"$btn2text\"></th>
+				<th><input type=\"text\" class=\"form-control\" id=\"btn2url\" name=\"btn2url\" placeholder=\"URL\" value=\"$btn2url\"></th>
+			</tr>
+
+			<tr> 
+				<th>3</th>
+				<th><input type=\"text\" class=\"form-control\" id=\"btn3text\" name=\"btn3text\" placeholder=\"Text\" value=\"$btn3text\"></th>
+				<th><input type=\"text\" class=\"form-control\" id=\"btn3url\" name=\"btn3url\" placeholder=\"URL\" value=\"$btn3url\"></th>
+			</tr>
+
+			<tr> 
+				<th>4</th>
+				<th><input type=\"text\" class=\"form-control\" id=\"btn4text\" name=\"btn4text\" placeholder=\"Text\" value=\"$btn4text\"></th>
+				<th><input type=\"text\" class=\"form-control\" id=\"btn4url\" name=\"btn4url\" placeholder=\"URL\" value=\"$btn4url\"></th>
+			</tr>";
+
+
+	echo "
+	</tbody>
+	</table>
+	<button type=\"submit\" class=\"btn btn-primary\"> Update homepage links </button>
+	</form>
+	
+	</div>
+</div>";
+
+
+
+
+
+
+
+
+
+	#System behavior
 	echo "
 	<div class=\"panel panel-primary\">
 	<div class=\"panel-heading\">
@@ -540,182 +594,12 @@ echo "<div class=\"form-group\">
 		echo "<div class=\"success\" id=\"tt2\">The database was updated.</div>";
 		}
 	
-	#allow chorus
-	#$use_chorus=query_one("SELECT Value from PumilioSettings WHERE Settings='use_chorus'", $connection);
-
-/*	if ($use_chorus == "1"){
-		$use_chorus_d = "Yes";
-		}
-	elseif ($use_chorus == "0"){
-		$use_chorus_d = "No";
-		}
-	else {
-		$use_chorus_d = "Not set";
-		}
-
-	echo "<div class=\"form-group\">
-	<label for=\"use_chorus\">Allow this website to be indexed in the <a href=\"http://pumilio.sourceforge.net/chorus.php\" target=_blank>Pumilio Chorus</a></label>";
-	
-	echo "<select name=\"use_chorus\" id=\"use_chorus\" class=\"form-control\">";
-		if ($use_chorus) {
-			echo "<option SELECTED value=\"1\">Yes</option>
-				<option value=\"0\">No</option>";
-			}
-		else {
-			echo "<option value=\"1\">Yes</option>
-				<option SELECTED value=\"0\">No</option>";
-			}
-
-		echo " </select></div>\n";*/
-
-
-	#use tag cloud
-	#$use_tags=query_one("SELECT Value from PumilioSettings WHERE Settings='use_tags'", $connection);
-/*
-	if ($use_tags=="1"){
-		$use_tags_d="Yes";
-		}
-	elseif ($use_tags=="0"){
-		$use_tags_d="No";
-		}
-	else {
-		$use_tags_d="Not set";
-		}
-
-	echo "<div class=\"form-group\">
-	<label for=\"use_tags\">Use a tag cloud</label>";
-	
-	echo "<select name=\"use_tags\" id=\"use_tags\" class=\"form-control\">";
-		if ($use_tags) {
-			echo "<option SELECTED value=\"1\">Yes</option>
-				<option value=\"0\">No</option>";
-			}
-		else {
-			echo "<option value=\"1\">Yes</option>
-				<option SELECTED value=\"0\">No</option>";
-			}
-	echo " </select></div>";
-*/
 
 	#audio preview format
 	#$audiopreview_format=query_one("SELECT Value from PumilioSettings WHERE Settings='audiopreview_format'", $connection);
 	if (!isset($audiopreview_format)){
 		$audiopreview_format = "mp3";
 		}
-
-/*
-	echo "<br>Audio preview format: $audiopreview_format";
-	
-	echo "<form action=\"include/editpumiliosettings.php\" method=\"POST\">
-		<input type=\"hidden\" name=\"Settings\" value=\"audiopreview_format\">
-		<select name=\"Value\" class=\"ui-state-default ui-corner-all\">";
-		if ($audiopreview_format=="mp3") {
-			echo "<option SELECTED value=\"mp3\">mp3</option>
-				<option value=\"ogg\">ogg</option>";
-			}
-		elseif ($audiopreview_format=="ogg") {
-			echo "<option value=\"mp3\">mp3</option>
-				<option SELECTED value=\"ogg\">ogg</option>";
-			}
-		elseif ($audiopreview_format=="wav") {
-			echo "<option value=\"mp3\">mp3</option>
-				<option value=\"ogg\">ogg</option>
-				<option SELECTED value=\"wav\">wav</option>";
-			}
-
-		echo " </select>
-		<input type=submit value=\" Change selection \"></form>";
-*/
-	
-	#hide_latlon_guests
-	#$hide_latlon_guests=query_one("SELECT Value from PumilioSettings WHERE Settings='hide_latlon_guests'", $connection);
-/*
-	if ($hide_latlon_guests=="1"){
-		$hide_latlon_guests_d="Yes";
-		}
-	elseif ($hide_latlon_guests=="0"){
-		$hide_latlon_guests_d="No";
-		}
-	else{
-		$hide_latlon_guests_d="Not set";
-		}
-			
-	echo "<div class=\"form-group\">
-	<label for=\"hide_latlon_guests\">Hide the coordinates from users that are not logged in</label>";
-	
-	echo "<select name=\"hide_latlon_guests\" id=\"hide_latlon_guests\" class=\"form-control\">";
-		if ($hide_latlon_guests) {
-			echo "<option SELECTED value=\"1\">Yes</option>
-				<option value=\"0\">No</option>";
-			}
-		else {
-			echo "<option value=\"1\">Yes</option>
-				<option SELECTED value=\"0\">No</option>";
-			}
-
-	echo " </select></div>";*/
-
-
-	#use side-to-side comparison
-	#$sidetoside_comp=query_one("SELECT Value from PumilioSettings WHERE Settings='sidetoside_comp'", $connection);
-/*
-	if ($sidetoside_comp=="1"){
-		$sidetoside_comp_d="Yes";
-		}
-	elseif ($sidetoside_comp=="0"){
-		$sidetoside_comp_d="No";
-		}
-	else{
-		$sidetoside_comp_d="Not set";
-		}
-			
-	echo "<div class=\"form-group\">
-	<label for=\"sidetoside_comp\">Use Side-to-side comparison</label>";
-	
-	echo "<select name=\"sidetoside_comp\" id=\"sidetoside_comp\" class=\"form-control\">";
-		if ($sidetoside_comp){
-			echo "<option SELECTED value=\"1\">Yes</option>
-			<option value=\"0\">No</option>";
-			}
-		else {
-			echo "<option value=\"1\">Yes</option>
-			<option SELECTED value=\"0\">No</option>";
-			}
-
-	echo " </select></div>";
-*/
-
-	#allow_upload
-	#$allow_upload=query_one("SELECT Value from PumilioSettings WHERE Settings='allow_upload'", $connection);
-/*
-	if ($allow_upload=="1"){
-		$allow_upload_d="Yes";
-		}
-	elseif ($allow_upload=="0"){
-		$allow_upload_d="No";
-		}
-	else{
-		$allow_upload_d="Not set";
-		}
-			
-	echo "<div class=\"form-group\">
-	<label for=\"allow_upload\">Allow users to upload files</label>";
-	
-	echo "<select name=\"allow_upload\" id=\"allow_upload\" class=\"form-control\">";
-		if ($allow_upload){
-			echo "<option SELECTED value=\"1\">Yes</option>
-				<option value=\"0\">No</option>";
-			}
-		else {
-			echo "<option value=\"1\">Yes</option>
-				<option SELECTED value=\"0\">No</option>";
-			}
-
-	echo " </select></div>";*/
-
-
-	#compress wav to flac
-	#$wav_toflac=query_one("SELECT Value from PumilioSettings WHERE Settings='wav_toflac'", $connection);
 
 	if ($wav_toflac=="1") {
 		$wav_toflac_d="Yes";

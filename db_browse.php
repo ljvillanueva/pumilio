@@ -62,7 +62,8 @@ else{
 		}
 	}
 
-$valid_id = query_one("SELECT COUNT(*) FROM Collections WHERE ColID=$ColID", $connection);
+#$valid_id = query_one("SELECT COUNT(*) FROM Collections WHERE ColID=$ColID", $connection);
+$valid_id = DB::column('SELECT COUNT(*) FROM Collections WHERE ColID = ?', array($ColID));
 
 if ($valid_id == 0) {
 	echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">

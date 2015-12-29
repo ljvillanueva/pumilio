@@ -111,10 +111,10 @@ if ($pumilio_admin==TRUE) {
 	if (!is_dir("sounds/") || !is_writable("sounds/")) {
 		$sys_errors++;
 		}
-	elseif (!is_dir("sounds/images") || !is_writable("sounds/images")) {
+	if (!is_dir("sounds/images") || !is_writable("sounds/images")) {
 		$sys_errors++;
 		}
-	elseif (!is_dir("sounds/previewsounds") || !is_writable("sounds/previewsounds")) {
+	if (!is_dir("sounds/previewsounds") || !is_writable("sounds/previewsounds")) {
 		$sys_errors++;
 		}
 		
@@ -161,7 +161,7 @@ if ($pumilio_admin==TRUE) {
 			}
 
 	if ($sys_errors > 0) {
-		echo "<li><a href=\"#\" title=\"There are $sys_errors problems\" onclick=\"window.open('include/alerts.php', 'alerts', 'width=550,height=400,status=yes,resizable=yes,scrollbars=auto')\"><span class=\"badge\">$sys_errors</span></a></li>";
+		echo "<li><a href=\"#\" title=\"There are $sys_errors problems\" onclick=\"window.open('include/alerts.php', 'alerts', 'width=550,height=400,status=yes,resizable=yes,scrollbars=auto')\"><span class=\"label label-danger\">$sys_errors</span></a></li>";
 		}
 	}
 ?>
