@@ -625,7 +625,7 @@ else {
 					#Tags
 					#$use_tags=query_one("SELECT Value from PumilioSettings WHERE Settings='use_tags'", $connection);
 					if ($use_tags=="1" || $use_tags=="") {
-						echo "<h3><a href=\"#\">File Tags</a></h3>
+						echo "<h4>File Tags</h4>
 							<div>";
 						if ($pumilio_loggedin) {
 							require("include/managetags_db.php");
@@ -659,7 +659,7 @@ else {
 						
 
 
-				echo "
+				echo "<h4>File Details</h4>
 					<dl class=\"dl-horizontal\">
 						<dt>Original filename</dt>
 						<dd>$OriginalFilename</dd>";
@@ -819,9 +819,9 @@ else {
 					if ($guests_can_dl || $pumilio_loggedin) {
 						echo "<dt>Download</dt>";
 						
-						echo "<dd><a href=\"dl.php?file=sounds/sounds/$ColID/$DirID/$OriginalFilename\" title=\"Please read the license field on the right for legal limitations on the use of these files.\"><button type=\"button\" class=\"btn btn-primary btn-sm\">$SoundFormat</button></a>";
+						echo "<dd><a href=\"dl.php?file=sounds/sounds/$ColID/$DirID/$OriginalFilename\" title=\"Please read the license field on the right for legal limitations on the use of these files.\">$SoundFormat</a>";
 						echo " | ";					
-						echo "<a href=\"dl.php?file=sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename\" title=\"Please read the license field on the right for legal limitations on the use of these files.\"><button type=\"button\" class=\"btn btn-primary btn-sm\">$AudioPreviewFormat</button></a>
+						echo "<a href=\"dl.php?file=sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename\" title=\"Please read the license field on the right for legal limitations on the use of these files.\">$AudioPreviewFormat</a>
 							</dd>";
 						}
 

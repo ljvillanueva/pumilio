@@ -30,7 +30,15 @@ else{
 	$u = "";
 	}
 
-	
+
+if (isset($_GET["uu"])){
+	$uu = filter_var($_GET["uu"], FILTER_SANITIZE_NUMBER_INT);
+	}
+else{
+	$uu = "";
+	}
+
+
 if (!isset($_GET["tt"])){
 	$tt = 0;
 	}

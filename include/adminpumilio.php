@@ -779,4 +779,437 @@ echo "
 
 	echo "</div>
 	</div>";
-?>
+
+
+
+#USERS
+	echo "
+	<div class=\"panel panel-primary\">
+		<div class=\"panel-heading\">
+			<h3 class=\"panel-title\">Manage Users</h3>
+		</div>
+        <div class=\"panel-body\">";	
+
+			
+			if ($u==1) {
+				echo "<p><div class=\"alert alert-success\">User was added successfully</div>";
+				}
+			if ($u==2) {
+				echo "<p><div class=\"alert alert-danger\">That username is already in use, please use another.</div>";
+				}
+			
+			echo "<form action=\"include/add_user.php\" method=\"POST\" id=\"AddUserForm\">";
+			?>
+		<h4>Add new user:</h4>
+		<div class="row">
+		<div class="col-md-5">
+			<div class="form-group">
+				<label for="UserName">Username</label>
+				<input type="text" name="UserName" maxlength="20" class="form-control">
+			</div>
+
+			<div class="form-group">
+				<label for="UserFullname">Full name of the user</label>
+				<input type="text" name="UserFullname" maxlength="20" class="form-control">
+			</div>
+
+			<div class="form-group">
+				<label for="UserEmail">User email address</label>
+				<input type="text" name="UserEmail" maxlength="20" class="form-control">
+			</div>
+
+		</div>
+		<div class="col-md-5">
+			<div class="form-group">
+				<label for="newpassword1">User password</label>
+				<input type="password" name="newpassword1" maxlength="20" class="form-control">
+			</div>
+
+			<div class="form-group">
+				<label for="newpassword2">Please retype the password</label>
+				<input type="password" name="newpassword2" maxlength="20" class="form-control">
+			</div>
+
+			<div class="form-group">
+				<label for="UserRole">User role</label>
+				<select name="UserRole" class="form-control">
+					<option value="user">Regular user</option>
+					<option value="admin">Administrator</option>
+				</select>
+			</div>
+			
+		</div></div>
+			<button type="submit" class="btn btn-primary"> Add user </button>
+			</form><br><br>
+			
+			<hr noshade>
+		
+		<h4>Manage users</h4>
+			<?php
+			if ($u==3) {
+				echo "<p><div class=\"alert alert-success\">Change was made successfully</div>";
+				}
+			$no_users = DB::column('SELECT COUNT(*) FROM `Users` WHERE `UserActive` LIKE 1');
+			
+			$query = "SELECT * from Users WHERE UserActive='1' ORDER BY UserName";
+			$result = mysqli_query($connection, $query)
+				or die (mysqli_error($connection));
+			$nrows = mysqli_num_rows($result);
+			
+			if ($nrows == 1){
+				echo "<p>This system has $no_users user:";
+				}
+			else{
+				echo "<p>This system has $no_users users:";
+				}
+
+			echo "
+				<table border=\"0\">";
+			for ($i=0; $i<$nrows; $i++) {
+				$row = mysqli_fetch_array($result);
+				extract($row);
+				
+				echo "<tr>
+					<td><strong>Name</strong></td><td>&nbsp;</td><td><strong>Username</strong></td><td>&nbsp;</td><td><strong>Role</strong></td><td>&nbsp;</td><td><strong>Change password</strong></td>
+					</tr><tr>";
+				
+				echo "<td><form action=\"include/edit_user.php\" method=\"POST\">$UserFullname</td><td>&nbsp;</td><td>$UserName</td><td>&nbsp;</td><td>";
+				if ($UserRole == "admin") {
+					#$other_admins=query_one("SELECT COUNT(*) FROM Users WHERE UserRole='admin' AND UserID!='$UserID'", $connection);
+					$other_admins = DB::column('SELECT COUNT(*) FROM `Users` WHERE  `UserRole`=`admin` AND `UserID`!= ?', $UserID);
+					if ($other_admins > 0 && $UserName != $username) {
+						echo "<input type=\"hidden\" name=\"ac\" value=\"remadmin\">
+						<input type=\"hidden\" name=\"UserID\" value=\"$UserID\">
+						<input type=submit value=\" Remove from administrators \"></form>";
+						}
+					else {
+						echo "[Administrator]</form>";
+						}
+					}
+				else {
+					echo "<input type=\"hidden\" name=\"ac\" value=\"makeadmin\">
+					<input type=\"hidden\" name=\"UserID\" value=\"$UserID\">
+					<input type=submit value=\" Make administrator \"></form>";
+					}
+				echo "</td><td>&nbsp;</td><td>";
+				
+				if ($UserName == $username){
+					echo "<a href=\"edit_myinfo.php?t=2\" title=\"Edit my information or change password\">Change my password</a>";
+					}
+				else{
+					echo "<form method=\"GET\" action=\"include/edit_user_password.php\" target=\"editpassword\" onsubmit=\"window.open('', 'editpassword', 'width=450,height=400,status=yes,resizable=yes,scrollbars=yes')\">
+						<input type=\"hidden\" name=\"UserID\" value=\"$UserID\">
+						<button type=\"submit\" class=\"btn btn-primary\"> Edit user password </button>
+					</form>
+					</td></tr>";
+					}
+				}
+			echo "</table>";
+			?>
+				</ul>
+				
+			<hr noshade>
+			<h4>Set users as inactive</h4>
+			<?php
+			if ($u==4) {
+				echo "<p><div class=\"alert alert-success\">User was set as inactive successfully</div>";
+				}
+			#Delete div
+			echo "<div id=\"dialog\" title=\"Set user as inactive?\">
+			<p><span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>The user will be set as inactive immediately and will not be able to log in. Are you sure?</p></div>";
+			$query = "SELECT * from Users WHERE UserName!='$username' AND UserActive='1' ORDER BY UserName";
+			$result = mysqli_query($connection, $query)
+				or die (mysqli_error($connection));
+			$nrows = mysqli_num_rows($result);
+			if ($nrows==0) {
+				echo "There are no other users and you can not set yourself as inactive.";
+				}
+			else {
+				echo "
+				<form action=\"include/edit_user.php\" method=\"POST\" id=\"delform\" name=\"delform\">
+				<input type=\"hidden\" name=\"ac\" value=\"inactive\">
+				<select name=\"UserID\">";
+				for ($j=0; $j<$nrows; $j++) {
+					$row = mysqli_fetch_array($result);
+					extract($row);
+					echo "<option value=\"$UserID\">$UserFullname ($UserName)</option>";
+					}
+				echo "</select>";
+				echo " &nbsp;&nbsp;<button type=\"submit\" class=\"btn btn-primary\"> Set user as inactive </button>
+				</form>";
+				}
+			$query = "SELECT * from Users WHERE UserName!='$username' AND UserActive='0' ORDER BY UserName";
+			$result = mysqli_query($connection, $query)
+				or die (mysqli_error($connection));
+			$nrows = mysqli_num_rows($result);
+			if ($nrows==0) {
+				#echo "There are no other users and you can not set yourself as inactive.";
+				}
+			else {
+				echo "
+				<form action=\"include/edit_user.php\" method=\"POST\">
+				<input type=\"hidden\" name=\"ac\" value=\"activate\">
+				<select name=\"UserID\" class=\"form-control\">";
+				for ($j=0; $j<$nrows; $j++) {
+					$row = mysqli_fetch_array($result);
+					extract($row);
+					echo "<option value=\"$UserID\">$UserFullname ($UserName)</option>";
+					}
+				echo "</select>";
+				echo " &nbsp;&nbsp;
+				<button type=\"submit\" class=\"btn btn-primary\"> Reset user as active </button>
+				</form>";
+				}
+			?>
+			</p>
+			</div>
+			</div>
+
+
+
+			
+		
+			<?php
+				
+				echo "
+
+				<div class=\"panel panel-primary\">
+					<div class=\"panel-heading\">
+						<h3 class=\"panel-title\">Sensors</h3>
+					</div>
+				    <div class=\"panel-body\">";					
+
+				$no_sensors = DB::column('SELECT COUNT(*) FROM `Sensors`');
+
+				if ($no_sensors == 0){
+					echo "<p>There are no sensors in the system.";
+					}
+				else {
+					$rows = DB::fetch('SELECT * FROM `Sensors` ORDER BY `SensorID`', array(TRUE));
+					echo "<p>The system has the following ". count($rows) ." sensors:
+						<table>";
+
+					echo "<tr>
+							<td>Sensor ID</td>
+							<td>&nbsp;</td>
+							<td>Recorder</td>
+							<td>&nbsp;</td>
+							<td>Microphone</td>
+							<td>&nbsp;</td>
+							<td>Notes</td>
+							<td>&nbsp;</td>
+							<td>Edit</td>
+						</tr>\n";
+
+
+				 	foreach($rows as $row){
+				#	for ($i = 0; $i < $nrows; $i++) {
+						#$row = mysqli_fetch_array($result);
+						#extract($row);
+						
+							echo "<tr>
+								<td>" . $row->SensorID . "</td>
+								<td>&nbsp;</td>
+								<td>" . $row->Recorder . "</td>
+								<td>&nbsp;</td>
+								<td>" . $row->Microphone . "</td>
+								<td>&nbsp;</td>
+								<td>" . $row->Notes . "</td>
+								<td>&nbsp;</td>
+								<td><a href=\"sensor_edit.php?SensorID=" . $row->SensorID . "\"><img src=\"images/pencil.png\"></td>
+							</tr>\n";
+						
+						}
+					echo "</table>";
+					}
+
+				echo "<hr noshade>";
+
+				echo "<h4>Add sensors to the database</h4>
+						<form action=\"include/add_sensors.php\" method=\"POST\" id=\"AddSensors\">
+							<p>Recorder:<br><input type=\"text\" name=\"Recorder\" maxlength=\"100\" class=\"form-control\"><br>
+							Microphone: <br><input type=\"text\" name=\"Microphone\" maxlength=\"80\" class=\"form-control\"><br>
+							Notes of the sensor: <br><input type=\"text\" name=\"Notes\" maxlength=\"255\" class=\"form-control\"><br>
+							<button type=\"submit\" class=\"btn btn-primary\"> Add sensor </button>
+						</form>";
+
+				echo "</div></div>";
+
+			?>
+			
+
+
+
+
+		<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">Export sound files</h3>
+		</div>
+        <div class="panel-body">
+				
+				<?php
+				#Window to get a menu to export files
+				# keeping it separate helps to avoid having to get the dir sizes without need
+				echo "<p><form method=\"GET\" action=\"include/exportsounds.php\" target=\"disk\" onsubmit=\"window.open('', 'disk', 'width=650,height=600,status=yes,resizable=yes,scrollbars=auto')\">
+					<button type=\"submit\" class=\"btn btn-primary\"> Open selection window </button>
+					</form>";
+				?>
+			</div>
+		</div>
+
+
+			
+
+		
+		<?php
+			
+			echo "
+			<a name=\"qc\"></a>
+			<div class=\"panel panel-primary\">
+				<div class=\"panel-heading\">
+					<h3 class=\"panel-title\">Quality control</h3>
+				</div>
+			    <div class=\"panel-body\">";
+
+
+
+				if ($uu==1) {
+					echo "<div class=\"alert alert-success\">The database was updated.</div>";
+					}
+				elseif ($uu==2) {
+					echo "<div class=\"alert alert-danger\">The Quality Flag could not be added. Please try again.</div>";
+					}
+				elseif ($uu==3) {
+					echo "<div class=\"alert alert-warning\">The Quality Flag already exists in the database.</div>";
+					}
+
+
+				echo "<p><strong><a href=\"qc.php\">Data extraction for quality control</a>
+				<p><a href=\"qa.php\">Figures for quality control</a></strong><br><br>";
+										
+										
+			$query_qf = "SELECT * from QualityFlags ORDER BY QualityFlagID";
+			$result_qf = mysqli_query($connection, $query_qf)
+				or die (mysqli_error($connection));
+			$nrows_qf = mysqli_num_rows($result_qf);
+
+			echo "<p>
+				<table border=\"0\">
+				<tr>
+					<td><strong>Quality Flag</strong></td><td>&nbsp;</td><td><strong>Meaning</strong></td><td>&nbsp;</td><td><strong>Delete (files that have it will be changed to 0)</strong></td>
+				</tr>";
+
+				for ($f=0;$f<$nrows_qf;$f++) {
+					$row_qf = mysqli_fetch_array($result_qf);
+					extract($row_qf);
+					echo "	<tr>
+					<td>$QualityFlagID</td><td>&nbsp;</td><td>$QualityFlag</td><td>&nbsp;</td><td>";
+					if ($QualityFlagID=="0"){
+						echo " (default) ";
+						}
+					else {
+						echo "<a href=\"include/delqf.php?QualityFlagID=$QualityFlagID\"><img src=\"images/cross.png\"></a>";
+						}
+					echo "</td>
+					</tr>";
+					}
+
+			echo "</table>";
+
+			echo "<p><div style=\"width: 200px;\"><form action=\"include/addqf.php\" method=\"POST\" id=\"AddQF\">Add new Quality Flags:<br>
+					Quality Flag Value:<br>
+						<input name=\"QualityFlagID\" type=\"text\" maxlength=\"4\" size=\"4\" class=\"form-control\"> (Integer or decimal value)<br>
+					Quality Flag Meaning:<br>
+						<input name=\"QualityFlag\" type=\"text\" maxlength=\"40\" size=\"40\" class=\"form-control\"><br>
+					<button type=\"submit\" class=\"btn btn-primary\"> Add quality flag </button>
+				</form></div><br><br>";
+
+			if ($u==4) {
+				echo "<div class=\"success\">The database was updated.</div>";
+				}
+
+			echo "Minimum Quality Flag to display to anonymous users: $default_qf
+				<br>&nbsp;&nbsp;&nbsp;(useful to hide unchecked data to the public)";
+
+			echo "<p><form action=\"include/editqfdefault.php\" method=\"POST\" id=\"EditQFDef\">";
+
+				$query_qf = "SELECT * from QualityFlags ORDER BY QualityFlagID";
+				$result_qf = mysqli_query($connection, $query_qf)
+					or die (mysqli_error($connection));
+				$nrows_qf = mysqli_num_rows($result_qf);
+
+				echo "<select name=\"defaultqf\">";
+
+					for ($f=0;$f<$nrows_qf;$f++) {
+						$row_qf = mysqli_fetch_array($result_qf);
+						extract($row_qf);
+						if ($QualityFlagID == $default_qf){
+							echo "<option value=\"$QualityFlagID\" SELECTED>$QualityFlagID: $QualityFlag</option>\n";
+							}
+						else {
+							echo "<option value=\"$QualityFlagID\">$QualityFlagID: $QualityFlag</option>\n";
+							}
+						}
+
+				echo "</select><br>
+				<button type=\"submit\" class=\"btn btn-primary\"> Change </button>
+				<br>
+				</form>";
+				
+			echo "</div></div>";
+		?>
+			
+
+
+
+
+
+			<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Maintenance</h3>
+			</div>
+	        <div class="panel-body">
+
+			<?php
+				echo "<h4>Execute maintenance tasks:</h4>";
+				echo "<p><form method=\"GET\" action=\"admin_generate.php\">
+
+				<div class=\"row\">
+				<div class=\"col-md-5\">
+					<p><button type=\"submit\" class=\"btn btn-primary\"> Generate mp3 and image files </button>
+					</form> <br>";
+					
+					echo "<p><form method=\"GET\" action=\"include/emptytmp.php\" target=\"tmp\" onsubmit=\"window.open('', 'tmp', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
+					<button type=\"submit\" class=\"btn btn-primary\"> Cleanup temp folder </button>
+					</form> <br>";
+					
+					/*
+					echo "<p><form method=\"GET\" action=\"include/systemlog.php\" target=\"systemlog\" onsubmit=\"window.open('', 'systemlog', 'width=850,height=620,status=yes,resizable=yes,scrollbars=auto')\">
+					<input type=submit value=\" System log \"></form><br><hr noshade>";
+					*/
+					#Check database values
+					echo "<p><form method=\"GET\" action=\"include/checkdb.php\" target=\"checkdb\" onsubmit=\"window.open('', 'checkdb', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
+					<button type=\"submit\" class=\"btn btn-primary\"> Check database for missing data and optimize tables </button>
+					</form>  <br>";
+			
+				echo "</div>
+				<div class=\"col-md-5\">";
+
+					#Window to get disk used
+					echo "<p><form method=\"GET\" action=\"include/diskused.php\" target=\"disk\" onsubmit=\"window.open('', 'disk', 'width=450,height=300,status=yes,resizable=yes,scrollbars=auto')\">
+					<button type=\"submit\" class=\"btn btn-primary\"> Check disk usage </button>
+					</form> <br>";
+					#Delete mp3 or images
+					echo "<p><form method=\"GET\" action=\"include/delauxfiles.php\" target=\"delauxfiles\" onsubmit=\"window.open('', 'delauxfiles', 'width=450,height=700,status=yes,resizable=yes,scrollbars=auto')\">
+					<button type=\"submit\" class=\"btn btn-primary\"> Delete mp3 and/or images from system </button>
+					</form> <br>";
+					#Delete collection
+					echo "<p><form method=\"GET\" action=\"include/delcol.php\" target=\"delcol\" onsubmit=\"window.open('', 'delcol', 'width=550,height=400,status=yes,resizable=yes,scrollbars=auto')\">
+					<button type=\"submit\" class=\"btn btn-primary\"> Delete a collection and all the files </button>
+					</form>
+				</div></div>";
+				?>
+			</div></div>
+
+	</div>
+	<div class="col-lg-1">&nbsp;</div></div>

@@ -13,19 +13,19 @@ $QualityFlagID=filter_var($_POST["QualityFlagID"], FILTER_SANITIZE_NUMBER_FLOAT,
 $QualityFlag=filter_var($_POST["QualityFlag"], FILTER_SANITIZE_STRING);
 
 if ($QualityFlagID==""){
-	header("Location: ../admin.php?t=6&u=2");
+	header("Location: ../admin.php?uu=2#qc");
 	die();
 	}
 
 if ($QualityFlag==""){
-	header("Location: ../admin.php?t=6&u=2");
+	header("Location: ../admin.php?uu=2#qc");
 	die();
 	}
 
 $flag_check = query_one("SELECT COUNT(*) FROM QualityFlags WHERE QualityFlagID='$QualityFlagID'", $connection);
 
 if ($flag_check!=0) {
-	header("Location: ../admin.php?t=6&u=3");
+	header("Location: ../admin.php?uu=3#qc");
 	die();
 	}
 			
@@ -36,6 +36,6 @@ $result = mysqli_query($connection, $query)
 	or die (mysqli_error($connection));
 
 // Relocate back to the first page of the application
-	header("Location: ../admin.php?t=6&u=1");
+	header("Location: ../admin.php?uu=1#qc");
 	die();
 ?>

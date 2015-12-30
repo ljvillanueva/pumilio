@@ -151,10 +151,10 @@ if (is_file("$absolute_dir/customhead.php")) {
 				}
 			else{
 				if ($d == 1) {
-					echo "<p><div class=\"success\">Changes were applied successfully</div>";
+					echo "<p><div class=\"alert alert-success\">Changes were applied successfully</div>";
 					}
 				if ($d == 3) {
-					echo "<p><div class=\"success\">Your password was changed.</div>";
+					echo "<p><div class=\"alert alert-success\">Your password was changed.</div>";
 					echo "<br>";
 	
 					require("include/bottom.php");
@@ -172,7 +172,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 					extract($row);
 					}
 				else {
-					die("<div class=\"error\">Your account could not be found or you are not logged in.</div>");
+					die("<div class=\"alert alert-danger\">Your account could not be found or you are not logged in.</div>");
 					}
 				}
 			?>
@@ -192,7 +192,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 					<p>Please enter your email address: 
 
 					<?php
-						echo "<input type=\"text\" name=\"UserEmail\" maxlength=\"60\" size=\"30\" value=\"$UserEmail\">";
+						echo "<input type=\"text\" name=\"UserEmail\" maxlength=\"60\" class=\"form-control\" value=\"$UserEmail\"><br>";
 					?>
 
 					<button type="submit" class="btn btn-primary"> Edit email address </button>
@@ -231,17 +231,17 @@ if (is_file("$absolute_dir/customhead.php")) {
 				<input type="hidden" name="ac" value="editpassword" class="form-control">
 				<div class="form-group">
 					<p>Please enter your current password:</p>
-					<input type="password" name="curpassword" id="curpassword" maxlength="20" size="20">
+					<input type="password" name="curpassword" id="curpassword" maxlength="20" class="form-control">
 				</div>
 				
 				<div class="form-group">
 					<p>Please enter a new password:</p>
-					<input type="password" name="newpassword1" id="newpassword1" maxlength="20" size="20"><br>
+					<input type="password" name="newpassword1" id="newpassword1" maxlength="20" class="form-control">
 				</div>
 
 				<div class="form-group">
 					<p>Please retype the new password:</p>
-					<input type="password" name="newpassword2" id="newpassword2" maxlength="20" size="20"><br>
+					<input type="password" name="newpassword2" id="newpassword2" maxlength="20" class="form-control">
 				</div>
 
 				<button type="submit" class="btn btn-primary"> Edit my password </button>
