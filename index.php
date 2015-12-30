@@ -319,8 +319,7 @@ else{
 
 					}
 
-
-		echo "</div>";
+			echo "</div>";
 
 			#include("include/check_system.php");
 
@@ -328,6 +327,7 @@ else{
 
 			#if ($use_leaflet == TRUE){
 			echo "<div id=\"map\">Your browser does not have JavaScript enabled or can not connect to the tile server. Please contact your administrator.</div>\n";
+
 			/*}
 			else{
 				require("include/index_map_body.php");
@@ -356,7 +356,7 @@ else{
 			       </div>
 			        <div class=\"col-lg-4 text-center\">
 			          <h2><span class=\"glyphicon glyphicon-tasks\" aria-hidden=\"true\"></span> Data extraction<br>and analysis</h2>
-			          <p><a class=\"btn btn-primary\" href=\"data.php\" role=\"button\">Export data »</a></p>
+			          <p><a class=\"btn btn-primary\" href=\"data.php\" role=\"button\">Explore »</a></p>
 			        </div>
 			       </div>";
 		?>

@@ -564,7 +564,7 @@ else {
 					echo "<a href=\"$wrapper?page=db_browse&ColID=$ColID\" title=\"Browse this collection\">";
 					}
 				else {
-					echo "<a href=\"db_browse.php?ColID=$ColID\" title=\"Browse this collection\">";
+					echo "<a href=\"browse_col.php?ColID=$ColID\" title=\"Browse this collection\">";
 					}
 					
 				echo "<strong>$CollectionName</strong></a></dd>";

@@ -30,15 +30,15 @@ $SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
 
 	if ($valid_id == 0) {
 		echo "<!DOCTYPE html>
-		<html>
+		<html lang=\"en\">
 		<head>
 
-		<title>$app_custom_name - File Details</title>\n";
+		<title>$app_custom_name - Error</title>\n";
 
 		require("include/get_css3.php");
 
 		echo "<body>
-			<div class=\"alert alert-danger\"><img src=\"images/exclamation.png\"> The site requested does not exists or it has no recordings. Please go back and try your query again.</div>
+			<div class=\"alert alert-danger\"><span class=\"glyphicon glyphicon-alert\" aria-hidden=\"true\"></span> The site requested does not exists or it has no recordings. Please go back and try your query again.</div>
 			</body>
 			</html>";
 		die();
@@ -468,10 +468,8 @@ echo "\n<link rel=\"stylesheet\" href=\"libs/leaflet/leaflet.css\" />\n
 						}
 					echo "</ul></nav>";
 				#}
-			?>
+			
 
-	
-<?php
 require("include/bottom.php");
 
 #Loading... message

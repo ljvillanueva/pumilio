@@ -57,7 +57,7 @@ if ($use_leaflet == TRUE){
 
 		<style>
 			#map { height: 600px; 
-					width: 1140px;
+					width: 100%;
 				}
 		</style>";
 	}	

@@ -96,7 +96,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 				echo "<h3>Edit site information</h3>";
 
 				if ($d==1) {
-					echo "<p><div class=\"success\">Site was updated successfully. 
+					echo "<p><div class=\"alert alert-success\">Site was updated successfully. 
 					Return to <a href=\"browse_site.php?SiteID=$SiteID\">browsing</a></div>";
 					}
 
@@ -104,9 +104,16 @@ if (is_file("$absolute_dir/customhead.php")) {
 				echo "<p>
 				<form action=\"edit_site2.php\" method=\"POST\" id=\"EditForm\">
 					<input name=\"SiteID\" type=\"hidden\" value=\"$SiteID\">
-					Name of the site: <br><input name=\"SiteName\" type=\"text\" maxlength=\"160\" value=\"$SiteName\" class=\"form-control\"><br>
-					Latitude: <br><input name=\"SiteLat\" type=\"text\" maxlength=\"20\" value=\"$SiteLat\" class=\"form-control\"><br>
-					Longitude: <br><input name=\"SiteLon\" type=\"text\" maxlength=\"20\" value=\"$SiteLon\" class=\"form-control\"><br>
+					<div class=\"row\">
+			        	<div class=\"col-md-5\">
+							<p>Name of the site: <br><input name=\"SiteName\" type=\"text\" maxlength=\"160\" value=\"$SiteName\" class=\"form-control\"></p>
+						</div>
+						<div class=\"col-md-3\">
+							<p>Latitude: <br><input name=\"SiteLat\" type=\"text\" maxlength=\"20\" value=\"$SiteLat\" class=\"form-control\"></p>
+							<p>Longitude: <br><input name=\"SiteLon\" type=\"text\" maxlength=\"20\" value=\"$SiteLon\" class=\"form-control\"></p>
+						</div>
+					</div>
+					
 
 					<button type=\"submit\" class=\"btn btn-primary\"> Edit Site </button>
 				</form>";
@@ -118,7 +125,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 					<h3>Add or edit metadata for all the files in this site</h3>\n";
 
 				if ($d==2) {
-					echo "<p><div class=\"success\">Metadata was updated successfully. 
+					echo "<p><div class=\"alert alert-success\">Metadata was updated successfully. 
 					Return to <a href=\"browse_site.php?SiteID=$SiteID\">browsing</a></div>";}
 
 
@@ -126,23 +133,27 @@ if (is_file("$absolute_dir/customhead.php")) {
 				<form action=\"edit_site3.php\" method=\"POST\">
 					<input name=\"SiteID\" type=\"hidden\" value=\"$SiteID\">";
 
-				$query_e = "SELECT SensorID as SensorID_q, Recorder from Sensors ORDER BY Recorder";
-				$result_e = mysqli_query($connection, $query_e)
-					or die (mysqli_error($connection));
-				$nrows_e = mysqli_num_rows($result_e);
-				echo "Sensor used: <br><select name=\"SensorID\" class=\"form-control\">";
-					echo "<option value=\"\"> </option>\n";
+				echo "<div class=\"row\">
+			        	<div class=\"col-md-7\">";
 
-				for ($e=0;$e<$nrows_e;$e++){
-					$row_e = mysqli_fetch_array($result_e);
-					extract($row_e);
-					echo "<option value=\"$SensorID_q\">$Recorder</option>\n";
-					}
-				echo "</select> <small><a href=\"admin.php?t=4\">Add sensors to the list</a></small><br>
-				
-				Notes: <br><input name=\"Notes\" type=\"text\" maxlength=\"250\" value=\"$Notes\" class=\"form-control\"><br>
-				<div class=\"notice\"><img src=\"images/error.png\"> This will replace the fields in the $no_sounds files at this site.</div>
+					$query_e = "SELECT SensorID as SensorID_q, Recorder from Sensors ORDER BY Recorder";
+					$result_e = mysqli_query($connection, $query_e)
+						or die (mysqli_error($connection));
+					$nrows_e = mysqli_num_rows($result_e);
+					echo "Sensor used: <br><select name=\"SensorID\" class=\"form-control\">";
+						echo "<option value=\"\"> </option>\n";
 
+					for ($e=0;$e<$nrows_e;$e++){
+						$row_e = mysqli_fetch_array($result_e);
+						extract($row_e);
+						echo "<option value=\"$SensorID_q\">$Recorder</option>\n";
+						}
+					echo "</select> <small><a href=\"admin.php?t=4\">Add sensors to the list</a></small><br>
+					
+					Notes: <br><input name=\"Notes\" type=\"text\" maxlength=\"250\" value=\"$Notes\" class=\"form-control\"><br>
+					<div class=\"alert alert-warning\"><span class=\"glyphicon glyphicon-alert\" aria-hidden=\"true\"></span> This will replace the fields in the $no_sounds files at this site.</div>
+					</div>
+					</div>
 				<button type=\"submit\" class=\"btn btn-primary\">  Add metadata of the files </button>
 				</form>
 			
