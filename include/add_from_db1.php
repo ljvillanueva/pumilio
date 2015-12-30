@@ -48,15 +48,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 	<div class="container">
 		<?php
 			require("include/topbar.php");
-		?>
-		<div class="span-24 last">
-			<hr noshade>
-		</div>
-		<div class="span-24 last">
-			&nbsp;
-		</div>
-		<div class="span-24 last">
-			<?php
+
 			echo "<h3>Add files from a database or spreadsheet</h3>
 			<form action=\"add_from_db.php\" method=\"POST\" id=\"AddForm\">
 			<input type=\"hidden\" name=\"step\" value=\"2\">

@@ -14,7 +14,7 @@ echo "<p><strong>Tag regions</strong></p>";
 		<input type=\"hidden\" id=\"y2_2\" name=\"f_max\" value=\"\" />
 		<input type=\"hidden\" name=\"ch\" value=\"$ch\" />
 		<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\" />
-		<button type=\"submit\" title=\"Save selected region to the database\" class=\"btn btn-xs btn-primary\"><span class=\"glyphicon glyphicon-save\" aria-hidden=\"true\"></span> Save selected region</button> 
+		<button type=\"submit\" title=\"Save selected region to the database\" class=\"btn btn-xs btn-primary\"><span class=\"glyphicon glyphicon glyphicon-hdd\" aria-hidden=\"true\"></span> Save selected region</button> 
 	</form><br>";
 
 

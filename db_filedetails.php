@@ -124,14 +124,10 @@ $QualityFlagID = $this_sound->QualityFlagID;
 require("include/get_jqueryui.php");
 ?>
 
-<!--#Accordion-->
-<script type="text/javascript">
-$(function() {
-	$("#accordion").accordion({
-		heightStyle: "content",
-		collapsible: true,
-		active: false
-		});
+<!-- Tooltips-->
+<script>
+	$(function() {
+		$( document ).tooltip();
 	});
 </script>
 
@@ -422,6 +418,8 @@ else {
 
 		echo "	<div style=\"height: 460px; width: 920px; position: relative;\">";
 
+			/*echo "<img id=\"specRotate\" src=\"sounds/images/$ColID/$DirID/$sound_spectrogram\" data-swap=\"sounds/images/$ColID/$DirID/$sound_waveform\" title=\"Click to switch between the spectrogram and the waveform\" />";*/
+
 			if ($d=="w"){
 				echo "<img src=\"sounds/images/$ColID/$DirID/$sound_waveform\">";
 				}
@@ -621,26 +619,7 @@ else {
 
 		echo "<div class=\"col-md-8\">";
 
-
-					#Tags
-					#$use_tags=query_one("SELECT Value from PumilioSettings WHERE Settings='use_tags'", $connection);
-					if ($use_tags=="1" || $use_tags=="") {
-						echo "<h4>File Tags</h4>
-							<div>";
-						if ($pumilio_loggedin) {
-							require("include/managetags_db.php");
-							echo "<p><strong>Add tags</strong>:<form method=\"get\" action=\"include/addtag.php\">
-								<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-								<input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\">
-								<INPUT TYPE=\"image\" src=\"images/tag_blue_add.png\" BORDER=\"0\" alt=\"Add new tag\">
-								<br><em>Separate tags with a space</em></form><br>";
-							}
-						else {
-							require("include/gettags.php");
-							}
-						echo "</div>";
-						}
-					
+				
 
 					#Marks
 					if ($d!="w") {
@@ -675,10 +654,11 @@ else {
 							);
 						DB::update('Sounds', $this_array, $SoundID, 'SoundID');
 						
-						$FileSize=formatSize($file_filesize);
+						$FileSize_d=formatSize($file_filesize);
+						$FileSize = $file_filesize;
 						}
 					else {
-						$FileSize=formatSize($FileSize);
+						$FileSize_d=formatSize($FileSize);
 						}
 
 					echo "<dt>File Format</dt><dd>$SoundFormat</dd>
@@ -687,7 +667,7 @@ else {
 
 					echo "
 						<dt>File size</dt>
-						<dd>$FileSize</dd>";
+						<dd title=\"$FileSize\">$FileSize_d</dd>";
 
 
 					if ($Duration>60) {
@@ -819,9 +799,9 @@ else {
 					if ($guests_can_dl || $pumilio_loggedin) {
 						echo "<dt>Download</dt>";
 						
-						echo "<dd><a href=\"dl.php?file=sounds/sounds/$ColID/$DirID/$OriginalFilename\" title=\"Please read the license field on the right for legal limitations on the use of these files.\">$SoundFormat</a>";
+						echo "<dd><a href=\"dl.php?file=sounds/sounds/$ColID/$DirID/$OriginalFilename\" title=\"Please take note of the license of this file above for legal limitations on the use of these files.\">$SoundFormat</a>";
 						echo " | ";					
-						echo "<a href=\"dl.php?file=sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename\" title=\"Please read the license field on the right for legal limitations on the use of these files.\">$AudioPreviewFormat</a>
+						echo "<a href=\"dl.php?file=sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename\" title=\"Please take note of the license of this file above for legal limitations on the use of these files.\">$AudioPreviewFormat</a>
 							</dd>";
 						}
 
@@ -829,13 +809,56 @@ else {
 				
 				echo "</dl>";
 				
+
+			if ($pumilio_admin) {
+				echo "<br>
+						<form method=\"get\" action=\"file_edit.php\">
+						<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
+						<button type=\"submit\" class=\"btn btn-primary btn-xs\"> Edit file information </button>
+						</form>";
+
+						#Delete file div
+						echo "<div id=\"dialog\" title=\"Delete the file?\">
+							<p><span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>The file will be permanently deleted and cannot be recovered. Are you sure?</p>
+							</div>";
+
+						echo "
+						<br><form id=\"testconfirmJQ\" name=\"testconfirmJQ\" method=\"post\" action=\"del_file.php\">
+						<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
+						<button type=\"submit\" class=\"btn btn-primary btn-xs\"> Delete file from archive </button>
+						</form>\n";
+				}
+
+
 		echo "</div>";
 
-		echo "<div class=\"col-md-4\">";#MAP
+		echo "<div class=\"col-md-4\">";
 
-			if ($use_leaflet == TRUE){
+				#Tags
+				#$use_tags=query_one("SELECT Value from PumilioSettings WHERE Settings='use_tags'", $connection);
+				if ($use_tags=="1" || $use_tags=="") {
+					echo "<h4>File Tags</h4>
+						<div>";
+					if ($pumilio_loggedin) {
+						require("include/managetags_db.php");
+						echo "<p><strong>Add tags</strong>:<form method=\"get\" action=\"include/addtag.php\">
+							<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
+							<input type=\"text\" size=\"16\" name=\"newtag\" id=\"newtag\" class=\"fg-button ui-state-default ui-corner-all\">
+							<INPUT TYPE=\"image\" src=\"images/tag_blue_add.png\" BORDER=\"0\" alt=\"Add new tag\">
+							<br><em>Separate tags with a space</em></form><br>";
+						}
+					else {
+						require("include/gettags.php");
+						}
+					echo "</div>";
+					}
+
+
+			#MAP
+
+			#if ($use_leaflet == TRUE){
 					echo "<div id=\"map\">Your browser does not have JavaScript enabled or can not connect to the tile server. Please contact your administrator.</div>\n";
-			}
+			/*}
 			elseif ($use_googlemaps=="1" || $use_googlemaps=="3") {#Add small GMap
 				if ($SiteID!="" && $SiteLat!="" && $SiteLon!=""){
 					echo "<div id=\"map_canvas\" style=\"width: 320px; height: 220px\">Your browser does not have JavaScript enabled or can not connect to GoogleMaps. Please contact your administrator.</div>\n";
@@ -853,28 +876,10 @@ else {
 						}
 					echo "<br>";
 					}
-				}
+				}*/
 
 
 
-				if ($pumilio_admin) {
-					echo "<br><br>
-							<form method=\"get\" action=\"file_edit.php\">
-							<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-							<button type=\"submit\" class=\"btn btn-primary btn-xs\"> Edit file information </button>
-							</form>";
-
-							#Delete file div
-							echo "<div id=\"dialog\" title=\"Delete the file?\">
-								<p><span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>The file will be permanently deleted and cannot be recovered. Are you sure?</p>
-								</div>";
-
-							echo "
-							<br><form id=\"testconfirmJQ\" name=\"testconfirmJQ\" method=\"post\" action=\"del_file.php\">
-							<input type=\"hidden\" name=\"SoundID\" value=\"$SoundID\">
-							<button type=\"submit\" class=\"btn btn-primary btn-xs\"> Delete file from archive </button>
-							</form>\n";
-					}
 
 		echo "</div>";
 	echo "</div>";#end row

@@ -55,6 +55,8 @@ else {
 		margin-left: 10px;
 		width: auto;
 		display: inline;
+		alert;
+		alert-danger;
 	}
 	</style>
 
@@ -75,26 +77,15 @@ if (is_file("$absolute_dir/customhead.php")) {
 	}
 	
 
-?>
+echo "</head>\n";
 
-
-
-</head>
-<body>
+echo "<body>
 
 	<!--Blueprint container-->
-	<div class="container">
-		<?php
-			require("include/topbar.php");
-		?>
-		<div class="span-24 last">
-			<hr noshade>
-		</div>
-		<div class="span-24 last">
-			&nbsp;
-		</div>
-		<div class="span-24 last">
-			<?php
+	<div class=\"container\">";
+
+	require("include/topbar.php");
+
 			if ($sm==1) {
 				echo "<h3>Add sound files from a Wildlife Acoustic SongMeter</h3>
 					<p>This form will allow you to import files that were recorded
@@ -113,12 +104,12 @@ if (is_file("$absolute_dir/customhead.php")) {
 			if ($local == 1){
 				$temp_add_dir=query_one("SELECT Value from PumilioSettings WHERE Settings='temp_add_dir'", $connection);
 				if ($temp_add_dir == ""){
-					echo "<div class=\"error\">The local directory is not set. Please set it up in the <a href=\"admin.php\">Administration</a> menu.</div>";
+					echo "<div class=\"alert alert-danger\">The local directory is not set. Please set it up in the <a href=\"admin.php\">Administration</a> menu.</div>";
 					$valid_form = 0;
 					}
 				else{
 					$localdir = $temp_add_dir;
-					echo "<p>Server local directory: <input name=\"localdir\" type=\"text\" maxlength=\"160\" size=\"50\" value=\"$localdir\" class=\"fg-button ui-state-default ui-corner-all\">";
+					echo "<p>Server local directory: <input name=\"localdir\" type=\"text\" maxlength=\"160\" value=\"$localdir\" class=\"form-control\">";
 					$valid_form = 1;
 					}
 					echo "<input type=\"hidden\" name=\"local\" value=\"1\">";
@@ -136,7 +127,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 		
 			if ($nrows>0) {
 				echo "<p>Add files to this collection: 
-				<select name=\"ColID\" class=\"ui-state-default ui-corner-all\">
+				<select name=\"ColID\" class=\"form-control\">
 					<option></option>\n";
 	
 				for ($i=0;$i<$nrows;$i++) {
@@ -152,7 +143,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 				$result_s = mysqli_query($connection, $query_s)
 					or die (mysqli_error($connection));
 				$nrows_s = mysqli_num_rows($result_s);
-				echo "<select name=\"SiteID\" class=\"ui-state-default ui-corner-all\">
+				echo "<select name=\"SiteID\" class=\"form-control\">
 					<option></option>\n";
 
 				for ($j=0;$j<$nrows_s;$j++) {
@@ -169,7 +160,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 				$result_s = mysqli_query($connection, $query_s)
 					or die (mysqli_error($connection));
 				$nrows_s = mysqli_num_rows($result_s);
-				echo "<select name=\"SensorID\" class=\"ui-state-default ui-corner-all\">
+				echo "<select name=\"SensorID\" class=\"form-control\">
 					<option></option>\n";
 
 				for ($j=0;$j<$nrows_s;$j++) {
@@ -184,10 +175,10 @@ if (is_file("$absolute_dir/customhead.php")) {
 				<input type=\"hidden\" name=\"sm\" value=\"$sm\"><br>";
 			
 				if ($valid_form == 0){
-					echo "<input type=submit value=\" Next step \" DISABLED class=\"fg-button ui-state-default ui-corner-all\">";
+					echo "<button type=\"submit\" class=\"btn btn-primary disabled\"> Next step </button>";
 					}
 				elseif ($valid_form == 1){
-					echo "<input type=submit value=\" Next step \" class=\"fg-button ui-state-default ui-corner-all\">";
+					echo "<button type=\"submit\" class=\"btn btn-primary\"> Next step </button>";
 					}
 			
 				echo "</form>";

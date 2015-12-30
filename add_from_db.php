@@ -16,14 +16,17 @@ require("include/apply_config.php");
 $force_loggedin = TRUE;
 require("include/check_login.php");
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
-<html>
+#DB
+use \DByte\DB;
+DB::$c = $pdo;
+
+echo "<!DOCTYPE html>
+<html lang=\"en\">
 <head>
 <title>$app_custom_name - Add from a database or spreadsheet</title>";
 
-require("include/get_css.php");
+require("include/get_css3.php");
 require("include/get_jqueryui.php");
-
 
 #Call particular scripts from include, post to same with variable 'step' to indicate which
 
@@ -41,22 +44,9 @@ if ($step > 5){
 
 require("include/add_from_db$step.php");
 
+		
+require("include/bottom.php");
 ?>
-
-		</div>
-		<div class="span-24 last">
-			&nbsp;
-		</div>
-		<div class="span-24 last">
-			<?php
-			require("include/bottom.php");
-			?>
-
-		</div>
-
-	</div>
-
-	
 
 </body>
 </html>

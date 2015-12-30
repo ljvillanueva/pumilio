@@ -84,7 +84,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 			<form name=\"frequencies\" action=\"set_cookies.php\" method=\"post\" class=\"form-inline\">
 				<input type=\"hidden\" name=\"cookie_to_set\" value=\"freq_range\">
 				Frequency range when opening files:
-				<select name=\"min_freq\" class=\"form-control input-sm\">
+				<select name=\"min_freq\" class=\"form-control\">
 					<option selected>10</option>
 					<option>100</option>
 					<option>500</option>
@@ -98,7 +98,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 					<option>12000</option>
 				</select> Hz
 				to
-				<select name=\"max_freq\" class=\"form-control input-sm\">
+				<select name=\"max_freq\" class=\"form-control\">
 					<option>300</option>
 					<option>500</option>
 					<option>1000</option>
@@ -130,7 +130,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 			<form name=\"fft\" action=\"set_cookies.php\" method=\"post\" class=\"form-inline\">
 				<input type=\"hidden\" name=\"cookie_to_set\" value=\"fft\">
 				FFT size:
-				<select name=\"fft\" class=\"form-control input-sm\">
+				<select name=\"fft\" class=\"form-control\">
 					<option>256</option>
 					<option>512</option>
 					<option>1024</option>
@@ -151,7 +151,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 			<form name=\"palette\" action=\"set_cookies.php\" method=\"post\" class=\"form-inline\">
 				<input type=\"hidden\" name=\"cookie_to_set\" value=\"palette\">
 				Color palette to use in spectrograms:
-				<select name=\"palette\" class=\"form-control input-sm\">
+				<select name=\"palette\" class=\"form-control\">
 					<option value=\"2\">white background</option>
 					<option value=\"1\">black background</option>
 				</select> 

@@ -256,7 +256,7 @@ else{
 
 
 	echo "<div class=\"jumbotron\">
-			<h1>Welcome to $app_custom_name</h1>";
+			<h1>$app_custom_name</h1>";
 
 			$btn1text = DB::column('SELECT Value FROM `PumilioSettings` WHERE `Settings` = ?', array('btn1text'));
 			$btn1url = DB::column('SELECT Value FROM `PumilioSettings` WHERE `Settings` = ?', array('btn1url'));
@@ -326,12 +326,12 @@ else{
 
 		
 
-			if ($use_leaflet == TRUE){
-				echo "<div id=\"map\">Your browser does not have JavaScript enabled or can not connect to the tile server. Please contact your administrator.</div>\n";
-			}
+			#if ($use_leaflet == TRUE){
+			echo "<div id=\"map\">Your browser does not have JavaScript enabled or can not connect to the tile server. Please contact your administrator.</div>\n";
+			/*}
 			else{
 				require("include/index_map_body.php");
-			}
+			}*/
 			
 		
 				#Tag cloud
@@ -348,15 +348,15 @@ else{
 			echo " <div class=\"row\">
 			        <div class=\"col-lg-4 text-center\">
 			          <h2><span class=\"glyphicon glyphicon-cloud-upload\" aria-hidden=\"true\"></span> Add sounds<br>to this archive</h2>
-			          <p><a class=\"btn btn-primary\" href=\"add.php\" role=\"button\">View details »</a></p>
+			          <p><a class=\"btn btn-primary\" href=\"add.php\" role=\"button\">Add sounds »</a></p>
 			        </div>
 			        <div class=\"col-lg-4 text-center\">
 			          <h2><span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span> Explore the<br>sound archive</h2>
-			          <p><a class=\"btn btn-primary\" href=\"search.php\" role=\"button\">View details »</a></p>
+			          <p><a class=\"btn btn-primary\" href=\"search.php\" role=\"button\">Search »</a></p>
 			       </div>
 			        <div class=\"col-lg-4 text-center\">
 			          <h2><span class=\"glyphicon glyphicon-tasks\" aria-hidden=\"true\"></span> Data extraction<br>and analysis</h2>
-			          <p><a class=\"btn btn-primary\" href=\"data.php\" role=\"button\">View details »</a></p>
+			          <p><a class=\"btn btn-primary\" href=\"data.php\" role=\"button\">Export data »</a></p>
 			        </div>
 			       </div>";
 		?>

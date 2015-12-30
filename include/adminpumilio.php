@@ -510,7 +510,7 @@ echo "
     <div class=\"panel-body\">
     	Here you can add links to pages that will appear in the homepage. These links can be
     		useful to display a link to your lab's website, a page about the methods,
-    		or other relevant pages. If the text or URL are empty, the button will not be used.";
+    		or other relevant pages. If the text or URL are empty, the button will not be displayed.";
 
 
 	echo "
