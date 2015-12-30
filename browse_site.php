@@ -477,7 +477,7 @@ require("include/bottom.php");
 #Loading... message
 require("include/loadingbottom.php");
 
-require("include/leafletsmall.php");
+require("include/leaflet1.php");
 ?>
 
 </body>

@@ -256,7 +256,7 @@ else{
 
 
 	echo "<div class=\"jumbotron\">
-			<h2>Welcome to $app_custom_name</h2>";
+			<h1>Welcome to $app_custom_name</h1>";
 
 			$btn1text = DB::column('SELECT Value FROM `PumilioSettings` WHERE `Settings` = ?', array('btn1text'));
 			$btn1url = DB::column('SELECT Value FROM `PumilioSettings` WHERE `Settings` = ?', array('btn1url'));
@@ -285,8 +285,13 @@ else{
 				
 			echo "</div>";
 
+			$app_custom_text = DB::column('SELECT `Value` FROM `PumilioSettings` WHERE Settings=?', array('app_custom_text'));
 
-			echo "<p>$app_custom_text<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam suscipit lobortis leo sed maximus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin sed arcu ac tellus tempus facilisis eget ac diam. Maecenas purus leo, cursus ut consequat in, luctus eget libero. Etiam dictum massa enim, consectetur tincidunt sem fermentum finibus. Ut vulputate neque leo, ut vulputate dolor consequat in.</p>\n";
+			if ($app_custom_text == "") {
+				$app_custom_text = "Pumilio is a free and open source sound archive manager for the visualization and manipulation of sound files.";
+				}
+
+			echo "<p>$app_custom_text</p>\n";
 
 
 				$no_Collections = DB::column('SELECT COUNT(DISTINCT ColID) FROM `Sounds` WHERE SoundStatus!=9 ' . $qf_check);
@@ -330,13 +335,13 @@ else{
 			
 		
 				#Tag cloud
-				if ($use_tags=="1" || $use_tags=="") {
+				/*if ($use_tags=="1" || $use_tags=="") {
 					echo "<h3>Tag cloud</h3>
 						<p>Select sounds to browse according to their tags.";
 					require("include/tagcloud.php");
 
 					}
-
+				*/
 	
 
 			
@@ -360,17 +365,17 @@ else{
 <hr noshade>
 <?php
 
-##################################
-$thanks_text = "Donec fringilla tortor metus, eu faucibus nunc hendrerit quis. Pellentesque in ex at arcu interdum laoreet. Curabitur in aliquam lacus. Pellentesque sed nibh enim. Nam condimentum tellus quam, ut efficitur turpis fermentum a. Morbi ut orci vitae tortor dapibus congue non nec neque. Nullam egestas tortor eu leo mollis condimentum. Aliquam sodales vel purus quis tincidunt. ";
-##################################
-echo "<dl class=\"dl-horizontal\">
+$thanks_text = DB::column('SELECT `Value` FROM `PumilioSettings` WHERE Settings=?', array('thanks_text'));
+
+	if ($thanks_text != "") {
+		echo "<dl class=\"dl-horizontal\">
 		  <dt>Acknowledgements</dt>
 		  <dd>$thanks_text</dd>
 		</dl>";
+		}
 
 require("include/bottom.php");
 ?>
-
 
 </body>
 </html>

@@ -51,7 +51,7 @@ if ($nrows>0) {
 	$sites_bounds=array();
 	}
 
-if ($mapping_system == "Leaflet"){
+if ($use_leaflet == TRUE){
 		#Leafet
 		echo "\n<link rel=\"stylesheet\" href=\"libs/leaflet/leaflet.css\" />\n
 
@@ -61,19 +61,11 @@ if ($mapping_system == "Leaflet"){
 				}
 		</style>";
 	}	
-else if ($mapping_system == "Gmaps"){
+else if ($googlemaps_ver == "3"){
 ########################
 # GOOGLE MAPS v3
 ########################
-	if (isset($googlemaps3_key)){
-		echo "<script src=\"http://maps.googleapis.com/maps/api/js?key=$googlemaps3_key&amp;sensor=false\" type=\"text/javascript\"></script>\n";
-	}
-	else{
-		echo "<script src=\"http://maps.googleapis.com/maps/api/js?sensor=false\" type=\"text/javascript\"></script>\n";	
-	}
-	
-
-	
+	echo "<script src=\"http://maps.googleapis.com/maps/api/js?key=$googlemaps3_key&amp;sensor=false\" type=\"text/javascript\"></script>\n";
 	
 	echo "<script type=\"text/javascript\">
 		var infowindow = null;
@@ -322,5 +314,13 @@ else if ($mapping_system == "Gmaps"){
 				</script>\n";
 
 	}
-
+else {
+	$use_googlemaps=query_one("SELECT Value from PumilioSettings WHERE Settings='use_googlemaps'", $connection);
+	if ($use_googlemaps=="1"){
+		die("<div class=\"error\">The system is set up to use Google Maps v2. This version has been deprecated. Please update your settings in the administration menu or contact your administrator.</div>");
+		}
+	else{
+		die("<div class=\"error\">The system is not set up for the use of Google Maps.</div>");
+		}
+	}
 ?>

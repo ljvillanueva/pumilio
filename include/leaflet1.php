@@ -17,7 +17,7 @@ if ($SiteLat != "" && $SiteLon != ""){
 
 				var map = L.map('map').setView([$SiteLat, $SiteLon], 13);";
 
-
+				$tileserver = "openstreet";
 
 				if ($tileserver == "mapbox"){
 					#From default leaflet demo

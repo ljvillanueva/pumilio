@@ -30,12 +30,6 @@ else{
 	$u = "";
 	}
 
-if (!isset($_GET["t"])){
-	$t = 0;
-	}
-else{
-	$t = $_GET["t"];
-	}
 	
 if (!isset($_GET["tt"])){
 	$tt = 0;
@@ -322,28 +316,6 @@ $(function() {
 });
 </script>
 
-<script type="text/javascript">
-$(function() {
-    // setTimeout() function will be fired after page is loaded
-    // it will wait for 5 sec. and then will fire
-    // $("#successMessage").hide() function
-    setTimeout(function() {
-        $("#pumversion").hide('blind', {}, 500)
-    }, 5000);
-});
-</script>
-
-<script type="text/javascript">
-$(function() {
-    // setTimeout() function will be fired after page is loaded
-    // it will wait for 5 sec. and then will fire
-    // $("#successMessage").hide() function
-    setTimeout(function() {
-        $("#pumversiondev").hide('blind', {}, 500)
-    }, 8000);
-});
-</script>
-
 
 <!-- Tooltips-->
 <script>
@@ -392,7 +364,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 				if (count($website_version_e) == 4){
 					$w_dev = trim($website_version_e[3]);
 					if ($w_dev == "dev"){
-						echo "<div class=\"alert alert-danger\" id=\"pumversiondev\">
+						echo "<div class=\"alert alert-danger\">
 							<span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=\"true\"></span>
 							You are using a development version of Pumilio. This version may be more up to date
 							than the current version, but may be unstable.<br>

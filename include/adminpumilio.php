@@ -13,85 +13,57 @@ echo "
 		</div>
         <div class=\"panel-body\">";
 
-//Custom name of the app
-if ($tt==1) {
-	echo "<div class=\"alert alert-success\" id=\"tt1\">The database was updated.</div>";
-	}
-
-echo "<form action=\"include/editpumiliosettings.php\" method=\"POST\">
-	<input type=\"hidden\" name=\"settings\" value=\"top\">
-	<div class=\"form-group\">
-		<label for=\"app_custom_name\">This installation custom name:</label>
-		<input type=\"text\" id=\"app_custom_name\" name=\"app_custom_name\" value=\"$app_custom_name\" class=\"form-control\">
-	</div>";
-
-echo "<div class=\"form-group\">
-	<label for=\"app_custom_text\">Short description of this system:</label>";
-	echo "<input type=\"text\" name=\"app_custom_text\" id=\"app_custom_text\" value=\"$app_custom_text\" class=\"form-control\">
-</div>";
-	
-
-if ($use_googlemaps=="1"){
-	$use_googlemaps_d="No";
-	$use_googlemaps="0";
-	}
-elseif ($use_googlemaps=="0"){
-	$use_googlemaps_d="No";
-	}
-elseif ($use_googlemaps=="3"){
-	$use_googlemaps_d="Yes";
-	}
-else{
-	$use_googlemaps_d="Not set";
-	}
-	
-	
-	if ($map_only=="1"){
-		$map_only_d="Main map";
-		}
-	elseif ($map_only=="0" || $map_only==""){
-		$map_only_d="Full menu";
+	//Custom name of the app
+	if ($tt==1) {
+		echo "<div class=\"alert alert-success\" id=\"tt1\">The database was updated.</div>";
 		}
 
+	echo "<form action=\"include/editpumiliosettings.php\" method=\"POST\">
+		<input type=\"hidden\" name=\"settings\" value=\"top\">
 
 
-#Google Analytics:
+	<div class=\"row\">
+	<div class=\"col-md-5\">
+
+
+		<div class=\"form-group\">
+			<label for=\"app_custom_name\">This installation custom name:</label>
+			<input type=\"text\" id=\"app_custom_name\" name=\"app_custom_name\" value=\"$app_custom_name\" class=\"form-control\">
+		</div>";
+
 	echo "<div class=\"form-group\">
-	<label for=\"googleanalytics_ID\">Google Analytics Tracking ID</label>";
-
-	echo "<input type=\"text\" name=\"googleanalytics_ID\" id=\"googleanalytics_ID\" value=\"$googleanalytics_ID\" class=\"form-control\">
-			<a href=\"#\" onclick=\"window.open('help.php?topic=GoogleAnalytics', 'help', 'width=650,height=550,status=yes,resizable=yes,scrollbars=auto')\"><img src=\"images/help.png\" title=\"Click for instructions\"></a>
-		</div>\n";
-
-
-
-
-echo "<div class=\"form-group\">
-	<label for=\"map_only\">Main Menu:</label>";
-		
-	echo "<select name=\"map_only\" id=\"map_only\" class=\"form-control\">";
-		if ($map_only=="1") {
-			echo "<option value=\"0\">Full menu</option>
-				<option SELECTED value=\"1\">Main map</option>";
-			}
-		elseif ($map_only=="0" || $map_only=="") {
-			echo "<option SELECTED value=\"0\">Full menu</option>
-				<option value=\"1\">Main map</option>";
-			}
-	echo "</select>\n
+		<label for=\"app_custom_text\">Short description of this system:</label>";
+		echo "<textarea name=\"app_custom_text\" id=\"app_custom_text\" class=\"form-control\" rows=\"3\">$app_custom_text</textarea>
 	</div>";
-	
-	
-#Copyright or CC?
-	#$files_license = query_one("SELECT Value from PumilioSettings WHERE Settings='files_license'", $connection);
-	#$files_license_detail = query_one("SELECT Value from PumilioSettings WHERE Settings='files_license_detail'", $connection);
+
+	echo "<div class=\"form-group\">
+		<label for=\"thanks_text\">Acknowledgements to display in homepage:</label>";
+		echo "<textarea name=\"thanks_text\" id=\"thanks_text\" class=\"form-control\" rows=\"3\">$thanks_text</textarea>
+	</div>";
+		
+
+
+	echo "</div>
+		<div class=\"col-md-5\">";
+
+
+
+	#Copyright or CC?
+		#$files_license = query_one("SELECT Value from PumilioSettings WHERE Settings='files_license'", $connection);
+		#$files_license_detail = query_one("SELECT Value from PumilioSettings WHERE Settings='files_license_detail'", $connection);
 
 	if ($files_license=="") {
 		$files_license = "Not set";
 		}
 
 	echo "<div class=\"form-group\">
-	<label for=\"lic1\">Retain copyright or share with a <a href=\"http://creativecommons.org/licenses/\" target=_blank>Creative Commons</a> license? $files_license</label>";
+		<label for=\"files_license_detail\">Who owns the copyright:</label>";
+
+		echo "<input type=\"text\" name=\"files_license_detail\" id=\"files_license_detail\" size=\"40\" maxlength=\"250\" value=\"$files_license_detail\" class=\"form-control\"></div>";
+		
+
+	echo "<div class=\"form-group\">
+	<label for=\"lic1\">Retain copyright or share with a <a href=\"http://creativecommons.org/licenses/\" target=_blank>Creative Commons</a> license?</label>";
 		
 		echo "<select name=\"files_license\" id =\"lic1\" class=\"form-control\">";
 			if ($files_license=="Copyright") {
@@ -169,10 +141,18 @@ echo "<div class=\"form-group\">
 					
 			echo " </select>
 		
-		<input type=\"text\" name=\"files_license_detail\" size=\"40\" maxlength=\"250\" value=\"$files_license_detail\">
 	</div>";
-	
-		
+
+
+	#Google Analytics:
+		echo "<div class=\"form-group\">
+		<label for=\"googleanalytics_ID\">Google Analytics Tracking ID <a href=\"#\" onclick=\"window.open('help.php?topic=GoogleAnalytics', 'help', 'width=650,height=550,status=yes,resizable=yes,scrollbars=auto')\"><img src=\"images/help.png\" title=\"Click for instructions\"></a></label>";
+
+		echo "<input type=\"text\" name=\"googleanalytics_ID\" id=\"googleanalytics_ID\" value=\"$googleanalytics_ID\" class=\"form-control\">
+				
+		</div>\n";
+
+
 	#Temp dir
 	$temp_add_dir_f = "";
 	#$temp_add_dir=query_one("SELECT Value from PumilioSettings WHERE Settings='temp_add_dir'", $connection);
@@ -192,14 +172,12 @@ echo "<div class=\"form-group\">
 		$temp_add_dir_d="Not set";
 		}
 
+	$apacheuser = exec('whoami');
 	echo "<div class=\"form-group\">
-	<label for=\"temp_add_dir\">Local directory for adding multiple files:</label>";
+	<label for=\"temp_add_dir\">Local directory for adding multiple files: <img src=\"images/help.png\" title=\"Users can add files to the archive that are stored in the server or a network location mounted in the server. Add the full system path in this field. The path needs to exist and be readable by the Apache user ($apacheuser).\"></label>";
 
-		$apacheuser = exec('whoami');
+		
 		echo "<input type=\"text\" name=\"temp_add_dir\" id=\"temp_add_dir\" value=\"$temp_add_dir_f\" class=\"form-control\">
-				<img src=\"images/help.png\" title=\"Users can add files to the archive that are stored in the
-					server or a network location mounted in the server. Add the full system path 
-					in this field. The path needs to exist and be readable by the Apache user ($apacheuser).\">
 			</div>";
 
 
@@ -241,7 +219,7 @@ echo "<div class=\"form-group\">
 		}*/
 
 	echo "<div class=\"form-group\">
-	<label for=\"cores_to_use\">How many cores to use for background processes:</label>";
+	<label for=\"cores_to_use\">How many cores to use for background processes: <img src=\"images/help.png\" title=\"Set to maximum to speed up the background processes at the cost of server performance for other tasks. Set to a lower number to leave some cores for other processes.\"></label>";
 	$machine_cores = nocores();
 	
 	echo "<select name=\"cores_to_use\" id=\"cores_to_use\" class=\"form-control\">";
@@ -256,15 +234,15 @@ echo "<div class=\"form-group\">
 			}
 
 	echo " </select> 
-		<img src=\"images/help.png\" title=\"Set to maximum to speed up the background processes at the cost of server performance for other
-			tasks. Set to a lower number to leave some cores for other processes.\">
 		</div>";
 	
 	
-	echo "<p><button type=\"submit\" class=\"btn btn-primary\"> Update system settings </button>
+	echo "
+	</div>
+	</div>
+
+	<p><button type=\"submit\" class=\"btn btn-primary\"> Update System Settings </button>
 	</form>
-
-
 
 	</div>
 </div>";
@@ -274,9 +252,9 @@ echo "<div class=\"form-group\">
 
 
 
-	#Image settings
-	echo "
-	<a name=\"image\"></a>
+#Image settings
+echo "
+<a name=\"image\"></a>
 	<div class=\"panel panel-primary\">
 	<div class=\"panel-heading\">
 		<h3 class=\"panel-title\">Image Settings</h3>
@@ -284,15 +262,18 @@ echo "<div class=\"form-group\">
     <div class=\"panel-body\">";
 
 	if ($imgset == 1) {
-		echo "<div class=\"success\" id=\"imgset\">The database was updated. To force the system to recreate the images:<br>
+		echo "<div class=\"alert alert-success\" id=\"imgset\">The database was updated. To force the system to recreate the images:<br>
 		<form method=\"GET\" action=\"include/delauxfiles.php\" target=\"delauxfiles\" onsubmit=\"window.open('', 'delauxfiles', 'width=450,height=700,status=yes,resizable=yes,scrollbars=auto')\">
 			<input type=\"hidden\" name=\"op\" value=\"7\">
-			<input type=submit value=\" Delete all images from system \"></form>
+			<button type=\"submit\" class=\"btn btn-primary\"> Delete all images from system </button></form><br><br>
 		</div>";
 		}
 
 	echo "<form action=\"include/editpumiliosettings.php\" method=\"POST\">
-		<input type=\"hidden\" name=\"settings\" value=\"image\">";
+		<input type=\"hidden\" name=\"settings\" value=\"image\">
+
+	<div class=\"row\">
+	<div class=\"col-md-5\">";
 	#Max freq to draw in spectrograms
 	#$max_spec_freq=query_one("SELECT Value from PumilioSettings WHERE Settings='max_spec_freq'", $connection);
 
@@ -380,45 +361,7 @@ echo "<div class=\"form-group\">
 	echo " </select>
 	</div>";
 
-	#FFT window size
-	echo "<div class=\"form-group\">
-	<label for=\"fft\">FFT window size";
-	
-	echo "<select name=\"fft\" id=\"fft\" class=\"form-control\">";
-		
-		$fft1="";
-		$fft2="";
-		$fft3="";
-		$fft4="";
-		$fft5="";
-		$fft6="";
 
-		if ($fft == 4096)
-			$fft1="SELECTED";
-		elseif ($fft == 2048)
-			$fft2="SELECTED";
-		elseif ($fft == 1024)
-			$fft3="SELECTED";
-		elseif ($fft == 512)
-			$fft4="SELECTED";
-		elseif ($fft == 256)
-			$fft5="SELECTED";
-		elseif ($fft == 128)
-			$fft6="SELECTED";
-			
-		echo "<option $fft1>4096</option>
-			<option $fft2>2048</option>
-			<option $fft3>1024</option>
-			<option $fft4>512</option>
-			<option $fft5>256</option>
-			<option $fft6>128</option>";
-
-	echo " </select></div>";
-
-
-	#spectrogram_palette
-	#$spectrogram_palette=query_one("SELECT Value from PumilioSettings WHERE Settings='spectrogram_palette'", $connection);
-	
 	echo "<div class=\"form-group\">
 	<label for=\"spectrogram_palette\">Color palette to use for the spectrograms</label>";
 	
@@ -488,8 +431,55 @@ echo "<div class=\"form-group\">
 	echo "</div>";
 
 
+	#FFT window size
 	echo "
-	<button type=\"submit\" class=\"btn btn-primary\"> Update spectrogram settings </button>
+	</div>
+	<div class=\"col-md-5\">
+
+	<div class=\"form-group\">
+	<label for=\"fft\">FFT window size";
+	
+	echo "<select name=\"fft\" id=\"fft\" class=\"form-control\">";
+		
+		$fft1="";
+		$fft2="";
+		$fft3="";
+		$fft4="";
+		$fft5="";
+		$fft6="";
+
+		if ($fft == 4096)
+			$fft1="SELECTED";
+		elseif ($fft == 2048)
+			$fft2="SELECTED";
+		elseif ($fft == 1024)
+			$fft3="SELECTED";
+		elseif ($fft == 512)
+			$fft4="SELECTED";
+		elseif ($fft == 256)
+			$fft5="SELECTED";
+		elseif ($fft == 128)
+			$fft6="SELECTED";
+			
+		echo "<option $fft1>4096</option>
+			<option $fft2>2048</option>
+			<option $fft3>1024</option>
+			<option $fft4>512</option>
+			<option $fft5>256</option>
+			<option $fft6>128</option>";
+
+	echo " </select></div>";
+
+
+	#spectrogram_palette
+	#$spectrogram_palette=query_one("SELECT Value from PumilioSettings WHERE Settings='spectrogram_palette'", $connection);
+	
+	
+
+
+	echo "
+	</div></div>
+	<button type=\"submit\" class=\"btn btn-primary\"> Update Spectrogram Settings </button>
 	</form>
 	</div>
 </div>";
@@ -567,7 +557,7 @@ echo "
 	echo "
 	</tbody>
 	</table>
-	<button type=\"submit\" class=\"btn btn-primary\"> Update homepage links </button>
+	<button type=\"submit\" class=\"btn btn-primary\"> Update Homepage Links </button>
 	</form>
 	
 	</div>
@@ -581,11 +571,12 @@ echo "
 
 
 
-	#System behavior
-	echo "
+#System behavior
+echo "
+<a name=\"sysb\"></a>
 	<div class=\"panel panel-primary\">
 	<div class=\"panel-heading\">
-		<h3 class=\"panel-title\">System behavior</h3>
+		<h3 class=\"panel-title\">System Behavior</h3>
 	</div>
     <div class=\"panel-body\">
 
@@ -594,9 +585,10 @@ echo "
 	<input type=\"hidden\" name=\"settings\" value=\"bottom\">";	
 		
 	if ($tt == 2) {
-		echo "<div class=\"success\" id=\"tt2\">The database was updated.</div>";
+		echo "<div class=\"alert alert-success\" id=\"tt2\">The database was updated.</div>";
 		}
 	
+	echo "<div class=\"row\">\n";
 
 	#audio preview format
 	#$audiopreview_format=query_one("SELECT Value from PumilioSettings WHERE Settings='audiopreview_format'", $connection);
@@ -614,171 +606,175 @@ echo "
 		$wav_toflac_d="Not set";
 		}
 			
-	echo "<div class=\"form-group\">
-	<label for=\"wav_toflac\">Compress uploaded wav files to flac</label>";
-	
-	echo "<select name=\"wav_toflac\" id=\"wav_toflac\" class=\"form-control\">";
-		if ($use_tags) {
-			echo "<option SELECTED value=\"1\">Yes</option>
-				<option value=\"0\">No</option>";
+	echo "<div class=\"col-md-5\">
+		<div class=\"form-group\">
+		<label for=\"wav_toflac\">Compress uploaded wav files to flac</label>";
+		
+		echo "<select name=\"wav_toflac\" id=\"wav_toflac\" class=\"form-control\">";
+			if ($use_tags) {
+				echo "<option SELECTED value=\"1\">Yes</option>
+					<option value=\"0\">No</option>";
+				}
+			else {
+				echo "<option value=\"1\">Yes</option>
+					<option SELECTED value=\"0\">No</option>";
+				}
+
+		echo " </select></div>";
+
+
+		#guests_can_open
+		#$guests_can_open=query_one("SELECT Value from PumilioSettings WHERE Settings='guests_can_open'", $connection);
+
+		if ($guests_can_open=="1"){
+			$guests_can_open_d="Yes";
 			}
-		else {
-			echo "<option value=\"1\">Yes</option>
-				<option SELECTED value=\"0\">No</option>";
-			}
-
-	echo " </select></div>";
-
-
-	#guests_can_open
-	#$guests_can_open=query_one("SELECT Value from PumilioSettings WHERE Settings='guests_can_open'", $connection);
-
-	if ($guests_can_open=="1"){
-		$guests_can_open_d="Yes";
-		}
-	elseif ($guests_can_open=="0"){
-		$guests_can_open_d="No";
-		}
-	else{
-		$guests_can_open_d="Not set";
-		}
-
-	echo "<div class=\"form-group\">
-	<label for=\"guests_can_open\">Allow users that are not logged in to open the files</label>";
-	
-	echo "<select name=\"guests_can_open\" id=\"guests_can_open\" class=\"form-control\">";
-		if ($guests_can_open) {
-			echo "<option SELECTED value=\"1\">Yes</option>
-				<option value=\"0\">No</option>";
-			}
-		else {
-			echo "<option value=\"1\">Yes</option>
-				<option SELECTED value=\"0\">No</option>";
-			}
-
-	echo " </select></div>";
-
-
-	#guests_can_download
-	#$guests_can_dl=query_one("SELECT Value from PumilioSettings WHERE Settings='guests_can_dl'", $connection);
-
-	if ($guests_can_dl=="1"){
-		$guests_can_dl_d="Yes";
-		}
-	elseif ($guests_can_dl=="0"){
-		$guests_can_dl_d="No";
-		}
-	else{
-		$guests_can_dl_d="Not set";
-		}
-
-	echo "<div class=\"form-group\">
-	<label for=\"guests_can_dl\">Allow users that are not logged in to download the files</label>";
-	
-	echo "<select name=\"guests_can_dl\" id=\"guests_can_dl\" class=\"form-control\">";
-		if ($guests_can_dl){
-			echo "<option SELECTED value=\"1\">Yes</option>
-				<option value=\"0\">No</option>";
+		elseif ($guests_can_open=="0"){
+			$guests_can_open_d="No";
 			}
 		else{
-			echo "<option value=\"1\">Yes</option>
-				<option SELECTED value=\"0\">No</option>";
-			}
-	echo " </select></div>";
-
-
-
-	#level data to share
-	#$public_leveldata=query_one("SELECT Value from PumilioSettings WHERE Settings='public_leveldata'", $connection);
-	
-	if ($default_qf==""){
-		$default_qf = "0";
-		}
-
-	echo "<div class=\"form-group\">
-	<label for=\"default_qf\">Level of data to display to guests</label>";
-	
-	echo "<select name=\"default_qf\" id=\"default_qf\" class=\"form-control\">";
-
-	$query_level = "SELECT * FROM QualityFlags ORDER BY QualityFlagID";
-	$result_level = query_several($query_level, $connection);
-	$nrows_level = mysqli_num_rows($result_level);
-
-	for ($i=0; $i<$nrows_level; $i++){
-		$row_level = mysqli_fetch_array($result_level);
-		extract($row_level);
-		if ($QualityFlagID == $default_qf){
-			echo "\n<option value=\"$QualityFlagID\" SELECTED>$QualityFlagID - $QualityFlag</option>";
-			}
-		else{
-			echo "\n<option value=\"$QualityFlagID\">$QualityFlagID - $QualityFlag</option>";
-			}
-		}
-	echo "</select></div>";
-	
-	
-	#allow access using XML
-	#$use_xml=query_one("SELECT Value from PumilioSettings WHERE Settings='use_xml'", $connection);
-
-	if ($use_xml == "1"){
-		$use_xml_d = "Yes";
-		}
-	elseif ($use_xml == "0"){
-		$use_xml_d = "No";
-		}
-	else {
-		$use_xml_d = "Not set";
-		}
-
-	echo "<div class=\"form-group\">
-	<label for=\"use_xml\">Allow access using XML</label>";
-
-	echo "<select name=\"use_xml\" id=\"use_xml\" class=\"form-control\">";
-		if ($use_xml) {
-			echo "<option SELECTED value=\"1\">Yes</option>
-				<option value=\"0\">No</option>";
-			}
-		elseif ($use_xml=="0"){
-			echo "<option value=\"1\">Yes</option>
-				<option SELECTED value=\"0\">No</option>";
-			}
-		else {
-			echo "<option SELECTED value=\"1\">Yes</option>
-				<option value=\"0\">No</option>";
-			}
-	echo " </select></div>";
-	
-	
-	#Who to allow to access XML?
-	if ($use_xml=="1"){
-		if ($xml_access=="1"){
-			$xml_access_d="Any";
-			}
-		elseif ($xml_access=="0"){
-			$xml_access_d="Users";
-			}
-		else{
-			$xml_access="1";
-			$xml_access_d="Any";
+			$guests_can_open_d="Not set";
 			}
 
 		echo "<div class=\"form-group\">
-		<label for=\"xml_access\">Who can access via XML</label>";
-
-		echo "<select name=\"xml_access\" id=\"xml_access\" class=\"form-control\">";
-			if ($xml_access=="1") {
-				echo "<option SELECTED value=\"1\">Any</option>
-					<option value=\"0\">Only Users</option>";
+		<label for=\"guests_can_open\">Allow users that are not logged in to open the files</label>";
+		
+		echo "<select name=\"guests_can_open\" id=\"guests_can_open\" class=\"form-control\">";
+			if ($guests_can_open) {
+				echo "<option SELECTED value=\"1\">Yes</option>
+					<option value=\"0\">No</option>";
 				}
-			elseif ($xml_access=="0"){
-				echo "<option value=\"1\">Any</option>
-					<option SELECTED value=\"0\">Only Users</option>";
+			else {
+				echo "<option value=\"1\">Yes</option>
+					<option SELECTED value=\"0\">No</option>";
+				}
+
+		echo " </select></div>";
+
+
+		#guests_can_download
+		#$guests_can_dl=query_one("SELECT Value from PumilioSettings WHERE Settings='guests_can_dl'", $connection);
+
+		if ($guests_can_dl=="1"){
+			$guests_can_dl_d="Yes";
+			}
+		elseif ($guests_can_dl=="0"){
+			$guests_can_dl_d="No";
+			}
+		else{
+			$guests_can_dl_d="Not set";
+			}
+
+		echo "<div class=\"form-group\">
+		<label for=\"guests_can_dl\">Allow users that are not logged in to download the files</label>";
+		
+		echo "<select name=\"guests_can_dl\" id=\"guests_can_dl\" class=\"form-control\">";
+			if ($guests_can_dl){
+				echo "<option SELECTED value=\"1\">Yes</option>
+					<option value=\"0\">No</option>";
+				}
+			else{
+				echo "<option value=\"1\">Yes</option>
+					<option SELECTED value=\"0\">No</option>";
 				}
 		echo " </select></div>";
-		}
+
+
+	echo "</div>
+		<div class=\"col-md-5\">";
+
+		#level data to share
+		#$public_leveldata=query_one("SELECT Value from PumilioSettings WHERE Settings='public_leveldata'", $connection);
+		
+		if ($default_qf==""){
+			$default_qf = "0";
+			}
+
+		echo "<div class=\"form-group\">
+		<label for=\"default_qf\">Level of data to display to guests</label>";
+		
+		echo "<select name=\"default_qf\" id=\"default_qf\" class=\"form-control\">";
+
+		$query_level = "SELECT * FROM QualityFlags ORDER BY QualityFlagID";
+		$result_level = query_several($query_level, $connection);
+		$nrows_level = mysqli_num_rows($result_level);
+
+		for ($i=0; $i<$nrows_level; $i++){
+			$row_level = mysqli_fetch_array($result_level);
+			extract($row_level);
+			if ($QualityFlagID == $default_qf){
+				echo "\n<option value=\"$QualityFlagID\" SELECTED>$QualityFlagID - $QualityFlag</option>";
+				}
+			else{
+				echo "\n<option value=\"$QualityFlagID\">$QualityFlagID - $QualityFlag</option>";
+				}
+			}
+		echo "</select></div>";
+		
+		
+		#allow access using XML
+		#$use_xml=query_one("SELECT Value from PumilioSettings WHERE Settings='use_xml'", $connection);
+
+		if ($use_xml == "1"){
+			$use_xml_d = "Yes";
+			}
+		elseif ($use_xml == "0"){
+			$use_xml_d = "No";
+			}
+		else {
+			$use_xml_d = "Not set";
+			}
+
+		echo "<div class=\"form-group\">
+		<label for=\"use_xml\">Allow access using XML</label>";
+
+		echo "<select name=\"use_xml\" id=\"use_xml\" class=\"form-control\">";
+			if ($use_xml) {
+				echo "<option SELECTED value=\"1\">Yes</option>
+					<option value=\"0\">No</option>";
+				}
+			elseif ($use_xml=="0"){
+				echo "<option value=\"1\">Yes</option>
+					<option SELECTED value=\"0\">No</option>";
+				}
+			else {
+				echo "<option SELECTED value=\"1\">Yes</option>
+					<option value=\"0\">No</option>";
+				}
+		echo " </select></div>";
+		
+		
+		#Who to allow to access XML?
+		if ($use_xml=="1"){
+			if ($xml_access=="1"){
+				$xml_access_d="Any";
+				}
+			elseif ($xml_access=="0"){
+				$xml_access_d="Users";
+				}
+			else{
+				$xml_access="1";
+				$xml_access_d="Any";
+				}
+
+			echo "<div class=\"form-group\">
+			<label for=\"xml_access\">Who can access via XML</label>";
+
+			echo "<select name=\"xml_access\" id=\"xml_access\" class=\"form-control\">";
+				if ($xml_access=="1") {
+					echo "<option SELECTED value=\"1\">Any</option>
+						<option value=\"0\">Only Users</option>";
+					}
+				elseif ($xml_access=="0"){
+					echo "<option value=\"1\">Any</option>
+						<option SELECTED value=\"0\">Only Users</option>";
+					}
+			echo " </select></div>";
+			}
 	
 	echo "
-	<button type=\"submit\" class=\"btn btn-primary\"> Update system behavior </button>
+	</div></div>
+	<button type=\"submit\" class=\"btn btn-primary\"> Update System Behavior </button>
 	</form>";
 
 	echo "</div>

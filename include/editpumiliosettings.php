@@ -54,6 +54,21 @@ if ($settings == "top"){
 		}
 
 
+
+	$value = filter_var($_POST["thanks_text"], FILTER_SANITIZE_STRING);
+	$check = DB::column('SELECT COUNT(*) FROM `PumilioSettings` WHERE Settings = "thanks_text"');
+	$settings = array(
+		'Settings' => 'thanks_text',
+		'Value' => $value
+	);
+	if ($check == 0){
+		DB::insert('PumilioSettings', $settings);
+		}
+	else{
+		DB::update('PumilioSettings', $settings, 'thanks_text', 'Settings');
+		}
+
+
 	$value = filter_var($_POST["mapping_system"], FILTER_SANITIZE_STRING);
 	$check = DB::column('SELECT COUNT(*) FROM `PumilioSettings` WHERE Settings = "mapping_system"');
 	$settings = array(
@@ -368,7 +383,7 @@ elseif ($settings == "bottom"){
 		}
 
 
-	header("Location: ../admin.php?t=1&tt=2");
+	header("Location: ../admin.php?tt=2#sysb");
 	die();
 	}
 elseif ($settings == "homelink"){
