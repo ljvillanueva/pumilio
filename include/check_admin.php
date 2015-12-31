@@ -44,12 +44,12 @@ if (!isset($force_admin)){
 	}
 
 if ($force_loggedin == TRUE && $pumilio_loggedin == FALSE){
-	header("Location: error.php?e=login");
+	header("Location: $app_url/error.php?e=login");
 	die();
 	}
 
 if ($force_admin == TRUE && $pumilio_admin == FALSE){
-	header("Location: error.php?e=admin");
+	header("Location: $app_url/error.php?e=admin");
 	die();
 	}
 

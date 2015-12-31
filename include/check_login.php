@@ -25,7 +25,7 @@ if (!isset($force_loggedin)){
 	}
 
 if ($force_loggedin == TRUE && $pumilio_loggedin == FALSE){
-	header("Location: error.php?e=login");
+	header("Location: $app_url/error.php?e=login");
 	die();
 	}
 

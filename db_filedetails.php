@@ -65,7 +65,7 @@ if ($valid_id != 1) {
 	echo "<body>
 
 		<div class=\"alert alert-danger\" role=\"alert\">
-    	    <img src=\"images/exclamation.png\"> The file requested does not exists or the Sound ID is not valid. Please go back and try again.
+    	    <span class=\"glyphicon glyphicon-alert\" aria-hidden=\"true\"></span> The file requested does not exists or the Sound ID is not valid. Please go back and try again.
       	</div>
 
 		</body>
@@ -76,7 +76,7 @@ if ($valid_id != 1) {
 if ($SoundID_status == 9) {
 	echo "<body>
 		<div class=\"alert alert-danger\" role=\"alert\">
-    	    <img src=\"images/exclamation.png\"> The file requested was deleted.
+    	    <span class=\"glyphicon glyphicon-alert\" aria-hidden=\"true\"></span> The file requested was deleted.
 			Please contact the administrator for more information.
       	</div>
 		</body>
@@ -87,7 +87,7 @@ if ($SoundID_status == 9) {
 if ($SoundID_qf_check < $default_qf && $pumilio_loggedin==FALSE) {
 	echo "<body>
 		<div class=\"alert alert-danger\" role=\"alert\">
-    	    <img src=\"images/exclamation.png\"> You must be logged in to see
+    	    <span class=\"glyphicon glyphicon-alert\" aria-hidden=\"true\"></span> You must be logged in to see
 			this file. Please contact the administrator for more information.
       	</div>
 		</body>
@@ -487,7 +487,7 @@ else {
 	if ($pumilio_loggedin && $special_nofiles == FALSE) {
 		if (!file_exists("sounds/sounds/$ColID/$DirID/$OriginalFilename")) {
 			echo "
-			<div class=\"alert alert-danger center\"><img src=\"images/exclamation.png\"> The file could not be found.</div>";
+			<div class=\"alert alert-danger center\"><span class=\"glyphicon glyphicon-alert\" aria-hidden=\"true\"></span> The file could not be found.</div>";
 			$file_error = 1;
 			$username = $_COOKIE["username"];
 			#$UserID = query_one("SELECT UserID FROM Users WHERE UserName='$username'", $connection);
@@ -504,7 +504,7 @@ else {
 				}
 
 			if ($MD5_hash!=$file_md5hash) {
-				echo "<div class=\"alert alert-danger center\"><img src=\"images/exclamation.png\"> 
+				echo "<div class=\"alert alert-danger center\"><span class=\"glyphicon glyphicon-alert\" aria-hidden=\"true\"></span> 
 					The file does not match the stored MD5 hash.</div>";
 						
 				save_log($connection, $SoundID, "98", "The file sounds/sounds/$ColID/$DirID/$OriginalFilename does not match the stored MD5 hash.");

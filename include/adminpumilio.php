@@ -588,6 +588,8 @@ echo "
 		echo "<div class=\"alert alert-success\" id=\"tt2\">The database was updated.</div>";
 		}
 	
+	echo "<h4>Edit the behavior of the system</h4>";
+
 	echo "<div class=\"row\">\n";
 
 	#audio preview format
@@ -726,7 +728,7 @@ echo "
 			}
 
 		echo "<div class=\"form-group\">
-		<label for=\"use_xml\">Allow access using XML</label>";
+		<label for=\"use_xml\">Allow API access using XML</label>";
 
 		echo "<select name=\"use_xml\" id=\"use_xml\" class=\"form-control\">";
 			if ($use_xml) {
@@ -982,11 +984,11 @@ echo "
 				$no_sensors = DB::column('SELECT COUNT(*) FROM `Sensors`');
 
 				if ($no_sensors == 0){
-					echo "<p>There are no sensors in the system.";
+					echo "<h4>There are no sensors in the system.</h4>";
 					}
 				else {
 					$rows = DB::fetch('SELECT * FROM `Sensors` ORDER BY `SensorID`', array(TRUE));
-					echo "<p>The system has the following ". count($rows) ." sensors:
+					echo "<h4>The system has the following ". count($rows) ." sensors:</h4>
 						<table>";
 
 					echo "<tr>
@@ -1041,21 +1043,21 @@ echo "
 
 
 
-		<div class="panel panel-primary">
+		<!-- <div class="panel panel-primary">
 		<div class="panel-heading">
 			<h3 class="panel-title">Export sound files</h3>
 		</div>
-        <div class="panel-body">
+        <div class="panel-body"> -->
 				
 				<?php
 				#Window to get a menu to export files
 				# keeping it separate helps to avoid having to get the dir sizes without need
-				echo "<p><form method=\"GET\" action=\"include/exportsounds.php\" target=\"disk\" onsubmit=\"window.open('', 'disk', 'width=650,height=600,status=yes,resizable=yes,scrollbars=auto')\">
+				/*echo "<p><form method=\"GET\" action=\"include/exportsounds.php\" target=\"disk\" onsubmit=\"window.open('', 'disk', 'width=650,height=600,status=yes,resizable=yes,scrollbars=auto')\">
 					<button type=\"submit\" class=\"btn btn-primary\"> Open selection window </button>
-					</form>";
+					</form>";*/
 				?>
-			</div>
-		</div>
+			<!-- </div>
+		</div> -->
 
 
 			
@@ -1083,17 +1085,15 @@ echo "
 					echo "<div class=\"alert alert-warning\">The Quality Flag already exists in the database.</div>";
 					}
 
-
-				echo "<p><strong><a href=\"qc.php\">Data extraction for quality control</a>
-				<p><a href=\"qa.php\">Figures for quality control</a></strong><br><br>";
-										
+									
 										
 			$query_qf = "SELECT * from QualityFlags ORDER BY QualityFlagID";
 			$result_qf = mysqli_query($connection, $query_qf)
 				or die (mysqli_error($connection));
 			$nrows_qf = mysqli_num_rows($result_qf);
 
-			echo "<p>
+			echo "<h4>Edit the QC flags:</h4>
+				<p>
 				<table border=\"0\">
 				<tr>
 					<td><strong>Quality Flag</strong></td><td>&nbsp;</td><td><strong>Meaning</strong></td><td>&nbsp;</td><td><strong>Delete (files that have it will be changed to 0)</strong></td>

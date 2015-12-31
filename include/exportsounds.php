@@ -5,8 +5,8 @@ require("functions.php");
 require("../config.php");
 require("apply_config_include.php");
 
-$force_admin = TRUE;
-require("check_admin.php");
+$force_loggedin = TRUE;
+require("check_login.php");
 
 session_write_close();
 flush(); @ob_flush();
@@ -17,15 +17,18 @@ echo "<!DOCTYPE html>
 <html>
 <head>
 
-<title>$app_custom_name - Administration Area</title>";
+<title>$app_custom_name - Export Sounds</title>";
 
 #Get CSS
 	require("get_css3_include.php");
 	require("get_jqueryui_include.php");
+
 ?>
 
 </head>
 <body>
+
+
 
 
 <div class="container">
