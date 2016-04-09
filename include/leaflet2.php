@@ -1,26 +1,24 @@
 <?php
 
+
 use \DByte\DB;
 DB::$c = $pdo;
 
 
+echo " <script src=\"libs/leaflet/leaflet.js\"></script>\n
+		<link rel=\"stylesheet\" href=\"libs/leaflet/MarkerCluster.css\" />
+		<link rel=\"stylesheet\" href=\"libs/leaflet/MarkerCluster.Default.css\" />
+		<script src=\"libs/leaflet/leaflet.markercluster-src.js\"></script>
+		<script src=\"libs/leaflet/leaflet-providers.js\"></script>
+		
+		<script>
+
+		var map = L.map('map').setView([0, 0], 8);	
+		L.tileLayer.provider('OpenStreetMap.HOT').addTo(map);
+		var markers = new L.MarkerClusterGroup();\n";
+
+
 if ($no_results_map>0){
-
-
-	echo " <script src=\"libs/leaflet/leaflet.js\"></script>\n
-			<link rel=\"stylesheet\" href=\"libs/leaflet/MarkerCluster.css\" />
-			<link rel=\"stylesheet\" href=\"libs/leaflet/MarkerCluster.Default.css\" />
-			<script src=\"libs/leaflet/leaflet.markercluster-src.js\"></script>
-			<script src=\"libs/leaflet/leaflet-providers.js\"></script>
-			
-			<script>
-
-			var map = L.map('map').setView([0, 0], 8);\n";
-
-	echo "L.tileLayer.provider('OpenStreetMap.HOT').addTo(map);";
-
-	echo "var markers = new L.MarkerClusterGroup();\n";
-
 
 	for ($i=0; $i < $no_results_map; $i++) {
 
@@ -62,8 +60,13 @@ if ($no_results_map>0){
 		echo "]);
  	map.setZoom(map.getZoom()-1);
 
-	</script>
-	";
+	</script>";
+}
+else{
+	echo "		
+		map.setZoom(3);
+		</script>
+		";
 
 }
 ?>

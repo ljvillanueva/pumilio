@@ -29,7 +29,7 @@ if (isset($_GET["hidemarks"])){
 else{
 	$hidemarks = "0";
 	}
-	
+
 if (isset($_GET["d"])){
 	$d=filter_var($_GET["d"], FILTER_SANITIZE_STRING);
 	}
@@ -98,26 +98,25 @@ if ($SoundID_qf_check < $default_qf && $pumilio_loggedin==FALSE) {
 
 
 $this_sound = DB::row('SELECT *, DATE_FORMAT(Date, \'%d %M %Y\') AS HumanDate, TIME_FORMAT(Time, \'%H:%i:%s\') AS HumanTime, TIME_FORMAT(Duration, \'%i:%s\') AS Duration_human FROM `Sounds` WHERE `SoundID`="' . $SoundID . '"');
-					  
 
-$HumanDate = $this_sound->HumanDate;
-$HumanTime = $this_sound->HumanTime;
-$Duration_human = $this_sound->Duration_human;
-$ColID = $this_sound->ColID;
-$SiteID = $this_sound->SiteID;
-$DirID = $this_sound->DirID;
-$AudioPreviewFilename = $this_sound->AudioPreviewFilename;
-$SoundName = $this_sound->SoundName;
-$OriginalFilename = $this_sound->OriginalFilename;
-$Duration = $this_sound->Duration;
-$SoundFormat = $this_sound->SoundFormat;
-$SamplingRate = $this_sound->SamplingRate;
-$Channels = $this_sound->Channels;
-$OtherSoundID = $this_sound->OtherSoundID;
-$Notes = $this_sound->Notes;
-$SensorID = $this_sound->SensorID;
-$DerivedSound = $this_sound->DerivedSound;
-$QualityFlagID = $this_sound->QualityFlagID;
+	$HumanDate = $this_sound->HumanDate;
+	$HumanTime = $this_sound->HumanTime;
+	$Duration_human = $this_sound->Duration_human;
+	$ColID = $this_sound->ColID;
+	$SiteID = $this_sound->SiteID;
+	$DirID = $this_sound->DirID;
+	$AudioPreviewFilename = $this_sound->AudioPreviewFilename;
+	$SoundName = $this_sound->SoundName;
+	$OriginalFilename = $this_sound->OriginalFilename;
+	$Duration = $this_sound->Duration;
+	$SoundFormat = $this_sound->SoundFormat;
+	$SamplingRate = $this_sound->SamplingRate;
+	$Channels = $this_sound->Channels;
+	$OtherSoundID = $this_sound->OtherSoundID;
+	$Notes = $this_sound->Notes;
+	$SensorID = $this_sound->SensorID;
+	$DerivedSound = $this_sound->DerivedSound;
+	$QualityFlagID = $this_sound->QualityFlagID;
 
 
 
@@ -145,22 +144,22 @@ require("include/get_jqueryui.php");
 				backgroundColor: '#000',
 				opacity: 0.5
 			},
-		 buttons: {
-		                "Delete file": function() {
-		                    document.testconfirmJQ.submit();
-		                },
-		                "Cancel": function() {
-		                    $(this).dialog("close");
-		                }
-		            }
-		        });
+			buttons: {
+                "Delete file": function() {
+                    document.testconfirmJQ.submit();
+                },
+                "Cancel": function() {
+                    $(this).dialog("close");
+                }
+            }
+	    });
 
-		        $('form#testconfirmJQ').submit(function(){
-		            $("p#dialog-email").html($("input#SoundID").val());
-		            $('#dialog').dialog('open');
-		            return false;
-		        });
-		});
+        $('form#testconfirmJQ').submit(function(){
+            $("p#dialog-email").html($("input#SoundID").val());
+            $('#dialog').dialog('open');
+            return false;
+        });
+	});
 
 	</script>
 
@@ -171,7 +170,7 @@ $result_all_tags = query_several($query_all_tags, $connection);
 $nrows_all_tags = mysqli_num_rows($result_all_tags);
 
 if ($nrows_all_tags>0) {
-	
+
 	echo "<script type=\"text/javascript\">
 	$(function() {
 		var mytags = [ ";
@@ -194,7 +193,7 @@ if ($nrows_all_tags>0) {
 	</script>
 	";
 	}
-	
+
 #flush();
 #require("include/update_sites.php");
 
@@ -204,43 +203,16 @@ $use_googlemaps=FALSE;
 $use_leaflet=TRUE;
 ####################################################3
 
-if ($use_leaflet == TRUE){
+#if ($use_leaflet == TRUE){
 		#Leafet
 		echo "\n<link rel=\"stylesheet\" href=\"libs/leaflet/leaflet.css\" />\n
 
 		<style>
-			#map { height: 220px; 
+			#map { height: 220px;
 					width: 320px;
 				}
 		</style>";
-	}
-elseif ($use_googlemaps=="3") {
-	#Get points from the database
-	$query_site = "SELECT * FROM Sites,Sounds WHERE SiteLat IS NOT NULL AND SiteLon IS NOT NULL
-				AND Sites.SiteID=Sounds.SiteID AND Sounds.SoundID='$SoundID' 
-				AND Sites.SiteLat IS NOT NULL AND Sites.SiteLon IS NOT NULL LIMIT 1";
-
-	$result_site=query_several($query_site, $connection);
-	$nrows_site = mysqli_num_rows($result_site);
-
-	if ($nrows_site>0) {
-		$map_div_message="Your browser does not have JavaScript enabled, which is required to proceed. 
-					Please enable JavaScript or contact your system administrator for help.";
-		}
-	else {
-		$map_div_message="This sound has no location data.";
-		}
-
-	if ($nrows_site>0) {
-		$SiteID = DB::column('SELECT SiteID FROM `Sounds` WHERE SoundID = ' . $SoundID);
-		
-		$SiteLat = DB::column('SELECT SiteLat FROM `Sites` WHERE SiteID = ' . $SiteID);
-		$SiteLon = DB::column('SELECT SiteLon FROM `Sites` WHERE SiteID = ' . $SiteID);
-		$SiteName = DB::column('SELECT SiteName FROM `Sites` WHERE SiteID = ' . $SiteID);
-
-		require("include/db_filedetails_map_head.php");
-		}
-	}
+#	}
 
 
 #HTML5 player
@@ -261,7 +233,7 @@ if (($AudioPreviewFilename=="") || (is_null($AudioPreviewFilename))) {
 	$result_mp3 = mysqli_query($connection, $query_mp3)
 		or die (mysqli_error($connection));
 	}
-	
+
 if (!is_file("$absolute_dir/sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename")) {
 	#File does not exists, create
 	#Check if dir exists
@@ -271,7 +243,7 @@ if (!is_file("$absolute_dir/sounds/previewsounds/$ColID/$DirID/$AudioPreviewFile
 	if (!is_dir("sounds/previewsounds/$ColID/$DirID")) {
 		mkdir("sounds/previewsounds/$ColID/$DirID", 0777);
 		}
-			
+
 	$AudioPreviewFilename=dbfile_mp3($OriginalFilename,$SoundFormat,$ColID,$DirID,$SamplingRate);
 	$query_mp3 = "UPDATE Sounds SET AudioPreviewFilename='$AudioPreviewFilename' WHERE SoundID='$SoundID'";
 	$result_mp3 = mysqli_query($connection, $query_mp3)
@@ -379,8 +351,8 @@ if ($use_googleanalytics) {
 if (is_file("$absolute_dir/customhead.php")) {
 		include("customhead.php");
 	}
-	
-	
+
+
 echo "</head>";
 
 if ($use_googlemaps=="3") {
@@ -389,17 +361,13 @@ if ($use_googlemaps=="3") {
 else {
 	echo "<body>";
 	}
-	
+
 ?>
 
 <!--Bootstrap container-->
 <div class="container">
 	<?php
 		require("include/topbar.php");
-
-	#Loading... message
-	require("include/loadingtop.php");
-
 
 
 	if ($makefigures==TRUE) {
@@ -426,7 +394,7 @@ else {
 			else {
 				echo "<img src=\"sounds/images/$ColID/$DirID/$sound_spectrogram\">";
 				}
-			
+
 			#Marks
 			if ($d!="w") {
 				$resultm=mysqli_query($connection, "SELECT marks_ID FROM SoundsMarks WHERE SoundID='$SoundID'")
@@ -481,8 +449,8 @@ else {
 
 		echo "</div>
 		</div>"; #Close row
-		
-			
+
+
 	#MD5 hash calculation
 	if ($pumilio_loggedin && $special_nofiles == FALSE) {
 		if (!file_exists("sounds/sounds/$ColID/$DirID/$OriginalFilename")) {
@@ -504,9 +472,9 @@ else {
 				}
 
 			if ($MD5_hash!=$file_md5hash) {
-				echo "<div class=\"alert alert-danger center\"><span class=\"glyphicon glyphicon-alert\" aria-hidden=\"true\"></span> 
+				echo "<div class=\"alert alert-danger center\"><span class=\"glyphicon glyphicon-alert\" aria-hidden=\"true\"></span>
 					The file does not match the stored MD5 hash.</div>";
-						
+
 				save_log($connection, $SoundID, "98", "The file sounds/sounds/$ColID/$DirID/$OriginalFilename does not match the stored MD5 hash.");
 				}
 			}
@@ -526,14 +494,14 @@ else {
 			#New top infobar
 			#file info
 			$filename_text = "<h3>$OriginalFilename</h3>";
-				
+
 			if ($guests_can_open || $pumilio_loggedin) {
 				if ($file_error == 1 || $special_noopen == TRUE || $special_noprocess == TRUE){
 					echo $filename_text;
 					}
 				else {
 					echo "<form method=\"get\" action=\"file_obtain.php\" class=\"form-inline\">
-					$filename_text 	
+					$filename_text
 					<input type=\"hidden\" name=\"fileid\" value=\"$SoundID\">
 					<input type=\"hidden\" name=\"method\" value=\"3\">
 					<button type=\"submit\" class=\"btn btn-primary btn-xs\"> Open file in Pumilio Viewer </button>
@@ -559,22 +527,22 @@ else {
 					}
 
 				echo "<dt>Collection</dt><dd>";
-					
+
 				if ($special_wrapper==TRUE){
 					echo "<a href=\"$wrapper?page=db_browse&ColID=$ColID\" title=\"Browse this collection\">";
 					}
 				else {
 					echo "<a href=\"browse_col.php?ColID=$ColID\" title=\"Browse this collection\">";
 					}
-					
+
 				echo "<strong>$CollectionName</strong></a></dd>";
-					
+
 				#site info
 				if ($SiteID!="") {
 					echo "<dt>Site</dt><dd>";
 
 					$this_site = DB::row('SELECT * FROM `Sites` WHERE `SiteID`="' . $SiteID . '"');
-										  
+
 					$SiteLat = $this_site->SiteLat;
 					$SiteLon = $this_site->SiteLon;
 					$SiteName = $this_site->SiteName;
@@ -586,7 +554,7 @@ else {
 						else {
 							echo "<a href=\"browse_site.php?SiteID=$SiteID\" title=\"Browse the recordings made at this site\"><strong>$SiteName</strong></a>";
 							}
-						
+
 						#Check if there are images of the site
 						$site_pics = DB::column('SELECT COUNT(*) FROM `SitesPhotos` WHERE `SiteID`="' . $SiteID . '"');
 						if ($site_pics>0) {
@@ -609,17 +577,17 @@ else {
 					}
 				echo "</dd>";
 
-			
+
 	echo "</dl></div></div></div>";
 
 
 
 	echo "<div class=\"row\">";
-		
+
 
 		echo "<div class=\"col-md-8\">";
 
-				
+
 
 					#Marks
 					if ($d!="w") {
@@ -635,7 +603,7 @@ else {
 							}
 						}
 
-						
+
 
 
 				echo "<h4>File Details</h4>
@@ -646,14 +614,14 @@ else {
 
 					#Check if the file size is in the database
 					if ($FileSize==NULL || $FileSize==0) {
-						$file_filesize=filesize("sounds/sounds/$ColID/$DirID/$OriginalFilename");
+						$file_filesize=@filesize("sounds/sounds/$ColID/$DirID/$OriginalFilename");
 						#$result_size = mysqli_query($connection, "UPDATE Sounds SET FileSize='$file_filesize' WHERE SoundID='$SoundID' LIMIT 1")
 						#	or die (mysqli_error($connection));
 						$this_array = array(
 							'FileSize' => $file_filesize,
 							);
 						DB::update('Sounds', $this_array, $SoundID, 'SoundID');
-						
+
 						$FileSize_d=formatSize($file_filesize);
 						$FileSize = $file_filesize;
 						}
@@ -681,7 +649,7 @@ else {
 					#Check if from a sample set
 					if ($pumilio_loggedin) {
 						$sample_check = mysqli_query($connection, "SELECT Samples.SampleName,Samples.SampleID FROM
-							Samples,SampleMembers WHERE Samples.SampleID=SampleMembers.SampleID 
+							Samples,SampleMembers WHERE Samples.SampleID=SampleMembers.SampleID
 							AND SampleMembers.SoundID='$SoundID'")
 							or die (mysqli_error($connection));
 						$check_nrows = mysqli_num_rows($sample_check);
@@ -724,11 +692,11 @@ else {
 					if ($SiteElevation != ""){
 						echo "<dt>Elevation</dt><dd>$SiteElevation</dd>\n";
 						}
-					
+
 					if ($SiteURL != ""){
 						echo "<dt>Site URL</dt><dd>$SiteURL</dd>\n";
 						}
-					
+
 					if ($Notes!="") {
 						echo "<dt>Notes</dt><dd>$Notes</dd>";
 						}
@@ -788,7 +756,7 @@ else {
 						else {
 							$files_license_img = str_replace(" ", "", $files_license);
 							$files_license_link = strtolower(str_replace("CC ", "", $files_license));
-							echo "<p>File available under a 
+							echo "<p>File available under a
 								<a href=\"http://creativecommons.org/licenses/$files_license_link/3.0/\" target=_blank><img src=\"images/cc/$files_license_img.png\"></a>
 								$files_license license by ";
 							}
@@ -798,17 +766,17 @@ else {
 
 					if ($guests_can_dl || $pumilio_loggedin) {
 						echo "<dt>Download</dt>";
-						
+
 						echo "<dd><a href=\"dl.php?file=sounds/sounds/$ColID/$DirID/$OriginalFilename\" title=\"Please take note of the license of this file above for legal limitations on the use of these files.\">$SoundFormat</a>";
-						echo " | ";					
+						echo " | ";
 						echo "<a href=\"dl.php?file=sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename\" title=\"Please take note of the license of this file above for legal limitations on the use of these files.\">$AudioPreviewFormat</a>
 							</dd>";
 						}
 
 
-				
+
 				echo "</dl>";
-				
+
 
 			if ($pumilio_admin) {
 				echo "<br>
@@ -893,7 +861,5 @@ if ($use_leaflet == TRUE){
 	require("include/leaflet1.php");
 }
 
-
-require("include/loadingbottom.php");
 
 ?>

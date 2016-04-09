@@ -40,14 +40,13 @@ require("include/get_jqueryui.php");
 
 
 
-####################################################3
+####################################################
 $use_googlemaps=FALSE;
 $use_leaflet=TRUE;
 #Get points from the database
 $results_map = DB::fetch('SELECT `Sites`.`SiteID`, `Sites`.`SiteLat`, `Sites`.`SiteLon`, `Sites`.`SiteName` FROM `Sites`, `Sounds` WHERE `Sites`.`SiteLat` IS NOT NULL AND `Sites`.`SiteLon` IS NOT NULL AND `Sites`.`SiteID`=`Sounds`.`SiteID` AND `Sounds`.`SoundStatus` != 9 GROUP BY `Sites`.`SiteID`, `Sites`.`SiteLat`, `Sites`.`SiteLon`, `Sites`.`SiteName`');
 $no_results_map = count($results_map);
-
-####################################################3
+####################################################
 
 
 require("include/index_map_head.php");
@@ -77,7 +76,7 @@ require("include/index_map_head.php");
 			});
 		});
 	</script>
-	
+
 	<script type=\"text/javascript\">
 	$().ready(function() {
 		// validate signup form on keyup and submit
@@ -98,7 +97,7 @@ require("include/index_map_head.php");
 			});
 		});
 	</script>
-	
+
 	<script type=\"text/javascript\">
 	$().ready(function() {
 		// validate signup form on keyup and submit
@@ -140,7 +139,7 @@ require("include/index_map_head.php");
 			});
 		});
 	</script>
-	
+
 	<script type=\"text/javascript\">
 	$().ready(function() {
 		// validate signup form on keyup and submit
@@ -161,7 +160,7 @@ require("include/index_map_head.php");
 			});
 		});
 	</script>
-		
+
 	<style type=\"text/css\">
 	#fileForm label.error {
 		margin-left: 10px;
@@ -176,9 +175,9 @@ require("include/index_map_head.php");
 	$DateLow1 = DB::column('SELECT DATE_FORMAT(`Date`, "%d-%b-%Y") FROM `Sounds` WHERE `SoundStatus`!=9 ' . $qf_check . ' ORDER BY `Date` LIMIT 1');
 	$DateHigh1 = DB::column('SELECT DATE_FORMAT(`Date`, "%d-%b-%Y") FROM `Sounds` WHERE `SoundStatus`!=9 ' . $qf_check . ' ORDER BY `Date` DESC LIMIT 1');
 
-	
+
 	#from http://jsbin.com/orora3/75/
-	echo "	
+	echo "
 	<script type=\"text/javascript\">
 	$(function() {
 		var dates = $( \"#startDate, #endDate\" ).datepicker({
@@ -202,7 +201,7 @@ require("include/index_map_head.php");
 	</script>
 	";
 
-	
+
 	#Duration slider
 	#Get min and max
 	$DurationLow = floor(DB::column('SELECT DISTINCT `Duration` FROM `Sounds` WHERE `Duration` IS NOT NULL AND `SoundStatus`!=9 ' . $qf_check . ' ORDER BY `Duration` LIMIT 1'));
@@ -235,8 +234,8 @@ if ($use_googleanalytics) {
 if (is_file("$absolute_dir/customhead.php")) {
 		include("customhead.php");
 	}
-	
-	
+
+
 echo "</head>\n";
 
 if ($use_leaflet == FALSE){
@@ -252,7 +251,7 @@ else{
 	<div class="container">
 		<?php
 			require("include/topbar.php");
-		
+
 
 
 	echo "<div class=\"jumbotron\">
@@ -268,7 +267,7 @@ else{
 			$btn4url = DB::column('SELECT Value FROM `PumilioSettings` WHERE `Settings` = ?', array('btn4url'));
 
 			echo "<div class=\"pull-right\">";
-				
+
 				if ($btn1text != "" && $btn1url != ""){
 					echo "<p><a class=\"btn btn-primary btn-lg\" href=\"$btn1url\" role=\"button\">$btn1text</a></p>";
 					}
@@ -281,8 +280,8 @@ else{
 				if ($btn4text != "" && $btn4url != ""){
 					echo "<p><a class=\"btn btn-primary btn-lg\" href=\"$btn4url\" role=\"button\">$btn4text</a></p>";
 					}
-				
-				
+
+
 			echo "</div>";
 
 			$app_custom_text = DB::column('SELECT `Value` FROM `PumilioSettings` WHERE Settings=?', array('app_custom_text'));
@@ -298,13 +297,13 @@ else{
 				$no_sounds = DB::column('SELECT COUNT(*) FROM `Sounds` WHERE SoundStatus!=9 ' . $qf_check);
 				$no_sites = DB::column('SELECT COUNT(DISTINCT SiteID) FROM `Sounds` WHERE SoundStatus!=9 ' . $qf_check);
 
-				
-					
+
+
 				if ($no_sounds > 0) {
 					$no_sounds_f = number_format($no_sounds);
 					$no_Collections_f = number_format($no_Collections);
-					$no_sites_f = number_format($no_sites);		
-					
+					$no_sites_f = number_format($no_sites);
+
 					echo "<p>This archive has $no_sounds_f sound files ";
 					if ($no_sites>0){
 						echo "from $no_sites_f sites ";
@@ -323,17 +322,10 @@ else{
 
 			#include("include/check_system.php");
 
-		
 
-			#if ($use_leaflet == TRUE){
 			echo "<div id=\"map\">Your browser does not have JavaScript enabled or can not connect to the tile server. Please contact your administrator.</div>\n";
 
-			/*}
-			else{
-				require("include/index_map_body.php");
-			}*/
-			
-		
+
 				#Tag cloud
 				/*if ($use_tags=="1" || $use_tags=="") {
 					echo "<h3>Tag cloud</h3>
@@ -342,9 +334,9 @@ else{
 
 					}
 				*/
-	
 
-			
+
+
 			echo " <div class=\"row\">
 			        <div class=\"col-lg-4 text-center\">
 			          <h2><span class=\"glyphicon glyphicon-cloud-upload\" aria-hidden=\"true\"></span> Add sounds<br>to this archive</h2>
@@ -381,9 +373,8 @@ require("include/bottom.php");
 </html>
 
 <?php
-if ($use_leaflet == TRUE){
-	require("include/leaflet2.php");
-}
+require("include/leaflet2.php");
+
 
 #Close session to release script from php session
 	session_write_close();

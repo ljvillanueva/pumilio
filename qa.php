@@ -1,5 +1,6 @@
 <?php
 session_start();
+header( 'Content-type: text/html; charset=utf-8' );
 
 require("include/functions.php");
 
@@ -16,6 +17,12 @@ require("include/apply_config.php");
 /*$force_loggedin = TRUE;
 require("include/check_login.php");
 */
+
+#DB
+use \DByte\DB;
+DB::$c = $pdo;
+
+
 $type=filter_var($_GET["type"], FILTER_SANITIZE_STRING);
 $SiteID=filter_var($_GET["SiteID"], FILTER_SANITIZE_NUMBER_INT);
 $ColID=filter_var($_GET["ColID"], FILTER_SANITIZE_NUMBER_INT);
@@ -60,12 +67,12 @@ if ($startDate != ""){
 	}
 
 
-echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
-<html>
+echo "<!DOCTYPE html>
+<html lang=\"en\">
 <head>
 <title>$app_custom_name - Quality Control figures</title>";
 
-require("include/get_css.php");
+require("include/get_css3.php");
 require("include/get_jqueryui.php");
 
 echo "<script language=\"javascript\" type=\"text/javascript\" src=\"js/flot/jquery.flot.js\"></script>";
@@ -260,22 +267,19 @@ if (is_file("$absolute_dir/customhead.php")) {
 </head>
 
 <body>
-<!--Blueprint container-->
-<div class="container">
+
+
+	<!--container-->
+	<div class="container">
 	<?php
 		require("include/topbar.php");
-	?>
-	<div class="span-24 last">
-		<hr noshade>
-	</div>
-	<div class="span-24 last">
-		<h3>Quality control figures</h3>
-		<p>This page lets you see data associated with each file to detect problems.</p>
+		
 
-		<?php
+	echo "<h2>Quality control figures</h3>
+		<p>This page lets you see data associated with each file to detect problems.</p>";
 		
 		if ($d == 1) {
-			echo "<div class=\"success\" id=\"updated_div\">The database was updated.</div>";
+			echo "<div class=\"alert alert-success\" id=\"updated_div\">The database was updated.</div>";
 			}
 			
 		echo "<div style=\"margin-left: 10px;\">";
@@ -454,10 +458,7 @@ if (is_file("$absolute_dir/customhead.php")) {
 			<br>
 			</div>";
 
-		?>
-	</div>
-	<div class="span-24 last">
-		<?php
+	
 		if ($type != ""){
 			echo "<hr noshade>
 				<h3>$data for the ";
@@ -525,15 +526,10 @@ if (is_file("$absolute_dir/customhead.php")) {
 			<em>This form will only change the value of files with a flag of 0 ('Unknown').</em>";
 
 			}
-		?>
-	</div>
-	<div class="span-24 last">
-		<br>
-		<?php
-		require("include/bottom.php");
-		?>
-	</div>
-</div>
+
+require("include/bottom.php");
+?>
+
 
 </body>
 </html>

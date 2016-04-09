@@ -88,15 +88,14 @@ require("include/get_jqueryui.php");
 					minlength: 5
 				},
 				newpassword2: {
-					required: true,
-					minlength: 5,
 					equalTo: "#newpassword1"
 					}
 			},
 			messages: {
 				UserName: "Please enter a username for this user",
 				UserFullname: "Please enter the full name of this user",
-				UserEmail: "Please enter a valid email of this user"
+				UserEmail: "Please enter a valid email of this user",
+				newpassword2: "The passwords do not match"
 			}
 			});
 		});

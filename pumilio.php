@@ -572,7 +572,8 @@ if (is_file("$absolute_dir/customhead.php")) {
 
 <div class="row">
 	<div class="col-md-6">
-		<?php require("include/file_details.php"); ?>
+		<?php #require("include/file_details.php"); 
+		?>
 	</div>
 	<div class="col-md-6">&nbsp;
 		

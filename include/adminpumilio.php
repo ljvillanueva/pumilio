@@ -786,11 +786,13 @@ echo "
 
 #USERS
 	echo "
+	<A name=\"manageusers\"></a>
 	<div class=\"panel panel-primary\">
 		<div class=\"panel-heading\">
 			<h3 class=\"panel-title\">Manage Users</h3>
 		</div>
-        <div class=\"panel-body\">";	
+        <div class=\"panel-body\">
+        ";	
 
 			
 			if ($u==1) {
@@ -798,6 +800,9 @@ echo "
 				}
 			if ($u==2) {
 				echo "<p><div class=\"alert alert-danger\">That username is already in use, please use another.</div>";
+				}
+			if ($u==4) {
+				echo "<p><div class=\"alert alert-danger\">The passwords did not match. Please try again.</div>";
 				}
 			
 			echo "<form action=\"include/add_user.php\" method=\"POST\" id=\"AddUserForm\">";
@@ -807,34 +812,34 @@ echo "
 		<div class="col-md-5">
 			<div class="form-group">
 				<label for="UserName">Username</label>
-				<input type="text" name="UserName" maxlength="20" class="form-control">
+				<input type="text" name="UserName" id="UserName" maxlength="20" class="form-control">
 			</div>
 
 			<div class="form-group">
 				<label for="UserFullname">Full name of the user</label>
-				<input type="text" name="UserFullname" maxlength="20" class="form-control">
+				<input type="text" name="UserFullname" id="UserFullname" maxlength="20" class="form-control">
 			</div>
 
 			<div class="form-group">
 				<label for="UserEmail">User email address</label>
-				<input type="text" name="UserEmail" maxlength="20" class="form-control">
+				<input type="text" name="UserEmail" id="UserEmail" maxlength="20" class="form-control">
 			</div>
 
 		</div>
 		<div class="col-md-5">
 			<div class="form-group">
 				<label for="newpassword1">User password</label>
-				<input type="password" name="newpassword1" maxlength="20" class="form-control">
+				<input type="password" name="newpassword1" id="newpassword1" maxlength="20" class="form-control">
 			</div>
 
 			<div class="form-group">
 				<label for="newpassword2">Please retype the password</label>
-				<input type="password" name="newpassword2" maxlength="20" class="form-control">
+				<input type="password" name="newpassword2" id="newpassword2" maxlength="20" class="form-control">
 			</div>
 
 			<div class="form-group">
 				<label for="UserRole">User role</label>
-				<select name="UserRole" class="form-control">
+				<select name="UserRole" id="UserRole" class="form-control">
 					<option value="user">Regular user</option>
 					<option value="admin">Administrator</option>
 				</select>

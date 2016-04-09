@@ -118,6 +118,8 @@ if (!isset($special_noopen)){
 
 
 ##########
+$mapping_system = "Leaflet";
+
 if ($mapping_system=="GMaps"){
 
 }

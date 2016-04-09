@@ -55,7 +55,7 @@ echo "</head>\n
 	<body>
 
 
-	<!--Blueprint container-->
+	<!--container-->
 	<div class=\"container\">";
 
 		require("include/topbar.php");
@@ -65,9 +65,9 @@ echo "</head>\n
 
 		<p>This section lets the user explore the data behind the files in the archive.</p>";
 
-
-
-		echo "<h4><a href=\"qa.php\">Figures for Quality Control</a></h4><br><br>";
+		echo "<h4><form method=\"GET\" action=\"qa.php\">
+				<button type=\"submit\" class=\"btn btn-primary\"> Figures for Quality Control </button>
+				</form>";
 
 		echo "<p><form method=\"GET\" action=\"include/exportsounds.php\" target=\"disk\" onsubmit=\"window.open('', 'disk', 'width=650,height=600,status=yes,resizable=yes,scrollbars=auto')\"><button type=\"submit\" class=\"btn btn-primary\"";
 			if (!$pumilio_loggedin){

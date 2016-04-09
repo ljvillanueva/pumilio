@@ -10,7 +10,7 @@ $row_break_counter = 0;
 for ($i=0;$i<$nrows;$i++) {
 	$row = mysqli_fetch_array($result);
 	extract($row);
-	
+
 	if ($row_break_counter == 0) {
 		echo "<div class=\"row\">";
 	}
@@ -25,27 +25,27 @@ for ($i=0;$i<$nrows;$i++) {
 
 	$small_spectrogram = DB::column('SELECT ImageFile FROM `SoundsImages` WHERE ImageType="spectrogram-small" AND SoundID = ' . $SoundID);
 	$small_spectrogram_path = "sounds/images/$ColID/$DirID/$small_spectrogram";
-	
+
 	if (!is_file("$absolute_dir/$small_spectrogram_path"))	{
 		$small_spectrogram_path = "images/notready-small.png";
 		}
 
-	echo "<a href=\"db_filedetails.php?SoundID=$SoundID\" title=\"Click for file details and more options\">
+	echo "<a href=\"opendbfile.php?SoundID=$SoundID\" title=\"Click for file details and more options\">
 		<img src=\"$small_spectrogram_path\" width=\"300\" height=\"150\" style=\"margin-top: 20px;\"><br>
 		$SoundName</a>";
 
 	if (isset($Date_h) && $Date_h!="") {
 		echo "<br>$Date_h | $Time";
 		}
-	
+
 if (!isset($show_tags)){
 	$show_tags = 0;
 	}
 
-	
+
 	flush(); @ob_flush();
-		
-	
+
+
 	#Check if there are images
 		$query_img = "SELECT COUNT(*) FROM SoundsImages WHERE SoundID='$SoundID'";
 		$sound_images=query_one($query_img, $connection);
@@ -53,7 +53,7 @@ if (!isset($show_tags)){
 		if ($sound_images!=6) {
 			$check_auxfiles = TRUE;
 			}
-			
+
 		#check if spectrogram exists
 		$query_img2 = query_one("SELECT ImageFile FROM SoundsImages WHERE SoundID='$SoundID' and ImageType='waveform'", $connection);
 		if (!is_file("$absolute_dir/sounds/images/$ColID/$DirID/$query_img2")) {
@@ -85,7 +85,7 @@ if (!isset($show_tags)){
 			$check_auxfiles = TRUE;
 			}
 
-		
+
 
 	#MP3
 	$AudioPreviewFilename=query_one("SELECT AudioPreviewFilename FROM Sounds WHERE SoundID='$SoundID' LIMIT 1", $connection);
@@ -95,7 +95,7 @@ if (!isset($show_tags)){
 	if (!is_file("$absolute_dir/sounds/previewsounds/$ColID/$DirID/$AudioPreviewFilename")) {
 		$check_auxfiles = TRUE;
 		}
-	
+
 	if ($check_auxfiles) {
 		#check files in background
 		if ($special_noprocess == FALSE){
@@ -110,7 +110,7 @@ if (!isset($show_tags)){
 		}
 	echo "</div>";
 
-}	
+}
 
 if ($row_break_counter != 0){
 	$remdivs = ($nrows % 3 ) - 1;
