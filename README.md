@@ -1,6 +1,12 @@
 pumilio
 =======
 
+# Important note
+
+Due to changes in my career path, this project is no longer under development. It may or may not work in newer systems. Feel free to fork it and change it and expand as you see fit. 
+
+# About
+
 Pumilio is a PHP/MySQL application that serves as a sound archive manager
  and allows the user to load sound files in many formats and see the
  spectrogram of the sound, select regions of the sound for further
